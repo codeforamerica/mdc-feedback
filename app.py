@@ -59,10 +59,7 @@ def index():
                 )
                 db.session.add(survey)
                 db.session.commit()
-
-                print "[row committed]"
             except:
-                print "[row exception]"
                 errors.append("Unable to add item to database.")
 
             # for j in i['answers']:
