@@ -3,7 +3,11 @@
 
 ## Wireframes
 
+![feedback_flow_v1-1](https://cloud.githubusercontent.com/assets/33945/8314560/11a67eca-199f-11e5-8625-38d84fb028f4.png)
 
+![feedback_flow_module_v1-1](https://cloud.githubusercontent.com/assets/33945/8314562/1552bd5e-199f-11e5-81d8-9fe0d34ea8c6.png)
+
+![feedback_flow_v1-2](https://cloud.githubusercontent.com/assets/33945/8314566/1b1f0d46-199f-11e5-86bc-4859df9ed84c.png)
 
 ## Screenshots
 
