@@ -23,3 +23,4 @@ If so, import everything into the db table
 else
   see the last entry in the database
 
+heroku run python manage.py db upgrade --app

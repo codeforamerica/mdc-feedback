@@ -40,23 +40,35 @@
       {% endfor %}
 
 
-        <h2>Dashboard</h2>
+        <h2>Surveys</h2>
+        <a class="pull-right btn btn-primary" href="/surveys/add">Add new survey</a>
 
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Feedback</h3>
-          </div>
-          <div class="panel-body">
-            <ul>
-              <li>The PIC is rated at <strong>??.???</strong></li>
-              <li>There are <strong>??</strong> surveys completed in the past <strong>??</strong> days</li>
-              <li>?? out of ?? surveys are in Spanish</li>
-            </ul>
+      {% if results %}
+        <table class="table table-striped">
+          <thead>
+            <th>Name</th>
+            <th>Date Created</th>
+            <th># Responses</th>
+            <th>Actions</th>
+          </thead>
 
-            <p><a href="/surveys">Configure this panel</a></p>
+          <tbody>
+            {% for result in results %}
+            <tr>
+              <td>{{ result.title_en }}</td>
+              <td>??</td>
+              <td>??</td>
+              <td>
+                <a class="btn btn-default btn-xs" href="#">Download CSV</a>
+                <a class="btn btn-default btn-xs" href="/surveys/edit/{{ result.id }}">Edit Questions</a>
+                <a class="btn btn-default btn-xs" href="#">Delete Survey</a>
+              </td>
+            </tr>
+            {% endfor %}
 
-          </div>
-        </div>
+          </tbody>
+        </table>
+      {% endif %}
 
     </div>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

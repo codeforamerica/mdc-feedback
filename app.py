@@ -1,58 +1,87 @@
-import requests
-import time
-
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
+from forms import SurveyForm
+
 import os
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
 
-from models import Survey
+from models import Survey, Question
 
-@app.route('/admin', methods=['GET', 'POST'])
-def admin():
+
+@app.route('/surveys')
+def surveys():
+    errors = []
+    results = Survey.query.order_by(Survey.id).all()
+
+    return render_template('surveys.html', errors=errors, results=results)
+
+@app.route('/surveys/add', methods=['GET', 'POST'])
+def surveys_add():
+    errors = []
+    results = {}
+    action = '/surveys/add'
+
+    # you don't have to pass request.form to Flask-WTF; it will load automatically
+    form = SurveyForm()
+
+    if form.validate_on_submit():
+
+        # Write survey metadata to survey database
+        try:
+            survey = Survey(
+                title_en = form.title_en.data,
+                title_es = form.title_es.data,
+                description_en = form.description_en.data,
+                description_es = form.description_es.data
+            )
+            db.session.add(survey)
+            db.session.commit()
+        except:
+            errors.append("Unable to add to the database.")
+
+        # Iterate on questions
+
+
+        return redirect('/surveys')
+    return render_template('survey-add.html', action=action, errors=errors, form=form, results=results)
+
+# http://stackoverflow.com/questions/30677515/wtform-does-not-entirely-repopulate-form-data-upon-editing-a-model
+
+@app.route('/surveys/edit/<int:survey_id>', methods=['GET', 'POST'])
+def surveys_edit(survey_id):
+    survey = Survey.query.get_or_404(survey_id)
+
+    action = '/surveys/edit/' + `survey_id`
     errors = []
 
-    hardcoded_api = 'https://api.typeform.com/v0/form/UYZYtI?key=433dcf9fb24804b47666bf62f83d25dbef2f629d&completed=true'
-    if request.method == 'POST':
-        print('POST method')
-        now = time.ctime(int(time.time()))
-        r = requests.get(hardcoded_api)
-        r_json = r.json()
+    form = SurveyForm(obj=survey)
+    if form.validate_on_submit():
 
-        for i in r_json['responses']:
+        # Write survey metadata to survey database
+        try:
+            survey.title_en = form.title_en.data
+            survey.title_es = form.title_es.data
+            survey.description_en = form.description_en.data
+            survey.description_es = form.description_es.data
 
-            try:
-                # TO DO: Add lang to models.py
+            db.session.commit()
+        except:
+            errors.append("Unable to edit to the database.")
 
-                survey = Survey(
-                    lang='en',
-                    quiz_id=i['id'],
-                    list_choice_1=i['answers']['list_7649733_choice'],
-                    list_choice_2=i['answers']['list_7205097_choice'],
-                    textfield_1=i['answers']['textfield_7205223'],
-                    textarea_1=i['answers']['textarea_7205107'],
-                    textarea_2=i['answers']['textarea_7205102'],
-                    opinionscale_1=i['answers']['opinionscale_7205022']
-                )
-                db.session.add(survey)
-                db.session.commit()
-            except:
-                errors.append("Unable to add item to database.")
+        # Iterate on questions
 
-            # for j in i['answers']:
-            #     print j
 
-    return render_template('admin.html', errors=errors)
+        return redirect('/surveys')
+
+    return render_template('survey-add.html', action=action, errors=errors, form=form)
 
 @app.route('/')
 def index():
     errors = []
-    results = {}
-
-    results = Survey.query.all()
+    results = Survey.query.order_by(Survey.id).all()
 
     return render_template('index.html', errors=errors, results=results)
 

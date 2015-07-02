@@ -1,33 +1,42 @@
-import datetime
+# import datetime
 from app import db
-from sqlalchemy.dialects.postgresql import JSON
+from sqlalchemy.schema import Table
 
 # https://pythonhosted.org/Flask-SQLAlchemy/models.html
 
 class Survey(db.Model):
-    __tablename__ = 'surveys'
+    __tablename__ = 'survey'
 
-    id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    title_en = db.Column(db.String(255))
+    title_es = db.Column(db.String(255))
+    description_en = db.Column(db.String(255))
+    description_es = db.Column(db.String(255))
+    questions = db.relationship('Question', backref='survey')
 
-    lang = db.Column(db.String(2), nullable=False)
-    quiz_id = db.Column(db.Integer)
-    list_choice_1 = db.Column(db.String(255))
-    list_choice_2 = db.Column(db.String(255))
-    textfield_1 = db.Column(db.String(255))
-    textarea_1 = db.Column(db.Text)
-    textarea_2 = db.Column(db.Text)
-    opinionscale_1 = db.Column(db.Integer)
-
-    def __init__(self, lang, quiz_id, list_choice_1, list_choice_2, textfield_1, textarea_1, textarea_2, opinionscale_1):
-        self.lang = lang
-        self.quiz_id = quiz_id
-        self.list_choice_1 = list_choice_1
-        self.list_choice_2 = list_choice_2
-        self.textfield_1 = textfield_1
-        self.textarea_1 = textarea_1
-        self.textarea_2 = textarea_2
-        self.opinionscale_1 = opinionscale_1
+    def __init__(self, title_en, title_es, description_en, description_es):
+        self.title_en = title_en
+        self.title_es = title_es
+        self.description_en = description_en
+        self.description_es = description_es
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
+
+class Question(db.Model):
+    __tablename__ = 'question'
+
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    question_en = db.Column(db.String(255))
+    question_es = db.Column(db.String(255))
+    question_type = db.Column(db.String(255))
+    survey_id = db.Column(db.Integer, db.ForeignKey('survey.id'))
+
+    def __init__(self, question_en, question_es, question_type):
+        self.question_en = question_en
+        self.question_es = question_es
+        self.question_type = question_type
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
