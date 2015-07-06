@@ -103,7 +103,7 @@ def surveys_edit(survey_id):
     # for question in survey.questions:
     #    survey_questions.append(question.id)
 
-    action = '/surveys/edit/' + `survey_id`
+    action = '/surveys/edit/' + str(survey_id)
     errors = []
 
     # For dynamic forms, class attributes must be set before any instantiation occurs.
