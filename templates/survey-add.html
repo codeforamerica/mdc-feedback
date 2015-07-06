@@ -50,28 +50,29 @@
         <div class="form-group">
           <label for="" class="col-sm-2 control-label">Title (English)</label>
           <div class="col-sm-10">
-            <input type="text" name="title_en" class="form-control" id="" placeholder="Title (English)" value="{{ form.title_en.data }}">
+            {{ form.title_en(class_='form-control', placeholder='Title (English)') }}
           </div>
         </div>
         <div class="form-group">
           <label for="" class="col-sm-2 control-label">Title (Spanish)</label>
           <div class="col-sm-10">
-            <input type="text" name="title_es" class="form-control" id="" placeholder="Title (Spanish)" value="{{ form.title_es.data }}">
+            {{ form.title_es(class_='form-control', placeholder='Title (Spanish)') }}
           </div>
         </div>
         <div class="form-group">
           <label for="" class="col-sm-2 control-label">Description (English)</label>
           <div class="col-sm-10">
-            <input type="text" name="description_en" class="form-control" id="" placeholder="Description (English)" value="{{ form.description_en.data }}">
+            {{ form.description_en(class_='form-control', placeholder='Description (English)') }}
           </div>
         </div>
         <div class="form-group">
           <label for="" class="col-sm-2 control-label">Description (Spanish)</label>
           <div class="col-sm-10">
-            <input type="text" name="description_es" class="form-control" id="" placeholder="Description (Spanish)" value="{{ form.description_es.data }}">
+            {{ form.description_es(class_='form-control', placeholder='Description (Spanish)') }}
           </div>
         </div>
 
+        <!--
         <h3>Choose your delivery methods</h3>
         <div class="checkbox">
           <label>
@@ -91,8 +92,13 @@
             Also include an phone interface. (Recommended for five questions or fewer)
           </label>
         </div>
+      -->
 
         <h3>Questions</h3>
+
+      {% for question in form.questions %}
+        <h4>Question?</h4>
+      {% endfor %}
 
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -103,25 +109,19 @@
         <div class="form-group">
           <label for="inputq1" class="col-sm-2 control-label">Question (English)</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputq1" placeholder="Question (English)">
+            {{ form.question_en(class_='form-control', placeholder='Question (English)') }}
           </div>
         </div>
         <div class="form-group">
           <label for="inputText3" class="col-sm-2 control-label">Question (Spanish)</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPassword3" placeholder="Question (Spanish)">
+            {{ form.question_es(class_='form-control', placeholder='Question (Spanish)') }}
           </div>
         </div>
         <div class="form-group">
           <label for="inputType1" class="col-sm-2 control-label">Type</label>
           <div class="col-sm-10">
-            <select id="inputType1" class="form-control">
-              <option>Short Text</option>
-              <option>Long Text</option>
-              <option>Multiple Choice</option>
-              <option>Yes/No</option>
-              <option>Opinion Scale</option>
-            </select>
+            {{ form.question_type(class_='form-control') }}
           </div>
         </div>
 

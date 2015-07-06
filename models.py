@@ -1,6 +1,5 @@
 # import datetime
 from app import db
-from sqlalchemy.schema import Table
 
 # https://pythonhosted.org/Flask-SQLAlchemy/models.html
 
@@ -21,7 +20,7 @@ class Survey(db.Model):
         self.description_es = description_es
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return '<Survey {}>'.format(self.id)
 
 class Question(db.Model):
     __tablename__ = 'question'
@@ -32,11 +31,11 @@ class Question(db.Model):
     question_type = db.Column(db.String(255))
     survey_id = db.Column(db.Integer, db.ForeignKey('survey.id'))
 
-    def __init__(self, question_en, question_es, question_type):
+    def __init__(self, question_en, question_es, question_type, survey_id):
         self.question_en = question_en
         self.question_es = question_es
         self.question_type = question_type
+        self.survey_id = survey_id
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
-
+        return '<Question {0}, {1}>'.format(self.id, self.survey_id)
