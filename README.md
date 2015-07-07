@@ -29,12 +29,27 @@ Set these up in a local `.env` file.
 $ pip install -r requirements.txt
 ```
 
-* Set up a new database
+* Set up a new database. Note that if you're using OSX you can also just download postgres.app and create a `feedback_dev` table that way.
 
 ```
 createdb feedback_dev
 python app.py createdb
 ```
+
+* Inside your virtual environment, open up the `postactivate` file:
+
+```
+vi $VIRTUAL_ENV/bin/postactivate
+```
+
+* Insert the following into your postactivate file:
+
+```
+export APP_SETTINGS="config.DevelopmentConfig"
+export DATABASE_URL="postgresql://localhost/feedback_dev"
+```
+
+* Reboot your virtual environment. (I use `workon mdc-feedback`, but your mileage will vary)
 
 * Start the server
 
