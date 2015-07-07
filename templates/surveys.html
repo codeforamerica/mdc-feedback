@@ -47,7 +47,6 @@
         <table class="table table-striped">
           <thead>
             <th>Name</th>
-            <th>Date Created</th>
             <th># Responses</th>
             <th>Actions</th>
           </thead>
@@ -55,8 +54,7 @@
           <tbody>
             {% for result in results %}
             <tr>
-              <td>{{ result.title_en }}</td>
-              <td>??</td>
+              <td><a href="/surveys/run/{{ result.id }}">{{ result.title_en }}</a></td>
               <td>??</td>
               <td>
                 <a class="btn btn-default btn-xs" href="#">Download CSV</a>

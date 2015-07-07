@@ -154,6 +154,10 @@ def surveys_edit(survey_id):
 
     return render_template('survey-add.html', action=action, errors=errors, form=form)
 
+@app.route('/surveys/run/<int:survey_id>')
+def surveys_run(survey_id):
+    return render_template('trigger.html')
+
 @app.route('/')
 def index():
     errors = []
