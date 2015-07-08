@@ -29,12 +29,20 @@ Set these up in a local `.env` file.
 $ pip install -r requirements.txt
 ```
 
-* Set up a new database. Note that if you're using OSX you can also just download postgres.app and create a `feedback_dev` table that way.
+* Set up a new database (not using Postgres.app): 
 
 ```
 createdb feedback_dev
 python app.py createdb
 ```
+
+* On Mac OSX, using Postres.app, and working within psql: 
+
+```
+CREATE USER user PASSWORD 'password';
+CREATE DATABASE feedback_dev OWNER=user;
+```
+_Feel free to replace user and password with values of your choice._
 
 * Inside your virtual environment, open up the `postactivate` file:
 
