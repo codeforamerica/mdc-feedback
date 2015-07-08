@@ -56,7 +56,7 @@ CREATE USER user PASSWORD 'password';
 CREATE DATABASE feedback_dev OWNER=user;
 _Feel free to replace user and password with values of your choice._
 ```
-* Upgrade your database 
+* Upgrade your database in the virtual environment
 
 ```
 python manage.py db upgrade
