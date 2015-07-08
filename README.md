@@ -12,6 +12,10 @@ A lot of early development for this application was based on this tutorial, so a
 
 * PostgreSQL Database - [How To](https://github.com/codeforamerica/howto/blob/master/PostgreSQL.md)
 
+#### A note on VIM
+
+If you're not used to it see [VIM Adventures](http://vim-adventures.com/), because at least one of these steps requires using VIM. 
+
 #### Environmental variables
 
 * `DATABASE_URL=[db connection string]` — My local example is `postgresql://localhost/feedback_dev`
@@ -36,13 +40,13 @@ createdb feedback_dev
 python app.py createdb
 ```
 
-* On Mac OSX, using Postres.app, and working within psql: 
+* On Mac OSX, using Postgres.app, and working within psql: 
 
 ```
 CREATE USER user PASSWORD 'password';
 CREATE DATABASE feedback_dev OWNER=user;
-```
 _Feel free to replace user and password with values of your choice._
+```
 
 * Inside your virtual environment, open up the `postactivate` file:
 
