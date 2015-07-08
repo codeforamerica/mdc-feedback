@@ -56,6 +56,11 @@ CREATE USER user PASSWORD 'password';
 CREATE DATABASE feedback_dev OWNER=user;
 _Feel free to replace user and password with values of your choice._
 ```
+* Upgrade your database 
+
+```
+python manage.py db upgrade
+```
 
 * Inside your virtual environment, open up the `postactivate` file:
 
