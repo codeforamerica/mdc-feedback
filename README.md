@@ -27,10 +27,18 @@ Set these up in a local `.env` file.
 
 * Set up a [virtual environment](https://github.com/codeforamerica/howto/blob/master/Python-Virtualenv.md)
 
-* Install the required libraries
+* Use the following commands to bootstrap your development environment:
 
 ```
-$ pip install -r requirements.txt
+# clone the repo
+git clone https://github.com/codeforamerica/mdc-feedback.git
+# change into the repo directory
+cd mdc-feedback
+# install python dependencies
+# NOTE: if you are using postgres.app, you will need to make sure to
+# set your PATH to include the bin directory. For example:
+# export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/
+pip install -r requirements.txt
 ```
 
 * Set up a new database (not using Postgres.app): 
