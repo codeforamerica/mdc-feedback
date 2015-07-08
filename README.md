@@ -28,6 +28,7 @@ Set these up in a local `.env` file.
 * Set up a [virtual environment](https://github.com/codeforamerica/howto/blob/master/Python-Virtualenv.md)
 
 * Use the following commands to bootstrap your development environment:
+(kudos go to (Team Pittsburgh)[https://github.com/codeforamerica/pittsburgh-purchasing-suite])
 
 ```
 # clone the repo
