@@ -15,9 +15,7 @@ A lot of early development for this application was based on this tutorial, so a
 #### Environmental variables
 
 * `DATABASE_URL=[db connection string]` — My local example is `postgresql://localhost/feedback_dev`
-* `APP_SETTINGS=[]` — I use `config.StagingConfig` for staging
-
-Set these up in a local `.env` file.
+* `APP_SETTINGS=[class name provided by config variable]` — I use `config.StagingConfig` for staging
 
 #### Project setup
 

@@ -12,3 +12,7 @@ class SurveyForm(Form):
     title_es = fields.TextField()
     description_en = fields.TextField()
     description_es = fields.TextField()
+
+class ProfileForm(Form):
+    first_name = fields.TextField()
+    last_name = fields.TextField()
