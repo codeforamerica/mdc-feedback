@@ -12,6 +12,10 @@ A lot of early development for this application was based on this tutorial, so a
 
 * PostgreSQL Database - [How To](https://github.com/codeforamerica/howto/blob/master/PostgreSQL.md)
 
+#### A note on VIM
+
+If you're not used to it see [VIM Adventures](http://vim-adventures.com/), because at least one of these steps requires using VIM. 
+
 #### Environmental variables
 
 * `DATABASE_URL=[db connection string]` — My local example is `postgresql://localhost/feedback_dev`
@@ -21,17 +25,39 @@ A lot of early development for this application was based on this tutorial, so a
 
 * Set up a [virtual environment](https://github.com/codeforamerica/howto/blob/master/Python-Virtualenv.md)
 
-* Install the required libraries
+* Use the following commands to bootstrap your development environment:
+(kudos go to [Team Pittsburgh](https://github.com/codeforamerica/pittsburgh-purchasing-suite))
 
 ```
-$ pip install -r requirements.txt
+# clone the repo
+git clone https://github.com/codeforamerica/mdc-feedback.git
+# change into the repo directory
+cd mdc-feedback
+# install python dependencies
+# NOTE: if you are using postgres.app, you will need to make sure to
+# set your PATH to include the bin directory. For example:
+# export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin/
+pip install -r requirements.txt
 ```
 
-* Set up a new database. Note that if you're using OSX you can also just download postgres.app and create a `feedback_dev` table that way.
+* Set up a new database (not using Postgres.app): 
 
 ```
 createdb feedback_dev
 python app.py createdb
+```
+
+* On Mac OSX, using Postgres.app, and working within psql: 
+
+```
+CREATE USER user PASSWORD 'password';
+CREATE DATABASE feedback_dev OWNER=user;
+_Feel free to replace user and password with values of your choice._
+```
+* Upgrade your database in the virtual environment
+
+```
+python manage.py db upgrade
 ```
 
 * Inside your virtual environment, open up the `postactivate` file:
