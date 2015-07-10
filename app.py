@@ -1,17 +1,123 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, current_app, abort, flash
 from flask.ext.sqlalchemy import SQLAlchemy
-from forms import SurveyForm
+from forms import SurveyForm, ProfileForm
 from wtforms import fields
 from pprint import pprint
+from flask.ext.login import login_user, logout_user, login_required
+from flask_login import LoginManager, current_user
+from utils import thispage
 
+import urllib
+import urllib2
 import os
+import requests
+import json
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
 
-from models import Survey, Question
+from models import Survey, Question, User
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.filter_by(email=id).first()
+
+app.jinja_env.globals['thispage'] = thispage
+
+@app.route('/login', methods=['GET'])
+def login():
+    return render_template("users/login.html", current_user=current_user)
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    logout_user()
+    if request.args.get('persona', None):
+        return 'OK'
+    else:
+        flash('Logged out successfully!', 'alert-success')
+        return render_template('users/logout.html')
+
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+
+    form = ProfileForm(
+        first_name=current_user.first_name,
+        last_name=current_user.last_name
+    )
+
+    if form.validate_on_submit():
+
+        user = User.query.get(current_user.email)
+        data = request.form
+
+        user.first_name = data.get('first_name')
+        user.last_name = data.get('last_name')
+        db.session.commit()
+
+        flash('Updated your profile!', 'alert-success')
+        data = data.to_dict().pop('csrf_token', None)
+        print ('PROFILE UPDATE: Updated profile for {email} with {data}'.format(
+            email=user.email, data=data
+        ))
+
+        return redirect(url_for('profile'))
+
+    return render_template('users/profile.html', form=form, user=current_user)
+
+@app.route('/auth', methods=['POST'])
+def auth():
+    '''
+    Endpoint from AJAX request for authentication from persona
+    '''
+
+    data = urllib.urlencode({
+        'assertion': request.form.get('assertion'),
+        'audience': current_app.config.get('BROWSERID_URL')
+    })
+    req = urllib2.Request('https://verifier.login.persona.org/verify', data)
+
+    response = json.loads(urllib2.urlopen(req).read())
+    if response.get('status') != 'okay':
+        print('REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
+        abort(403)
+
+    next_url = request.args.get('next', None)
+    email = response.get('email')
+    user = User.query.filter(User.email == email).first()
+
+    domain = email.split('@')[1] if len(email.split('@')) > 1 else None
+
+    if user:
+        login_user(user)
+        flash('Logged in successfully!', 'alert-success')
+
+        print('LOGIN: User {} logged in successfully'.format(user.email))
+        return next_url if next_url else '/'
+    else:
+        user = User.create(email=email)
+        login_user(user)
+
+        print('NEWUSER: New User {} successfully created'.format(user.email))
+        return '/users/profile'
+
+    # FIXME - unhook this, set CITY_DOMAIN to miamidade.gov
+    '''
+    elif domain == current_app.config.get('CITY_DOMAIN'):
+        user = User.create(email=email)
+        login_user(user)
+
+        print('NEWUSER: New User {} successfully created'.format(user.email))
+        return '/users/profile'
+
+    else:
+        print('NOTINDB: User {} not in DB -- aborting!'.format(email))
+        abort(403)
+    '''
 
 @app.route('/surveys')
 def surveys():
@@ -21,6 +127,7 @@ def surveys():
     return render_template('surveys.html', errors=errors, results=results)
 
 @app.route('/surveys/add', methods=['GET', 'POST'])
+@login_required
 def surveys_add():
     errors = []
     results = {}
@@ -38,7 +145,7 @@ def surveys_add():
 
     form = F()
 
-    pprint (vars(form))
+    # pprint (vars(form))
     if form.validate_on_submit():
 
         # Write survey metadata to survey database
@@ -96,6 +203,7 @@ def surveys_add():
 # http://stackoverflow.com/questions/30677515/wtform-does-not-entirely-repopulate-form-data-upon-editing-a-model
 
 @app.route('/surveys/edit/<int:survey_id>', methods=['GET', 'POST'])
+@login_required
 def surveys_edit(survey_id):
     survey = Survey.query.get_or_404(survey_id)
     # survey_questions = []
@@ -160,10 +268,12 @@ def surveys_run(survey_id):
 
 @app.route('/')
 def index():
+    # API = 'https://api.typeform.com/v0/form/UYZYtI?key=433dcf9fb24804b47666bf62f83d25dbef2f629d&completed=true'
+    # response = requests.get(API)
+    # json = response.json()
+    # print json['stats']['responses']
     errors = []
-    results = Survey.query.order_by(Survey.id).all()
-
-    return render_template('index.html', errors=errors, results=results)
+    return render_template('index.html', errors=errors)
 
 if __name__ == '__main__':
     app.run()

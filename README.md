@@ -19,9 +19,7 @@ If you're not used to it see [VIM Adventures](http://vim-adventures.com/), becau
 #### Environmental variables
 
 * `DATABASE_URL=[db connection string]` — My local example is `postgresql://localhost/feedback_dev`
-* `APP_SETTINGS=[]` — I use `config.StagingConfig` for staging
-
-Set these up in a local `.env` file.
+* `APP_SETTINGS=[class name provided by config variable]` — I use `config.StagingConfig` for staging
 
 #### Project setup
 
