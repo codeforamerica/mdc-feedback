@@ -1,1 +1,1 @@
-web: gunicorn feedback.app:app
+web: gunicorn feedback.app:create_app\(\)
