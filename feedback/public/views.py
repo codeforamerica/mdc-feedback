@@ -3,7 +3,11 @@
 
 import json
 import urllib
-import urllib2
+
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 
 from flask import (
     Blueprint, request, render_template, flash, url_for,
