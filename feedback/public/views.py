@@ -129,3 +129,7 @@ def register():
 def about():
     form = LoginForm(request.form)
     return render_template("public/about.html", form=form)
+    
+@blueprint.route("/admin/")
+def admin():
+    return render_template("public/admin.html")
