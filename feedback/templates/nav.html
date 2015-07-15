@@ -1,38 +1,37 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container">
+<header class='row'>
+  	<div class='u-pull-left four columns'>
+			
+			<a href="{{ url_for('public.home') }}">Logo goes here</a>
+	</div>
+		
+	<div class='four columns'>
+			
+			<h3 id='header-date'>Today's Date</h3>
+	</div>
+	
+	<div class='u-pull-right four columns'>
+			
+		{% if current_user and current_user.is_authenticated() %}
+		
+		<ul>
+			<li id='sign-out'><a href=#>Sign Out</a></li>
+			<li id='admin'>Logged in as <a id='admin' href="{{ url_for('user.profile') }}">Admin</a></li>
+		</ul>
+		
+		{% else %}
+		
+		<ul>
+			<li><p class="navbar-text"><a href="#" class="navbar-link js-signin">Login</a></p></li>
+		</ul>
+		
+		{% endif %}
+    
+	</div>
 
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="{{ url_for('public.home') }}">
+</header>
 
-      Feedback
+  
 
-    </a>
-  </div>
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-    <ul class="nav navbar-nav">
-      <li><a href="{{ url_for('public.home') }}">Home</a></li>
-    </ul>
 
-    {% if current_user and current_user.is_authenticated() %}
-    <ul class="nav navbar-nav navbar-right">
-      <li><p class="navbar-text">Signed on as FIXME</p></li>
-      <li><p class="navbar-text"><a class="navbar-link" href="{{ url_for('user.profile') }}">Profile</a></p></li>
-      <li><a class="navbar-link js-signout" href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
-    </ul>
-    {% else %}
-    <ul class="nav navbar-nav navbar-right">
-      <li><p class="navbar-text"><a href="#" class="navbar-link js-signin">Login</a></p></li>
-    </ul>
-    {% endif %}
 
-  </div><!-- /.navbar-collapse -->
-  </div><!-- /.container -->
-</nav>
+				
