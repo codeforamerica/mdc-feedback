@@ -25,7 +25,9 @@ css = Bundle(
     output="public/css/common.css"
 )
 
-js = Bundle()
+js = Bundle(
+	"js/app.js"
+)
 
 assets = Environment()
 

@@ -78,6 +78,9 @@
 {% include "footer.html" %}
 
 <!-- JavaScript at the bottom for fast page loading -->
+<!-- Grab Google CDN's jQuery. -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	
 {% assets "js_all" %}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {% endassets %}
