@@ -17,6 +17,12 @@
 	
 	font-size:.5em;
 }
+
+.huge {
+	
+	font-size:3em;
+	
+}
 /* END TYPOGRAPHY */
 
 body {
@@ -161,6 +167,14 @@ section:last-child {
 	overflow: auto;
 	border-bottom:1px solid grey;
 }
+
+/* DASHBOARD */
+.panel {
+	
+	border:1px solid purple;
+	min-height:300px;
+}
+
 
 /* -------------------------------------------- end sophia stuff -------------------------------------------- */
 

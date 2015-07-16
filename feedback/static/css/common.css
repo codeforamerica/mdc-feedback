@@ -846,8 +846,8 @@ there.
 @media (min-width: 1200px) {}
 
 /* OVERRIDES */
-.column:first-child, 
-.columns:first-child {
+.column,
+.columns {
 	
 	margin-left:0;
 }
@@ -863,6 +863,12 @@ there.
 .tiny {
 	
 	font-size:.5em;
+}
+
+.huge {
+	
+	font-size:3em;
+	
 }
 /* END TYPOGRAPHY */
 
@@ -1008,6 +1014,14 @@ section:last-child {
 	overflow: auto;
 	border-bottom:1px solid grey;
 }
+
+/* DASHBOARD */
+.panel {
+	
+	border:1px solid purple;
+	min-height:300px;
+}
+
 
 /* -------------------------------------------- end sophia stuff -------------------------------------------- */
 
