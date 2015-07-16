@@ -133,3 +133,7 @@ def about():
 @blueprint.route("/admin/")
 def admin():
     return render_template("public/admin.html")
+    
+@blueprint.route("/create-survey/")
+def create_survey():
+    return render_template("public/create-survey.html")
