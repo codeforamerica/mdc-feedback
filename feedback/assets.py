@@ -19,9 +19,9 @@ js = Bundle(
 '''
 
 css = Bundle(
-    "css/style.css",
     "css/normalize.css",
     "css/skeleton.css",
+    "css/style.css",
     output="public/css/common.css"
 )
 
