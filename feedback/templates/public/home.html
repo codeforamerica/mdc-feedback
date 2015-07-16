@@ -4,6 +4,9 @@
 
 <h1 class="page-header">RER Dashboard <small>Statistics Overview</small></h1>
 
+<h2 class="section-title">Feedback</h2>
+
+
 <div class="row placeholders">
   <div class="col-xs-6 col-sm-3 placeholder">
     <div class="panel panel-primary">
@@ -13,8 +16,8 @@
                     <i class="fa fa-comments fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                    <div class="huge">26</div>
-                    <div>New Reviews - Last 7 Days</div>
+                    <div class="huge" style="font-size:5em; font-weight:bold;">{{ stats.new_reviews }}</div>
+                    <div>Surveys Submitted - Last 7 Days</div>
                 </div>
             </div>
         </div>
@@ -35,8 +38,8 @@
                     <i class="fa fa-comments fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                    <div class="huge">26</div>
-                    <div>Review Rating - Last 7 Days</div>
+                    <div class="huge" style="font-size:5em; font-weight:bold;">{{ stats.rating }}</div>
+                    <div>Satisfaction Rating - Last 7 Days</div>
                 </div>
             </div>
         </div>
@@ -57,8 +60,8 @@
                     <i class="fa fa-comments fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                    <div class="huge">26</div>
-                    <div>Recommended - Last 7 Days</div>
+                    <div class="huge">??</div>
+                    <div>TBA</div>
                 </div>
             </div>
         </div>
@@ -79,7 +82,7 @@
                     <i class="fa fa-comments fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                    <div class="huge">0</div>
+                    <div class="huge">??</div>
                     <div>TBA</div>
                 </div>
             </div>
@@ -193,38 +196,38 @@
     <h3 class="panel-title">Plans</h3>
   </div>
   <div class="panel-body">
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Team Name</th>
-        <th>Late Plans</th>
-        <th>Plans in Area</th>
-        <th>Completed Ratio</th>
-        <th>Avg Handle Time</th>
-        <th>Health</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>A-Team</td>
-        <td>0</td>
-        <td>0</td>
-        <td>100% [SPARKLINE]</td>
-        <td>31 days [SPARKLINE]</td>
-        <td>Good</td>
-      </tr>
-      <tr>
-        <td>Public Works A-Team</td>
-        <td>133</td>
-        <td>143</td>
-        <td>6% [SPARKLINE]</td>
-        <td>31 days [SPARKLINE]</td>
-        <td>Good</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Team Name</th>
+            <th>Late Plans</th>
+            <th>Plans in Area</th>
+            <th>Completed Ratio</th>
+            <th>Avg Handle Time</th>
+            <th>Health</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A-Team</td>
+            <td>0</td>
+            <td>0</td>
+            <td>100% [SPARKLINE]</td>
+            <td>31 days [SPARKLINE]</td>
+            <td>Good</td>
+          </tr>
+          <tr>
+            <td>Public Works A-Team</td>
+            <td>133</td>
+            <td>143</td>
+            <td>6% [SPARKLINE]</td>
+            <td>31 days [SPARKLINE]</td>
+            <td>Good</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </div>

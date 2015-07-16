@@ -29,21 +29,6 @@ def load_user(id):
     return User.query.filter_by(email=id).first()
 
 
-@blueprint.route("/", methods=["GET", "POST"])
-def home():
-    form = LoginForm(request.form)
-    # Handle logging in
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            login_user(form.user)
-            flash("You are logged in.", 'success')
-            redirect_url = request.args.get("next") or url_for("user.members")
-            return redirect(redirect_url)
-        else:
-            flash_errors(form)
-    return render_template("public/home.html", form=form)
-
-
 @blueprint.route('/login/', methods=['GET'])
 def login():
     return render_template("user/login.html", current_user=current_user)

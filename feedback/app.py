@@ -7,11 +7,12 @@ from feedback.assets import assets
 from feedback.extensions import (
     db,
     login_manager,
-    migrate
+    migrate,
+    cache
 )
 # from feedback.utils import thispage
 
-from feedback import public, user
+from feedback import public, user, dashboard
 
 def create_app(config_object=ProductionConfig):
     """An application factory, as explained here:
@@ -30,9 +31,10 @@ def register_extensions(app):
     login_manager.init_app(app)
     migrate.init_app(app, db)
     assets.init_app(app)
+    cache.init_app(app)
+
     '''
     bcrypt.init_app(app)
-    cache.init_app(app)
     debug_toolbar.init_app(app)
     '''
     return None
@@ -40,6 +42,7 @@ def register_extensions(app):
 def register_blueprints(app):
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(user.views.blueprint)
+    app.register_blueprint(dashboard.views.blueprint)
     # app.jinja_env.globals['thispage'] = thispage
     return None
 
