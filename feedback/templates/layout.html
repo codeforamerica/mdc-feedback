@@ -36,7 +36,6 @@
 
 <div id='container' class="{% block content_class %}container-fluid{% endblock content_class %}">
 
-  <div class="row">
     <div class="col-sm-3 col-md-2 sidebar hidden">
       <ul class="nav nav-sidebar">
         <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
@@ -53,7 +52,7 @@
       </ul>
 
     </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" role="main">
+    
       {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
       <div class="row">
@@ -70,8 +69,7 @@
       {% endwith %}
 
     {% block content %}{% endblock %}
-    </div><!-- second col -->
-  </div><!-- .row -->
+    
 
 </div><!-- end container -->
 

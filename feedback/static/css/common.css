@@ -845,6 +845,13 @@ there.
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
 
+/* OVERRIDES */
+.column:first-child, 
+.columns:first-child {
+	
+	margin-left:0;
+}
+
 /* SOPHIA STUFF */
 /* TYPOGRAPHY */
 
@@ -917,7 +924,7 @@ ul li {
 
 #container {
 	
-	width:80%;
+	width:90%;
 	min-height:800px;
 	padding:10px;
 	margin:0 auto;
@@ -1011,6 +1018,11 @@ section:last-child {
  * Base structure
  */
 
+#container .row,
+#container .columns {
+	
+	text-align: left;
+}
 
 /*
  * Global add-ons
