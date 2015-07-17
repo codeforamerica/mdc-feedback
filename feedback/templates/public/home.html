@@ -3,121 +3,121 @@
 {% block content %}
 
 <div class='row'>
-	
+
 	<h3>Metrics from user surveys at the PIC</h3>
-	
+
 	<div class='six columns panel'>
-		
+
 		<p class='huge bold'>{{ stats.new_reviews }}</p>
 		<p>Surveys Submitted - Last 7 Days</p>
-		
+
 		<div class='image-container'>
 			<img src='https://placekitten.com/g/500/300'>
 		</div>
-		
+
 		<a href=#>View Details</a>
-		
+
 	</div>
-	
+
 	<div class='six columns'>
-	
-		<div class='six columns panel'>
-			
-			<p class='huge'>{{ stats.rating }}</p>
-			<p>Satisfaction Rating - Last 7 Days</p>
+
+		<!-- div class='six columns panel'>
+
+			<p class='huge'>{{ stats.new_reviews }}</p>
+			<p>New Reviews - Last 7 Days</p>
 			<a href=#>View Details</a>
-			
-		</div>
-		
-		<div class='six columns panel'>
-			
+
+		</div -->
+
+		<!-- div class='six columns panel'>
+
 			<p class='huge'></p>
 			<p>Recommended - Last 7 Days</p>
 			<a href=#>View Details</a>
-			
-		</div>
-		
+
+		</div -->
+
 		<div class='six columns panel'>
-			
-			<p class='huge'>26(should be stars)</p>
+
+			<p class='huge'>{{ stats.rating }} out of 5 stars</p>
 			<p>Review Rating - Last 7 Days</p>
 			<a href=#>View Details</a>
-			
+
 		</div>
-		
+
 		<div class='six columns panel'>
-			
+
 			<p class='huge'></p>
 			<p>Recommended - Last 7 Days</p>
 			<a href=#>View Details</a>
-			
+
 		</div>
-	
-	</div> 
-	
+
+	</div>
+
 </div> <!-- close row -->
 
 <div class='row'>
-	
+
 	<h3>Permit Metrics</h3>
-	
+
 	<div class='six columns'>
-	
+
 		<div class='six columns panel'>
-			
+
 			<p class='huge'>26</p>
 			<p>Permit Lifespan - Last 30 Days</p>
 			<a href=#>View Details</a>
-			
+
 		</div>
-		
+
 		<div class='six columns panel'>
-			
+
 			<p class='huge'>26</p>
 			<p>Average # of inspections per permit - Last 30 Days</p>
 			<a href=#>View Details</a>
-			
+
 		</div>
-		
+
 		<div class='six columns panel'>
-			
+
 			<p class='huge'>26</p>
 			<p>% of Permits Completed Within 15 Days</p>
 			<a href=#>View Details</a>
-			
+
 		</div>
-		
+
 		<div class='six columns panel'>
-			
+
 			<p class='huge'>$500</p>
 			<p>Cost per permit / Average</p>
 			<a href=#>View Details</a>
-			
+
 		</div>
-	
-	</div> 
-	
+
+	</div>
+
 	<div class='six columns panel'>
-		
+
 		<p class='huge bold'>30</p>
 		<p>Average # of inspections per permit - Last 30 Days</p>
-		
+
 		<div class='image-container'>
 			<img src='https://placekitten.com/g/500/300'>
 		</div>
-		
+
 		<a href=#>View Details</a>
-		
+
 	</div>
-	
+
 </div> <!-- close row -->
 
 <div class='row'>
-	
+
 	<h3>Plans</h3>
-	
+
 	<div class='twelve columns panel'>
-		
+
 		<table class="table table-striped">
         <thead>
           <tr>
@@ -148,67 +148,67 @@
           </tr>
         </tbody>
       </table>
-		
+
 		<a href=#>View Details</a>
-		
+
 	</div>
-	
+
 </div> <!-- close row -->
 
 <div class='row'>
-	
+
 	<h3>Neighborhood Compliance</h3>
-	
+
 	<div class='six columns'>
-	
+
 		<div class='six columns panel'>
-			
+
 			<p class='huge'>26</p>
 			<p>Violations in the Past Month</p>
 			<a href=#>View Details</a>
-			
+
 		</div>
-		
+
 		<div class='six columns panel'>
-			
+
 			<p class='huge'>26</p>
 			<p>Violation Type</p>
 			<a href=#>View Details</a>
-			
+
 		</div>
-		
+
 		<div class='six columns panel'>
-			
+
 			<p class='huge'>26</p>
 			<p>Building regulation</p>
 			<a href=#>View Details</a>
-			
+
 		</div>
-		
+
 		<div class='six columns panel'>
-			
+
 			<p>Violation Type</p>
 			<div class='image-container'>
 				<img src="http://placehold.it/175x175">
 			</div>
 			<a href=#>View Details</a>
-			
-			
+
+
 		</div>
-	
-	</div> 
-	
+
+	</div>
+
 	<div class='six columns panel'>
-		
+
 		<p>Violation Locations</p>
 		<div class='image-container'>
 			<img src='https://placeholdit.imgix.net/~text?txtsize=19&txt=Map+(625x375)&w=625&h=375'>
 		</div>
-		
+
 		<a href=#>View Details</a>
-		
+
 	</div>
-	
+
 </div> <!-- close row -->
 
 {% endblock %}
