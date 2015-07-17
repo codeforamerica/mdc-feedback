@@ -23,7 +23,29 @@ $(document).ready(function() {
 		
 	})
 	
-	var globalQuestion = $('.survey-question').clone();
+	//oh god so messy, but need to be sure first Q has listeners
+	$('#choose-answer-type').on('change', function() {
+		
+			var answerType = this.value;
+			
+			if(answerType == 'checkboxes'){
+				
+				console.log('checkboxes added');	
+				globalCheckbox.clone().appendTo($('#answerType'));
+			
+			} else if(answerType == 'radio') {
+				
+				console.log('radio buttons added');
+				globalRadio.clone().appendTo($('#answerType'));
+			}
+			
+		});
+	
+	var globalQuestion = $('.survey-question').clone(true);
+	var globalRadio = $('#answer-types #radio-buttons').clone(true);
+	var globalCheckbox = $('#answer-types #checkboxes').clone(true);
+	
+	console.log("GLOBALS:", globalRadio, globalCheckbox);
 	
 	function buildQuestion() {
 		
@@ -33,11 +55,8 @@ $(document).ready(function() {
 		console.log("GLOBAL: ", globalQuestion);
 		
 		//create a new question, give it an ID, append to the right div
-		//$('.survey-question#' + questionInt.toString()).clone().attr('id', 'new-q').appendTo('#survey-questions');
-
 		var thisQ = globalQuestion.clone().attr('id', questionInt.toString()).appendTo('#survey-questions');
 		console.log('thisq: ', thisQ);
-			
 		
 		//modify question text
 		$(thisQ).find('.identifier').text(questionInt + 1);
@@ -55,9 +74,23 @@ $(document).ready(function() {
 			
 		})
 		
-		//assign new value as unique ID to question; replaces 'new-q' from above
-		//you're using the unique ID as a way to target the element to clone
-		/*$('#new-q').attr('id', questionInt.toString());	*/
+		$(thisQ).find('#choose-answer-type').on('change', function() {
+		
+			var answerType = this.value;
+			
+			if(answerType == 'checkboxes'){
+				
+				console.log('checkboxes added');	
+				globalCheckbox.clone().appendTo($(thisQ).find('#answerType'));
+			
+			} else if(answerType == 'radio') {
+				
+				console.log('radio buttons added');
+				globalRadio.clone().appendTo($(thisQ).find('#answerType'));
+			}
+			
+		});
+
 	}
 		
 	function destroyQuestion(id) {
@@ -65,5 +98,8 @@ $(document).ready(function() {
 		console.log('destroy question: ', id, '.survey-question#' + id)
 		$('.survey-question#' + id).detach();
 	}
+	
+		
+		
 	
 }) //close ready

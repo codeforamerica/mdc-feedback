@@ -22,6 +22,21 @@
 						
 		</section>
 		
+		<!-- hacky! -->
+		<div id='answer-types' class='row'>
+			
+			<div id='checkboxes'>
+				<input type='checkbox' name='checkbox'> Checkbox
+				<span class='button' id='add-checkbox'>Add another option</span>
+			</div>
+			<div id='radio-buttons'>
+				<input type='radio' name='radio'> Radio Button
+				<span class='button' id='add-radio'>Add another option</span>
+			</div>
+			
+		</div>
+		
+		
 		<section class='row twelve columns'>
 			
 			<p>Choose your delivery methods:</p>
@@ -51,14 +66,14 @@
 				<div class='row twelve columns'>
 					
 					<div class='two columns'>.</div>
-					<div class='eight columns'>
+					<div class='eight columns' id='answerType'>
 						
 						<p class='bold'>Answer type:</p>
-						<select>
-							<option>Open-ended text</option>
-							<option>Multiple choice (checkboxes)</option>
-							<option>Multiple choice (radio buttons)</option>
-							<option>Yes/No</option>
+						<select id='choose-answer-type'>
+							<option value='text'>Open-ended text</option>
+							<option value='checkboxes'>Multiple choice (checkboxes)</option>
+							<option value='radio'>Multiple choice (radio buttons)</option>
+							<option value='yesNo'>Yes/No</option>
 							
 						</select>
 					</div>
