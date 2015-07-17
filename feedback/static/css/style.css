@@ -1,13 +1,195 @@
+/* OVERRIDES */
+.column,
+.columns {
+	
+	margin-left:0;
+}
+
+/* SOPHIA STUFF */
+/* TYPOGRAPHY */
+
+.bold {
+	
+	font-weight:bold;
+}
+
+.tiny {
+	
+	font-size:.5em;
+}
+
+.huge {
+	
+	font-size:3em;
+	
+}
+/* END TYPOGRAPHY */
+
+body {
+	
+	margin:0 auto;
+	text-align: center;
+}
+
+header {
+	
+	width:100%;
+	background-color: #4BC3FF;
+	color:white;
+	padding-top:30px;
+	padding-bottom:20px;
+	margin-bottom:20px;
+	height:auto;
+	overflow: auto;
+}
+
+header a {
+	
+	color:white;
+}
+
+footer div,
+header div {
+	
+	width:80%;
+	text-align: center;
+	margin:0 auto;
+}
+
+footer {
+	
+	width:100%;
+	background-color:#d1d1d1;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+
+footer p {
+	
+	padding:0;
+	margin:0;
+	line-height: normal;
+}
+
+ul li {
+	
+	display:inline;
+}
+
+.hidden {
+	
+	display:none !important;
+}
+
+#container {
+	
+	width:90%;
+	min-height:800px;
+	padding:10px;
+	margin:0 auto;
+	
+}
+
+section {
+	
+	margin-top:30px;
+	margin-bottom:30px;
+	padding-bottom:30px;
+	border-bottom:1px solid grey;
+	text-align: left;
+}
+
+section:last-child {
+	
+	border-bottom:0;
+}
+
+.active {
+	
+	background-color:#4BC3FF;
+	color:white !important;
+	border-color:#4BC3FF;
+}
+
+.button {
+	
+	min-height:38px !important;
+	height: auto !important;
+}
+
+/* Admin panel */
+
+#admin-nav {
+	
+}
+
+#admin-nav li {
+	
+	display:list-item;
+	min-width:25%;
+	max-width:40%;
+	list-style:none;
+	margin:0 auto;
+	margin-top:10px;
+	margin-bottom:10px;
+	text-align: center;
+}
+
+#survey-existing {
+	
+	margin-top:30px;
+	margin-bottom:30px;
+}
+
+#survey-existing li {
+	
+	max-width:100% !important;
+}
+
+.secondary {
+	
+	color:white;
+	background-color:grey;
+}
+
+.delete {
+	
+	color:white;
+	background-color:red;
+	margin-left:5px;
+}
+
+/* SURVEY BUILDER */
+
+.survey-question {
+	
+	height:auto;
+	overflow: auto;
+	border-bottom:1px solid grey;
+}
+
+/* DASHBOARD */
+.panel {
+	
+	border:1px solid purple;
+	min-height:300px;
+}
+
+
+/* -------------------------------------------- end sophia stuff -------------------------------------------- */
+
+
+
 /* TYPOGRAPHY */
 /*
  * Base structure
  */
 
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: 50px;
+#container .row,
+#container .columns {
+	
+	text-align: left;
 }
-
 
 /*
  * Global add-ons

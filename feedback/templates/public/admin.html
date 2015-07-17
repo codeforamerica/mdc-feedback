@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block content %}
+		
+	<div id="container">
+		
+		<div class='row u-pull-left' id='breadcrumb'>
+			
+			<ul class='list-nav'>
+				
+				<li class='breadcrumb-text'>You're looking at:</li>
+				<li id='breadcrumb-location'>User feedback admin panel</li>
+				<li class='breadcrumb-empty'></li>
+				<li class='breadcrumb-text'>Go back to:</li>
+				<li id='breadcrumb-return'><a href='/'>Dashboard</a></li>
+				
+			</ul>
+		</div>
+		
+		<div class='row twelve columns'>
+			
+			<h2>What would you like to do?</h2>
+			
+			<menu id='admin-nav'>
+			
+				<li class='button'><a href='/create-survey'>Create a new survey</a></li>
+				
+				<li class='button'>Select public-facing metrics</li>
+				<li class='button'>Select internal-facing metrics</li>
+				<li class='button'>Export reports</li>
+				
+				<ul id='survey-existing'>
+						
+						<li><h4>Edit an existing survey:</h4></li>
+						
+						<li><span class='button secondary'>Survey 1</span> <span class='date'>Published on x/y/z'</span><span class='button delete'>Delete</span></li>
+						<li><span class='button secondary'>Survey 2</span> <span class='date'>Published on x/y/z'</span><span class='button delete'>Delete</span></li>
+						<li><span class='button secondary'>Survey 3</span> <span class='date'>Published on x/y/z'</span><span class='button delete'>Delete</span></li>
+						
+					</ul>
+
+			
+			</menu>
+		</div>
+	</div><!--!/#container -->
+	
+	
+{% endblock %}

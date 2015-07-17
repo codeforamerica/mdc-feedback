@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+{% block content %}
+		
+	<div id="container">
+		
+		<div class='row u-pull-left' id='breadcrumb'>
+			
+			<ul class='list-nav'>
+				
+				<li class='breadcrumb-text'>You're looking at:</li>
+				<li id='breadcrumb-location'>Survey Builder</li>
+				<li class='breadcrumb-empty'></li>
+				<li class='breadcrumb-text'>Go back to:</li>
+				<li id='breadcrumb-return'><a href='/admin'>User feedback admin panel</a></li>
+				
+			</ul>
+		</div>
+		
+		<section class='row twelve columns'>
+			
+			<h1>What would you like to ask your community?</h1>
+						
+		</section>
+		
+		<section class='row twelve columns'>
+			
+			<p>Choose your delivery methods:</p>
+			<input type="checkbox" name="typeform" value="Typeform"> Typeform (web survey)<br>
+			<input type="checkbox" name="textitin" value="TextItIn"> TextItIn (SMS survey)<br>
+			
+		</section>
+		
+		<section class='row twelve columns' id='survey-questions'>
+			
+			<div class='survey-question' id='0'>
+				
+				<div class='two columns'>
+					DRAGGER
+				</div>
+				<div class='five columns survey-question-english'>
+					
+					<p class='bold'>Question <span class='identifier'>1</span> (EN):</p>
+					<input type='text' name='question-1' value='Ask away!'>
+				</div>
+				
+				<div class='five columns survey-question-spanish'>
+					<p class='bold'>Question <span class='identifier'>1</span> (ES):</p>
+					<input type='text' name='question-1' value='Ask away!'>
+				</div>
+				
+				<div class='row twelve columns'>
+					
+					<div class='two columns'>.</div>
+					<div class='eight columns'>
+						
+						<p class='bold'>Answer type:</p>
+						<select>
+							<option>Open-ended text</option>
+							<option>Multiple choice (checkboxes)</option>
+							<option>Multiple choice (radio buttons)</option>
+							<option>Yes/No</option>
+							
+						</select>
+					</div>
+					
+					
+					
+				</div>
+				
+				<div class='row'>
+					<div class='two columns'>.</div>
+					<div class='one column'>
+							<span class='delete button' id='0'>Delete question</span>
+					</div>
+				</div>
+				
+			</div>
+			
+		</section>
+		
+		<section class='row'>
+			
+			<li><a class='button' id='add-question' href=#>Add another question</a></li>
+			<li><a class='button'>Save this survey</a></li>
+			<li><a class='button'>Save and publish this survey</a></li>
+			
+		</section>
+	</div><!--!/#container -->
+
+
+{% endblock %}

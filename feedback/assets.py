@@ -19,11 +19,15 @@ js = Bundle(
 '''
 
 css = Bundle(
-    "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css",
+    "css/normalize.css",
+    "css/skeleton.css",
     "css/style.css",
     output="public/css/common.css"
 )
-js = Bundle()
+
+js = Bundle(
+	"js/app.js"
+)
 
 assets = Environment()
 
