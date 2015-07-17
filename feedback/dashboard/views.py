@@ -42,7 +42,8 @@ for survey_response in json['responses']:
         try:
             ans = survey_response['answers']['opinionscale_8228843']
         except KeyError:
-            print 'ERROR! one of these opinion scales should show up.'
+            # print 'ERROR! one of these opinion scales should show up.'
+            pass
     total = total + int(ans)
 stats['rating'] = total / len(json['responses'])
 
