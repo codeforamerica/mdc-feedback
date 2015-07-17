@@ -30,22 +30,39 @@ $(document).ready(function() {
 			
 			if(answerType == 'checkboxes'){
 				
-				console.log('checkboxes added');	
-				globalCheckbox.clone().appendTo($('#answerType'));
+				//console.log('checkboxes added');	
+				var cloneBox = globalCheckbox.clone(true);
+					cloneBox.appendTo($('#answerType'));
+					
+				$(cloneBox).find('.add-checkbox').click(function() {
+					
+					var parent = $(this).parent();
+					var clone = parent.find('.checkbox-object').first().clone(true);
+					$(clone).insertBefore(parent.find('.add-checkbox'));/**/
+				})
+
 			
 			} else if(answerType == 'radio') {
 				
-				console.log('radio buttons added');
-				globalRadio.clone().appendTo($('#answerType'));
+				//console.log('radio buttons added');
+				var cloneRadio = globalRadio.clone(true);
+					cloneRadio.appendTo($('#answerType'));
+					
+					$(cloneRadio).find('#add-radio').click(function() {
+					
+					var parent = $(this).parent();
+					var clone = parent.find('.radio-object').first().clone(true);
+					$(clone).insertBefore(parent.find('#add-radio'));
+				})
 			}
-			
+	
 		});
 	
 	var globalQuestion = $('.survey-question').clone(true);
 	var globalRadio = $('#answer-types #radio-buttons').clone(true);
 	var globalCheckbox = $('#answer-types #checkboxes').clone(true);
 	
-	console.log("GLOBALS:", globalRadio, globalCheckbox);
+	//console.log("GLOBALS:", globalRadio, globalCheckbox);
 	
 	function buildQuestion() {
 		
@@ -81,14 +98,35 @@ $(document).ready(function() {
 			if(answerType == 'checkboxes'){
 				
 				console.log('checkboxes added');	
-				globalCheckbox.clone().appendTo($(thisQ).find('#answerType'));
+				
+				var cloneBox = globalCheckbox.clone(true);
+				cloneBox.appendTo($(thisQ).find('#answerType'));
 			
+				$(cloneBox).find('.add-checkbox').click(function() {
+					console.log('cb button clicked', this);
+					var parent = $(this).parent();
+					var clone = parent.find('.checkbox-object').first().clone(true);
+					$(clone).insertBefore(parent.find('.add-checkbox'));/**/
+				})
+
+
 			} else if(answerType == 'radio') {
 				
 				console.log('radio buttons added');
-				globalRadio.clone().appendTo($(thisQ).find('#answerType'));
+				var cloneRadio = globalRadio.clone(true);
+				cloneRadio.appendTo($(thisQ).find('#answerType'));
+			
+				$(cloneRadio).find('#add-radio').click(function() {
+					console.log('button clicked', this);
+					var parent = $(this).parent();
+					var clone = parent.find('.radio-object').first().clone(true);
+					$(clone).insertBefore(parent.find('#add-radio'));
+				})
 			}
 			
+			
+		
+	
 		});
 
 	}
@@ -99,7 +137,19 @@ $(document).ready(function() {
 		$('.survey-question#' + id).detach();
 	}
 	
+	//checkboxes & radio buttons +1s
+	$('#add-radio').click(function() {
+		console.log('button clicked', this);
+		var parent = $(this).parent();
+		var clone = parent.find('.radio-object').first().clone(true);
+		$(clone).insertBefore(parent.find('#add-radio'));
+	})
 		
-		
+	$('#add-checkbox').click(function() {
+		console.log('cb button clicked', this);
+		var parent = $(this).parent();
+		var clone = parent.find('.checkbox-object').first().clone(true);
+		$(clone).insertBefore(parent.find('#add-checkbox'));/**/
+	})
 	
 }) //close ready
