@@ -1030,7 +1030,13 @@ section:last-child {
 	margin-left:0 !important;
 }
 
+/* NAV */
 
+#logo img{
+	
+	width:150px;
+	height:auto;
+}
 /* -------------------------------------------- end sophia stuff -------------------------------------------- */
 
 
