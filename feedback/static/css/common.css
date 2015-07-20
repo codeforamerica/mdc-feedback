@@ -1018,8 +1018,16 @@ section:last-child {
 /* DASHBOARD */
 .panel {
 	
-	border:1px solid purple;
+	border:5px solid #cacaca;
+	padding:10px;
 	min-height:300px;
+	
+	margin:5px;
+}
+
+.first-panel {
+	
+	margin-left:0 !important;
 }
 
 
