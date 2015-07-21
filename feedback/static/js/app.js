@@ -30,30 +30,63 @@ $(document).ready(function() {
 			
 			if(answerType == 'checkboxes'){
 				
-				//console.log('checkboxes added');	
-				var cloneBox = globalCheckbox.clone(true);
-					cloneBox.appendTo($('.answerType'));
+				//look to be sure we haven't already selected checkboxes/radio buttons
+				var atParent = $(this).parent();
+				
+				console.log(atParent.find('.radio-buttons')[0])
+				console.log(atParent.find('.checkboxes')[0])
+				
+				//if we have rbuttons, remove them.
+				if(atParent.find('.radio-buttons')[0] != undefined) {
 					
-				$(cloneBox).find('.add-checkbox').click(function() {
+					console.log('we have radio buttons already')
+					atParent.find('.radio-buttons').detach();
+				}
+				
+				//if we have don't have checkboxes, add them.
+				if(atParent.find('.checkboxes')[0] == undefined) {
 					
-					var parent = $(this).parent();
-					var clone = parent.find('.checkbox-object').first().clone(true);
-					$(clone).insertBefore(parent.find('.add-checkbox'));/**/
-				})
+					//console.log('checkboxes added');	
+					var cloneBox = globalCheckbox.clone(true);
+						cloneBox.appendTo($('.answerType'));
+						
+					$(cloneBox).find('.add-checkbox').click(function() {
+						
+						var parent = $(this).parent();
+						var clone = parent.find('.checkbox-object').first().clone(true);
+						$(clone).insertBefore(parent.find('.add-checkbox'));/**/
+					})
+				
+				}
 
 			
 			} else if(answerType == 'radio') {
 				
-				//console.log('radio buttons added');
-				var cloneRadio = globalRadio.clone(true);
-					cloneRadio.appendTo($('.answerType'));
+				//look to be sure we haven't already selected checkboxes/radio buttons
+				var atParent = $(this).parent();
+				
+				//if we have checkboxes, remove them.
+				if(atParent.find('.checkboxes')[0] != undefined) {
 					
-					$(cloneRadio).find('#add-radio').click(function() {
+					console.log('we have checkboxes already')
+					atParent.find('.checkboxes').detach();
+				}
+				
+				//if we have don't have radio buttons, add them.
+				if(atParent.find('.radio-buttons')[0] == undefined) {
+
+					//console.log('radio buttons added');
+					var cloneRadio = globalRadio.clone(true);
+						cloneRadio.appendTo($('.answerType'));
+						
+						$(cloneRadio).find('#add-radio').click(function() {
+						
+						var parent = $(this).parent();
+						var clone = parent.find('.radio-object').first().clone(true);
+						$(clone).insertBefore(parent.find('#add-radio'));
+					})
 					
-					var parent = $(this).parent();
-					var clone = parent.find('.radio-object').first().clone(true);
-					$(clone).insertBefore(parent.find('#add-radio'));
-				})
+				}
 			}
 	
 		});
