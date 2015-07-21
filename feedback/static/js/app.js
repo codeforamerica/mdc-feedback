@@ -53,7 +53,13 @@ $(document).ready(function() {
 					$(cloneBox).find('.add-checkbox').click(function() {
 						
 						var parent = $(this).parent();
-						var clone = parent.find('.checkbox-object').first().clone(true);
+						//var clone = parent.find('.checkbox-object').first().clone(true);
+						//console.log('cloning: ', globalCheckbox.find('.checkbox-object'));
+						var clone = globalCheckbox.find('.checkbox-object').clone(true);
+						clone.find('.delete-option').click(function() {
+						
+							$(this).parent().detach();
+						})
 						$(clone).insertBefore(parent.find('.add-checkbox'));/**/
 					})
 					
@@ -88,8 +94,17 @@ $(document).ready(function() {
 						$(cloneRadio).find('#add-radio').click(function() {
 						
 						var parent = $(this).parent();
-						var clone = parent.find('.radio-object').first().clone(true);
+						
+						console.log('cloning: ', globalRadio.find('.radio-object'));
+						var clone = globalRadio.find('.radio-object').clone(true);
+						//var clone = parent.find('.radio-object').first().clone(true);
+						
+						clone.find('.delete-option').click(function() {
+						
+							$(this).parent().detach();
+						})
 						$(clone).insertBefore(parent.find('#add-radio'));
+						
 					})
 					
 					$(cloneRadio).find('.delete-option').click(function() {
@@ -150,7 +165,13 @@ $(document).ready(function() {
 				$(cloneBox).find('.add-checkbox').click(function() {
 					console.log('cb button clicked', this);
 					var parent = $(this).parent();
-					var clone = parent.find('.checkbox-object').first().clone(true);
+					//var clone = parent.find('.checkbox-object').first().clone(true);
+					var clone = globalCheckbox.find('.checkbox-object').clone(true);
+					
+					clone.find('.delete-option').click(function() {
+						
+						$(this).parent().detach();
+					})
 					$(clone).insertBefore(parent.find('.add-checkbox'));/**/
 				})
 				
@@ -170,7 +191,13 @@ $(document).ready(function() {
 				$(cloneRadio).find('#add-radio').click(function() {
 					console.log('button clicked', this);
 					var parent = $(this).parent();
-					var clone = parent.find('.radio-object').first().clone(true);
+					//var clone = parent.find('.radio-object').first().clone(true);
+					var clone = globalRadio.find('.radio-object').clone(true);
+					
+					clone.find('.delete-option').click(function() {
+						
+						$(this).parent().detach();
+					})
 					$(clone).insertBefore(parent.find('#add-radio'));
 				})
 				
