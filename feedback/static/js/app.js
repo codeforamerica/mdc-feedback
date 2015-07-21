@@ -24,7 +24,7 @@ $(document).ready(function() {
 	})
 	
 	//oh god so messy, but need to be sure first Q has listeners
-	$('#choose-answer-type').on('change', function() {
+	$('.choose-answer-type').on('change', function() {
 		
 			var answerType = this.value;
 			
@@ -32,7 +32,7 @@ $(document).ready(function() {
 				
 				//console.log('checkboxes added');	
 				var cloneBox = globalCheckbox.clone(true);
-					cloneBox.appendTo($('#answerType'));
+					cloneBox.appendTo($('.answerType'));
 					
 				$(cloneBox).find('.add-checkbox').click(function() {
 					
@@ -46,7 +46,7 @@ $(document).ready(function() {
 				
 				//console.log('radio buttons added');
 				var cloneRadio = globalRadio.clone(true);
-					cloneRadio.appendTo($('#answerType'));
+					cloneRadio.appendTo($('.answerType'));
 					
 					$(cloneRadio).find('#add-radio').click(function() {
 					
@@ -59,8 +59,8 @@ $(document).ready(function() {
 		});
 	
 	var globalQuestion = $('.survey-question').clone(true);
-	var globalRadio = $('#answer-types #radio-buttons').clone(true);
-	var globalCheckbox = $('#answer-types #checkboxes').clone(true);
+	var globalRadio = $('.answer-types .radio-buttons').clone(true);
+	var globalCheckbox = $('.answer-types .checkboxes').clone(true);
 	
 	//console.log("GLOBALS:", globalRadio, globalCheckbox);
 	
@@ -91,7 +91,7 @@ $(document).ready(function() {
 			
 		})
 		
-		$(thisQ).find('#choose-answer-type').on('change', function() {
+		$(thisQ).find('.choose-answer-type').on('change', function() {
 		
 			var answerType = this.value;
 			
@@ -100,7 +100,7 @@ $(document).ready(function() {
 				console.log('checkboxes added');	
 				
 				var cloneBox = globalCheckbox.clone(true);
-				cloneBox.appendTo($(thisQ).find('#answerType'));
+				cloneBox.appendTo($(thisQ).find('.answerType'));
 			
 				$(cloneBox).find('.add-checkbox').click(function() {
 					console.log('cb button clicked', this);
@@ -114,7 +114,7 @@ $(document).ready(function() {
 				
 				console.log('radio buttons added');
 				var cloneRadio = globalRadio.clone(true);
-				cloneRadio.appendTo($(thisQ).find('#answerType'));
+				cloneRadio.appendTo($(thisQ).find('.answerType'));
 			
 				$(cloneRadio).find('#add-radio').click(function() {
 					console.log('button clicked', this);
