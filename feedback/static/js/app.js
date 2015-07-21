@@ -2,9 +2,14 @@ $(document).ready(function() {
 	
 	console.log('hello world');
 	
-	/************************* ADMIN PANELS *************************/
+	/************************* SURVEY BUILDER *************************/
+	
+	var globalQuestion = $('.survey-question').clone(true);
+	var globalRadio = $('.answer-types .radio-buttons').clone(true);
+	var globalCheckbox = $('.answer-types .checkboxes').clone(true);
 	
 	var questionInt = 0;	//how many questions do we have? begin at 0.
+	var displayQuestionInt = 0; 	//tracks # of questions displayed with respect to those added and deleted.
 	
 	//init interface: add click actions; store question HTML as a variable
 	//delete a question from the survey builder
@@ -118,9 +123,7 @@ $(document).ready(function() {
 	
 		});
 	
-	var globalQuestion = $('.survey-question').clone(true);
-	var globalRadio = $('.answer-types .radio-buttons').clone(true);
-	var globalCheckbox = $('.answer-types .checkboxes').clone(true);
+	
 	
 	//console.log("GLOBALS:", globalRadio, globalCheckbox);
 	
@@ -128,6 +131,7 @@ $(document).ready(function() {
 		
 		//increment the number of questions we have
 		questionInt++;	
+		displayQuestionInt ++;
 		
 		console.log("GLOBAL: ", globalQuestion);
 		
@@ -136,7 +140,7 @@ $(document).ready(function() {
 		console.log('thisq: ', thisQ);
 		
 		//modify question text
-		$(thisQ).find('.identifier').text(questionInt + 1);
+		$(thisQ).find('.identifier').text(displayQuestionInt + 1);
 		
 		//replace delete button's ID with the same unique identifier as its parent Q
 		$(thisQ).find('.delete').attr('id', questionInt.toString());
@@ -218,9 +222,27 @@ $(document).ready(function() {
 	function destroyQuestion(id) {
 		
 		console.log('destroy question: ', id, '.survey-question#' + id)
+		displayQuestionInt--;
 		$('.survey-question#' + id).detach();
+		
+		updateQuestionNumbering();
 	}
 	
+	function updateQuestionNumbering() {
+		
+		console.log('we currently have ', displayQuestionInt, 'questions.');
+		var i = 0;
+		$('.survey-question').each(function() {
+			
+			console.log('finding question: ', this);
+			$(this).find('.identifier').text(i + 1);
+			
+			if(i < displayQuestionInt) {
+				
+				i++;
+			}
+		})
+	}
 	//checkboxes & radio buttons +1s
 	$('#add-radio').click(function() {
 		console.log('button clicked', this);
