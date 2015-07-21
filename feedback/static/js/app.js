@@ -33,13 +33,13 @@ $(document).ready(function() {
 				//look to be sure we haven't already selected checkboxes/radio buttons
 				var atParent = $(this).parent();
 				
-				console.log(atParent.find('.radio-buttons')[0])
-				console.log(atParent.find('.checkboxes')[0])
+				//console.log(atParent.find('.radio-buttons')[0])
+				//console.log(atParent.find('.checkboxes')[0])
 				
 				//if we have rbuttons, remove them.
 				if(atParent.find('.radio-buttons')[0] != undefined) {
 					
-					console.log('we have radio buttons already')
+					//console.log('we have radio buttons already')
 					atParent.find('.radio-buttons').detach();
 				}
 				
@@ -56,6 +56,12 @@ $(document).ready(function() {
 						var clone = parent.find('.checkbox-object').first().clone(true);
 						$(clone).insertBefore(parent.find('.add-checkbox'));/**/
 					})
+					
+					$(cloneBox).find('.delete-option').click(function() {
+		
+						console.log('clicking delete');
+						$(this).parent().detach();
+					})
 				
 				}
 
@@ -68,7 +74,7 @@ $(document).ready(function() {
 				//if we have checkboxes, remove them.
 				if(atParent.find('.checkboxes')[0] != undefined) {
 					
-					console.log('we have checkboxes already')
+					//console.log('we have checkboxes already')
 					atParent.find('.checkboxes').detach();
 				}
 				
@@ -84,6 +90,12 @@ $(document).ready(function() {
 						var parent = $(this).parent();
 						var clone = parent.find('.radio-object').first().clone(true);
 						$(clone).insertBefore(parent.find('#add-radio'));
+					})
+					
+					$(cloneRadio).find('.delete-option').click(function() {
+		
+						console.log('clicking delete');
+						$(this).parent().detach();
 					})
 					
 				}
@@ -141,6 +153,12 @@ $(document).ready(function() {
 					var clone = parent.find('.checkbox-object').first().clone(true);
 					$(clone).insertBefore(parent.find('.add-checkbox'));/**/
 				})
+				
+				$(cloneBox).find('.delete-option').click(function() {
+		
+					console.log('clicking delete');
+					$(this).parent().detach();
+				})
 
 
 			} else if(answerType == 'radio') {
@@ -154,6 +172,12 @@ $(document).ready(function() {
 					var parent = $(this).parent();
 					var clone = parent.find('.radio-object').first().clone(true);
 					$(clone).insertBefore(parent.find('#add-radio'));
+				})
+				
+				$(cloneRadio).find('.delete-option').click(function() {
+		
+					console.log('clicking delete');
+					$(this).parent().detach();
 				})
 			}
 			
@@ -183,6 +207,11 @@ $(document).ready(function() {
 		var parent = $(this).parent();
 		var clone = parent.find('.checkbox-object').first().clone(true);
 		$(clone).insertBefore(parent.find('#add-checkbox'));/**/
+	})
+	
+	$('.delete-option').click(function() {
+		
+		$(this).parent().detach();
 	})
 	
 }) //close ready
