@@ -4,6 +4,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']

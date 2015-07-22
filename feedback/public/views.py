@@ -42,7 +42,7 @@ def logout():
         return 'OK'
     else:
         flash('You are logged out.', 'info')
-        return redirect(url_for('public.home'))
+        return redirect('/')
 
 @blueprint.route('/auth', methods=['POST'])
 def auth():
@@ -104,7 +104,7 @@ def register():
                         password=form.password.data,
                         active=True)
         flash("Thank you for registering. You can now log in.", 'success')
-        return redirect(url_for('public.home'))
+        return redirect('/')
     else:
         flash_errors(form)
     return render_template('public/register.html', form=form)
@@ -114,11 +114,11 @@ def register():
 def about():
     form = LoginForm(request.form)
     return render_template("public/about.html", form=form)
-    
+
 @blueprint.route("/admin/")
 def admin():
     return render_template("public/admin.html")
-    
+
 @blueprint.route("/create-survey/")
 def create_survey():
     return render_template("public/create-survey.html")
