@@ -13,6 +13,7 @@ js = Bundle(
     "libs/jQuery/dist/jquery.js",
     "libs/bootstrap/dist/js/bootstrap.js",
     "js/plugins.js",
+    "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js",
     filters='jsmin',
     output="public/js/common.js"
 )
