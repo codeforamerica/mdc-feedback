@@ -8,6 +8,7 @@ from feedback.extensions import (
     db,
     login_manager,
     migrate,
+    debug_toolbar,
     cache
 )
 # from feedback.utils import thispage
@@ -32,11 +33,7 @@ def register_extensions(app):
     migrate.init_app(app, db)
     assets.init_app(app)
     cache.init_app(app)
-
-    '''
-    bcrypt.init_app(app)
     debug_toolbar.init_app(app)
-    '''
     return None
 
 def register_blueprints(app):

@@ -18,5 +18,5 @@ migrate = Migrate()
 from flask_cache import Cache
 cache = Cache()
 
-# from flask_debugtoolbar import DebugToolbarExtension
-# debug_toolbar = DebugToolbarExtension()
+from flask_debugtoolbar import DebugToolbarExtension
+debug_toolbar = DebugToolbarExtension()
