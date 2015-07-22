@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='libs/font-awesome4/css/font-awesome.min.css') }}">
-  
+
   {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
   {% endassets %}
@@ -52,7 +52,7 @@
       </ul>
 
     </div>
-    
+
       {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
       <div class="row">
@@ -69,7 +69,7 @@
       {% endwith %}
 
     {% block content %}{% endblock %}
-    
+
 
 </div><!-- end container -->
 
@@ -78,7 +78,7 @@
 <!-- JavaScript at the bottom for fast page loading -->
 <!-- Grab Google CDN's jQuery. -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	
+
 {% assets "js_all" %}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {% endassets %}
@@ -92,6 +92,9 @@ var currentUser = null;
 {% else %}
 var currentUser = {{current_user.email|tojson|safe}};
 {% endif %}
+{% with json_obj=json_obj  %}
+var jsontest = {{ json_obj.test|safe }};
+{% endwith %}
 navigator.id.watch({
   loggedInUser: currentUser,
   onlogin: function(assertion) {
