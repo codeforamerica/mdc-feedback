@@ -3,6 +3,7 @@ import os
 class Config(object):
     DEBUG = False
     TESTING = False
+    DEBUG_TB_ENABLED = False  # Disable Debug toolbar
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
@@ -26,6 +27,7 @@ class DevelopmentConfig(Config):
     ENV = 'dev'
     DEVELOPMENT = True
     DEBUG = True
+    DEBUG_TB_ENABLED = True
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
 
 
