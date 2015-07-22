@@ -18,6 +18,7 @@ blueprint = Blueprint(
     static_folder="../static"
 )
 
+json_obj = {}
 stats = {}
 total = 0.0
 sms_total = 0.0
@@ -98,7 +99,7 @@ stats['web_es'] = web_es
 stats['sms_en'] = sms_en
 stats['sms_es'] = sms_es
 
-json_obj = {
+sample_graph = {
   "datetime": {
     "data": [
       "2014-01",
@@ -122,8 +123,8 @@ json_obj = {
     }
   ]
 }
-print(json.dumps(json_obj))
-json_obj['test'] = json.dumps(json_obj)
+
+json_obj['test'] = json.dumps(sample_graph)
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
