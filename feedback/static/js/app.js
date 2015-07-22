@@ -123,13 +123,20 @@ $(document).ready(function() {
 	
 		});
 		
-	$('.survey-question').draggable({
-		
-		/*containment:'#survey-questions',
-		cursor: 'move',
-		handle: '.dragger'*/
-		
-	});
+	$('#survey-questions').sortable({
+			axis: "y",
+			revert: true,
+			cursor: 'pointer',
+			items: "> li",
+			tolerance: "intersect",
+			placeholder: "sortable-placeholder",
+			distance: 50,
+			stop: function(event, item) {
+				
+				console.log("dragging stopped", item.item.attr('id'));
+				updateQuestionNumbering();
+			}
+		});
 	
 	//console.log("GLOBALS:", globalRadio, globalCheckbox);
 	
@@ -222,7 +229,8 @@ $(document).ready(function() {
 		
 	
 		});
-
+		
+		
 	}
 		
 	function destroyQuestion(id) {

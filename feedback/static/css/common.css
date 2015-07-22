@@ -999,6 +999,17 @@ section:last-child {
 	background-color:grey;
 }
 
+
+/* SURVEY BUILDER */
+
+.survey-question {
+	
+	height:auto;
+	overflow: auto;
+	border:1px solid grey;
+	background-color:white;
+}
+
 .delete-option,
 .delete {
 	
@@ -1007,13 +1018,16 @@ section:last-child {
 	margin-left:5px;
 }
 
-/* SURVEY BUILDER */
 
-.survey-question {
+.sortable-placeholder {
 	
+	background-color:#e0e0e0;
+}
+
+.dragger img {
+	
+	width:40px;
 	height:auto;
-	overflow: auto;
-	border-bottom:1px solid grey;
 }
 
 /* DASHBOARD */
@@ -1030,6 +1044,8 @@ section:last-child {
 	
 	margin-left:0 !important;
 }
+
+
 
 /* NAV */
 
