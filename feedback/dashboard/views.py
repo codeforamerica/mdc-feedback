@@ -36,11 +36,11 @@ API_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
 API = API + API_KEY + '&completed=true&since=' + unix_time
 
 response = requests.get(API)
-json = response.json()
+json_result = response.json()
 
-web_completed_responses = int(json['stats']['responses']['showing'])
+web_completed_responses = int(json_result['stats']['responses']['showing'])
 
-for survey_response in json['responses']:
+for survey_response in json_result['responses']:
     # Go through each entry in responses, and pull out opinionscale_7205022 / opinionscale_8228843, whichever is not null. Convert to integer.
     try:
         ans = survey_response['answers']['opinionscale_7205022']
@@ -72,10 +72,10 @@ SMS_API = 'https://textit.in/api/v1/runs.json?flow_uuid=' + TEXTIT_UUID_ES + ','
 
 response2 = requests.get(SMS_API, headers={'Authorization': 'Token ' + SMS_KEY})
 
-json = response2.json()
-sms_total_responses = json['count']
+json_result = response2.json()
+sms_total_responses = json_result['count']
 
-obj_completed = [result for result in json['results'] if result['completed'] == True]
+obj_completed = [result for result in json_result['results'] if result['completed'] == True]
 sms_completed_responses = len(obj_completed)
 
 for obj in obj_completed:
@@ -98,10 +98,42 @@ stats['web_es'] = web_es
 stats['sms_en'] = sms_en
 stats['sms_es'] = sms_es
 
+json_obj = {
+  "datetime": {
+    "data": [
+      "2014-01",
+      "2014-02",
+      "2014-03",
+      "2014-04",
+      "2014-05",
+      "2014-06"
+    ]
+  },
+  "series": [
+    {
+      "data": [
+        71173,
+        57624,
+        64851,
+        60486,
+        60500,
+        62908
+      ]
+    }
+  ]
+}
+print(json.dumps(json_obj))
+json_obj['test'] = json.dumps(json_obj)
+
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
     today = datetime.date.today()
-    return render_template("public/home.html", date=today.strftime('%B %d, %Y'), stats=stats)
+    return render_template(
+                "public/home.html",
+                date=today.strftime('%B %d, %Y'),
+                stats=stats,
+                json_obj=json_obj
+            )
 
 @blueprint.route('/dashboard', methods=['GET', 'POST'])
 def survey_index():
