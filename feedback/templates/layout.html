@@ -94,12 +94,7 @@ var currentUser = {{current_user.email|tojson|safe}};
 {% endif %}
 {% if json_obj %}
 var jsontest = {{ json_obj.test|safe }};
-<<<<<<< HEAD
-{% endwith %}
-
-=======
 {% endif %}
->>>>>>> master
 navigator.id.watch({
   loggedInUser: currentUser,
   onlogin: function(assertion) {
