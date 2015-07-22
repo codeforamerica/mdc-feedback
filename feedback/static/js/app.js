@@ -122,7 +122,14 @@ $(document).ready(function() {
 			}
 	
 		});
-	$('.survey-question').draggable();
+		
+	$('.survey-question').draggable({
+		
+		/*containment:'#survey-questions',
+		cursor: 'move',
+		handle: '.dragger'*/
+		
+	});
 	
 	//console.log("GLOBALS:", globalRadio, globalCheckbox);
 	
