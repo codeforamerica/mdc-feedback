@@ -122,8 +122,7 @@ $(document).ready(function() {
 			}
 	
 		});
-	
-	
+	$('.survey-question').draggable();
 	
 	//console.log("GLOBALS:", globalRadio, globalCheckbox);
 	

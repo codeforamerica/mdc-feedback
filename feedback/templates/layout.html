@@ -95,6 +95,7 @@ var currentUser = {{current_user.email|tojson|safe}};
 {% with json_obj=json_obj  %}
 var jsontest = {{ json_obj.test|safe }};
 {% endwith %}
+
 navigator.id.watch({
   loggedInUser: currentUser,
   onlogin: function(assertion) {
