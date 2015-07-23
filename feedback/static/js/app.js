@@ -283,8 +283,13 @@ $(document).ready(function() {
 	// Get context with jQuery - using jQuery's .get() method.
 	var ctx = $("#myChart").get(0).getContext("2d");
 	
-	var jsondata = $("#jsondata")[0].childNodes[0].data;
+
+	var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
 	console.log(jsondata);
+	
+	var data = jsondata.series[0].data;
+	var datetime = jsondata.datetime.data;
+	console.log(data, datetime);
 
 	var data = {
 	    labels: ["January", "February", "March", "April", "May", "June", "July"],
