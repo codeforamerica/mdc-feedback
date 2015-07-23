@@ -249,6 +249,7 @@ $(document).ready(function() {
 		$('.survey-question').each(function() {
 			
 			console.log('finding question: ', this);
+			$(this).attr('id', i);
 			$(this).find('.identifier').text(i + 1);
 			
 			if(i < displayQuestionInt) {
