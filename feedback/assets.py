@@ -10,9 +10,9 @@ css = Bundle(
 )
 
 js = Bundle(
-    "libs/jQuery/dist/jquery.js",
     "libs/bootstrap/dist/js/bootstrap.js",
     "js/plugins.js",
+    
     filters='jsmin',
     output="public/js/common.js"
 )
@@ -26,7 +26,9 @@ css = Bundle(
 )
 
 js = Bundle(
-	"js/app.js"
+	"js/app.js",
+	"js/Chart.min.js",
+	output="public/js/common.js"
 )
 
 assets = Environment()
