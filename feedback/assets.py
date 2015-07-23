@@ -10,12 +10,17 @@ css = Bundle(
 )
 
 js = Bundle(
-    "libs/jQuery/dist/jquery.js",
     "libs/bootstrap/dist/js/bootstrap.js",
     "js/plugins.js",
+    
     filters='jsmin',
     output="public/js/common.js"
 )
+
+,
+	output="public/js/common.js"
+'''"js/Chart.min.js",'''
+
 '''
 
 css = Bundle(
@@ -26,6 +31,7 @@ css = Bundle(
 )
 
 js = Bundle(
+	
 	"js/app.js"
 )
 
