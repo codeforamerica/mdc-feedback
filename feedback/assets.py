@@ -16,6 +16,11 @@ js = Bundle(
     filters='jsmin',
     output="public/js/common.js"
 )
+
+,
+	output="public/js/common.js"
+'''"js/Chart.min.js",'''
+
 '''
 
 css = Bundle(
@@ -26,9 +31,8 @@ css = Bundle(
 )
 
 js = Bundle(
-	"js/app.js",
-	"js/Chart.min.js",
-	output="public/js/common.js"
+	
+	"js/app.js"
 )
 
 assets = Environment()

@@ -74,23 +74,33 @@
 </div><!-- end container -->
 
 {% include "footer.html" %}
-{% assets "js_all" %}
-    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{% endassets %}
-{% block js %}{% endblock %}
+
 <!-- FIXME: move jquery into a bower and use grunt -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script src="https://login.persona.org/include.js"></script>
-<script>
+<script type="text/javascript" src="static/js/Chart.js"></script>
+
+	
+{% assets "js_all" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+{% block js %}{% endblock %}
+
 {% if current_user.is_anonymous() or not current_user %}
 var currentUser = null;
 {% else %}
 var currentUser = {{current_user.email|tojson|safe}};
 {% endif %}
+
 {% if json_obj %}
-var jsontest = {{ json_obj.test|safe }};
+
+<script type="application/json" id='jsondata'>
+{{ json_obj.test|safe }}	
+</script>
+
 {% endif %}
+
 navigator.id.watch({
   loggedInUser: currentUser,
   onlogin: function(assertion) {
