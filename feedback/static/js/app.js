@@ -320,7 +320,8 @@ $(document).ready(function() {
 		},
 		path: 'static/images',
 		half: true,
-		readOnly:true
+		readOnly:true,
+		number:7
 	});
 	
 }) //close ready
