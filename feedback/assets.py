@@ -26,6 +26,7 @@ js = Bundle(
 css = Bundle(
     "css/normalize.css",
     "css/skeleton.css",
+    "css/jquery.raty.css",
     "css/style.css",
     output="public/css/common.css"
 )
