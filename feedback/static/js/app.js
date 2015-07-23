@@ -311,6 +311,17 @@ $(document).ready(function() {
 	var myLineChart = new Chart(ctx).Line(data);
 	
 	
+	/***************************** star ratings *****************************/
 	
+	$('#star-rating').raty({
+		score: function() {
+			console.log($(this).find('.huge').text(), 'is value')
+			return $(this).find('.huge').text();
+		},
+		path: 'static/images',
+		half: true,
+		readOnly:true,
+		number:7
+	});
 	
 }) //close ready
