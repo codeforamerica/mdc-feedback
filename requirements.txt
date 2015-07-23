@@ -12,12 +12,14 @@ Flask-Script==2.0.5
 Flask-SQLAlchemy==2.0
 Flask-Testing==0.4.2
 Flask-WTF==0.11
+funcsigs==0.4
 gnureadline==6.3.3
 gunicorn==19.3.0
 itsdangerous==0.24
 Jinja2==2.7.3
 Mako==1.0.1
 MarkupSafe==0.23
+mock==1.2.0
 pbr==1.2.0
 psycopg2==2.6
 requests==2.7.0
