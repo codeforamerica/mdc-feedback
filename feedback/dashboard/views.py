@@ -99,6 +99,37 @@ stats['web_es'] = web_es
 stats['sms_en'] = sms_en
 stats['sms_es'] = sms_es
 
+dashboard_obj = [
+    {
+        "id": "foo",
+        "data": {
+            "rating": 0
+        }
+    },
+    {
+        "id": "foo",
+        "data": {
+            "web_en": 0,
+            "web_es": 0,
+            "sms_en": 0,
+            "sms_es": 0
+        }
+    },
+    {
+        "id": "graph",
+        "data": {
+            "surveys_submitted": 0,
+            "datetime": {
+                "data": [ "2014-01", "2014-02", "2014-03", "2014-04", "2014-05", "2014-06" ]
+            },
+            "series": {
+                "data": [ 71173, 57624, 64851, 60486, 60500, 62908 ]
+            }
+        }
+    }
+]
+
+
 sample_graph = {
   "datetime": {
     "data": [
