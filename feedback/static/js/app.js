@@ -225,9 +225,6 @@ $(document).ready(function() {
 				})
 			}
 			
-			
-		
-	
 		});
 		
 		
@@ -249,6 +246,8 @@ $(document).ready(function() {
 		$('.survey-question').each(function() {
 			
 			console.log('finding question: ', this);
+			$(this).attr('id', i);
+			$(this).find('.delete').attr('id', i)
 			$(this).find('.identifier').text(i + 1);
 			
 			if(i < displayQuestionInt) {
@@ -282,7 +281,6 @@ $(document).ready(function() {
 	
 	// Get context with jQuery - using jQuery's .get() method.
 	var ctx = $("#myChart").get(0).getContext("2d");
-	
 
 	var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
 	console.log(jsondata);

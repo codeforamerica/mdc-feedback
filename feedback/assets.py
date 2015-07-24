@@ -19,7 +19,7 @@ js = Bundle(
 
 ,
 	output="public/js/common.js"
-'''"js/Chart.min.js",'''
+
 
 '''
 

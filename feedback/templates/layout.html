@@ -91,18 +91,20 @@
 {% endassets %}
 {% block js %}{% endblock %}
 
+{% if json_obj %}
+<script type="application/json" id="jsondata">
+
+{{ json_obj.test|safe }}	
+
+</script>
+{% endif %}
+
+<script type='text/javascript'>
+	
 {% if current_user.is_anonymous() or not current_user %}
 var currentUser = null;
 {% else %}
 var currentUser = {{current_user.email|tojson|safe}};
-{% endif %}
-
-{% if json_obj %}
-
-<script type="application/json" id='jsondata'>
-{{ json_obj.test|safe }}	
-</script>
-
 {% endif %}
 
 navigator.id.watch({
