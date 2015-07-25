@@ -11,7 +11,7 @@ except ImportError:
 
 from flask import (
     Blueprint, request, render_template, flash, url_for,
-    current_app, redirect, session
+    current_app, abort, redirect, session
 )
 
 from flask.ext.login import current_user, login_user, login_required, logout_user
@@ -29,12 +29,12 @@ def load_user(id):
     return User.query.filter_by(email=id).first()
 
 
-@blueprint.route('/login/', methods=['GET'])
+@blueprint.route('/login', methods=['GET'])
 def login():
     return render_template("user/login.html", current_user=current_user)
 
 
-@blueprint.route('/logout/', methods=['GET', 'POST'])
+@blueprint.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     logout_user()
