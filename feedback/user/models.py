@@ -2,9 +2,9 @@
 import datetime as dt
 
 from flask_login import UserMixin
-from feedback.database import db
+from feedback.database import Column, Model, db
 
-class User(db.Model, UserMixin):
+class User(Model, UserMixin):
     __tablename__ = 'user'
 
     email = db.Column(db.String(80), primary_key=True, nullable=False, index=True)
