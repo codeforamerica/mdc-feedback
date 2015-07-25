@@ -42,7 +42,7 @@ def logout():
         return 'OK'
     else:
         flash('You are logged out.', 'info')
-        return redirect('/')
+        return render_template('user/logout.html')
 
 @blueprint.route('/auth', methods=['POST'])
 def auth():
@@ -58,7 +58,7 @@ def auth():
 
     response = json.loads(urllib2.urlopen(req).read())
     if response.get('status') != 'okay':
-        print('REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
+        current_app.logger.debug('REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
         abort(403)
 
     next_url = request.args.get('next', None)
@@ -71,28 +71,21 @@ def auth():
         login_user(user)
         flash('Logged in successfully!', 'alert-success')
 
-        print('LOGIN: User {} logged in successfully'.format(user.email))
+        current_app.logger.debug('LOGIN: User {} logged in successfully'.format(user.email))
         return next_url if next_url else '/'
-    else:
+
+    # FIXME - originally domain == current_app.config.get('CITY_DOMAIN'):
+    elif domain is not None:
         user = User.create(email=email)
         login_user(user)
 
-        print('NEWUSER: New User {} successfully created'.format(user.email))
-        return '/users/profile'
-
-    # FIXME - unhook this, set CITY_DOMAIN to miamidade.gov
-    '''
-    elif domain == current_app.config.get('CITY_DOMAIN'):
-        user = User.create(email=email)
-        login_user(user)
-
-        print('NEWUSER: New User {} successfully created'.format(user.email))
+        current_app.logger.debug('NEWUSER: New User {} successfully created'.format(user.email))
         return '/users/profile'
 
     else:
-        print('NOTINDB: User {} not in DB -- aborting!'.format(email))
+        current_app.logger.debug('NOTINDB: User {} not in DB -- aborting!'.format(email))
         abort(403)
-    '''
+
 
 
 @blueprint.route("/register/", methods=['GET', 'POST'])

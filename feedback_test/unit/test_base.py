@@ -48,9 +48,9 @@ class BaseTestCase(TestCase):
         mock_open.read.side_effect = ['{"status": "okay", "email": "' + _email + '"}']
         urlopen.return_value = mock_open
 
-        self.client.post('/public/auth', data=dict(
+        self.client.post('/auth', data=dict(
             assertion='test'
         ))
 
     def logout_user(self):
-        self.client.post('/public/logout')
+        self.client.post('/logout')

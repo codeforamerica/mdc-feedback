@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """The app module, containing the app factory function."""
+import logging
+
 from flask import Flask, render_template
 
 from feedback.settings import ProductionConfig, DevelopmentConfig
@@ -25,6 +27,38 @@ def create_app(config_object=ProductionConfig):
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
+
+    @app.before_first_request
+    def before_first_request():
+        if app.debug and not app.testing:
+            # log to console for dev
+            app.logger.setLevel(logging.DEBUG)
+        elif app.testing:
+            # disable logging output
+            app.logger.setLevel(logging.CRITICAL)
+        else:
+            # for heroku, just send everything to the console (instead of a file)
+            # and it will forward automatically to the logging service
+
+            stdout = logging.StreamHandler(sys.stdout)
+            stdout.setFormatter(logging.Formatter(
+                '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'
+            ))
+            app.logger.addHandler(stdout)
+            app.logger.setLevel(logging.DEBUG)
+
+            # log to a file. this is commented out for heroku deploy, but kept
+            # in case we need it later
+
+            # file_handler = logging.handlers.RotatingFileHandler(log_file(app), 'a', 10000000, 10)
+            # file_handler.setFormatter(logging.Formatter(
+            #     '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s')
+            # )
+            # app.logger.addHandler(file_handler)
+            # app.logger.setLevel(logging.DEBUG)
+
+        app.logger.info("app config before_first_request: %s", app.config)
+
     return app
 
 def register_extensions(app):
@@ -47,6 +81,8 @@ def register_errorhandlers(app):
     def render_error(error):
         # If a HTTPException, pull the `code` attribute; default to 500
         error_code = getattr(error, 'code', 500)
+
+        # app.logger.exception(error)
 
         return render_template("{0}.html".format(error_code))
 
