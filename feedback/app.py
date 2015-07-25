@@ -28,6 +28,7 @@ def create_app(config_object=ProductionConfig):
     register_blueprints(app)
     register_errorhandlers(app)
 
+    '''
     @app.before_first_request
     def before_first_request():
         if app.debug and not app.testing:
@@ -58,6 +59,7 @@ def create_app(config_object=ProductionConfig):
             # app.logger.setLevel(logging.DEBUG)
 
         app.logger.info("app config before_first_request: %s", app.config)
+        '''
 
     return app
 
