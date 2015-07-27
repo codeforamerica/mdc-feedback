@@ -21,21 +21,44 @@
 			<h1>What would you like to ask your community?</h1>
 						
 		</section>
-		
+		 
 		<!-- hacky! -->
-		<div id='' class='answer-types row twelve columns'>
+		<div id='' class='answer-types row twelve columns hidden'>
 			
-			<div class='checkboxes'>
-				<div class='checkbox-object'><input type='checkbox' name='checkbox'><input type='text' value='Choose a label'><span class='delete-option button'>X</span></div>
-				<span class='button add-checkbox' id='add-checkbox'>Add another option</span>
+			<div class='checkboxes row'>
+				
+				<div class='twelve columns'>
+					<div class='checkbox-object six columns en'>
+						<input type='checkbox' name='checkbox'><input type='text' value='Choose a label'>
+					</div>
+					
+					<div class='checkbox-object six columns es'>
+						<input type='checkbox' name='checkbox'><input type='text' value='Choose a label'><span class='delete-option button'>X</span>
+						
+					</div>
+				</div>
+				
+				<div class='twelve columns'>
+					<span class='button add-checkbox' id='add-checkbox'>Add another option</span>
+				</div>
 			</div>
-			<div class='radio-buttons'>
-				<div class='radio-object'><input type='radio' name='radio'><input type='text' value='Choose a label'><span class='delete-option button'>X</span></div>
-				<span class='button' id='add-radio'>Add another option</span>
+			
+			
+			<div class='radio-buttons row twelve columns'>
+				<div class='radio-object six columns en'>
+					<input type='radio' name='radio'><input type='text' value='Choose a label'>
+				</div>
+
+				<div class='radio-object six columns es'>
+					<input type='radio' name='radio'><input type='text' value='Choose a label'><span class='delete-option button'>X</span>	
+				</div>
+				
+				<div class='twelve columns'>
+					<span class='button' id='add-radio'>Add another option</span>
+				</div>
 			</div>
 			
 		</div>
-		
 		
 		<section class='row twelve columns'>
 			
@@ -77,7 +100,6 @@
 							
 						</select>
 					</div>
-					
 					
 					
 				</div>
