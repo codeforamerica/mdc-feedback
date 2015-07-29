@@ -18,10 +18,10 @@
 
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
   <meta name="viewport" content="width=device-width">
-  
+
   <!-- favicon -->
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
-  
+
    <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
@@ -90,7 +90,7 @@
 <script type="text/javascript" src="static/js/Chart.min.js"></script>
 <script type="text/javascript" src="static/js/jquery.raty.js"></script>
 
-	
+
 {% assets "js_all" %}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {% endassets %}
@@ -99,13 +99,13 @@
 {% if json_obj %}
 <script type="application/json" id="jsondata">
 
-{{ json_obj.test|safe }}	
+{{ json_obj.test|safe }}
 
 </script>
 {% endif %}
 
 <script type='text/javascript'>
-	
+
 {% if current_user.is_anonymous() or not current_user %}
 var currentUser = null;
 {% else %}
@@ -138,7 +138,9 @@ navigator.id.watch({
     $.ajax({
       type: 'POST',
       url: '{{ url_for("public.logout") }}', // This is a URL on your website.
-      success: function(res, status, xhr) { window.location.reload(); },
+      success: function(res, status, xhr) {
+        window.location.href = '{{ url_for("public.logout") }}';
+      },
       error: function(xhr, status, err) { alert("Logout failure: " + err); }
     });
   }
