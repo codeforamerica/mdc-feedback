@@ -344,6 +344,10 @@ $(document).ready(function() {
 	$('#save-draft').click(function() {
 		
 		console.log('you saved a draft -- create an alert');
+		
+		var alert = "<div class='twelve columns'<p class='success'>Your survey has been saved as a draft. It has <span class='bold'>not</span> been published.</p></div>"
+		
+		$('#save-draft').parent().append(alert);
 	})
 	
 	$('#save-publish').click(function() {
