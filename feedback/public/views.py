@@ -115,3 +115,7 @@ def admin():
 @blueprint.route("/create-survey/")
 def create_survey():
     return render_template("public/create-survey.html")
+    
+@blueprint.route("/saved-survey/")
+def save_survey():
+    return render_template("public/saved-survey.html")

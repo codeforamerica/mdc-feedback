@@ -337,7 +337,20 @@ $(document).ready(function() {
 		number:7
 	});
 	
-}
+	}
+
+	/***************************** save surveys *****************************/
 	
+	$('#save-draft').click(function() {
+		
+		console.log('you saved a draft -- create an alert');
+	})
+	
+	$('#save-publish').click(function() {
+		
+		console.log("you've published a survey");
+		window.location.href='/saved-survey/';
+		
+	})
 	
 }) //close ready
