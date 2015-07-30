@@ -20,6 +20,8 @@ js = Bundle(
 ,
 	output="public/js/common.js"
 
+<script type="text/javascript" src="static/js/Chart.js"></script>
+<script type="text/javascript" src="static/js/jquery.raty.js"></script>
 
 '''
 
