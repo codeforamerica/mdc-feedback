@@ -2,6 +2,18 @@ $(document).ready(function() {
 	
 	console.log('hello world');
 	
+	/************************* ADMIN PANEL *************************/
+	
+	var deleteModal = $('[data-remodal-id=modal]').remodal();
+	
+	$('.delete-survey').click(function() {
+		
+		 deleteModal.open();
+		
+	})
+	
+	
+	
 	/************************* SURVEY BUILDER *************************/
 	
 	var globalQuestion = $('.survey-question').clone(true);

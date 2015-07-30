@@ -1,18 +1,15 @@
-<!doctype html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!DOCTYPE html>
+<html class='no-js' lang='en'>
+	<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+	<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+	<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+	<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+	<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	
 <head>
   <meta charset="utf-8">
 
-  <title>{% block page_title %}
-
-    Feedback
-
-    {% endblock %}
-  </title>
+  <title>{% block page_title %} Feedback{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}{% endblock %}">
   <meta name="author" content="{% block meta_author %}{% endblock %}">
 
@@ -32,7 +29,6 @@
     <link rel="stylesheet" href="{{ ASSET_URL }}">
   {% endassets %}
 
-  {% block css %}{% endblock %}
 
 </head>
 <body class="{% block body_class %}{% endblock %}">
@@ -41,24 +37,8 @@
 {% include "nav.html" %}
 {% endwith %}
 
-<div id='container' class="{% block content_class %}container-fluid{% endblock content_class %}">
+<div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
 
-    <div class="col-sm-3 col-md-2 sidebar hidden">
-      <ul class="nav nav-sidebar">
-        <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Reports</a></li>
-        <li><a href="#">Analytics</a></li>
-        <li><a href="#">Export</a></li>
-      </ul>
-      <ul class="nav nav-sidebar">
-        <li><a href="">Nav item</a></li>
-        <li><a href="">Nav item again</a></li>
-        <li><a href="">One more nav</a></li>
-        <li><a href="">Another nav item</a></li>
-        <li><a href="">More navigation</a></li>
-      </ul>
-
-    </div>
 
       {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -82,13 +62,17 @@
 
 {% include "footer.html" %}
 
+
+</body>
 <!-- FIXME: move jquery into a bower and use grunt -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script src="https://login.persona.org/include.js"></script>
 
+<script type="text/javascript" src="static/js/remodal.min.js"></script>
 <script type="text/javascript" src="static/js/Chart.min.js"></script>
 <script type="text/javascript" src="static/js/jquery.raty.js"></script>
+
+<script src="https://login.persona.org/include.js"></script>
 
 
 {% assets "js_all" %}
@@ -105,7 +89,7 @@
 {% endif %}
 
 <script type='text/javascript'>
-
+	
 {% if current_user.is_anonymous() or not current_user %}
 var currentUser = null;
 {% else %}
@@ -160,5 +144,4 @@ if (signoutLink) {
 </script>
 <!-- end scripts -->
 {% endblock %}
-</body>
 </html>

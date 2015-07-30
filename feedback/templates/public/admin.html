@@ -32,14 +32,26 @@
 						
 						<li><h4>Edit an existing survey:</h4></li>
 						
-						<li><span class='button secondary'>Survey 1</span> <span class='date'>Published on x/y/z'</span><span class='button delete'>Delete</span></li>
-						<li><span class='button secondary'>Survey 2</span> <span class='date'>Published on x/y/z'</span><span class='button delete'>Delete</span></li>
-						<li><span class='button secondary'>Survey 3</span> <span class='date'>Published on x/y/z'</span><span class='button delete'>Delete</span></li>
+						<li><span class='button secondary'>Survey 1</span> <span class='date'>Published on x/y/z'</span><a href="#modal" class='button delete-survey' id='0'>Delete</a></li>
+						<li><span class='button secondary'>Survey 2</span> <span class='date'>Published on x/y/z'</span><span class='button delete-survey' id='1'>Delete</span></li>
+						<li><span class='button secondary'>Survey 3</span> <span class='date'>Published on x/y/z'</span><span class='button delete-survey' id='2'>Delete</span></li>
 						
+						<!-- id should be replaced by a unique ID from the database? -->
 					</ul>
 
 			
 			</menu>
+		</div>
+		
+		<div class="remodal" data-remodal-id="modal">
+		  <button data-remodal-action="close" class="remodal-close"></button>
+		  <h1>Remodal</h1>
+		  <p>
+		    Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
+		  </p>
+		  <br>
+		  <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+		  <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
 		</div>
 	</div><!--!/#container -->
 	
