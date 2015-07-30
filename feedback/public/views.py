@@ -103,14 +103,14 @@ def register():
     return render_template('public/register.html', form=form)
 
 
-@blueprint.route("/admin/")
+@blueprint.route("/admin/",  methods=['GET'])
 def admin():
     return render_template("public/admin.html")
 
-@blueprint.route("/create-survey/")
+@blueprint.route("/create-survey/",  methods=['GET'])
 def create_survey():
     return render_template("public/create-survey.html")
     
-@blueprint.route("/saved-survey/")
+@blueprint.route("/saved-survey/",  methods=['GET'])
 def save_survey():
     return render_template("public/saved-survey.html")

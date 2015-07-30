@@ -23,8 +23,6 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
  <link href='http://fonts.googleapis.com/css?family=Raleway:400,600,300' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="{{ url_for('static', filename='libs/font-awesome4/css/font-awesome.min.css') }}">
-
   {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
   {% endassets %}
@@ -67,10 +65,10 @@
 <!-- FIXME: move jquery into a bower and use grunt -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/js/chart.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
+<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 
-<script type="text/javascript" src="static/js/remodal.min.js"></script>
-<script type="text/javascript" src="static/js/Chart.min.js"></script>
-<script type="text/javascript" src="static/js/jquery.raty.js"></script>
 
 <script src="https://login.persona.org/include.js"></script>
 

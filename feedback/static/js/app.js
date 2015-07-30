@@ -4,6 +4,13 @@ $(document).ready(function() {
 	
 	/************************* ADMIN PANEL *************************/
 	
+	window.REMODAL_GLOBALS = {
+  NAMESPACE: 'modal',
+  DEFAULTS: {
+    hashTracking: false
+  }
+};
+
 	var deleteModal = $('[data-remodal-id=modal]').remodal();
 	
 	$('.delete-survey').click(function() {
