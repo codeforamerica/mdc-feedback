@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 
+import pprint
+
 from flask import (
-    Blueprint, render_template
+    Blueprint, render_template, redirect,
+    url_for
 )
 
 from flask.ext.login import login_required
 
-from feedback.surveys.forms import SurveyForm
 
 from wtforms import fields
 
 from feedback.extensions import login_manager
 from feedback.surveys.models import Survey
+from feedback.surveys.forms import SurveyForm
 
 blueprint = Blueprint('surveys', __name__, url_prefix='/surveys', static_folder="../static")
 
@@ -41,9 +44,10 @@ def create():
 
     form = F()
 
-    # pprint (vars(form))
+    pprint.pprint (vars(form))
     if form.validate_on_submit():
 
+        print('validated form?')
         # Write survey metadata to survey database
         try:
             survey = Survey(
@@ -91,7 +95,7 @@ def create():
             errors.append("Unable to add to the database.")
 
         # Iterate on questions
-        return redirect('/surveys')
+        return redirect(url_for('surveys.survey_index'))
 
     return render_template("surveys/survey-form.html", action=action,
                            errors=errors, form=form, results=results)

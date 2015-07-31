@@ -15,7 +15,7 @@
 
         <h3>Title</h3>
 
-        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
         <div class="form-group">
           <label for="" class="col-sm-2 control-label">Title (English)</label>
           <div class="col-sm-10">
@@ -40,10 +40,50 @@
             {{ form.description_es(class_='form-control', placeholder='Description (Spanish)') }}
           </div>
         </div>
+        <h3>Questions</h3>
+
+      {% for question in form.questions %}
+        <h4>Question?</h4>
+      {% endfor %}
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+              Question 1
+              <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="panel-body">
+        <div class="form-group">
+          <label for="inputq1" class="col-sm-2 control-label">Question (English)</label>
+          <div class="col-sm-10">
+            {{ form.question_en(class_='form-control', placeholder='Question (English)') }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputText3" class="col-sm-2 control-label">Question (Spanish)</label>
+          <div class="col-sm-10">
+            {{ form.question_es(class_='form-control', placeholder='Question (Spanish)') }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputType1" class="col-sm-2 control-label">Type</label>
+          <div class="col-sm-10">
+            {{ form.question_type(class_='form-control') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Add another question</button>
+          </div>
+        </div>
+
+          </div>
+        </div>
 
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Save as Draft</button>
             <button type="submit" class="btn btn-primary">Publish Survey</button>
           </div>
         </div>
