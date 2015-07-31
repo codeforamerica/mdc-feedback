@@ -2,6 +2,38 @@ $(document).ready(function() {
 	
 	console.log('hello world');
 	
+	/************************* ADMIN PANEL *************************/
+	
+	window.REMODAL_GLOBALS = {
+	  NAMESPACE: 'modal',
+	  DEFAULTS: {
+	    hashTracking: false
+	  }
+	};
+
+	//init modal
+	var deleteModal = $('[data-remodal-id=modal]').remodal();
+	var deleteSurvey; 
+	
+	//click delete! get modal.
+	$('.delete-survey').click(function() {
+		
+		//console.log($(this).parent().attr('id'));	//eventually record this to delete from db
+		deleteSurvey = $(this).parent();
+		deleteModal.open();
+		
+	})
+	
+	//confirm delete, peace out, survey.
+	$('.remodal-confirm').click(function() {
+		
+		console.log('click confirm', deleteSurvey);
+		$(deleteSurvey).detach();
+		
+	})
+	
+	
+	
 	/************************* SURVEY BUILDER *************************/
 	
 	var globalQuestion = $('.survey-question').clone(true);
@@ -348,6 +380,9 @@ $(document).ready(function() {
 		var alert = "<div class='twelve columns'<p class='success'>Your survey has been saved as a draft. It has <span class='bold'>not</span> been published.</p></div>"
 		
 		$('#save-draft').parent().append(alert);
+		$('#save-draft').unbind('click');
+		$('#save-draft').addClass('inactive');
+		
 	})
 	
 	$('#save-publish').click(function() {

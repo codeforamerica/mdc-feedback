@@ -29,6 +29,8 @@ css = Bundle(
     "css/normalize.css",
     "css/skeleton.css",
     "css/jquery.raty.css",
+    "css/remodal.css",
+    "css/remodal-default-theme.css",
     "css/style.css",
     output="public/css/common.css"
 )
