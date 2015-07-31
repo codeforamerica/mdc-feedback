@@ -1497,6 +1497,33 @@ section:last-child {
 	width:150px;
 	height:auto;
 }
+
+
+#breadcrumb {
+	
+	margin-left:10%;
+}
+
+#breadcrumb-nav-parent {
+	
+	margin-right:10%;
+}
+
+.breadcrumb-nav:after {
+	
+	content: ' | ';
+	
+}
+
+.breadcrumb-nav:last-child:after {
+	
+	content: '';
+}
+
+.breadcrumb-empty {
+	
+	margin-left:20px;
+}
 /* -------------------------------------------- end sophia stuff -------------------------------------------- */
 
 

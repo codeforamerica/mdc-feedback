@@ -35,13 +35,8 @@
 {% include "nav.html" %}
 {% endwith %}
 
-
-
-<div class='row u-pull-left' id='breadcrumb'>
-
-	<ul class='list-nav'>
-					
-		{% if active_page == 'Dashboard' %} 
+<!-- nav active states -->
+{% if active_page == 'Dashboard' %} 
 			
 			{% set navigation_bar = [
 				('/admin/', 'Admin Panel'),
@@ -66,19 +61,32 @@
 									
 			] -%}
 		{% endif %}
-				
+
+
+<div class='row u-pull-left' id='breadcrumb'>
+
+	<ul class='list-nav'>
+						
 		<li class='breadcrumb-text'>You're looking at:</li>
-		<li id='breadcrumb-location'>{{ title }}</li>
+		<li id='breadcrumb-location' class='bold'>{{ title }}</li>
 		<li class='breadcrumb-empty'></li>
+		
+	</ul>
+
+</div>
+
+<div class='row u-pull-right' id='breadcrumb-nav-parent'>
+	
+	<ul>
+		
 		<li class='breadcrumb-text'>Go back to:</li>
 		
 		{% for href, id in navigation_bar %}
 		<li class='breadcrumb-nav'><a href='{{ href|e}}'>{{id|e}}</a></li>
 		{% endfor %}
 		
-		
 	</ul>
-
+	
 </div>
 
 
