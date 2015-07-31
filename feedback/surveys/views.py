@@ -4,7 +4,7 @@ import pprint
 
 from flask import (
     Blueprint, render_template, redirect,
-    url_for
+    url_for, flash
 )
 
 from flask.ext.login import login_required
@@ -13,6 +13,8 @@ from flask.ext.login import login_required
 from wtforms import fields
 
 from feedback.extensions import login_manager
+from feedback.utils import flash_errors
+
 from feedback.surveys.models import Survey
 from feedback.surveys.forms import SurveyForm
 
@@ -44,58 +46,16 @@ def create():
 
     form = F()
 
-    pprint.pprint (vars(form))
     if form.validate_on_submit():
-
-        print('validated form?')
-        # Write survey metadata to survey database
-        try:
-            survey = Survey(
-                title_en = form.title_en.data,
-                title_es = form.title_es.data,
-                description_en = form.description_en.data,
-                description_es = form.description_es.data
-            )
-
-            # Maybe it's something like
-            # begin loop
-            #   survey.questions.append(question)
-            # (Taken from http://techarena51.com/index.php/one-to-many-relationships-with-flask-sqlalchemy/)
-
-            db.session.add(survey)
-            db.session.flush()
-
-            question = Question(
-                question_en = form.question_en.data,
-                question_es = form.question_es.data,
-                question_type = form.question_type.data,
-                survey_id = survey.id
-            )
-            survey.questions.append(question)
-
-            '''
-            for field in form:
-                print field.name
-
-                # FIXME: This is totally wrong. This should be one iteration
-                if field.name.startswith("q"):
-                    print "attempting to write to question table"
-                    print form.question_en.data, form.question_es.data, form.question_type.data, survey.id
-                    question = Question(
-                        question_en = form.question_en.data,
-                        question_es = form.question_es.data,
-                        question_type = form.question_type.data,
-                        survey_id = survey.id
-                    )
-                    survey.questions.append(question)
-            '''
-
-            db.session.commit()
-        except:
-            errors.append("Unable to add to the database.")
-
-        # Iterate on questions
+        new_survey = Survey.create(
+                        title_en = form.title_en.data,
+                        title_es = form.title_es.data,
+                        description_en = form.description_en.data,
+                        description_es = form.description_es.data)
+        flash("New survey created", 'success')
         return redirect(url_for('surveys.survey_index'))
+    else:
+        flash_errors(form)
 
     return render_template("surveys/survey-form.html", action=action,
                            errors=errors, form=form, results=results)

@@ -14,12 +14,6 @@ class Survey(Model):
     description_es = Column(db.String(255))
     questions = db.relationship('Question', backref='survey')
 
-    def __init__(self, title_en, title_es, description_en, description_es):
-        self.title_en = title_en
-        self.title_es = title_es
-        self.description_en = description_en
-        self.description_es = description_es
-
     def __repr__(self):
         return '<Survey {0}: {1}>'.format(self.id, self.title_en)
 
