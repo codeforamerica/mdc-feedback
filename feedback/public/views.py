@@ -102,15 +102,14 @@ def register():
         flash_errors(form)
     return render_template('public/register.html', form=form)
 
-
 @blueprint.route("/admin/",  methods=['GET'])
 def admin():
-    return render_template("public/admin.html")
+    return render_template("public/admin.html", title='Admin')
 
 @blueprint.route("/create-survey/",  methods=['GET'])
 def create_survey():
-    return render_template("public/create-survey.html")
+    return render_template("public/create-survey.html", title='Survey Builder')
     
 @blueprint.route("/saved-survey/",  methods=['GET'])
 def save_survey():
-    return render_template("public/saved-survey.html")
+    return render_template("public/saved-survey.html", title='Survey Builder')

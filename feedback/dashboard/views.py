@@ -18,6 +18,7 @@ blueprint = Blueprint(
     static_folder="../static"
 )
 
+
 json_obj = {}
 stats = {}
 total = 0.0
@@ -136,7 +137,8 @@ def home():
                 "public/home.html",
                 date=today.strftime('%B %d, %Y'),
                 stats=stats,
-                json_obj=json_obj
+                json_obj=json_obj,
+                title='Dashboard'	#sophia added
             )
 
 @blueprint.route('/dashboard', methods=['GET', 'POST'])

@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>{% block page_title %} Feedback{% endblock %}</title>
+  <title>{% block page_title %}Feedback | {{request.endpoint }} {% endblock %}</title>
   <meta name="description" content="{% block meta_description %}{% endblock %}">
   <meta name="author" content="{% block meta_author %}{% endblock %}">
 
@@ -34,6 +34,53 @@
 {% with form=form  %}
 {% include "nav.html" %}
 {% endwith %}
+
+
+
+<div class='row u-pull-left' id='breadcrumb'>
+
+	<ul class='list-nav'>
+					
+		{% if active_page == 'Dashboard' %} 
+			
+			{% set navigation_bar = [
+				('/admin/', 'Admin Panel'),
+				('/create-survey/', 'Survey Builder')	
+			] -%}
+				
+		{% elif active_page == 'Survey Builder' %}
+		
+			{% set navigation_bar = [
+				
+				('/', 'Dashboard'),
+				('/admin/', 'Admin Panel')
+					
+			] -%}
+			
+		{% elif active_page == 'Admin' %}
+		
+			{% set navigation_bar = [
+				
+				('/', 'Dashboard'),
+				('/create-survey/', 'Survey Builder')
+									
+			] -%}
+		{% endif %}
+				
+		<li class='breadcrumb-text'>You're looking at:</li>
+		<li id='breadcrumb-location'>{{ title }}</li>
+		<li class='breadcrumb-empty'></li>
+		<li class='breadcrumb-text'>Go back to:</li>
+		
+		{% for href, id in navigation_bar %}
+		<li class='breadcrumb-nav'><a href='{{ href|e}}'>{{id|e}}</a></li>
+		{% endfor %}
+		
+		
+	</ul>
+
+</div>
+
 
 <div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
 
