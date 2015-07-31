@@ -2,6 +2,38 @@ $(document).ready(function() {
 	
 	console.log('hello world');
 	
+	/************************* ADMIN PANEL *************************/
+	
+	window.REMODAL_GLOBALS = {
+	  NAMESPACE: 'modal',
+	  DEFAULTS: {
+	    hashTracking: false
+	  }
+	};
+
+	//init modal
+	var deleteModal = $('[data-remodal-id=modal]').remodal();
+	var deleteSurvey; 
+	
+	//click delete! get modal.
+	$('.delete-survey').click(function() {
+		
+		//console.log($(this).parent().attr('id'));	//eventually record this to delete from db
+		deleteSurvey = $(this).parent();
+		deleteModal.open();
+		
+	})
+	
+	//confirm delete, peace out, survey.
+	$('.remodal-confirm').click(function() {
+		
+		console.log('click confirm', deleteSurvey);
+		$(deleteSurvey).detach();
+		
+	})
+	
+	
+	
 	/************************* SURVEY BUILDER *************************/
 	
 	var globalQuestion = $('.survey-question').clone(true);

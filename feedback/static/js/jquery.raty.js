@@ -9,7 +9,6 @@
  *
  */
 
-;
 (function($) {
   'use strict';
 
