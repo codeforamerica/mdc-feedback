@@ -187,7 +187,7 @@ $(document).ready(function() {
 		console.log("GLOBAL: ", globalQuestion);
 		
 		//create a new question, give it an ID, append to the right div
-		var thisQ = globalQuestion.clone().attr('id', questionInt.toString()).appendTo('#survey-questions');
+		var thisQ = globalQuestion.clone().attr('id', questionInt.toString()).insertBefore('#add-question-wrapper');
 		console.log('thisq: ', thisQ);
 		
 		//modify question text

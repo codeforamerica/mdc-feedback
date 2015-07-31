@@ -50,14 +50,15 @@
 		
 		<section class='row twelve columns'>
 			
-			<p>Choose your delivery methods:</p>
-			<input type="checkbox" name="typeform" value="Typeform"> Typeform (web survey)<br>
-			<input type="checkbox" name="textitin" value="TextItIn"> TextItIn (SMS survey)<br>
+			<p class='bold'>Choose how people will take your survey:</p>
+			<input type="checkbox" name="typeform" value="Typeform"> Create a survey for people to take online<br>
+			<input type="checkbox" name="textitin" value="TextItIn"> Create a survey for people to take via text message<br>
 			
 		</section>
 		
 		<section class='row twelve columns' id='survey-questions'>
 			
+			<h3>Build your survey questions.</h3>
 			<li class='survey-question' id='0'>
 				
 				<div class='two columns dragger'>
@@ -76,7 +77,7 @@
 				
 				<div class='row twelve columns'>
 					
-					<div class='two columns'>.</div>
+					<div class='two columns invisible'>.</div>
 					<div class='eight columns answerType' id=''>
 						
 						<p class='bold'>Answer type:</p>
@@ -93,7 +94,7 @@
 				</div>
 				
 				<div class='row'>
-					<div class='two columns'>.</div>
+					<div class='two columns invisible'>.</div>
 					<div class='one column'>
 							<span class='delete button' id='0'>Delete question</span>
 					</div>
@@ -101,11 +102,13 @@
 				
 			</li>
 			
+			<div id='add-question-wrapper' class=''><a class='button' id='add-question'>Add another question</a></div>
+			
 		</section>
 		
-		<section class='row'>
+		<section class='row' id='survey-nav'>
 			
-			<li><a class='button' id='add-question'>Add another question</a></li>
+			
 			<li><a class='button' id='save-draft'>Save a draft of this survey</a></li>
 			<li><a class='button' id='save-publish'>Save and publish this survey</a></li>
 			
