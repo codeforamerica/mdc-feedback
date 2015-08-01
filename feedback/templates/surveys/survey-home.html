@@ -20,7 +20,7 @@
 
   <menu id='admin-nav'>
 
-    <li><a href='{{ url_for('surveys.create') }}' class="button">Create a new survey</a></li>
+    <li><a href="{{ url_for('surveys.create') }}" class="button">Create a new survey</a></li>
 
     <ul id="survey-existing">
 
@@ -28,7 +28,9 @@
 
         {% for survey in surveys %}
         <li>
-          <a href="#" class='button secondary'>Survey {{ survey.id }}: {{ survey.title_en }}</a>
+          <a href="{{ url_for('surveys.survey_edit', survey_id=survey.id) }}" class='button secondary'>
+            Survey {{ survey.id }}: {{ survey.title_en }}
+          </a>
           <span class='date'>Published on x/y/z'</span>
           <span class='button delete'>Delete</span>
         </li>

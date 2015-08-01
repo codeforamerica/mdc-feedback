@@ -29,11 +29,6 @@ def survey_index():
 @blueprint.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
-    errors = []
-    results = {}
-    action = 'surveys.create'
-
-
     # For dynamic forms, class attributes must be set before any instantiation occurs.
     # you don't have to pass request.form to Flask-WTF; it will load automatically
 
@@ -43,7 +38,6 @@ def create():
     F.question_en = fields.TextField()
     F.question_es = fields.TextField()
     F.question_type = fields.SelectField(choices=[('short_text', 'Short Text')])
-
     form = F()
 
     if form.validate_on_submit():
@@ -57,10 +51,17 @@ def create():
     else:
         flash_errors(form)
 
-    return render_template("surveys/survey-form.html", action=action,
-                           errors=errors, form=form, results=results)
+    return render_template("surveys/survey-form.html", form=form)
 
-@blueprint.route('/<int:survey_id>/edit', methods=['POST'])
+@blueprint.route('/<int:survey_id>/edit', methods=['GET', 'POST'])
 @login_required
 def survey_edit(survey_id):
-    pass
+    survey = Survey.query.get_or_404(survey_id)
+    errors = []
+
+    class F(SurveyForm):
+        pass
+
+    form = F(obj=survey)
+    return render_template('surveys/survey-form.html', form=form)
+
