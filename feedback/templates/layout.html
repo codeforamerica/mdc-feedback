@@ -5,7 +5,7 @@
 	<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 	<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 	<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-	
+
 <head>
   <meta charset="utf-8">
 
@@ -63,12 +63,11 @@
 
 </body>
 <!-- FIXME: move jquery into a bower and use grunt -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/static/js/chart.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.raty.js"></script>
 <script type="text/javascript" src="/static/js/remodal.min.js"></script>
-
 
 <script src="https://login.persona.org/include.js"></script>
 
@@ -80,14 +79,12 @@
 
 {% if json_obj %}
 <script type="application/json" id="jsondata">
-
 {{ json_obj.test|safe }}
-
 </script>
 {% endif %}
 
 <script type='text/javascript'>
-	
+
 {% if current_user.is_anonymous() or not current_user %}
 var currentUser = null;
 {% else %}

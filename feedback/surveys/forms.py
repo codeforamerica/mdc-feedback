@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from flask_wtf import Form
 from wtforms import fields
 
@@ -13,6 +15,3 @@ class SurveyForm(Form):
     description_en = fields.TextField()
     description_es = fields.TextField()
 
-class ProfileForm(Form):
-    first_name = fields.TextField()
-    last_name = fields.TextField()

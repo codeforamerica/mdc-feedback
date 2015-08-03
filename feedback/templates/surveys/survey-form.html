@@ -1,0 +1,162 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{{ super() }}
+
+<div id="container">
+
+  <div class='row u-pull-left' id='breadcrumb'>
+
+    <ul class='list-nav'>
+
+      <li class='breadcrumb-text'>You're looking at:</li>
+      <li id='breadcrumb-location'>Survey Builder</li>
+      <li class='breadcrumb-empty'></li>
+      <li class='breadcrumb-text'>Go back to:</li>
+      <li id='breadcrumb-return'><a href='/admin'>User feedback admin panel</a></li>
+
+    </ul>
+  </div>
+
+  <section class='row twelve columns'>
+
+    <h1>What would you like to ask your community?</h1>
+
+  </section>
+
+  <form method="POST" class="form-horizontal" action="">
+
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      <label for="" class="col-sm-2 control-label">Title (English)</label>
+      <div class="col-sm-10">
+        {{ form.title_en(class_='form-control', placeholder='Title (English)') }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="" class="col-sm-2 control-label">Title (Spanish)</label>
+      <div class="col-sm-10">
+        {{ form.title_es(class_='form-control', placeholder='Title (Spanish)') }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="" class="col-sm-2 control-label">Description (English)</label>
+      <div class="col-sm-10">
+        {{ form.description_en(class_='form-control', placeholder='Description (English)') }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="" class="col-sm-2 control-label">Description (Spanish)</label>
+      <div class="col-sm-10">
+        {{ form.description_es(class_='form-control', placeholder='Description (Spanish)') }}
+      </div>
+    </div>
+
+    <!-- hacky! -->
+    <div id='' class='answer-types row twelve columns hidden'>
+
+      <div class='checkboxes row'>
+
+        <div class='twelve columns'>
+          <div class='checkbox-object six columns en'>
+            <input type='checkbox' name='checkbox'><input type='text' value='Choose a label'>
+          </div>
+
+          <div class='checkbox-object six columns es'>
+            <input type='checkbox' name='checkbox'><input type='text' value='Choose a label'><span class='delete-option button'>X</span>
+
+          </div>
+        </div>
+
+        <div class='twelve columns'>
+          <span class='button add-checkbox' id='add-checkbox'>Add another option</span>
+        </div>
+      </div>
+
+
+      <div class='radio-buttons row twelve columns'>
+        <div class='radio-object six columns en'>
+          <input type='radio' name='radio'><input type='text' value='Choose a label'>
+        </div>
+
+        <div class='radio-object six columns es'>
+          <input type='radio' name='radio'><input type='text' value='Choose a label'><span class='delete-option button'>X</span>
+        </div>
+
+        <div class='twelve columns'>
+          <span class='button' id='add-radio'>Add another option</span>
+        </div>
+      </div>
+
+    </div>
+
+    <section class='row twelve columns'>
+
+      <p>Choose your delivery methods:</p>
+      <input type="checkbox" name="typeform" value="Typeform"> Typeform (web survey)<br>
+      <input type="checkbox" name="textitin" value="TextItIn"> TextItIn (SMS survey)<br>
+
+    </section>
+
+    <section class='row twelve columns' id='survey-questions'>
+
+      <li class='survey-question' id='0'>
+
+        <div class='two columns dragger'>
+          <img src={{ url_for('static', filename='dragger.png') }}/>
+        </div>
+        <div class='five columns survey-question-english'>
+
+          <p class='bold'>Question <span class='identifier'>1</span> (EN):</p>
+          <input type='text' name='question-1' value='Ask away!'>
+        </div>
+
+        <div class='five columns survey-question-spanish'>
+          <p class='bold'>Question <span class='identifier'>1</span> (ES):</p>
+          <input type='text' name='question-1' value='Ask away!'>
+        </div>
+
+        <div class='row twelve columns'>
+
+          <div class='two columns'>.</div>
+          <div class='eight columns answerType' id=''>
+
+            <p class='bold'>Answer type:</p>
+            <select class='choose-answer-type'>
+              <option value='text'>Open-ended text</option>
+              <option value='checkboxes'>Multiple choice (checkboxes)</option>
+              <option value='radio'>Multiple choice (radio buttons)</option>
+              <option value='yesNo'>Yes/No</option>
+
+            </select>
+          </div>
+
+
+        </div>
+
+        <div class='row'>
+          <div class='two columns'>.</div>
+          <div class='one column'>
+              <span class='delete button' id='0'>Delete question</span>
+          </div>
+        </div>
+
+      </li>
+
+    </section>
+
+    <section class='row'>
+
+      <li><a class='button' id='add-question'>Add another question</a></li>
+      <li><a class='button' id='save-draft'>Save a draft of this survey</a></li>
+      <li><button type="submit" class='button' id='save-publish'>
+        Save and publish this survey</button>
+      </li>
+
+    </section>
+
+  </form>
+</div><!--!/#container -->
+
+{% endblock %}
