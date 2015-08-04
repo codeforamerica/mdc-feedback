@@ -11,7 +11,7 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    BROWSERID_URL = 'http://localhost:5000'
+    BROWSERID_URL = 'http://localhost:9000'
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
 
 
