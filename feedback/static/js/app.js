@@ -2,6 +2,38 @@ $(document).ready(function() {
 	
 	console.log('hello world');
 	
+	/************************* ADMIN PANEL *************************/
+	
+	window.REMODAL_GLOBALS = {
+	  NAMESPACE: 'modal',
+	  DEFAULTS: {
+	    hashTracking: false
+	  }
+	};
+
+	//init modal
+	var deleteModal = $('[data-remodal-id=modal]').remodal();
+	var deleteSurvey; 
+	
+	//click delete! get modal.
+	$('.delete-survey').click(function() {
+		
+		//console.log($(this).parent().attr('id'));	//eventually record this to delete from db
+		deleteSurvey = $(this).parent();
+		deleteModal.open();
+		
+	})
+	
+	//confirm delete, peace out, survey.
+	$('.remodal-confirm').click(function() {
+		
+		console.log('click confirm', deleteSurvey);
+		$(deleteSurvey).detach();
+		
+	})
+	
+	
+	
 	/************************* SURVEY BUILDER *************************/
 	
 	var globalQuestion = $('.survey-question').clone(true);
@@ -51,27 +83,33 @@ $(document).ready(function() {
 				//if we have don't have checkboxes, add them.
 				if(atParent.find('.checkboxes')[0] == undefined) {
 					
-					//console.log('checkboxes added');	
+					console.log('checkboxes added');	
+					
 					var cloneBox = globalCheckbox.clone(true);
 						cloneBox.appendTo($('.answerType'));
 						
-					$(cloneBox).find('.add-checkbox').click(function() {
+						console.log('clonebox: ', $(cloneBox).find('#add-checkbox'));
 						
-						var parent = $(this).parent();
+					$(cloneBox).find('#add-checkbox').click(function() {
+						
+						var parent = $(this).parent().parent();
 						//var clone = parent.find('.checkbox-object').first().clone(true);
-						//console.log('cloning: ', globalCheckbox.find('.checkbox-object'));
+						console.log('cloning: ', globalCheckbox.find('.checkbox-object'));
+						
 						var clone = globalCheckbox.find('.checkbox-object').clone(true);
+						
 						clone.find('.delete-option').click(function() {
 						
-							$(this).parent().detach();
+							$(this).parent().parent().detach();
 						})
-						$(clone).insertBefore(parent.find('.add-checkbox'));/**/
+						
+						$(clone).insertBefore(parent.find('.add-checkbox'));
 					})
 					
 					$(cloneBox).find('.delete-option').click(function() {
 		
-						console.log('clicking delete');
-						$(this).parent().detach();
+						console.log('clicking delete', $(this).parent().parent());
+						$(this).parent().parent().detach();
 					})
 				
 				}
@@ -98,7 +136,7 @@ $(document).ready(function() {
 						
 						$(cloneRadio).find('#add-radio').click(function() {
 						
-						var parent = $(this).parent();
+						var parent = $(this).parent().parent();
 						
 						console.log('cloning: ', globalRadio.find('.radio-object'));
 						var clone = globalRadio.find('.radio-object').clone(true);
@@ -106,7 +144,7 @@ $(document).ready(function() {
 						
 						clone.find('.delete-option').click(function() {
 						
-							$(this).parent().detach();
+							$(this).parent().parent().detach();
 						})
 						$(clone).insertBefore(parent.find('#add-radio'));
 						
@@ -115,7 +153,7 @@ $(document).ready(function() {
 					$(cloneRadio).find('.delete-option').click(function() {
 		
 						console.log('clicking delete');
-						$(this).parent().detach();
+						$(this).parent().parent().detach();
 					})
 					
 				}
@@ -177,8 +215,9 @@ $(document).ready(function() {
 				console.log('checkboxes added');	
 				
 				var cloneBox = globalCheckbox.clone(true);
+				
 				cloneBox.appendTo($(thisQ).find('.answerType'));
-			
+				
 				$(cloneBox).find('.add-checkbox').click(function() {
 					console.log('cb button clicked', this);
 					var parent = $(this).parent();
@@ -187,15 +226,17 @@ $(document).ready(function() {
 					
 					clone.find('.delete-option').click(function() {
 						
-						$(this).parent().detach();
+						$(this).parent().parent().detach();
 					})
-					$(clone).insertBefore(parent.find('.add-checkbox'));/**/
+					
+					$(clone).insertBefore(parent.find('.add-checkbox'));
+					
 				})
 				
 				$(cloneBox).find('.delete-option').click(function() {
 		
-					console.log('clicking delete');
-					$(this).parent().detach();
+					console.log('clicking delete', $(this).parent());
+					$(this).parent().parent().detach();
 				})
 
 
@@ -206,6 +247,7 @@ $(document).ready(function() {
 				cloneRadio.appendTo($(thisQ).find('.answerType'));
 			
 				$(cloneRadio).find('#add-radio').click(function() {
+					
 					console.log('button clicked', this);
 					var parent = $(this).parent();
 					//var clone = parent.find('.radio-object').first().clone(true);
@@ -213,7 +255,7 @@ $(document).ready(function() {
 					
 					clone.find('.delete-option').click(function() {
 						
-						$(this).parent().detach();
+						$(this).parent().parent().detach();
 					})
 					$(clone).insertBefore(parent.find('#add-radio'));
 				})
@@ -221,13 +263,10 @@ $(document).ready(function() {
 				$(cloneRadio).find('.delete-option').click(function() {
 		
 					console.log('clicking delete');
-					$(this).parent().detach();
+					$(this).parent().parent().detach();
 				})
 			}
 			
-			
-		
-	
 		});
 		
 		
@@ -249,6 +288,8 @@ $(document).ready(function() {
 		$('.survey-question').each(function() {
 			
 			console.log('finding question: ', this);
+			$(this).attr('id', i);
+			$(this).find('.delete').attr('id', i)
 			$(this).find('.identifier').text(i + 1);
 			
 			if(i < displayQuestionInt) {
@@ -266,8 +307,9 @@ $(document).ready(function() {
 	})
 		
 	$('#add-checkbox').click(function() {
+		
 		console.log('cb button clicked', this);
-		var parent = $(this).parent();
+		var parent = $(this).parent().parent();
 		var clone = parent.find('.checkbox-object').first().clone(true);
 		$(clone).insertBefore(parent.find('#add-checkbox'));/**/
 	})
@@ -275,6 +317,79 @@ $(document).ready(function() {
 	$('.delete-option').click(function() {
 		
 		$(this).parent().detach();
+	})
+	
+	
+	/***************************** CHARTS! *****************************/
+	
+	console.log("DASH: ", $('#dashboard')[0]);	
+	
+	if($("#dashboard")[0] != undefined) {
+		
+		// Get context with jQuery - using jQuery's .get() method.
+	var ctx = $("#myChart").get(0).getContext("2d");
+
+	var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
+	console.log(jsondata);
+	
+	var series = jsondata.series[0].data;
+	var datetime = jsondata.datetime.data;
+	console.log(series, datetime);
+
+	var data = {
+	    labels: datetime,
+	    datasets: [
+	        {
+	            label: "My First dataset",
+	            fillColor: "rgba(220,220,220,0.2)",
+	            strokeColor: "rgba(220,220,220,1)",
+	            pointColor: "rgba(220,220,220,1)",
+	            pointStrokeColor: "#fff",
+	            pointHighlightFill: "#fff",
+	            pointHighlightStroke: "rgba(220,220,220,1)",
+	            data: series
+	        }
+	        
+	    ]
+	};
+
+	var myLineChart = new Chart(ctx).Line(data);
+	
+	
+	/***************************** star ratings *****************************/
+	
+	$('#star-rating').raty({
+		score: function() {
+			console.log($(this).find('.huge').text(), 'is value')
+			return $(this).find('.huge').text();
+		},
+		path: 'static/images',
+		half: true,
+		readOnly:true,
+		number:7
+	});
+	
+	}
+
+	/***************************** save surveys *****************************/
+	
+	$('#save-draft').click(function() {
+		
+		console.log('you saved a draft -- create an alert');
+		
+		var alert = "<div class='twelve columns'<p class='success'>Your survey has been saved as a draft. It has <span class='bold'>not</span> been published.</p></div>"
+		
+		$('#save-draft').parent().append(alert);
+		$('#save-draft').unbind('click');
+		$('#save-draft').addClass('inactive');
+		
+	})
+	
+	$('#save-publish').click(function() {
+		
+		console.log("you've published a survey");
+		window.location.href='/saved-survey/';
+		
 	})
 	
 }) //close ready

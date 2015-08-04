@@ -90,7 +90,10 @@ for obj in obj_completed:
     opinion_node = [result for result in obj['values'] if result['node'] == '8b04d9e3-9bdb-4b1b-b258-aaa3c7062083']
     sms_total = sms_total + float(opinion_node[0]['value'])
 
-rating = (total + sms_total) / (web_completed_responses + sms_completed_responses)
+try:
+  rating = (total + sms_total) / (web_completed_responses + sms_completed_responses)
+except ZeroDivisionError:
+  rating = 0
 stats['rating'] = "{0:.2f}".format(rating)
 stats['new_reviews'] = web_completed_responses + sms_completed_responses
 

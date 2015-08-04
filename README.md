@@ -14,7 +14,7 @@ A lot of early development for this application was based on this tutorial, so a
 
 #### A note on VIM
 
-If you're not used to it see [VIM Adventures](http://vim-adventures.com/), because at least one of these steps requires using VIM. 
+If you're not used to it see [VIM Adventures](http://vim-adventures.com/), because at least one of these steps requires using VIM.
 
 #### Environmental variables
 
@@ -40,14 +40,14 @@ cd mdc-feedback
 pip install -r requirements.txt
 ```
 
-* Set up a new database (not using Postgres.app): 
+* Set up a new database (not using Postgres.app):
 
 ```
 createdb feedback_dev
 python app.py createdb
 ```
 
-* On Mac OSX, using Postgres.app, and working within psql: 
+* On Mac OSX, using Postgres.app, and working within psql:
 
 ```
 CREATE USER user PASSWORD 'password';
@@ -95,6 +95,22 @@ Deployment is typically on Heroku. Follow [this tutorial](https://devcenter.hero
 #### Project setup
 
 ### Tests
+
+In order to run the tests, you will need to create a test database. You can follow the same procedures outlined in the install section. By default, the database should be named purchasing_test:
+
+```
+psql
+create database feedback_test;
+```
+
+Tests are located in the feedback_test directory. To run the tests, run
+```
+PYTHONPATH=. nosetests feedback_test/
+```
+from inside the root directory. For more coverage information, run
+```
+PYTHONPATH=. nosetests feedback_test/ -v --with-coverage --cover-package=purchasing_test --cover-erase
+```
 
 ### Migrations
 Migrations are handled through [flask-migrate](https://github.com/miguelgrinberg/Flask-Migrate#flask-migrate)

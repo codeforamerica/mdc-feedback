@@ -11,7 +11,7 @@ except ImportError:
 
 from flask import (
     Blueprint, request, render_template, flash, url_for,
-    current_app, redirect, session
+    current_app, abort, redirect, session
 )
 
 from flask.ext.login import current_user, login_user, login_required, logout_user
@@ -29,12 +29,12 @@ def load_user(id):
     return User.query.filter_by(email=id).first()
 
 
-@blueprint.route('/login/', methods=['GET'])
+@blueprint.route('/login', methods=['GET'])
 def login():
     return render_template("user/login.html", current_user=current_user)
 
 
-@blueprint.route('/logout/', methods=['GET', 'POST'])
+@blueprint.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     logout_user()
@@ -42,7 +42,7 @@ def logout():
         return 'OK'
     else:
         flash('You are logged out.', 'info')
-        return redirect('/')
+        return render_template('user/logout.html')
 
 @blueprint.route('/auth', methods=['POST'])
 def auth():
@@ -58,7 +58,7 @@ def auth():
 
     response = json.loads(urllib2.urlopen(req).read())
     if response.get('status') != 'okay':
-        print('REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
+        current_app.logger.debug('REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
         abort(403)
 
     next_url = request.args.get('next', None)
@@ -71,28 +71,21 @@ def auth():
         login_user(user)
         flash('Logged in successfully!', 'alert-success')
 
-        print('LOGIN: User {} logged in successfully'.format(user.email))
+        current_app.logger.debug('LOGIN: User {} logged in successfully'.format(user.email))
         return next_url if next_url else '/'
-    else:
+
+    # FIXME - originally domain == current_app.config.get('CITY_DOMAIN'):
+    elif domain is not None:
         user = User.create(email=email)
         login_user(user)
 
-        print('NEWUSER: New User {} successfully created'.format(user.email))
-        return '/users/profile'
-
-    # FIXME - unhook this, set CITY_DOMAIN to miamidade.gov
-    '''
-    elif domain == current_app.config.get('CITY_DOMAIN'):
-        user = User.create(email=email)
-        login_user(user)
-
-        print('NEWUSER: New User {} successfully created'.format(user.email))
+        current_app.logger.debug('NEWUSER: New User {} successfully created'.format(user.email))
         return '/users/profile'
 
     else:
-        print('NOTINDB: User {} not in DB -- aborting!'.format(email))
+        current_app.logger.debug('NOTINDB: User {} not in DB -- aborting!'.format(email))
         abort(403)
-    '''
+
 
 
 @blueprint.route("/register/", methods=['GET', 'POST'])
@@ -110,15 +103,10 @@ def register():
     return render_template('public/register.html', form=form)
 
 
-@blueprint.route("/about/")
-def about():
-    form = LoginForm(request.form)
-    return render_template("public/about.html", form=form)
-
-@blueprint.route("/admin/")
+@blueprint.route("/admin/",  methods=['GET'])
 def admin():
     return render_template("public/admin.html")
 
-@blueprint.route("/create-survey/")
-def create_survey():
-    return render_template("public/create-survey.html")
+@blueprint.route("/saved-survey/",  methods=['GET'])
+def save_survey():
+    return render_template("public/saved-survey.html")

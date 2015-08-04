@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
 """The app module, containing the app factory function."""
-from flask import Flask, render_template
+
+from flask import Flask, render_template, redirect
 
 from feedback.settings import ProductionConfig, DevelopmentConfig
 from feedback.assets import assets
 from feedback.extensions import (
-    db,
-    login_manager,
-    migrate,
-    debug_toolbar,
+    db, login_manager,
+    migrate, debug_toolbar,
     cache
 )
 # from feedback.utils import thispage
 
-from feedback import public, user, dashboard
+from feedback import (
+    public, user,
+    dashboard, surveys
+)
+
+login_manager.login_view = "public.login"
 
 def create_app(config_object=ProductionConfig):
     """An application factory, as explained here:
@@ -40,6 +44,7 @@ def register_blueprints(app):
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(dashboard.views.blueprint)
+    app.register_blueprint(surveys.views.blueprint)
     # app.jinja_env.globals['thispage'] = thispage
     return None
 

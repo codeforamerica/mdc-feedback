@@ -2,7 +2,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class='row'>
+<div class='row' id='dashboard'>
 
 	<h3>Metrics from user surveys at the PIC</h3>
 
@@ -12,7 +12,8 @@
 		<p>Surveys Submitted - Last 7 Days</p>
 
 		<div class='image-container'>
-			<img src='http://placehold.it/590x300'>
+			<!--<img src='http://placehold.it/590x300'>-->
+			<canvas id='myChart'></canvas>
 		</div>
 
 		<a href=#>View Details</a>
@@ -31,7 +32,8 @@
 
 		<div class='six columns panel'>
 
-			<p class='huge'>{{ stats.rating }} out of 5 stars</p>
+			<div id='star-rating'><p class='huge'>{{ stats.rating }}</p></div>
+			
 			<p>Satisfaction Rating - Last 7 Days</p>
 			<a href=#>View Details</a>
 
