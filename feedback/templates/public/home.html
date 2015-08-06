@@ -1,4 +1,3 @@
-
 {% extends "layout.html" %}
 {% block content %}
 
@@ -7,49 +6,31 @@
 	<h3>Metrics from user surveys at the PIC</h3>
 
 	<div class='six columns panel'>
-
-		<p class='huge bold'>{{ stats.new_reviews }}</p>
-		<p>Surveys Submitted - Last 7 Days</p>
-
+		<p class='huge bold'>{{ dash_obj[0].data.new_reviews }}</p>
+		<p>{{ dash_obj[0].title }}</p>
 		<div class='image-container'>
-			<!--<img src='http://placehold.it/590x300'>-->
 			<canvas id='myChart'></canvas>
 		</div>
-
 		<a href=#>View Details</a>
-
 	</div>
 
 	<div class='six columns'>
 
-		<!-- div class='six columns panel'>
-
-			<p class='huge'>{{ stats.new_reviews }}</p>
-			<p>New Reviews - Last 7 Days</p>
-			<a href=#>View Details</a>
-
-		</div -->
-
 		<div class='six columns panel'>
-
-			<div id='star-rating'><p class='huge'>{{ stats.rating }}</p></div>
-			
-			<p>Satisfaction Rating - Last 7 Days</p>
+			<div id='star-rating'><p class='huge'>{{ dash_obj[1].data }}</p></div>
+			<p>{{ dash_obj[1].title }}</p>
 			<a href=#>View Details</a>
-
 		</div>
 
 		<div class='six columns panel'>
-
 			<ol>
-				<li>{{ stats.web_en }} - TYPEFORM (EN)</li>
-				<li>{{ stats.web_es }} - TYPEFORM (ES)</li>
-				<li>{{ stats.sms_en }}  - TEXTIT (EN)</li>
-				<li>{{ stats.sms_es }}  - TEXTIT (ES)</li>
+				<li>{{ dash_obj[2].data.web_en }} - TYPEFORM (EN)</li>
+				<li>{{ dash_obj[2].data.web_es }} - TYPEFORM (ES)</li>
+				<li>{{ dash_obj[2].data.sms_en }}  - TEXTIT (EN)</li>
+				<li>{{ dash_obj[2].data.sms_es }}  - TEXTIT (ES)</li>
 			</ol>
-			<p>Survey Type - Last 7 Days</p>
+			<p>{{ dash_obj[2].title }}</p>
 			<a href=#>View Details</a>
-
 		</div>
 
 	</div>
