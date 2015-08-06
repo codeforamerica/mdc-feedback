@@ -88,7 +88,10 @@ for obj in obj_completed:
     # filter for the node ID of the opinion scale,
     # which is 8b04d9e3-9bdb-4b1b-b258-aaa3c7062083
     opinion_node = [result for result in obj['values'] if result['node'] == '8b04d9e3-9bdb-4b1b-b258-aaa3c7062083']
-    sms_total = sms_total + float(opinion_node[0]['value'])
+    try:
+        sms_total = sms_total + float(opinion_node[0]['value'])
+    except IndexError:
+        pass
 
 try:
   rating = (total + sms_total) / (web_completed_responses + sms_completed_responses)
