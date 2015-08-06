@@ -50,7 +50,6 @@ for i in xrange(6, -1, -1):
     surveys_by_date[date_index] = 0
     surveys_date_array.append(date_index)
 
-print surveys_by_date
 # Get unix timestamp of a week ago
 timestamp = datetime.date.today() - datetime.timedelta(7)
 unix_time = timestamp.strftime("%s")
@@ -98,7 +97,6 @@ SMS_API = 'https://textit.in/api/v1/runs.json?flow_uuid=' + TEXTIT_UUID_ES + ','
 response2 = requests.get(SMS_API, headers={'Authorization': 'Token ' + TEXTIT_AUTH_KEY})
 
 json_result = response2.json()
-# print json_result
 sms_total_responses = json_result['count']
 
 obj_completed = [result for result in json_result['results'] if result['completed'] == True]
@@ -114,10 +112,6 @@ for obj in obj_completed:
 
     # http://stackoverflow.com/questions/4563272/how-to-convert-a-python-utc-datetime-to-a-local-datetime-using-only-python-stand
     date_object = utc_to_local(date_object)
-
-    # print ('entering date object local conversation')
-    # print (date_object)
-
     surveys_by_date[date_object.strftime("%m-%d")] += 1
 
     if obj['flow_uuid'] == TEXTIT_UUID_EN:
