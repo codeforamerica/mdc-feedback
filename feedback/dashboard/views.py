@@ -44,7 +44,7 @@ def utc_to_local(utc_dt):
     local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
     return local_tz.normalize(local_dt) # .normalize might be unnecessary
 
-for i in xrange(6, -1, -1):
+for i in range(6, -1, -1):
     time_i = (datetime.date.today() - datetime.timedelta(i))
     date_index = time_i.strftime("%m-%d")
     surveys_by_date[date_index] = 0
