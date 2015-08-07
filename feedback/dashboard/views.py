@@ -132,7 +132,7 @@ try:
 except ZeroDivisionError:
   rating = 0
 
-for i in xrange(6, -1, -1):
+for i in range(6, -1, -1):
     time_i = (datetime.date.today() - datetime.timedelta(i))
     date_index = time_i.strftime("%m-%d")
     surveys_value_array.append(surveys_by_date[date_index])
