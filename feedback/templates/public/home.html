@@ -24,13 +24,15 @@
 		</div>
 
 		<div class='six columns panel'>
-			<ol>
-				<li>{{ dash_obj[2].data.web_en }} - TYPEFORM (EN)</li>
-				<li>{{ dash_obj[2].data.web_es }} - TYPEFORM (ES)</li>
-				<li>{{ dash_obj[2].data.sms_en }}  - TEXTIT (EN)</li>
-				<li>{{ dash_obj[2].data.sms_es }}  - TEXTIT (ES)</li>
+			<ol class='hidden'>
+				<li id='typeform-en'>{{ dash_obj[2].data.web_en }}</li> <!-- - TYPEFORM (EN) -->
+				<li id='typeform-es'>{{ dash_obj[2].data.web_es }}</li> <!-- - TYPEFORM (ES) -->
+				<li id='textit-en'>{{ dash_obj[2].data.sms_en }}</li> <!-- - TEXTIT (EN) -->
+				<li id='textit-es'>{{ dash_obj[2].data.sms_es }}</li> <!-- - TEXTIT (ES) -->
 			</ol>
 			<p>{{ dash_obj[2].title }}</p>
+			
+			<canvas id='surveyChart'></canvas>
 			<a href=#>View Details</a>
 		</div>
 

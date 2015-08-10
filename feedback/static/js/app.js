@@ -326,7 +326,7 @@ $(document).ready(function() {
 	
 	if($("#dashboard")[0] != undefined) {
 		
-		// Get context with jQuery - using jQuery's .get() method.
+	// Get context with jQuery - using jQuery's .get() method.
 	var ctx = $("#myChart").get(0).getContext("2d");
 
 	var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
@@ -355,6 +355,44 @@ $(document).ready(function() {
 
 	var myLineChart = new Chart(ctx).Line(data);
 	
+	var	pctx = $("#surveyChart").get(0).getContext("2d");
+			
+	var tfE = $('#typeform-en').text();
+	var tfS = $('#typeform-es').text();
+	var ttE = $('#textit-en').text();
+	var ttS = $('#textit-es').text();
+
+	console.log("surveys", tfE, tfS, ttE, ttS);
+			
+	var pieData = [
+    {
+        value: tfE,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: "Typeform - English"
+    },
+    {
+        value: tfS,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: "Typeform - Spanish"
+    },
+    {
+        value: ttE,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: "TextItIn - English"
+    },
+    {
+	    	value: ttS,
+        color: "#000",
+        highlight: "#FFC870",
+        label: "TextItIn - Spanish"
+	    
+    }
+	]
+	
+			var myPieChart = new Chart(pctx).Pie(pieData);/**/
 	
 	/***************************** star ratings *****************************/
 	
