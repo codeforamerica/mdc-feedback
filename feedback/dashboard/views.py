@@ -20,6 +20,11 @@ blueprint = Blueprint(
     static_folder="../static"
 )
 
+TYPEFORM_API = 'https://api.typeform.com/v0/form/UYZYtI?key='
+TYPEFORM_API_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
+TEXTIT_UUID_EN = 'cd8cd1b5-ab4c-4c85-b623-9f28c56cc753'
+TEXTIT_UUID_ES = 'abc55a5c-2d4a-468f-ae76-a5a1e31865e0'
+TEXTIT_AUTH_KEY = '41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9'
 
 json_obj = {}
 stats = {}
@@ -176,9 +181,8 @@ def home():
                 date=today.strftime('%B %d, %Y'),
                 stats=stats,
                 json_obj=json_obj,
-
+                dash_obj=dashboard_obj,
                 title='Dashboard'	#sophia added
-
             )
 
 @blueprint.route('/dashboard', methods=['GET', 'POST'])
