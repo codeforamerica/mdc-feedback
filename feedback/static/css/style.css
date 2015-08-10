@@ -8,6 +8,11 @@
 /* SOPHIA STUFF */
 /* TYPOGRAPHY */
 
+h1 {
+	
+	margin-bottom:0;
+}
+
 .bold {
 	
 	font-weight:bold;
@@ -81,6 +86,12 @@ ul li {
 	display:none !important;
 }
 
+/* when you need it invisible but taking up space */
+.invisible {
+	
+	visibility:collapse;
+}
+
 #container {
 	
 	width:90%;
@@ -95,7 +106,6 @@ section {
 	margin-top:30px;
 	margin-bottom:30px;
 	padding-bottom:30px;
-	border-bottom:1px solid grey;
 	text-align: left;
 }
 
@@ -155,12 +165,45 @@ section:last-child {
 
 /* SURVEY BUILDER */
 
+#survey-questions {
+	
+	padding:20px;
+	border:1px solid #cccccc;
+	margin-top:0;
+	
+}
+
+#survey-questions h3 {
+	
+	width:100%;
+	background-color:#eeeeee;
+	padding:20px;
+	margin-left:-20px;
+	margin-top:-20px;
+	}
+	
 .survey-question {
 	
 	height:auto;
 	overflow: auto;
-	border:1px solid grey;
 	background-color:white;
+	
+}
+
+#add-question-wrapper {
+	
+	border-top:1px solid #cccccc;
+	padding-top:20px;
+	padding-bottom:0px;
+	margin-left:-20px;
+	margin-right:-20px;
+}
+
+#add-question {
+	
+	margin-left:20px;
+	background-color:white;
+	margin-top:10px;
 }
 
 .delete-survey,
@@ -172,9 +215,11 @@ section:last-child {
 	margin-left:5px;
 }
 
-
 .sortable-placeholder {
-	
+
+	border:1px solid #e0e0e0;
+	list-style:none;
+	height:150px;
 	background-color:#e0e0e0;
 }
 
@@ -182,6 +227,14 @@ section:last-child {
 	
 	width:40px;
 	height:auto;
+}
+
+.ui-sortable-handle,
+#survey-nav li,
+li.survey-question {
+	
+	list-style: none;
+	
 }
 
 /* DASHBOARD */
@@ -207,6 +260,33 @@ section:last-child {
 	
 	width:150px;
 	height:auto;
+}
+
+
+#breadcrumb {
+	
+	margin-left:10%;
+}
+
+#breadcrumb-nav-parent {
+	
+	margin-right:10%;
+}
+
+.breadcrumb-nav:after {
+	
+	content: ' | ';
+	
+}
+
+.breadcrumb-nav:last-child:after {
+	
+	content: '';
+}
+
+.breadcrumb-empty {
+	
+	margin-left:20px;
 }
 /* -------------------------------------------- end sophia stuff -------------------------------------------- */
 
