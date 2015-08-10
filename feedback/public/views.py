@@ -106,6 +106,7 @@ def register():
 def admin():
     return render_template("public/admin.html", title='Admin')
 
+
 @blueprint.route("/create-survey/",  methods=['GET'])
 def create_survey():
     return render_template("public/create-survey.html", title='Survey Builder')

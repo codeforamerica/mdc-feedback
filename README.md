@@ -78,12 +78,12 @@ export DATABASE_URL="postgresql://localhost/feedback_dev"
 * Start the server
 
 ```
-python manage.py runserver
+python manage.py server
 ```
 
-* Visit `localhost:5000` in your browser to see the results
+* Visit `localhost:9000` in your browser to see the results
 ```
-http://localhost:5000
+http://localhost:9000
 ```
 
 ### Deployment

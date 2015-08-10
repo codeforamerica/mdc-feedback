@@ -5,7 +5,7 @@
 	<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 	<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 	<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-	
+
 <head>
   <meta charset="utf-8">
 
@@ -21,7 +21,7 @@
 
     <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
- <link href='http://fonts.googleapis.com/css?family=Raleway:400,600,300' rel='stylesheet' type='text/css'>
+ <link href='//fonts.googleapis.com/css?family=Raleway:400,600,300' rel='stylesheet' type='text/css'>
 
   {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
@@ -90,24 +90,22 @@
 
 <div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="row">
+    <div class="col-md-12">
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">
+        <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
+       {{message}}
+      </div><!-- end .alert -->
+      {% endfor %}
+    </div><!-- end col-md -->
+  </div><!-- end row -->
+  {% endif %}
+{% endwith %}
 
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-      <div class="row">
-        <div class="col-md-12">
-          {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">
-            <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
-           {{message}}
-          </div><!-- end .alert -->
-          {% endfor %}
-        </div><!-- end col-md -->
-      </div><!-- end row -->
-          {% endif %}
-      {% endwith %}
-
-    {% block content %}{% endblock %}
-
+{% block content %}{% endblock %}
 
 </div><!-- end container -->
 
@@ -116,12 +114,11 @@
 
 </body>
 <!-- FIXME: move jquery into a bower and use grunt -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/static/js/chart.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.raty.js"></script>
 <script type="text/javascript" src="/static/js/remodal.min.js"></script>
-
 
 <script src="https://login.persona.org/include.js"></script>
 
@@ -133,14 +130,12 @@
 
 {% if json_obj %}
 <script type="application/json" id="jsondata">
-
 {{ json_obj.test|safe }}
-
 </script>
 {% endif %}
 
 <script type='text/javascript'>
-	
+
 {% if current_user.is_anonymous() or not current_user %}
 var currentUser = null;
 {% else %}
