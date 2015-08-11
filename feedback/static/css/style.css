@@ -1,3 +1,5 @@
+/* blue: #4bc3ff */
+
 /* OVERRIDES */
 .column,
 .columns {
@@ -7,6 +9,11 @@
 
 /* SOPHIA STUFF */
 /* TYPOGRAPHY */
+
+body {
+	
+	font-size:16px;
+}
 
 h1 {
 	
@@ -238,13 +245,20 @@ li.survey-question {
 }
 
 /* DASHBOARD */
+
 .panel {
 	
 	border:5px solid #cacaca;
-	padding:10px;
 	min-height:300px;
-	
 	margin:5px;
+}
+
+.content-container {
+	
+	padding:10px;
+	text-align: center;
+	margin:0 auto;
+	vertical-align: middle;
 }
 
 .first-panel {
@@ -252,7 +266,40 @@ li.survey-question {
 	margin-left:0 !important;
 }
 
+.headline {
+	
+	background-color:#cacaca;
+	color:white;
+	padding:10px;
+	font-weight:bold;
+	
+}
 
+.content-container {
+	
+	height:200px;
+	
+}
+
+.details {
+	
+	position:relative;
+	background-color: #f7fafa;
+	text-align: center;
+	margin:0 auto;
+	padding-bottom:4px;
+	
+}
+
+.details a {
+	
+	color:#4bc3ff;
+	text-transform: uppercase;
+	font-weight:bold;
+	font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1rem;
+}
 
 /* NAV */
 

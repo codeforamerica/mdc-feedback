@@ -398,8 +398,8 @@ $(document).ready(function() {
 	
 	$('#star-rating').raty({
 		score: function() {
-			console.log($(this).find('.huge').text(), 'is value')
-			return $(this).find('.huge').text();
+			console.log($(this).find('.hidden').text(), 'is value')
+			return $(this).find('.hidden').text();
 		},
 		path: 'static/images',
 		half: true,

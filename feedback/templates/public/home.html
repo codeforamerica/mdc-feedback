@@ -4,36 +4,61 @@
 
 <div class='row' id='dashboard'>
 
-	<h3>Metrics from user surveys at the PIC</h3>
-
+	<div class='row twelve columns'>
+		<h3>Metrics from user surveys at the PIC</h3>
+	</div>
+	
 	<div class='six columns panel'>
-		<p class='huge bold'>{{ dash_obj[0].data.new_reviews }}</p>
-		<p>{{ dash_obj[0].title }}</p>
-		<div class='image-container'>
+		
+		<!-- the data -->
+		<p class='hidden'>{{ dash_obj[0].data.new_reviews }}</p>
+		
+		<!-- the content -->
+		<div class='headline'>{{ dash_obj[0].title }}</div>
+		
+		<div class='content-container'>
 			<canvas id='myChart'></canvas>
 		</div>
-		<a href=#>View Details</a>
+		
+		<p class='details'><a href=#>View Details</a></p>
+		
 	</div>
 
 	<div class='six columns'>
 
 		<div class='six columns panel'>
-			<div id='star-rating'><p class='huge'>{{ dash_obj[1].data }}</p></div>
-			<p>{{ dash_obj[1].title }}</p>
-			<a href=#>View Details</a>
+			
+			<div class='headline'>{{ dash_obj[1].title }}</div>
+			
+			<div class='content-container'>
+				<div id='star-rating'>
+					<!-- data & display -->
+					<p class='hidden'>{{ dash_obj[1].data }}</p>
+				</div>
+				<p class='label'>{{ dash_obj[1].data }}</p>
+			</div>
+			
+			<p class='details'><a href=#>View Details</a></p>
+	
 		</div>
 
 		<div class='six columns panel'>
+			
+			<!-- the data -->
 			<ol class='hidden'>
 				<li id='typeform-en'>{{ dash_obj[2].data.web_en }}</li> <!-- - TYPEFORM (EN) -->
 				<li id='typeform-es'>{{ dash_obj[2].data.web_es }}</li> <!-- - TYPEFORM (ES) -->
 				<li id='textit-en'>{{ dash_obj[2].data.sms_en }}</li> <!-- - TEXTIT (EN) -->
 				<li id='textit-es'>{{ dash_obj[2].data.sms_es }}</li> <!-- - TEXTIT (ES) -->
 			</ol>
-			<p>{{ dash_obj[2].title }}</p>
 			
-			<canvas id='surveyChart'></canvas>
-			<a href=#>View Details</a>
+			<!-- the content -->
+			<div class='headline'>{{ dash_obj[2].title }}</div>
+			<div class='content-container'>
+				<canvas id='surveyChart'></canvas>
+			</div>
+				
+			<p class='details'><a href=#>View Details</a></p>
 		</div>
 
 	</div>
@@ -42,7 +67,7 @@
 
 <div class='row'>
 
-	<h3>Permit Metrics</h3>
+	<div class='row twelve columns'><h3>Permit Metrics</h3></div>
 
 	<div class='six columns'>
 
@@ -97,7 +122,7 @@
 
 <div class='row'>
 
-	<h3>Plans</h3>
+	<div class='row twelve columns'><h3>Plans</h3></div>
 
 	<div class='twelve columns panel'>
 
@@ -140,7 +165,7 @@
 
 <div class='row'>
 
-	<h3>Neighborhood Compliance</h3>
+	<div class='row twelve columns'><h3>Neighborhood Compliance</h3></div>
 
 	<div class='six columns'>
 
@@ -171,11 +196,11 @@
 		<div class='six columns panel'>
 
 			<p>Violation Type</p>
+
 			<div class='image-container'>
 				<img src="http://placehold.it/175x175">
 			</div>
 			<a href=#>View Details</a>
-
 
 		</div>
 
