@@ -355,39 +355,29 @@ $(document).ready(function() {
 
 	var myLineChart = new Chart(ctx).Line(data);
 	var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
-	
-	console.log(surveyData);
-	
 	var	pctx = $("#surveyChart").get(0).getContext("2d");
-			
-	var tfE = $('#typeform-en').text();
-	var tfS = $('#typeform-es').text();
-	var ttE = $('#textit-en').text();
-	var ttS = $('#textit-es').text();
-
-	console.log("surveys", tfE, tfS, ttE, ttS);
 			
 	var pieData = [
     {
-        value: tfE,
+        value: surveyData.web_en,
         color:"#F7464A",
         highlight: "#FF5A5E",
         label: "Typeform - English"
     },
     {
-        value: tfS,
+        value: surveyData.web_es,
         color: "#46BFBD",
         highlight: "#5AD3D1",
         label: "Typeform - Spanish"
     },
     {
-        value: ttE,
+        value: surveyData.sms_en,
         color: "#FDB45C",
         highlight: "#FFC870",
         label: "TextItIn - English"
     },
     {
-	    	value: ttS,
+	    	value: surveyData.sms_es,
         color: "#000",
         highlight: "#FFC870",
         label: "TextItIn - Spanish"
