@@ -278,7 +278,7 @@ li.survey-question {
 .content-container {
 	
 	height:200px;
-	
+	border:1px solid red;
 }
 
 .details {
@@ -301,6 +301,10 @@ li.survey-question {
   letter-spacing: .1rem;
 }
 
+#star-rating {
+	
+	padding-top:50px;
+}
 /* NAV */
 
 #logo img{
