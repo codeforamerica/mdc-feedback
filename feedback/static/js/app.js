@@ -354,6 +354,9 @@ $(document).ready(function() {
 	};
 
 	var myLineChart = new Chart(ctx).Line(data);
+	var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
+	
+	console.log(surveyData);
 	
 	var	pctx = $("#surveyChart").get(0).getContext("2d");
 			
