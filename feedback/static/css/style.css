@@ -244,8 +244,15 @@ li.survey-question {
 	
 }
 
+
 /* DASHBOARD */
 
+canvas {
+	
+	width:90%;
+	height:200px;
+	
+}
 .panel {
 	
 	border:5px solid #cacaca;
