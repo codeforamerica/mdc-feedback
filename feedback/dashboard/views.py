@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 
 import datetime
 import requests
@@ -184,7 +184,8 @@ def home():
                 date=today.strftime('%B %d, %Y'),
                 stats=stats,
                 json_obj=json_obj,
-                dash_obj=dashboard_obj
+                dash_obj=dashboard_obj,
+                title='Dashboard'	#sophia added
             )
 
 @blueprint.route('/dashboard', methods=['GET', 'POST'])

@@ -187,7 +187,7 @@ $(document).ready(function() {
 		console.log("GLOBAL: ", globalQuestion);
 		
 		//create a new question, give it an ID, append to the right div
-		var thisQ = globalQuestion.clone().attr('id', questionInt.toString()).appendTo('#survey-questions');
+		var thisQ = globalQuestion.clone().attr('id', questionInt.toString()).insertBefore('#add-question-wrapper');
 		console.log('thisq: ', thisQ);
 		
 		//modify question text
@@ -326,7 +326,7 @@ $(document).ready(function() {
 	
 	if($("#dashboard")[0] != undefined) {
 		
-		// Get context with jQuery - using jQuery's .get() method.
+	// Get context with jQuery - using jQuery's .get() method.
 	var ctx = $("#myChart").get(0).getContext("2d");
 
 	var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
@@ -354,14 +354,45 @@ $(document).ready(function() {
 	};
 
 	var myLineChart = new Chart(ctx).Line(data);
+	var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
+	var	pctx = $("#surveyChart").get(0).getContext("2d");
+			
+	var pieData = [
+    {
+        value: surveyData.web_en,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: "Typeform - English"
+    },
+    {
+        value: surveyData.web_es,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: "Typeform - Spanish"
+    },
+    {
+        value: surveyData.sms_en,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: "TextItIn - English"
+    },
+    {
+	    	value: surveyData.sms_es,
+        color: "#000",
+        highlight: "#FFC870",
+        label: "TextItIn - Spanish"
+	    
+    }
+	]
 	
+			var myPieChart = new Chart(pctx).Pie(pieData);/**/
 	
 	/***************************** star ratings *****************************/
 	
 	$('#star-rating').raty({
 		score: function() {
-			console.log($(this).find('.huge').text(), 'is value')
-			return $(this).find('.huge').text();
+			console.log($(this).find('.hidden').text(), 'is value')
+			return $(this).find('.hidden').text();
 		},
 		path: 'static/images',
 		half: true,

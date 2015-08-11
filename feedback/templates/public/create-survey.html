@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+{% set active_page = 'Survey Builder' %}
+{% block content %}
+		
+	<div id="container">
+	
+		<section class='row twelve columns'>
+			
+			<h1>What would you like to ask your community?</h1>
+						
+		</section>
+		 
+		<!-- hacky! -->
+		<div id='' class='answer-types row twelve columns hidden'>
+			
+			<div class='checkboxes row'>
+				
+				<div class='twelve columns'>
+					<div class='checkbox-object six columns en'>
+						<input type='checkbox' name='checkbox'><input type='text' value='Choose a label'>
+					</div>
+					
+					<div class='checkbox-object six columns es'>
+						<input type='checkbox' name='checkbox'><input type='text' value='Choose a label'><span class='delete-option button'>X</span>
+						
+					</div>
+				</div>
+				
+				<div class='twelve columns'>
+					<span class='button add-checkbox' id='add-checkbox'>Add another option</span>
+				</div>
+			</div>
+			
+			
+			<div class='radio-buttons row twelve columns'>
+				<div class='radio-object six columns en'>
+					<input type='radio' name='radio'><input type='text' value='Choose a label'>
+				</div>
+
+				<div class='radio-object six columns es'>
+					<input type='radio' name='radio'><input type='text' value='Choose a label'><span class='delete-option button'>X</span>	
+				</div>
+				
+				<div class='twelve columns'>
+					<span class='button' id='add-radio'>Add another option</span>
+				</div>
+			</div>
+			
+		</div>
+		
+		<section class='row twelve columns'>
+			
+			<p class='bold'>Choose how people will take your survey:</p>
+			<input type="checkbox" name="typeform" value="Typeform"> Create a survey for people to take online<br>
+			<input type="checkbox" name="textitin" value="TextItIn"> Create a survey for people to take via text message<br>
+			
+		</section>
+		
+		<section class='row twelve columns' id='survey-questions'>
+			
+			<h3>Build your survey questions.</h3>
+			<li class='survey-question' id='0'>
+				
+				<div class='two columns dragger'>
+					<img src={{ url_for('static', filename='dragger.png') }}/>
+				</div>
+				<div class='five columns survey-question-english'>
+					
+					<p class='bold'>Question <span class='identifier'>1</span> (EN):</p>
+					<input type='text' name='question-1' value='Ask away!'>
+				</div>
+				
+				<div class='five columns survey-question-spanish'>
+					<p class='bold'>Question <span class='identifier'>1</span> (ES):</p>
+					<input type='text' name='question-1' value='Ask away!'>
+				</div>
+				
+				<div class='row twelve columns'>
+					
+					<div class='two columns invisible'>.</div>
+					<div class='eight columns answerType' id=''>
+						
+						<p class='bold'>Answer type:</p>
+						<select class='choose-answer-type'>
+							<option value='text'>Open-ended text</option>
+							<option value='checkboxes'>Multiple choice (checkboxes)</option>
+							<option value='radio'>Multiple choice (radio buttons)</option>
+							<option value='yesNo'>Yes/No</option>
+							
+						</select>
+					</div>
+					
+					
+				</div>
+				
+				<div class='row'>
+					<div class='two columns invisible'>.</div>
+					<div class='one column'>
+							<span class='delete button' id='0'>Delete question</span>
+					</div>
+				</div>
+				
+			</li>
+			
+			<div id='add-question-wrapper' class=''><a class='button' id='add-question'>Add another question</a></div>
+			
+		</section>
+		
+		<section class='row' id='survey-nav'>
+			
+			
+			<li><a class='button' id='save-draft'>Save a draft of this survey</a></li>
+			<li><a class='button' id='save-publish'>Save and publish this survey</a></li>
+			
+		</section>
+	</div><!--!/#container -->
+
+
+{% endblock %}
