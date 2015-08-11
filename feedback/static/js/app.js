@@ -385,7 +385,52 @@ $(document).ready(function() {
     }
 	]
 	
-			var myPieChart = new Chart(pctx).Pie(pieData);/**/
+	var myPieChart = new Chart(pctx).Pie(pieData);/**/
+	
+	/* Permitting */
+				
+		$.ajax({
+		  url: "https://opendata.miamidade.gov/resource/awsz-tanw.json?$select=date_trunc_ym(issuedate)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=2",
+		  context: document.body
+		}).done(function(data) {
+		 			 
+			var ctx2 = $("#openPermits").get(0).getContext("2d");
+			//console.log(data);
+			
+			var series = [];
+			var datetime = [];
+			
+			for(var i = 0; i < data.length; i++) {
+				
+				datetime.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
+				series.push(data[i].total);
+				
+			}
+			
+			//socrata pushes the data backwards. fix that.
+			datetime.reverse();
+			series.reverse();
+			
+			var d = {
+					labels:datetime,
+			    datasets: [
+			        {
+			            label: "My First dataset",
+			            fillColor: "rgba(220,220,220,0.2)",
+			            strokeColor: "rgba(220,220,220,1)",
+			            pointColor: "rgba(220,220,220,1)",
+			            pointStrokeColor: "#fff",
+			            pointHighlightFill: "#fff",
+			            pointHighlightStroke: "rgba(220,220,220,1)",
+			            data: series
+			        }
+			        
+			    ]
+			};
+			
+			var myLineChart = new Chart(ctx2).Line(d);
+
+		});
 	
 	/***************************** star ratings *****************************/
 	
