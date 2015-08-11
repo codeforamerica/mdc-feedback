@@ -347,7 +347,8 @@ $(document).ready(function() {
 	            pointStrokeColor: "#fff",
 	            pointHighlightFill: "#fff",
 	            pointHighlightStroke: "rgba(220,220,220,1)",
-	            data: series
+	            data: series,
+	            scaleStartValue: 0
 	        }
 	        
 	    ]
@@ -416,6 +417,11 @@ $(document).ready(function() {
 			    datasets: [
 			        {
 			            label: "My First dataset",
+			            scaleOverride: true,
+			            scaleSteps: 50,
+									scaleStepWidth: 200,
+			            scaleBeginAtZero:true,
+			            scaleStartValue:0,
 			            fillColor: "rgba(220,220,220,0.2)",
 			            strokeColor: "rgba(220,220,220,1)",
 			            pointColor: "rgba(220,220,220,1)",
@@ -423,6 +429,7 @@ $(document).ready(function() {
 			            pointHighlightFill: "#fff",
 			            pointHighlightStroke: "rgba(220,220,220,1)",
 			            data: series
+			            
 			        }
 			        
 			    ]

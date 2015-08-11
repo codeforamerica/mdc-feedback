@@ -256,8 +256,13 @@ canvas {
 .panel {
 	
 	border:5px solid #cacaca;
-	min-height:300px;
+	height:300px;
 	margin:5px;
+}
+
+.double-height {
+	
+	height:610px;
 }
 
 .content-container {
