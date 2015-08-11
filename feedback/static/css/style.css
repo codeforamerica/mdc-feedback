@@ -256,8 +256,18 @@ canvas {
 .panel {
 	
 	border:5px solid #cacaca;
-	min-height:300px;
+	height:300px;
 	margin:5px;
+}
+
+.double-height {
+	
+	height:610px;
+}
+
+.double-height canvas {
+	
+	height:500px;
 }
 
 .content-container {
@@ -294,7 +304,7 @@ canvas {
 	background-color: #f7fafa;
 	text-align: center;
 	margin:0 auto;
-	padding-bottom:4px;
+	padding-bottom:1px;
 	
 }
 
@@ -323,7 +333,7 @@ canvas {
 
 #breadcrumb {
 	
-	margin-left:10%;
+	margin-left:5%;
 }
 
 #breadcrumb-nav-parent {
