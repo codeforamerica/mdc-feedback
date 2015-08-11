@@ -265,6 +265,11 @@ canvas {
 	height:610px;
 }
 
+.double-height canvas {
+	
+	height:500px;
+}
+
 .content-container {
 	
 	padding:10px;
@@ -299,7 +304,7 @@ canvas {
 	background-color: #f7fafa;
 	text-align: center;
 	margin:0 auto;
-	padding-bottom:4px;
+	padding-bottom:1px;
 	
 }
 
@@ -328,7 +333,7 @@ canvas {
 
 #breadcrumb {
 	
-	margin-left:10%;
+	margin-left:5%;
 }
 
 #breadcrumb-nav-parent {
