@@ -15,19 +15,12 @@
 
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
   <meta name="viewport" content="width=device-width">
-
-  <!-- favicon -->
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
-
-    <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
- <link href='//fonts.googleapis.com/css?family=Raleway:400,600,300' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,600,300' rel='stylesheet' type='text/css'>
 
   {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
   {% endassets %}
-
-
 </head>
 <body class="{% block body_class %}{% endblock %}">
 {% block body %}
@@ -78,6 +71,9 @@
 {% if json_obj %}
 <script type="application/json" id="jsondata">
 {{ json_obj.test|safe }}
+</script>
+<script type="application/json" id="jsondata">
+{{ json_obj.surveys_type|safe }}
 </script>
 {% endif %}
 
