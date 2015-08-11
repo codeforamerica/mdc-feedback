@@ -2,7 +2,7 @@
 {% set active_page = 'Dashboard' %}
 {% block content %}
 
-<div class='row' id='dashboard'>
+<section class='row' id='dashboard'>
 
 	<div class='row twelve columns'>
 		<h3>Metrics from user surveys at the PIC</h3>
@@ -63,9 +63,9 @@
 
 	</div>
 
-</div> <!-- close row -->
+</section> <!-- close row -->
 
-<div class='row'>
+<section class='row'>
 
 	<div class='row twelve columns'><h3>Permit Metrics</h3></div>
 
@@ -73,7 +73,8 @@
 
 		<div class='six columns panel'>
 
-			<p class='huge'>26</p>
+			<div class='headline'><p class='huge'>26</p></div>
+			
 			<p>Permit Lifespan - Last 30 Days</p>
 			<a href=#>View Details</a>
 
@@ -81,7 +82,7 @@
 
 		<div class='six columns panel'>
 
-			<p class='huge'>26</p>
+			<div class='headline'><p class='huge'>26</p></div>
 			<p>Average # of inspections per permit - Last 30 Days</p>
 			<a href=#>View Details</a>
 
@@ -89,16 +90,17 @@
 
 		<div class='six columns panel first-panel'>
 
-			<p class='huge'>26</p>
+			<div class='headline'><p class='huge'>26</p></div>
 			<p>% of Permits Completed Within 15 Days</p>
 			<a href=#>View Details</a>
 
 		</div>
 
 		<div class='six columns panel'>
-
+			
+			<div class='headline'><p>Cost per permit / Average</p></div>
+			
 			<p class='huge'>$500</p>
-			<p>Cost per permit / Average</p>
 			<a href=#>View Details</a>
 
 		</div>
@@ -118,9 +120,9 @@
 
 	</div>
 
-</div> <!-- close row -->
+</section> <!-- close row -->
 
-<div class='row'>
+<section class='row'>
 
 	<div class='row twelve columns'><h3>Plans</h3></div>
 
@@ -161,9 +163,9 @@
 
 	</div>
 
-</div> <!-- close row -->
+</section> <!-- close row -->
 
-<div class='row'>
+<section class='row'>
 
 	<div class='row twelve columns'><h3>Neighborhood Compliance</h3></div>
 
@@ -217,6 +219,6 @@
 
 	</div>
 
-</div> <!-- close row -->
+</section> <!-- close row -->
 
 {% endblock %}
