@@ -7,29 +7,29 @@
 	<div class='row twelve columns'>
 		<h3>Metrics from user surveys at the PIC</h3>
 	</div>
-	
+
 	<div class='six columns panel'>
-		
+
 		<!-- the data -->
 		<p class='hidden'>{{ dash_obj[0].data.new_reviews }}</p>
-		
+
 		<!-- the content -->
 		<div class='headline'>{{ dash_obj[0].title }}</div>
-		
+
 		<div class='content-container'>
 			<canvas id='myChart'></canvas>
 		</div>
-		
+
 		<p class='details'><a href=#>View Details</a></p>
-		
+
 	</div>
 
 	<div class='six columns'>
 
 		<div class='six columns panel'>
-			
+
 			<div class='headline'>{{ dash_obj[1].title }}</div>
-			
+
 			<div class='content-container'>
 				<div id='star-rating'>
 					<!-- data & display -->
@@ -37,19 +37,19 @@
 				</div>
 				<p class='label'>Visitors to the PIC are rating their experience as {{ dash_obj[1].data }} out of seven stars.</p>
 			</div>
-			
+
 			<p class='details'><a href=#>View Details</a></p>
-	
+
 		</div>
 
 		<div class='six columns panel'>
-		
+
 			<!-- the content -->
 			<div class='headline'>{{ dash_obj[2].title }}</div>
 			<div class='content-container'>
 				<canvas id='surveyChart'></canvas>
 			</div>
-				
+
 			<p class='details'><a href=#>View Details</a></p>
 		</div>
 
@@ -69,7 +69,6 @@
 				<canvas id='openPermits'></canvas>
 			</div>
 		
-		<p class='details'><a href=#>View Details</a></p>
 
 		</div>
 		
@@ -92,9 +91,9 @@
 		</div>
 
 		<div class='six columns panel'>
-			
+
 			<div class='headline'><p>Cost per permit / Average</p></div>
-			
+
 			<p class='huge'>$500</p>
 			<a href=#>View Details</a>
 
@@ -165,7 +164,7 @@
 		<div class='six columns panel'>
 
 			<p class='huge'>26</p>
-			<p>Violations in the Past Month</p>
+			<p>Violations in the Past 30 Days (???% Change YOY)</p>
 			<a href=#>View Details</a>
 
 		</div>
@@ -173,7 +172,7 @@
 		<div class='six columns panel'>
 
 			<p class='huge'>26</p>
-			<p>Violation Type</p>
+			<p>Cases closed in the Past 30 Days (???% Change YOY)</p>
 			<a href=#>View Details</a>
 
 		</div>
@@ -203,7 +202,7 @@
 
 		<p>Violation Locations</p>
 		<div class='image-container'>
-			<img src='https://placeholdit.imgix.net/~text?txtsize=19&txt=Map+(625x375)&w=625&h=375'>
+			<iframe width="500px" title="RER-311-map" height="425px" src="https://opendata.miamidade.gov/w/mdve-y46a/e65f-pfdb?cur=qBqigp1ooiQ&from=root" frameborder="0"scrolling="no"><a href="https://opendata.miamidade.gov/311/RER-311-map/mdve-y46a" title="RER-311-map" target="_blank">RER-311-map</a></iframe>
 		</div>
 
 		<a href=#>View Details</a>
