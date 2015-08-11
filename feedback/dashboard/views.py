@@ -137,6 +137,9 @@ for i in range(6, -1, -1):
     date_index = time_i.strftime("%m-%d")
     surveys_value_array.append(surveys_by_date[date_index])
 
+def code_violations_stats():
+    pass
+
 dashboard_obj = [
     {
         "id": "graph",
@@ -170,8 +173,8 @@ dashboard_obj = [
     }
 ]
 
-sample_graph = json.dumps(dashboard_obj[0]['data']['graph'])
-json_obj['test'] = sample_graph
+json_obj['test'] = json.dumps(dashboard_obj[0]['data']['graph'])
+json_obj['surveys_type'] = json.dumps(dashboard_obj[2]['data'])
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
