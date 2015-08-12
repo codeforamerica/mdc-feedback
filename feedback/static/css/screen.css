@@ -1,46 +1,20 @@
-/* blue: #4bc3ff */
-/* OVERRIDES */
+/* VARIABLES */
+/* OVERRIDES - SKELETON */
 /* line 6, ../sass/screen.scss */
 .column,
 .columns {
   margin-left: 0;
 }
 
-/* SOPHIA STUFF */
-/* TYPOGRAPHY */
-/* line 15, ../sass/screen.scss */
+/* HTML BASICS - BODY, HEADER, FOOTER, UL */
+/* line 14, ../sass/screen.scss */
 body {
   font-size: 16px;
-}
-
-/* line 20, ../sass/screen.scss */
-h1 {
-  margin-bottom: 0;
-}
-
-/* line 25, ../sass/screen.scss */
-.bold {
-  font-weight: bold;
-}
-
-/* line 30, ../sass/screen.scss */
-.tiny {
-  font-size: .5em;
-}
-
-/* line 35, ../sass/screen.scss */
-.huge {
-  font-size: 3em;
-}
-
-/* END TYPOGRAPHY */
-/* line 42, ../sass/screen.scss */
-body {
   margin: 0 auto;
   text-align: center;
 }
 
-/* line 48, ../sass/screen.scss */
+/* line 21, ../sass/screen.scss */
 header {
   width: 100%;
   background-color: #4BC3FF;
@@ -52,12 +26,12 @@ header {
   overflow: auto;
 }
 
-/* line 60, ../sass/screen.scss */
+/* line 33, ../sass/screen.scss */
 header a {
   color: white;
 }
 
-/* line 65, ../sass/screen.scss */
+/* line 38, ../sass/screen.scss */
 footer div,
 header div {
   width: 80%;
@@ -65,7 +39,7 @@ header div {
   margin: 0 auto;
 }
 
-/* line 73, ../sass/screen.scss */
+/* line 46, ../sass/screen.scss */
 footer {
   width: 100%;
   background-color: #d1d1d1;
@@ -73,53 +47,19 @@ footer {
   padding-bottom: 20px;
 }
 
-/* line 81, ../sass/screen.scss */
+/* line 54, ../sass/screen.scss */
 footer p {
   padding: 0;
   margin: 0;
   line-height: normal;
 }
 
-/* line 88, ../sass/screen.scss */
+/* line 61, ../sass/screen.scss */
 ul li {
   display: inline;
 }
 
-/* line 93, ../sass/screen.scss */
-.hidden {
-  display: none !important;
-}
-
-/* when you need it invisible but taking up space */
-/* line 99, ../sass/screen.scss */
-.invisible {
-  visibility: collapse;
-}
-
-/* line 104, ../sass/screen.scss */
-#container {
-  width: 90%;
-  min-height: 800px;
-  padding: 10px;
-  margin: 0 auto;
-}
-
-/* line 113, ../sass/screen.scss */
-.main-nav {
-  text-align: right;
-}
-
-/* line 117, ../sass/screen.scss */
-.main-nav li {
-  display: inline;
-}
-
-/* line 122, ../sass/screen.scss */
-.main-nav li:first-child:after {
-  content: ' | ';
-}
-
-/* line 127, ../sass/screen.scss */
+/* line 66, ../sass/screen.scss */
 section {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -127,26 +67,115 @@ section {
   text-align: left;
 }
 
-/* line 135, ../sass/screen.scss */
+/* line 74, ../sass/screen.scss */
 section:last-child {
   border-bottom: 0;
 }
 
-/* line 140, ../sass/screen.scss */
+/* TYPOGRAPHY */
+/* line 82, ../sass/screen.scss */
+h1 {
+  margin-bottom: 0;
+}
+
+/* line 87, ../sass/screen.scss */
+.bold {
+  font-weight: bold;
+}
+
+/* line 92, ../sass/screen.scss */
+.tiny {
+  font-size: .5em;
+}
+
+/* line 97, ../sass/screen.scss */
+.huge {
+  font-size: 3em;
+}
+
+/* UTILITY CLASSES */
+/* line 105, ../sass/screen.scss */
+.hidden {
+  display: none !important;
+}
+
+/* when you need it invisible but taking up space */
+/* line 111, ../sass/screen.scss */
+.invisible {
+  visibility: collapse;
+}
+
+/* line 116, ../sass/screen.scss */
 .active {
   background-color: #4BC3FF;
   color: white !important;
   border-color: #4BC3FF;
 }
 
-/* line 147, ../sass/screen.scss */
+/* GLOBAL CONTAINER, NAV */
+/* line 125, ../sass/screen.scss */
+#container {
+  width: 90%;
+  min-height: 800px;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+/* line 134, ../sass/screen.scss */
+.main-nav {
+  text-align: right;
+}
+
+/* line 139, ../sass/screen.scss */
+.main-nav li {
+  display: inline;
+}
+
+/* line 144, ../sass/screen.scss */
+.main-nav li:first-child:after {
+  content: ' | ';
+}
+
+/* line 150, ../sass/screen.scss */
 .button {
   min-height: 38px !important;
   height: auto !important;
 }
 
-/* Admin panel */
+/* NAV */
 /* line 159, ../sass/screen.scss */
+#logo img {
+  width: 150px;
+  height: auto;
+}
+
+/* line 166, ../sass/screen.scss */
+#breadcrumb {
+  margin-left: 5%;
+}
+
+/* line 171, ../sass/screen.scss */
+#breadcrumb-nav-parent {
+  margin-right: 10%;
+}
+
+/* line 176, ../sass/screen.scss */
+.breadcrumb-nav:after {
+  content: ' | ';
+}
+
+/* line 182, ../sass/screen.scss */
+.breadcrumb-nav:last-child:after {
+  content: '';
+}
+
+/* line 187, ../sass/screen.scss */
+.breadcrumb-empty {
+  margin-left: 20px;
+}
+
+/* ADMIN PANEL-SPECIFIC */
+/* line 194, ../sass/screen.scss */
 #admin-nav li {
   display: list-item;
   min-width: 25%;
@@ -158,32 +187,32 @@ section:last-child {
   text-align: center;
 }
 
-/* line 171, ../sass/screen.scss */
+/* line 206, ../sass/screen.scss */
 #survey-existing {
   margin-top: 30px;
   margin-bottom: 30px;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 212, ../sass/screen.scss */
 #survey-existing li {
   max-width: 100% !important;
 }
 
-/* line 182, ../sass/screen.scss */
+/* line 217, ../sass/screen.scss */
 .secondary {
   color: white;
   background-color: grey;
 }
 
 /* SURVEY BUILDER */
-/* line 191, ../sass/screen.scss */
+/* line 225, ../sass/screen.scss */
 #survey-questions {
   padding: 20px;
   border: 1px solid #cccccc;
   margin-top: 0;
 }
 
-/* line 199, ../sass/screen.scss */
+/* line 233, ../sass/screen.scss */
 #survey-questions h3 {
   width: 100%;
   background-color: #eeeeee;
@@ -192,14 +221,14 @@ section:last-child {
   margin-top: -20px;
 }
 
-/* line 208, ../sass/screen.scss */
+/* line 242, ../sass/screen.scss */
 .survey-question {
   height: auto;
   overflow: auto;
   background-color: white;
 }
 
-/* line 216, ../sass/screen.scss */
+/* line 250, ../sass/screen.scss */
 #add-question-wrapper {
   border-top: 1px solid #cccccc;
   padding-top: 20px;
@@ -208,14 +237,14 @@ section:last-child {
   margin-right: -20px;
 }
 
-/* line 225, ../sass/screen.scss */
+/* line 259, ../sass/screen.scss */
 #add-question {
   margin-left: 20px;
   background-color: white;
   margin-top: 10px;
 }
 
-/* line 232, ../sass/screen.scss */
+/* line 266, ../sass/screen.scss */
 .delete-survey,
 .delete-option,
 .delete {
@@ -224,7 +253,7 @@ section:last-child {
   margin-left: 5px;
 }
 
-/* line 241, ../sass/screen.scss */
+/* line 275, ../sass/screen.scss */
 .sortable-placeholder {
   border: 1px solid #e0e0e0;
   list-style: none;
@@ -232,13 +261,13 @@ section:last-child {
   background-color: #e0e0e0;
 }
 
-/* line 249, ../sass/screen.scss */
+/* line 283, ../sass/screen.scss */
 .dragger img {
   width: 40px;
   height: auto;
 }
 
-/* line 255, ../sass/screen.scss */
+/* line 289, ../sass/screen.scss */
 .ui-sortable-handle,
 #survey-nav li,
 li.survey-question {
@@ -246,30 +275,30 @@ li.survey-question {
 }
 
 /* DASHBOARD */
-/* line 266, ../sass/screen.scss */
+/* line 299, ../sass/screen.scss */
 canvas {
   width: 90%;
   height: 200px;
 }
 
-/* line 272, ../sass/screen.scss */
+/* line 306, ../sass/screen.scss */
 .panel {
   border: 5px solid #cacaca;
   height: 300px;
   margin: 5px;
 }
 
-/* line 279, ../sass/screen.scss */
+/* line 313, ../sass/screen.scss */
 .double-height {
   height: 610px;
 }
 
-/* line 284, ../sass/screen.scss */
+/* line 318, ../sass/screen.scss */
 .double-height canvas {
   height: 500px;
 }
 
-/* line 289, ../sass/screen.scss */
+/* line 323, ../sass/screen.scss */
 .content-container {
   padding: 10px;
   text-align: center;
@@ -277,12 +306,12 @@ canvas {
   vertical-align: middle;
 }
 
-/* line 297, ../sass/screen.scss */
+/* line 331, ../sass/screen.scss */
 .first-panel {
   margin-left: 0 !important;
 }
 
-/* line 302, ../sass/screen.scss */
+/* line 336, ../sass/screen.scss */
 .headline {
   background-color: #cacaca;
   color: white;
@@ -290,12 +319,12 @@ canvas {
   font-weight: bold;
 }
 
-/* line 311, ../sass/screen.scss */
+/* line 345, ../sass/screen.scss */
 .content-container {
   height: 200px;
 }
 
-/* line 317, ../sass/screen.scss */
+/* line 351, ../sass/screen.scss */
 .details {
   position: relative;
   background-color: #f7fafa;
@@ -304,7 +333,7 @@ canvas {
   padding-bottom: 1px;
 }
 
-/* line 327, ../sass/screen.scss */
+/* line 361, ../sass/screen.scss */
 .details a {
   color: #4bc3ff;
   text-transform: uppercase;
@@ -314,174 +343,7 @@ canvas {
   letter-spacing: .1rem;
 }
 
-/* line 337, ../sass/screen.scss */
+/* line 371, ../sass/screen.scss */
 #star-rating {
   padding-top: 50px;
 }
-
-/* NAV */
-/* line 343, ../sass/screen.scss */
-#logo img {
-  width: 150px;
-  height: auto;
-}
-
-/* line 350, ../sass/screen.scss */
-#breadcrumb {
-  margin-left: 5%;
-}
-
-/* line 355, ../sass/screen.scss */
-#breadcrumb-nav-parent {
-  margin-right: 10%;
-}
-
-/* line 360, ../sass/screen.scss */
-.breadcrumb-nav:after {
-  content: ' | ';
-}
-
-/* line 366, ../sass/screen.scss */
-.breadcrumb-nav:last-child:after {
-  content: '';
-}
-
-/* line 371, ../sass/screen.scss */
-.breadcrumb-empty {
-  margin-left: 20px;
-}
-
-/* -------------------------------------------- end sophia stuff -------------------------------------------- */
-/* TYPOGRAPHY */
-/*
- * Base structure
- */
-/* line 384, ../sass/screen.scss */
-#container .row,
-#container .columns {
-  text-align: left;
-}
-
-/*
- * Global add-ons
- */
-/* line 394, ../sass/screen.scss */
-.sub-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-/*
- * Top navigation
- * Hide default border to remove 1px line.
- */
-/* line 403, ../sass/screen.scss */
-.navbar-fixed-top {
-  border: 0;
-}
-
-/*
- * Sidebar
- */
-/* Hide for mobile, show later */
-/* line 412, ../sass/screen.scss */
-.sidebar {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  /* line 416, ../sass/screen.scss */
-  .sidebar {
-    position: fixed;
-    top: 51px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
-  }
-}
-/* Sidebar navigation */
-/* line 432, ../sass/screen.scss */
-.nav-sidebar {
-  margin-right: -21px;
-  /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-
-/* line 437, ../sass/screen.scss */
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-
-/* line 441, ../sass/screen.scss */
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
-}
-
-/*
- * Main content
- */
-/* line 453, ../sass/screen.scss */
-.main {
-  padding: 20px;
-}
-
-@media (min-width: 768px) {
-  /* line 457, ../sass/screen.scss */
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
-/* line 462, ../sass/screen.scss */
-.main .page-header {
-  margin-top: 0;
-}
-
-/*
- * Placeholder dashboard ideas
- */
-/* line 471, ../sass/screen.scss */
-.placeholders {
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-/* line 475, ../sass/screen.scss */
-.placeholders h4 {
-  margin-bottom: 0;
-}
-
-/* line 478, ../sass/screen.scss */
-.placeholder {
-  margin-bottom: 20px;
-}
-
-/* line 481, ../sass/screen.scss */
-.placeholder img {
-  display: inline-block;
-  border-radius: 50%;
-}
-
-/* line 486, ../sass/screen.scss */
-.bold {
-  font-weight: bold;
-}
-
-/* line 491, ../sass/screen.scss */
-.tiny {
-  font-size: .5em;
-}
-
-/* END TYPOGRAPHY */
