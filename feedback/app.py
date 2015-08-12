@@ -4,7 +4,7 @@
 from flask import Flask, render_template, redirect
 
 from feedback.settings import ProductionConfig, DevelopmentConfig
-from feedback.assets import assets
+from feedback.assets import assets, test_assets
 from feedback.extensions import (
     db, login_manager,
     migrate, debug_toolbar,
@@ -32,6 +32,7 @@ def create_app(config_object=ProductionConfig):
     return app
 
 def register_extensions(app):
+    test_assets.init_app(app) if app.config.get('TESTING') else assets.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)

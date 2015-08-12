@@ -18,9 +18,11 @@
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
   <link href='//fonts.googleapis.com/css?family=Raleway:400,600,300' rel='stylesheet' type='text/css'>
 
-  {% assets "css_all" %}
-    <link rel="stylesheet" href="{{ ASSET_URL }}">
-  {% endassets %}
+  {% block assets %}
+    {% assets "css_all" %}
+  <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+  {% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
 {% block body %}
@@ -29,29 +31,29 @@
 {% endwith %}
 
 <!-- nav active states -->
-{% if active_page == 'Dashboard' %} 
-			
+{% if active_page == 'Dashboard' %}
+
 			{% set navigation_bar = [
 				('/admin/', 'Admin Panel'),
-				('/create-survey/', 'Survey Builder')	
+				('/create-survey/', 'Survey Builder')
 			] -%}
-				
+
 		{% elif active_page == 'Survey Builder' %}
-		
+
 			{% set navigation_bar = [
-				
+
 				('/', 'Dashboard'),
 				('/admin/', 'Admin Panel')
-					
+
 			] -%}
-			
+
 		{% elif active_page == 'Admin' %}
-		
+
 			{% set navigation_bar = [
-				
+
 				('/', 'Dashboard'),
 				('/create-survey/', 'Survey Builder')
-									
+
 			] -%}
 		{% endif %}
 
@@ -59,25 +61,25 @@
 <div class='row u-pull-left' id='breadcrumb'>
 
 	<ul class='list-nav'>
-						
+
 		<li class='breadcrumb-text'>You're looking at:</li>
-		<li id='breadcrumb-location' class='bold'>{{ title }}</li>		
+		<li id='breadcrumb-location' class='bold'>{{ title }}</li>
 	</ul>
 
 </div>
 
 <div class='row u-pull-right' id='breadcrumb-nav-parent'>
-	
+
 	<ul>
-		
+
 		<li class='breadcrumb-text'>Go back to:</li>
-		
+
 		{% for href, id in navigation_bar %}
 		<li class='breadcrumb-nav'><a href='{{ href|e}}'>{{id|e}}</a></li>
 		{% endfor %}
-		
+
 	</ul>
-	
+
 </div>
 
 
@@ -115,11 +117,11 @@
 
 <script src="https://login.persona.org/include.js"></script>
 
-
-{% assets "js_all" %}
-    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{% endassets %}
-{% block js %}{% endblock %}
+{% block js %}
+  {% assets "js_all" %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+{% endblock %}
 
 {% if json_obj %}
 <script type="application/json" id="jsondata">
