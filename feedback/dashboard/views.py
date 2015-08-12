@@ -112,7 +112,10 @@ for obj in obj_completed:
 
     # http://stackoverflow.com/questions/4563272/how-to-convert-a-python-utc-datetime-to-a-local-datetime-using-only-python-stand
     date_object = utc_to_local(date_object)
-    surveys_by_date[date_object.strftime("%m-%d")] += 1
+    try:
+        surveys_by_date[date_object.strftime("%m-%d")] += 1
+    except KeyError:
+        pass
 
     if obj['flow_uuid'] == TEXTIT_UUID_EN:
         sms_en += 1
