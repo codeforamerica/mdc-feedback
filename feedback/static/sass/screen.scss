@@ -2,11 +2,22 @@
 
 $mdc-blue: #4bc3ff;
 
+$red: #C40232;
+$blue: #52D0F5;
+$green: #4CD884;
+$yellow: #F5C93D;
+$pale-yellow: #FDE876;
+$orange: #F39B79;
+$purple: #3D3377;
+$grey: #f7fafa;
+$charcoal: #1a1a1a;
+
 /* OVERRIDES - SKELETON */
 .column,
 .columns {
 	
 	margin-left:0;
+	
 }
 
 /* HTML BASICS - BODY, HEADER, FOOTER, UL */
@@ -16,12 +27,13 @@ body {
 	font-size:16px;
 	margin:0 auto;
 	text-align: center;
+	color:$charcoal;
 }
 
 header {
 	
 	width:100%;
-	background-color: #4BC3FF;
+	background-color: $blue;
 	color:white;
 	padding-top:30px;
 	padding-bottom:20px;
@@ -33,6 +45,7 @@ header {
 header a {
 	
 	color:white;
+	
 }
 
 footer div,
@@ -46,7 +59,7 @@ header div {
 footer {
 	
 	width:100%;
-	background-color:#d1d1d1;
+	background-color:$grey;
 	padding-top:20px;
 	padding-bottom:20px;
 }
@@ -76,6 +89,13 @@ section:last-child {
 	border-bottom:0;
 }
 
+a {
+	
+	color:$blue;
+	font-weight:bold;
+	text-decoration:none;
+	
+}
 
 /* TYPOGRAPHY */
 
@@ -305,7 +325,7 @@ canvas {
 
 .panel {
 	
-	border:5px solid #cacaca;
+	border:5px solid $grey;
 	height:300px;
 	margin:5px;
 }
@@ -326,6 +346,7 @@ canvas {
 	text-align: center;
 	margin:0 auto;
 	vertical-align: middle;
+	height:200px;
 }
 
 .first-panel {
@@ -335,16 +356,10 @@ canvas {
 
 .headline {
 	
-	background-color:#cacaca;
-	color:white;
+	background-color:$grey;
+	color:$charcoal;
 	padding:10px;
 	font-weight:bold;
-	
-}
-
-.content-container {
-	
-	height:200px;
 	
 }
 
@@ -360,12 +375,10 @@ canvas {
 
 .details a {
 	
-	color:#4bc3ff;
 	text-transform: uppercase;
-	font-weight:bold;
 	font-size: 11px;
-  font-weight: 600;
   letter-spacing: .1rem;
+
 }
 
 #star-rating {

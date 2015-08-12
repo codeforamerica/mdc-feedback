@@ -1,23 +1,24 @@
 /* VARIABLES */
 /* OVERRIDES - SKELETON */
-/* line 6, ../sass/screen.scss */
+/* line 16, ../sass/screen.scss */
 .column,
 .columns {
   margin-left: 0;
 }
 
 /* HTML BASICS - BODY, HEADER, FOOTER, UL */
-/* line 14, ../sass/screen.scss */
+/* line 25, ../sass/screen.scss */
 body {
   font-size: 16px;
   margin: 0 auto;
   text-align: center;
+  color: #1a1a1a;
 }
 
-/* line 21, ../sass/screen.scss */
+/* line 33, ../sass/screen.scss */
 header {
   width: 100%;
-  background-color: #4BC3FF;
+  background-color: #52D0F5;
   color: white;
   padding-top: 30px;
   padding-bottom: 20px;
@@ -26,12 +27,12 @@ header {
   overflow: auto;
 }
 
-/* line 33, ../sass/screen.scss */
+/* line 45, ../sass/screen.scss */
 header a {
   color: white;
 }
 
-/* line 38, ../sass/screen.scss */
+/* line 51, ../sass/screen.scss */
 footer div,
 header div {
   width: 80%;
@@ -39,27 +40,27 @@ header div {
   margin: 0 auto;
 }
 
-/* line 46, ../sass/screen.scss */
+/* line 59, ../sass/screen.scss */
 footer {
   width: 100%;
-  background-color: #d1d1d1;
+  background-color: #f7fafa;
   padding-top: 20px;
   padding-bottom: 20px;
 }
 
-/* line 54, ../sass/screen.scss */
+/* line 67, ../sass/screen.scss */
 footer p {
   padding: 0;
   margin: 0;
   line-height: normal;
 }
 
-/* line 61, ../sass/screen.scss */
+/* line 74, ../sass/screen.scss */
 ul li {
   display: inline;
 }
 
-/* line 66, ../sass/screen.scss */
+/* line 79, ../sass/screen.scss */
 section {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -67,45 +68,52 @@ section {
   text-align: left;
 }
 
-/* line 74, ../sass/screen.scss */
+/* line 87, ../sass/screen.scss */
 section:last-child {
   border-bottom: 0;
 }
 
+/* line 92, ../sass/screen.scss */
+a {
+  color: #52D0F5;
+  font-weight: bold;
+  text-decoration: none;
+}
+
 /* TYPOGRAPHY */
-/* line 82, ../sass/screen.scss */
+/* line 102, ../sass/screen.scss */
 h1 {
   margin-bottom: 0;
 }
 
-/* line 87, ../sass/screen.scss */
+/* line 107, ../sass/screen.scss */
 .bold {
   font-weight: bold;
 }
 
-/* line 92, ../sass/screen.scss */
+/* line 112, ../sass/screen.scss */
 .tiny {
   font-size: .5em;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 117, ../sass/screen.scss */
 .huge {
   font-size: 3em;
 }
 
 /* UTILITY CLASSES */
-/* line 105, ../sass/screen.scss */
+/* line 125, ../sass/screen.scss */
 .hidden {
   display: none !important;
 }
 
 /* when you need it invisible but taking up space */
-/* line 111, ../sass/screen.scss */
+/* line 131, ../sass/screen.scss */
 .invisible {
   visibility: collapse;
 }
 
-/* line 116, ../sass/screen.scss */
+/* line 136, ../sass/screen.scss */
 .active {
   background-color: #4BC3FF;
   color: white !important;
@@ -113,7 +121,7 @@ h1 {
 }
 
 /* GLOBAL CONTAINER, NAV */
-/* line 125, ../sass/screen.scss */
+/* line 145, ../sass/screen.scss */
 #container {
   width: 90%;
   min-height: 800px;
@@ -121,61 +129,61 @@ h1 {
   margin: 0 auto;
 }
 
-/* line 134, ../sass/screen.scss */
+/* line 154, ../sass/screen.scss */
 .main-nav {
   text-align: right;
 }
 
-/* line 139, ../sass/screen.scss */
+/* line 159, ../sass/screen.scss */
 .main-nav li {
   display: inline;
 }
 
-/* line 144, ../sass/screen.scss */
+/* line 164, ../sass/screen.scss */
 .main-nav li:first-child:after {
   content: ' | ';
 }
 
-/* line 150, ../sass/screen.scss */
+/* line 170, ../sass/screen.scss */
 .button {
   min-height: 38px !important;
   height: auto !important;
 }
 
 /* NAV */
-/* line 159, ../sass/screen.scss */
+/* line 179, ../sass/screen.scss */
 #logo img {
   width: 150px;
   height: auto;
 }
 
-/* line 166, ../sass/screen.scss */
+/* line 186, ../sass/screen.scss */
 #breadcrumb {
   margin-left: 5%;
 }
 
-/* line 171, ../sass/screen.scss */
+/* line 191, ../sass/screen.scss */
 #breadcrumb-nav-parent {
   margin-right: 10%;
 }
 
-/* line 176, ../sass/screen.scss */
+/* line 196, ../sass/screen.scss */
 .breadcrumb-nav:after {
   content: ' | ';
 }
 
-/* line 182, ../sass/screen.scss */
+/* line 202, ../sass/screen.scss */
 .breadcrumb-nav:last-child:after {
   content: '';
 }
 
-/* line 187, ../sass/screen.scss */
+/* line 207, ../sass/screen.scss */
 .breadcrumb-empty {
   margin-left: 20px;
 }
 
 /* ADMIN PANEL-SPECIFIC */
-/* line 194, ../sass/screen.scss */
+/* line 214, ../sass/screen.scss */
 #admin-nav li {
   display: list-item;
   min-width: 25%;
@@ -187,32 +195,32 @@ h1 {
   text-align: center;
 }
 
-/* line 206, ../sass/screen.scss */
+/* line 226, ../sass/screen.scss */
 #survey-existing {
   margin-top: 30px;
   margin-bottom: 30px;
 }
 
-/* line 212, ../sass/screen.scss */
+/* line 232, ../sass/screen.scss */
 #survey-existing li {
   max-width: 100% !important;
 }
 
-/* line 217, ../sass/screen.scss */
+/* line 237, ../sass/screen.scss */
 .secondary {
   color: white;
   background-color: grey;
 }
 
 /* SURVEY BUILDER */
-/* line 225, ../sass/screen.scss */
+/* line 245, ../sass/screen.scss */
 #survey-questions {
   padding: 20px;
   border: 1px solid #cccccc;
   margin-top: 0;
 }
 
-/* line 233, ../sass/screen.scss */
+/* line 253, ../sass/screen.scss */
 #survey-questions h3 {
   width: 100%;
   background-color: #eeeeee;
@@ -221,14 +229,14 @@ h1 {
   margin-top: -20px;
 }
 
-/* line 242, ../sass/screen.scss */
+/* line 262, ../sass/screen.scss */
 .survey-question {
   height: auto;
   overflow: auto;
   background-color: white;
 }
 
-/* line 250, ../sass/screen.scss */
+/* line 270, ../sass/screen.scss */
 #add-question-wrapper {
   border-top: 1px solid #cccccc;
   padding-top: 20px;
@@ -237,14 +245,14 @@ h1 {
   margin-right: -20px;
 }
 
-/* line 259, ../sass/screen.scss */
+/* line 279, ../sass/screen.scss */
 #add-question {
   margin-left: 20px;
   background-color: white;
   margin-top: 10px;
 }
 
-/* line 266, ../sass/screen.scss */
+/* line 286, ../sass/screen.scss */
 .delete-survey,
 .delete-option,
 .delete {
@@ -253,7 +261,7 @@ h1 {
   margin-left: 5px;
 }
 
-/* line 275, ../sass/screen.scss */
+/* line 295, ../sass/screen.scss */
 .sortable-placeholder {
   border: 1px solid #e0e0e0;
   list-style: none;
@@ -261,13 +269,13 @@ h1 {
   background-color: #e0e0e0;
 }
 
-/* line 283, ../sass/screen.scss */
+/* line 303, ../sass/screen.scss */
 .dragger img {
   width: 40px;
   height: auto;
 }
 
-/* line 289, ../sass/screen.scss */
+/* line 309, ../sass/screen.scss */
 .ui-sortable-handle,
 #survey-nav li,
 li.survey-question {
@@ -275,56 +283,52 @@ li.survey-question {
 }
 
 /* DASHBOARD */
-/* line 299, ../sass/screen.scss */
+/* line 319, ../sass/screen.scss */
 canvas {
   width: 90%;
   height: 200px;
 }
 
-/* line 306, ../sass/screen.scss */
+/* line 326, ../sass/screen.scss */
 .panel {
-  border: 5px solid #cacaca;
+  border: 5px solid #f7fafa;
   height: 300px;
   margin: 5px;
 }
 
-/* line 313, ../sass/screen.scss */
+/* line 333, ../sass/screen.scss */
 .double-height {
   height: 610px;
 }
 
-/* line 318, ../sass/screen.scss */
+/* line 338, ../sass/screen.scss */
 .double-height canvas {
   height: 500px;
 }
 
-/* line 323, ../sass/screen.scss */
+/* line 343, ../sass/screen.scss */
 .content-container {
   padding: 10px;
   text-align: center;
   margin: 0 auto;
   vertical-align: middle;
+  height: 200px;
 }
 
-/* line 331, ../sass/screen.scss */
+/* line 352, ../sass/screen.scss */
 .first-panel {
   margin-left: 0 !important;
 }
 
-/* line 336, ../sass/screen.scss */
+/* line 357, ../sass/screen.scss */
 .headline {
-  background-color: #cacaca;
-  color: white;
+  background-color: #f7fafa;
+  color: #1a1a1a;
   padding: 10px;
   font-weight: bold;
 }
 
-/* line 345, ../sass/screen.scss */
-.content-container {
-  height: 200px;
-}
-
-/* line 351, ../sass/screen.scss */
+/* line 366, ../sass/screen.scss */
 .details {
   position: relative;
   background-color: #f7fafa;
@@ -333,17 +337,14 @@ canvas {
   padding-bottom: 1px;
 }
 
-/* line 361, ../sass/screen.scss */
+/* line 376, ../sass/screen.scss */
 .details a {
-  color: #4bc3ff;
   text-transform: uppercase;
-  font-weight: bold;
   font-size: 11px;
-  font-weight: 600;
   letter-spacing: .1rem;
 }
 
-/* line 371, ../sass/screen.scss */
+/* line 384, ../sass/screen.scss */
 #star-rating {
   padding-top: 50px;
 }
