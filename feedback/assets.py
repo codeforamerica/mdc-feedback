@@ -33,7 +33,7 @@ css = Bundle(
     "css/remodal-default-theme.css",
     "css/style.css",
     "css/ie.css",
-    "css/screen.css"
+    "css/screen.css",
     output="public/css/common.css"
 )
 
