@@ -2,6 +2,33 @@ $(document).ready(function() {
 	
 	console.log('hello world');
 	
+	/************************* dashboard css *************************/
+	
+	$('.headline').each(function() {
+		
+		
+		
+		var h = $(this).height();
+		var container = $(this).parent().find('.content-container');		
+		var details = $(this).parent().find('.details');		
+		
+		console.log('headline is ', h, details.height() )
+		//a single line of text is 25px high.
+		//if we have a 2x tall headline, need to reposition .details
+		//we do this by adjusting .content-container height
+		if(h > 25) {
+			
+			var offset = 300 - h - details.height() * 2 - 26;	//300 is fixed height, 20 is padding
+			console.log(offset);
+			
+			$(container).css('height', offset);
+			
+			
+		}
+		
+		$(details).removeClass("invisible-button");
+		
+	})
 	/************************* ADMIN PANEL *************************/
 	
 	window.REMODAL_GLOBALS = {
@@ -392,6 +419,7 @@ $(document).ready(function() {
 				
 		$.ajax({
 		  url: "https://opendata.miamidade.gov/resource/awsz-tanw.json?$select=date_trunc_ym(issuedate)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=2",
+		  
 		  context: document.body
 		}).done(function(data) {
 		 			 
@@ -438,6 +466,60 @@ $(document).ready(function() {
 			var myLineChart = new Chart(ctx2).Line(d);
 
 		});
+	
+	
+	/* VIOLATIONS */
+	
+	$.ajax({
+		  url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1",
+		  
+		  context: document.body
+		}).done(function(data) {
+		 			 
+			var ctx3 = $("#violations").get(0).getContext("2d");
+			//console.log(data);
+			
+			var series = [];
+			var datetime = [];
+			
+			for(var i = 0; i < data.length; i++) {
+				
+				datetime.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
+				series.push(data[i].total);
+				
+			}
+			
+			//socrata pushes the data backwards. fix that.
+			datetime.reverse();
+			series.reverse();
+			
+			var d3 = {
+					labels:datetime,
+			    datasets: [
+			        {
+			            label: "My First dataset",
+			            scaleOverride: true,
+			            scaleSteps: 50,
+									scaleStepWidth: 200,
+			            scaleBeginAtZero:true,
+			            scaleStartValue:0,
+			            fillColor: "rgba(220,220,220,0.2)",
+			            strokeColor: "rgba(220,220,220,1)",
+			            pointColor: "rgba(220,220,220,1)",
+			            pointStrokeColor: "#fff",
+			            pointHighlightFill: "#fff",
+			            pointHighlightStroke: "rgba(220,220,220,1)",
+			            data: series
+			            
+			        }
+			        
+			    ]
+			};
+			
+			var myLineChart = new Chart(ctx3).Line(d3);
+
+		});
+		
 	
 	/***************************** star ratings *****************************/
 	
