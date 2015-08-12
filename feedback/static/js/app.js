@@ -2,6 +2,33 @@ $(document).ready(function() {
 	
 	console.log('hello world');
 	
+	/************************* dashboard css *************************/
+	
+	$('.headline').each(function() {
+		
+		
+		
+		var h = $(this).height();
+		var container = $(this).parent().find('.content-container');		
+		var details = $(this).parent().find('.details');		
+		
+		console.log('headline is ', h, details.height() )
+		//a single line of text is 25px high.
+		//if we have a 2x tall headline, need to reposition .details
+		//we do this by adjusting .content-container height
+		if(h > 25) {
+			
+			var offset = 300 - h - details.height() * 2 - 26;	//300 is fixed height, 20 is padding
+			console.log(offset);
+			
+			$(container).css('height', offset);
+			
+			
+		}
+		
+		$(details).removeClass("invisible-button");
+		
+	})
 	/************************* ADMIN PANEL *************************/
 	
 	window.REMODAL_GLOBALS = {

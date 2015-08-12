@@ -11,7 +11,7 @@
 	<div class='six columns panel first-panel'>
 
 		<!-- the data -->
-		<p class='hidden'>{{ dash_obj[0].data.new_reviews }}</p>
+		<p class='invisible'>{{ dash_obj[0].data.new_reviews }}</p>
 
 		<!-- the content -->
 		<div class='headline'>{{ dash_obj[0].title }}</div>
@@ -20,7 +20,7 @@
 			<canvas id='myChart'></canvas>
 		</div>
 
-		<p class='details'><a href=#>View Details</a></p>
+		<p class='details invisible-button'><a href=#>View Details</a></p>
 
 	</div>
 
@@ -33,12 +33,12 @@
 			<div class='content-container'>
 				<div id='star-rating'>
 					<!-- data & display -->
-					<p class='hidden'>{{ dash_obj[1].data }}</p>
+					<p class='invisible'>{{ dash_obj[1].data }}</p>
 				</div>
 				<p class='label'>Visitors to the PIC are rating their experience as {{ dash_obj[1].data }} out of seven stars.</p>
 			</div>
 
-			<p class='details'><a href=#>View Details</a></p>
+			<p class='details invisible-button'><a href=#>View Details</a></p>
 
 		</div>
 
@@ -50,7 +50,7 @@
 				<canvas id='surveyChart'></canvas>
 			</div>
 
-			<p class='details'><a href=#>View Details</a></p>
+			<p class='details invisible-button'><a href=#>View Details</a></p>
 		</div>
 
 	</div>
@@ -69,6 +69,8 @@
 				<canvas id='openPermits'></canvas>
 			</div>
 
+			<p class='details invisible-button'><a href=#>View Details</a></p>
+			
 		</div>
 		
 	<div class='six columns'>
@@ -78,17 +80,17 @@
 			<div class='headline'>Average # of inspections per permit - Last 30 Days</div>
 			<div class='content-container'>
 				<p>data</p>
-				<a href=#>View Details</a>
 			</div>
+			<p class='details invisible-button'><a href=#>View Details</a></p>
 		</div>
 
 		<div class='six columns panel'>
 
 			<div class='headline'>% of Permits Completed Within 15 Days</div>
 			<div class='content-container'>
-				<p>data</p>
-				<a href=#>View Details</a>
+				data
 			</div>
+			<p class='details invisible-button'><a href=#>View Details</a></p>
 
 		</div>
 
@@ -97,9 +99,9 @@
 			<div class='headline'>Cost per permit / Average</div>
 			<div class='content-container'>
 				<p>data</p>
-				<a href=#>View Details</a>
 			</div>
-
+			<p class='details invisible-button'><a href=#>View Details</a></p>
+			
 		</div>
 		
 		<div class='six columns panel'>
@@ -107,9 +109,9 @@
 			<div class='headline'>Average # of inspections per permit - Last 30 Days</div>
 			<div class='content-container'>
 				<p>data</p>
-				<a href=#>View Details</a>
+				
 			</div>
-
+			<p class='details invisible-button'><a href=#>View Details</a></p>
 		</div>
 
 	</div>
@@ -172,8 +174,8 @@
 			<div class='headline'>Violations in the Past 30 Days (???% Change YOY)</div>
 			<div class='content-container'>
 				<p>data</p>
-				<a href=#>View Details</a>
 			</div>
+			<p class='details invisible-button'><a href=#>View Details</a></p>
 			
 		</div>
 
@@ -182,8 +184,8 @@
 			<div class='headline'>Cases closed in the Past 30 Days (???% Change YOY)</div>
 			<div class='content-container'>
 				<p>data</p>
-				<a href=#>View Details</a>
 			</div>
+			<p class='details invisible-button'><a href=#>View Details</a></p>
 			
 		</div>
 
@@ -192,9 +194,8 @@
 			<div class='headline'>Building regulation</div>
 			<div class='content-container'>
 				<p>data</p>
-				<a href=#>View Details</a>
 			</div>
-			
+			<p class='details invisible-button'><a href=#>View Details</a></p>
 
 		</div>
 
@@ -203,9 +204,9 @@
 			<div class='headline'>Violation Type</div>
 			<div class='content-container'>
 				<p>data</p>
-				<a href=#>View Details</a>
 			</div>
-
+			<p class='details invisible-button'><a href=#>View Details</a></p>
+			
 		</div>
 
 	</div>
@@ -216,8 +217,8 @@
 		<div class='content-container'>
 			<iframe width="500px" title="RER-311-map" height="425px" src="https://opendata.miamidade.gov/w/mdve-y46a/e65f-pfdb?cur=qBqigp1ooiQ&from=root" frameborder="0"scrolling="no"><a href="https://opendata.miamidade.gov/311/RER-311-map/mdve-y46a" title="RER-311-map" target="_blank">RER-311-map</a></iframe>
 		
-			<p><a href=#>View Details</a></p>
 		</div>
+		<p class='details invisible-button'><a href=#>View Details</a></p>
 	</div>
 
 </section> <!-- close row -->
