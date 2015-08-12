@@ -108,6 +108,20 @@ ul li {
 	
 }
 
+.main-nav {
+	
+	text-align: right;
+}
+.main-nav li {
+	
+	display:inline;
+}
+
+.main-nav li:first-child:after {
+	
+	content: ' | ';
+	
+}
 section {
 	
 	margin-top:30px;

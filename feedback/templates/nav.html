@@ -1,29 +1,28 @@
 <header class='row'>
-  	<div class='u-pull-left four columns'>
+  	<div class='three columns'>
 
 			<a id='logo' href="{{ url_for('dashboard.home') }}"><img src="{{ url_for('static', filename='miami-logo-white.png') }}"></a>
 	</div>
 
-	<div class='four columns'>
+	<div class='six columns'>
 
 			<h3 id='header-date'>{{ date }}</h3>
 	</div>
 
-	<div class='u-pull-right four columns'>
+	<div class='three columns'>
 
 		{% if current_user and current_user.is_authenticated() %}
 
-		<ul>
+		<ul class='main-nav'>
 			<li id='sign-out'><a href="#" class="navbar-link js-signout">Sign Out</a></li>
 			<li id='admin'>Logged in as <a id='admin' href="{{ url_for('user.profile') }}">Admin</a></li>
 		</ul>
 
 		{% else %}
 
-		<ul>
-			<li><p class="navbar-text"><a href="#" class="navbar-link js-signin">Sign In</a></p></li>
-			<!-- temporary to get around localhost crap -->
-			<a href='admin'>Admin panel</a>
+		<ul class='main-nav'>
+			<li><a href="#" class="navbar-link js-signin">Sign In</a></li>
+			<li><a href='admin'>Admin panel</a></li>
 		</ul>
 
 		{% endif %}
