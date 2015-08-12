@@ -2,3 +2,4 @@
 *.py[cod]
 *.sqlite
 feedback/static/.webassets-cache/
+.sass-cache/
