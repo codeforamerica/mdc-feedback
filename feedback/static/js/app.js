@@ -1,12 +1,8 @@
 $(document).ready(function() {
-	
-	console.log('hello world');
-	
+
 	/************************* dashboard css *************************/
 	
 	$('.headline').each(function() {
-		
-		
 		
 		var h = $(this).height();
 		var container = $(this).parent().find('.content-container');		
@@ -349,7 +345,18 @@ $(document).ready(function() {
 	
 	/***************************** CHARTS! *****************************/
 	
-	console.log("DASH: ", $('#dashboard')[0]);	
+	var green = "rgba(76, 216, 132, 1)";
+	var t_green = "rgba(76, 216, 132, 0.2)";
+	
+	var yellow = "rgba(245, 201, 61, 1)";
+	var t_yellow = "rgba(245, 201, 61, 0.2)";
+	
+	var orange = "rgba(243, 155, 121, 1)";
+	var t_orange = "rgba(243, 155, 121, 0.2)";
+	
+	var purple = "rgba(61, 51, 119, 1)";
+	var t_purple = "rgba(61, 51, 119, 0.2)";
+	
 	
 	if($("#dashboard")[0] != undefined) {
 		
@@ -368,9 +375,9 @@ $(document).ready(function() {
 	    datasets: [
 	        {
 	            label: "My First dataset",
-	            fillColor: "rgba(220,220,220,0.2)",
-	            strokeColor: "rgba(220,220,220,1)",
-	            pointColor: "rgba(220,220,220,1)",
+	            fillColor: t_orange,
+	            strokeColor: orange,
+	            pointColor: orange,
 	            pointStrokeColor: "#fff",
 	            pointHighlightFill: "#fff",
 	            pointHighlightStroke: "rgba(220,220,220,1)",
@@ -388,26 +395,26 @@ $(document).ready(function() {
 	var pieData = [
     {
         value: surveyData.web_en,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
+        color:orange,
+        highlight: t_orange,
         label: "Typeform - English"
     },
     {
         value: surveyData.web_es,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
+        color: purple,
+        highlight: t_purple,
         label: "Typeform - Spanish"
     },
     {
         value: surveyData.sms_en,
-        color: "#FDB45C",
-        highlight: "#FFC870",
+        color: yellow,
+        highlight: t_yellow,
         label: "TextItIn - English"
     },
     {
 	    	value: surveyData.sms_es,
-        color: "#000",
-        highlight: "#FFC870",
+        color: green,
+        highlight: t_green,
         label: "TextItIn - Spanish"
 	    
     }
@@ -450,9 +457,9 @@ $(document).ready(function() {
 									scaleStepWidth: 200,
 			            scaleBeginAtZero:true,
 			            scaleStartValue:0,
-			            fillColor: "rgba(220,220,220,0.2)",
-			            strokeColor: "rgba(220,220,220,1)",
-			            pointColor: "rgba(220,220,220,1)",
+			            fillColor: t_orange,
+									strokeColor: orange,
+									pointColor: orange,
 			            pointStrokeColor: "#fff",
 			            pointHighlightFill: "#fff",
 			            pointHighlightStroke: "rgba(220,220,220,1)",
@@ -503,12 +510,12 @@ $(document).ready(function() {
 									scaleStepWidth: 200,
 			            scaleBeginAtZero:true,
 			            scaleStartValue:0,
-			            fillColor: "rgba(220,220,220,0.2)",
-			            strokeColor: "rgba(220,220,220,1)",
-			            pointColor: "rgba(220,220,220,1)",
+			            fillColor: t_purple,
+			            strokeColor: purple,
+			            pointColor: purple,
 			            pointStrokeColor: "#fff",
 			            pointHighlightFill: "#fff",
-			            pointHighlightStroke: "rgba(220,220,220,1)",
+			            pointHighlightStroke: purple,
 			            data: series
 			            
 			        }
