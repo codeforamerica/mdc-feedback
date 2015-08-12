@@ -1,0 +1,500 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+
+/* blue: #4bc3ff */
+
+/* OVERRIDES */
+.column,
+.columns {
+	
+	margin-left:0;
+}
+
+/* SOPHIA STUFF */
+/* TYPOGRAPHY */
+
+body {
+	
+	font-size:16px;
+}
+
+h1 {
+	
+	margin-bottom:0;
+}
+
+.bold {
+	
+	font-weight:bold;
+}
+
+.tiny {
+	
+	font-size:.5em;
+}
+
+.huge {
+	
+	font-size:3em;
+	
+}
+/* END TYPOGRAPHY */
+
+body {
+	
+	margin:0 auto;
+	text-align: center;
+}
+
+header {
+	
+	width:100%;
+	background-color: #4BC3FF;
+	color:white;
+	padding-top:30px;
+	padding-bottom:20px;
+	margin-bottom:20px;
+	height:auto;
+	overflow: auto;
+}
+
+header a {
+	
+	color:white;
+}
+
+footer div,
+header div {
+	
+	width:80%;
+	text-align: center;
+	margin:0 auto;
+}
+
+footer {
+	
+	width:100%;
+	background-color:#d1d1d1;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+
+footer p {
+	
+	padding:0;
+	margin:0;
+	line-height: normal;
+}
+
+ul li {
+	
+	display:inline;
+}
+
+.hidden {
+	
+	display:none !important;
+}
+
+/* when you need it invisible but taking up space */
+.invisible {
+	
+	visibility:collapse;
+}
+
+#container {
+	
+	width:90%;
+	min-height:800px;
+	padding:10px;
+	margin:0 auto;
+	
+}
+
+.main-nav {
+	
+	text-align: right;
+}
+.main-nav li {
+	
+	display:inline;
+}
+
+.main-nav li:first-child:after {
+	
+	content: ' | ';
+	
+}
+section {
+	
+	margin-top:30px;
+	margin-bottom:30px;
+	padding-bottom:30px;
+	text-align: left;
+}
+
+section:last-child {
+	
+	border-bottom:0;
+}
+
+.active {
+	
+	background-color:#4BC3FF;
+	color:white !important;
+	border-color:#4BC3FF;
+}
+
+.button {
+	
+	min-height:38px !important;
+	height: auto !important;
+}
+
+/* Admin panel */
+
+#admin-nav {
+	
+}
+
+#admin-nav li {
+	
+	display:list-item;
+	min-width:25%;
+	max-width:40%;
+	list-style:none;
+	margin:0 auto;
+	margin-top:10px;
+	margin-bottom:10px;
+	text-align: center;
+}
+
+#survey-existing {
+	
+	margin-top:30px;
+	margin-bottom:30px;
+}
+
+#survey-existing li {
+	
+	max-width:100% !important;
+}
+
+.secondary {
+	
+	color:white;
+	background-color:grey;
+}
+
+
+/* SURVEY BUILDER */
+
+#survey-questions {
+	
+	padding:20px;
+	border:1px solid #cccccc;
+	margin-top:0;
+	
+}
+
+#survey-questions h3 {
+	
+	width:100%;
+	background-color:#eeeeee;
+	padding:20px;
+	margin-left:-20px;
+	margin-top:-20px;
+	}
+	
+.survey-question {
+	
+	height:auto;
+	overflow: auto;
+	background-color:white;
+	
+}
+
+#add-question-wrapper {
+	
+	border-top:1px solid #cccccc;
+	padding-top:20px;
+	padding-bottom:0px;
+	margin-left:-20px;
+	margin-right:-20px;
+}
+
+#add-question {
+	
+	margin-left:20px;
+	background-color:white;
+	margin-top:10px;
+}
+
+.delete-survey,
+.delete-option,
+.delete {
+	
+	color:white;
+	background-color:red;
+	margin-left:5px;
+}
+
+.sortable-placeholder {
+
+	border:1px solid #e0e0e0;
+	list-style:none;
+	height:150px;
+	background-color:#e0e0e0;
+}
+
+.dragger img {
+	
+	width:40px;
+	height:auto;
+}
+
+.ui-sortable-handle,
+#survey-nav li,
+li.survey-question {
+	
+	list-style: none;
+	
+}
+
+
+/* DASHBOARD */
+
+canvas {
+	
+	width:90%;
+	height:200px;
+	
+}
+.panel {
+	
+	border:5px solid #cacaca;
+	height:300px;
+	margin:5px;
+}
+
+.double-height {
+	
+	height:610px;
+}
+
+.double-height canvas {
+	
+	height:500px;
+}
+
+.content-container {
+	
+	padding:10px;
+	text-align: center;
+	margin:0 auto;
+	vertical-align: middle;
+}
+
+.first-panel {
+	
+	margin-left:0 !important;
+}
+
+.headline {
+	
+	background-color:#cacaca;
+	color:white;
+	padding:10px;
+	font-weight:bold;
+	
+}
+
+.content-container {
+	
+	height:200px;
+	
+}
+
+.details {
+	
+	position:relative;
+	background-color: #f7fafa;
+	text-align: center;
+	margin:0 auto;
+	padding-bottom:1px;
+	
+}
+
+.details a {
+	
+	color:#4bc3ff;
+	text-transform: uppercase;
+	font-weight:bold;
+	font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1rem;
+}
+
+#star-rating {
+	
+	padding-top:50px;
+}
+/* NAV */
+
+#logo img{
+	
+	width:150px;
+	height:auto;
+}
+
+
+#breadcrumb {
+	
+	margin-left:5%;
+}
+
+#breadcrumb-nav-parent {
+	
+	margin-right:10%;
+}
+
+.breadcrumb-nav:after {
+	
+	content: ' | ';
+	
+}
+
+.breadcrumb-nav:last-child:after {
+	
+	content: '';
+}
+
+.breadcrumb-empty {
+	
+	margin-left:20px;
+}
+/* -------------------------------------------- end sophia stuff -------------------------------------------- */
+
+
+
+/* TYPOGRAPHY */
+/*
+ * Base structure
+ */
+
+#container .row,
+#container .columns {
+	
+	text-align: left;
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.bold {
+
+  font-weight:bold;
+}
+
+.tiny {
+
+  font-size:.5em;
+}
+/* END TYPOGRAPHY */
