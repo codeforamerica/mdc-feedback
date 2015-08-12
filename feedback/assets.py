@@ -26,12 +26,12 @@ js = Bundle(
 '''
 
 css = Bundle(
+		"css/ie.css",
     "css/normalize.css",
     "css/skeleton.css",
     "css/jquery.raty.css",
     "css/remodal.css",
     "css/remodal-default-theme.css",
-    "css/ie.css",
     "css/screen.css",
     output="public/css/common.css"
 )
