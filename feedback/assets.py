@@ -31,7 +31,6 @@ css = Bundle(
     "css/jquery.raty.css",
     "css/remodal.css",
     "css/remodal-default-theme.css",
-    "css/style.css",
     "css/ie.css",
     "css/screen.css",
     output="public/css/common.css"
