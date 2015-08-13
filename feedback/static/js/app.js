@@ -583,31 +583,77 @@ $(document).ready(function() {
         });
 			}
 			
-			//var issues = [{title: ' ', count: 0}]; //gets objects with title: "title", count: int
-	
-			/*for(var i = 0; i < issuesRaw.length; i++) {
+			//sort the array by name	
+			issuesRaw.sort(SortByName);
+			var obj = {title: '', count: 1};
+			var current = '';
+			var newA = [obj];
+			
+			console.log('BEFORE: ', newA.length);
+			
+			for(var i = 0; i < issuesRaw.length; i++) {
 				
-				console.log(issues.length, issuesRaw[i] != issues[0].title);
+				//console.log(issuesRaw[i], current)
 				
-				/*$.each(issues, function( index, title ) {
+				if(issuesRaw[i] != current) {
 					
-					if(issuesRaw[i] != title) {
-						
-						console.log('hello world');
-					}
-				  alert( index + ": " + title );
-				  
-				});
+					current = issuesRaw[i];
+					
+					var nobj = {};
+					nobj.title = issuesRaw[i];
+					nobj.count = 1;
+					obj = nobj;
+					newA.push(obj);
+					//console.log(issuesRaw[i], current)
+					//console.log('newA:', newA.length)
+					
+				} else {
+					
+					obj.count++;
+					//console.log("THE SAME: ", obj.title, obj.count)
+					
+				}
 				
-				console.log(issues.length);
-							
 			}
 			
-			}*/
+			newA.reverse();
 			
+			var labels = [];
+			var dataset = [];
+			
+			for(var i = 0; i < newA.length; i++) {
+				
+				labels[i] = newA[i].title;
+				dataset[i] = newA[i].count;
+				
+			}			
+			var bctx = $("#viotype").get(0).getContext("2d");
+			
+			var bdata = {
+			    labels: labels,
+			    datasets: [
+			        {
+			            label: "My First dataset",
+			            fillColor: t_purple,
+			            strokeColor: purple,
+			            data: dataset
+			        },
+			        
+			    ]
+			};
+
+			//var myBarChart = new Chart(bctx).Bar(bdata);
+			var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata	);
 		})
 	
-		
+		//This will sort your array
+		function SortByName(a, b){
+		  var aName = a.toLowerCase();
+		  var bName = b.toLowerCase(); 
+		  return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+		}
+
+
 	
 	/***************************** star ratings *****************************/
 	
