@@ -585,7 +585,7 @@ $(document).ready(function() {
 			
 			//sort the array by name	
 			issuesRaw.sort(SortByName);
-			var obj = {title: '', count: 0};
+			var obj = {title: '', count: 1};
 			var current = '';
 			var newA = [obj];
 			
@@ -601,7 +601,7 @@ $(document).ready(function() {
 					
 					var nobj = {};
 					nobj.title = issuesRaw[i];
-					nobj.count = 0;
+					nobj.count = 1;
 					obj = nobj;
 					newA.push(obj);
 					//console.log(issuesRaw[i], current)
