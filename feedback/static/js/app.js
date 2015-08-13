@@ -25,6 +25,23 @@ $(document).ready(function() {
 		$(details).removeClass("invisible-button");
 		
 	})
+	
+	
+	/************************* LEAFLET MAPPING *************************/
+	
+	//
+	//25.7667° N, 80.2000° W
+
+	var map = L.map('leaflet').setView([25.7667, -80.2000], 10);
+	
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'phiden.e64a2341',
+    accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
+}).addTo(map);
+
+
 	/************************* ADMIN PANEL *************************/
 	
 	window.REMODAL_GLOBALS = {
