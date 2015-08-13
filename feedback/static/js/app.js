@@ -366,11 +366,11 @@ $(document).ready(function() {
 	var ctx = $("#myChart").get(0).getContext("2d");
 
 	var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
-	console.log(jsondata);
+	//console.log(jsondata);
 	
 	var series = jsondata.series[0].data;
 	var datetime = jsondata.datetime.data;
-	console.log(series, datetime);
+	//console.log(series, datetime);
 
 	var data = {
 	    labels: datetime,
@@ -532,7 +532,6 @@ $(document).ready(function() {
 	/************************* LEAFLET MAPPING *************************/
 	
 	//25.7667° N, 80.2000° W
-
 	var map = L.map('leaflet').setView([25.7667, -80.2000], 10);
 	
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -544,13 +543,15 @@ $(document).ready(function() {
 
 	//var marker = L.marker([51.5, -0.09]).addTo(map);
 	
+	var issuesRaw = [];	
+
 	$.ajax({
 		  url: "https://opendata.miamidade.gov/resource/tzia-umkx.json",
 		  
 		  context: document.body
 		}).done(function(data) {
 			
-			//console.log(data);
+			console.log(data[0]);
 			//console.log(data[0].location.latitude);
 			
 			for(var i = 0; i < data.length; i++) {
@@ -562,7 +563,7 @@ $(document).ready(function() {
 				var color = yellow;
 				var title = data[i].issue_type;
 				
-				//console.log(title);
+				issuesRaw.push(title);
 				
 				var marker = L.circleMarker([lat, lon], {
 		        radius: 5,
@@ -581,6 +582,29 @@ $(document).ready(function() {
             this.closePopup();
         });
 			}
+			
+			//var issues = [{title: ' ', count: 0}]; //gets objects with title: "title", count: int
+	
+			/*for(var i = 0; i < issuesRaw.length; i++) {
+				
+				console.log(issues.length, issuesRaw[i] != issues[0].title);
+				
+				/*$.each(issues, function( index, title ) {
+					
+					if(issuesRaw[i] != title) {
+						
+						console.log('hello world');
+					}
+				  alert( index + ": " + title );
+				  
+				});
+				
+				console.log(issues.length);
+							
+			}
+			
+			}*/
+			
 		})
 	
 		
