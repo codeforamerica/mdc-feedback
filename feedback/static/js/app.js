@@ -616,6 +616,7 @@ $(document).ready(function() {
 				
 			}
 			
+			newA.reverse();
 			
 			var labels = [];
 			var dataset = [];
@@ -642,7 +643,7 @@ $(document).ready(function() {
 			};
 
 			//var myBarChart = new Chart(bctx).Bar(bdata);
-			var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
+			var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata	);
 		})
 	
 		//This will sort your array
