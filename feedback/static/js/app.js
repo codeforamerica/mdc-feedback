@@ -25,6 +25,8 @@ $(document).ready(function() {
 		$(details).removeClass("invisible-button");
 		
 	})
+	
+	
 	/************************* ADMIN PANEL *************************/
 	
 	window.REMODAL_GLOBALS = {
@@ -526,6 +528,61 @@ $(document).ready(function() {
 			var myLineChart = new Chart(ctx3).Line(d3);
 
 		});
+		
+	/************************* LEAFLET MAPPING *************************/
+	
+	//25.7667° N, 80.2000° W
+
+	var map = L.map('leaflet').setView([25.7667, -80.2000], 10);
+	
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'phiden.e64a2341',
+    accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
+}).addTo(map);
+
+	//var marker = L.marker([51.5, -0.09]).addTo(map);
+	
+	$.ajax({
+		  url: "https://opendata.miamidade.gov/resource/tzia-umkx.json",
+		  
+		  context: document.body
+		}).done(function(data) {
+			
+			//console.log(data);
+			//console.log(data[0].location.latitude);
+			
+			for(var i = 0; i < data.length; i++) {
+				
+				var lat = data[i].location.latitude;
+				var lon = data[i].location.longitude;
+				var openClosed = data[i].ticket_status;
+				var fill = t_yellow;
+				var color = yellow;
+				var title = data[i].issue_type;
+				
+				//console.log(title);
+				
+				var marker = L.circleMarker([lat, lon], {
+		        radius: 5,
+		        fillColor: fill,
+		        color: color,
+		        weight: 1,
+		        opacity: 1,
+		        fillOpacity: 0.8
+		    }).addTo(map);
+			
+				marker.bindPopup(title);
+        marker.on('mouseover', function (e) {
+            this.openPopup();
+        });
+        marker.on('mouseout', function (e) {
+            this.closePopup();
+        });
+			}
+		})
+	
 		
 	
 	/***************************** star ratings *****************************/

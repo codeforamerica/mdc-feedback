@@ -329,12 +329,18 @@ canvas {
   height: 510px;
 }
 
-/* line 370, ../sass/screen.scss */
+/* line 371, ../sass/screen.scss */
+#leaflet {
+  height: inherit;
+  width: inherit;
+}
+
+/* line 378, ../sass/screen.scss */
 .first-panel {
   margin-left: 0 !important;
 }
 
-/* line 375, ../sass/screen.scss */
+/* line 383, ../sass/screen.scss */
 .headline {
   background-color: #f7fafa;
   color: #1a1a1a;
@@ -342,7 +348,7 @@ canvas {
   font-weight: bold;
 }
 
-/* line 384, ../sass/screen.scss */
+/* line 392, ../sass/screen.scss */
 .details {
   background-color: #f7fafa;
   text-align: center;
@@ -350,14 +356,14 @@ canvas {
   padding-bottom: 1px;
 }
 
-/* line 394, ../sass/screen.scss */
+/* line 402, ../sass/screen.scss */
 .details a {
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: .1rem;
 }
 
-/* line 402, ../sass/screen.scss */
+/* line 410, ../sass/screen.scss */
 #star-rating {
   padding-top: 50px;
 }
