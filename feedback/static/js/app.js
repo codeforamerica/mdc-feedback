@@ -664,7 +664,7 @@ $(document).ready(function() {
 	$('#star-rating').raty({
 		score: function() {
 			console.log($(this).find('.hidden').text(), 'is value')
-			return $(this).find('.hidden').text();
+			return $(this).find('.invisible').text();
 		},
 		path: 'static/images',
 		half: true,
