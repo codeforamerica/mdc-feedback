@@ -1,5 +1,11 @@
 .DS_Store
 *.py[cod]
 *.sqlite
-feedback/static/.webassets-cache/
-.sass-cache/
+.webassets-cache
+.sass-cache
+
+# Flask-assets output
+common.css
+ie.css
+print.css
+screen.css

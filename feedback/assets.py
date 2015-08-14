@@ -2,7 +2,7 @@
 from flask_assets import Bundle, Environment
 
 css = Bundle(
-		"css/ie.css",
+	"css/ie.css",
     "css/normalize.css",
     "css/skeleton.css",
     "css/jquery.raty.css",
