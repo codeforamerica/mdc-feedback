@@ -172,12 +172,18 @@ dashboard_obj = [
             "web_es": web_es,
             "sms_en": sms_en,
             "sms_es": sms_es
+        },
+        "labels": {
+            "web_en": "Web (EN)",
+            "web_es": "Web (ES)",
+            "sms_en": "SMS (EN)",
+            "sms_es": "SMS (ES)"
         }
     }
 ]
 
 json_obj['test'] = json.dumps(dashboard_obj[0]['data']['graph'])
-json_obj['surveys_type'] = json.dumps(dashboard_obj[2]['data'])
+json_obj['surveys_type'] = json.dumps(dashboard_obj[2])
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
