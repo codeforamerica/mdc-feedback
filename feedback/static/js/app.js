@@ -392,36 +392,40 @@ $(document).ready(function() {
 
 	var myLineChart = new Chart(ctx).Line(data);
 	var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
+	
+	console.log(surveyData);
+	
 	var	pctx = $("#surveyChart").get(0).getContext("2d");
 			
 	var pieData = [
     {
-        value: surveyData.web_en,
+        value: surveyData.data.web_en,
         color:orange,
         highlight: t_orange,
-        label: "Typeform - English"
+        label: surveyData.labels.web_en
     },
     {
-        value: surveyData.web_es,
+        value: surveyData.data.web_es,
         color: purple,
         highlight: t_purple,
-        label: "Typeform - Spanish"
+        label: surveyData.labels.web_es
     },
     {
-        value: surveyData.sms_en,
+        value: surveyData.data.sms_en,
         color: yellow,
         highlight: t_yellow,
-        label: "TextItIn - English"
+        label: surveyData.labels.sms_en
     },
     {
-	    	value: surveyData.sms_es,
+	    	value: surveyData.data.sms_es,
         color: green,
         highlight: t_green,
-        label: "TextItIn - Spanish"
+        label: surveyData.labels.sms_es
 	    
     }
 	]
 	
+	$('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
 	var myPieChart = new Chart(pctx).Pie(pieData);/**/
 	
 	/* Permitting */
