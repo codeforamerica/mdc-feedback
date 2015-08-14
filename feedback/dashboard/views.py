@@ -55,7 +55,7 @@ timestamp = datetime.date.today() - datetime.timedelta(7)
 unix_time = timestamp.strftime("%s")
 
 API = TYPEFORM_API + TYPEFORM_API_KEY + '&completed=true&since=' + unix_time 
-print (API)
+#print (API)
 
 response = requests.get(API)
 json_result = response.json()

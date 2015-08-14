@@ -550,7 +550,7 @@ $(document).ready(function() {
 	var issuesRaw = [];	
 
 	$.ajax({
-		  url: "https://opendata.miamidade.gov/resource/tzia-umkx.json",
+		  url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$where=ticket_created_date_time%20%3E%20%272015-01-01%27",
 		  
 		  context: document.body
 		}).done(function(data) {
@@ -589,7 +589,7 @@ $(document).ready(function() {
 			
 			//sort the array by name	
 			issuesRaw.sort(SortByName);
-			var obj = {title: '', count: 1};
+			var obj = {title: '', count: 0};
 			var current = '';
 			var newA = [obj];
 			
@@ -627,8 +627,19 @@ $(document).ready(function() {
 			
 			for(var i = 0; i < newA.length; i++) {
 				
-				labels[i] = newA[i].title;
-				dataset[i] = newA[i].count;
+				//catch any empty objects and prevent them from displaying
+				if(newA[i].count == 0) {
+					
+					newA.splice(i,1);
+					
+				} else {
+					
+					labels[i] = newA[i].title;
+					dataset[i] = newA[i].count;
+				}
+				
+				//console.log(newA[i].count, i);
+				
 				
 			}			
 			var bctx = $("#viotype").get(0).getContext("2d");
@@ -646,7 +657,6 @@ $(document).ready(function() {
 			    ]
 			};
 
-			//var myBarChart = new Chart(bctx).Bar(bdata);
 			var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata	);
 		})
 	
@@ -664,7 +674,7 @@ $(document).ready(function() {
 	$('#star-rating').raty({
 		score: function() {
 			console.log($(this).find('.hidden').text(), 'is value')
-			return $(this).find('.hidden').text();
+			return $(this).find('.invisible').text();
 		},
 		path: 'static/images',
 		half: true,
