@@ -125,12 +125,23 @@ h1 {
 .hidden {
 	
 	display:none !important;
+	
 }
 
+/* when you need it invisible _but_ taking up space*/
+.invisible-button {
+	
+	visibility: collapse;
+	
+}
 /* when you need it invisible but taking up space */
 .invisible {
 	
 	visibility:collapse;
+	height:0;
+	margin:0;
+	padding:0;
+	
 }
 
 .active {
@@ -319,7 +330,7 @@ li.survey-question {
 canvas {
 	
 	width:90%;
-	height:200px;
+	height:192px;
 	
 }
 
@@ -328,6 +339,7 @@ canvas {
 	border:5px solid $grey;
 	height:300px;
 	margin:5px;
+	
 }
 
 .double-height {
@@ -335,9 +347,10 @@ canvas {
 	height:610px;
 }
 
+
 .double-height canvas {
 	
-	height:500px;
+	height:502px;
 }
 
 .content-container {
@@ -346,7 +359,20 @@ canvas {
 	text-align: center;
 	margin:0 auto;
 	vertical-align: middle;
-	height:200px;
+	height:199px;
+}
+
+.double-height .content-container {
+	
+	height:510px;
+	
+}
+
+#leaflet {
+	
+	height:inherit;
+	width:inherit;
+	
 }
 
 .first-panel {
@@ -365,7 +391,7 @@ canvas {
 
 .details {
 	
-	position:relative;
+	
 	background-color: #f7fafa;
 	text-align: center;
 	margin:0 auto;

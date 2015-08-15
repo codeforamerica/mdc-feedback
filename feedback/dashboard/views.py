@@ -232,8 +232,8 @@ dashboard_collection = [
     }
 ]
 
-json_obj['test'] = json.dumps(dashboard_collection[0]['data']['graph'])
-json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
+json_obj['test'] = json.dumps(dashboard_obj[0]['data']['graph'])
+json_obj['surveys_type'] = json.dumps(dashboard_obj[2])
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():

@@ -1,6 +1,31 @@
 $(document).ready(function() {
+
+	/************************* dashboard css *************************/
 	
-	console.log('hello world');
+	$('.headline').each(function() {
+		
+		var h = $(this).height();
+		var container = $(this).parent().find('.content-container');		
+		var details = $(this).parent().find('.details');		
+		
+		console.log('headline is ', h, details.height() )
+		//a single line of text is 25px high.
+		//if we have a 2x tall headline, need to reposition .details
+		//we do this by adjusting .content-container height
+		if(h > 25) {
+			
+			var offset = 300 - h - details.height() * 2 - 26;	//300 is fixed height, 20 is padding
+			console.log(offset);
+			
+			$(container).css('height', offset);
+			
+			
+		}
+		
+		$(details).removeClass("invisible-button");
+		
+	})
+	
 	
 	/************************* ADMIN PANEL *************************/
 	
@@ -322,7 +347,18 @@ $(document).ready(function() {
 	
 	/***************************** CHARTS! *****************************/
 	
-	console.log("DASH: ", $('#dashboard')[0]);	
+	var green = "rgba(76, 216, 132, 1)";
+	var t_green = "rgba(76, 216, 132, 0.2)";
+	
+	var yellow = "rgba(245, 201, 61, 1)";
+	var t_yellow = "rgba(245, 201, 61, 0.2)";
+	
+	var orange = "rgba(243, 155, 121, 1)";
+	var t_orange = "rgba(243, 155, 121, 0.2)";
+	
+	var purple = "rgba(61, 51, 119, 1)";
+	var t_purple = "rgba(61, 51, 119, 0.2)";
+	
 	
 	if($("#dashboard")[0] != undefined) {
 		
@@ -330,20 +366,20 @@ $(document).ready(function() {
 	var ctx = $("#myChart").get(0).getContext("2d");
 
 	var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
-	console.log(jsondata);
+	//console.log(jsondata);
 	
 	var series = jsondata.series[0].data;
 	var datetime = jsondata.datetime.data;
-	console.log(series, datetime);
+	//console.log(series, datetime);
 
 	var data = {
 	    labels: datetime,
 	    datasets: [
 	        {
 	            label: "My First dataset",
-	            fillColor: "rgba(220,220,220,0.2)",
-	            strokeColor: "rgba(220,220,220,1)",
-	            pointColor: "rgba(220,220,220,1)",
+	            fillColor: t_orange,
+	            strokeColor: orange,
+	            pointColor: orange,
 	            pointStrokeColor: "#fff",
 	            pointHighlightFill: "#fff",
 	            pointHighlightStroke: "rgba(220,220,220,1)",
@@ -356,42 +392,47 @@ $(document).ready(function() {
 
 	var myLineChart = new Chart(ctx).Line(data);
 	var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
+	
+	console.log(surveyData);
+	
 	var	pctx = $("#surveyChart").get(0).getContext("2d");
 			
 	var pieData = [
     {
-        value: surveyData.web_en,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: "Typeform - English"
+        value: surveyData.data.web_en,
+        color:orange,
+        highlight: t_orange,
+        label: surveyData.labels.web_en
     },
     {
-        value: surveyData.web_es,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: "Typeform - Spanish"
+        value: surveyData.data.web_es,
+        color: purple,
+        highlight: t_purple,
+        label: surveyData.labels.web_es
     },
     {
-        value: surveyData.sms_en,
-        color: "#FDB45C",
-        highlight: "#FFC870",
-        label: "TextItIn - English"
+        value: surveyData.data.sms_en,
+        color: yellow,
+        highlight: t_yellow,
+        label: surveyData.labels.sms_en
     },
     {
-	    	value: surveyData.sms_es,
-        color: "#000",
-        highlight: "#FFC870",
-        label: "TextItIn - Spanish"
+	    	value: surveyData.data.sms_es,
+        color: green,
+        highlight: t_green,
+        label: surveyData.labels.sms_es
 	    
     }
 	]
 	
+	$('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
 	var myPieChart = new Chart(pctx).Pie(pieData);/**/
 	
 	/* Permitting */
 				
 		$.ajax({
 		  url: "https://opendata.miamidade.gov/resource/awsz-tanw.json?$select=date_trunc_ym(issuedate)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=2",
+		  
 		  context: document.body
 		}).done(function(data) {
 		 			 
@@ -422,9 +463,9 @@ $(document).ready(function() {
 									scaleStepWidth: 200,
 			            scaleBeginAtZero:true,
 			            scaleStartValue:0,
-			            fillColor: "rgba(220,220,220,0.2)",
-			            strokeColor: "rgba(220,220,220,1)",
-			            pointColor: "rgba(220,220,220,1)",
+			            fillColor: t_orange,
+									strokeColor: orange,
+									pointColor: orange,
 			            pointStrokeColor: "#fff",
 			            pointHighlightFill: "#fff",
 			            pointHighlightStroke: "rgba(220,220,220,1)",
@@ -439,12 +480,201 @@ $(document).ready(function() {
 
 		});
 	
+	
+	/* VIOLATIONS */
+	
+	$.ajax({
+		  url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1",
+		  
+		  context: document.body
+		}).done(function(data) {
+		 			 
+			var ctx3 = $("#violations").get(0).getContext("2d");
+			//console.log(data);
+			
+			var series = [];
+			var datetime = [];
+			
+			for(var i = 0; i < data.length; i++) {
+				
+				datetime.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
+				series.push(data[i].total);
+				
+			}
+			
+			//socrata pushes the data backwards. fix that.
+			datetime.reverse();
+			series.reverse();
+			
+			var d3 = {
+					labels:datetime,
+			    datasets: [
+			        {
+			            label: "My First dataset",
+			            scaleOverride: true,
+			            scaleSteps: 50,
+									scaleStepWidth: 200,
+			            scaleBeginAtZero:true,
+			            scaleStartValue:0,
+			            fillColor: t_purple,
+			            strokeColor: purple,
+			            pointColor: purple,
+			            pointStrokeColor: "#fff",
+			            pointHighlightFill: "#fff",
+			            pointHighlightStroke: purple,
+			            data: series
+			            
+			        }
+			        
+			    ]
+			};
+			
+			var myLineChart = new Chart(ctx3).Line(d3);
+
+		});
+		
+	/************************* LEAFLET MAPPING *************************/
+	
+	//25.7667° N, 80.2000° W
+	var map = L.map('leaflet').setView([25.7667, -80.2000], 10);
+	
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'phiden.e64a2341',
+    accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
+}).addTo(map);
+
+	//var marker = L.marker([51.5, -0.09]).addTo(map);
+	
+	var issuesRaw = [];	
+
+	$.ajax({
+		  url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$where=ticket_created_date_time%20%3E%20%272015-01-01%27",
+		  
+		  context: document.body
+		}).done(function(data) {
+			
+			console.log(data[0]);
+			//console.log(data[0].location.latitude);
+			
+			for(var i = 0; i < data.length; i++) {
+				
+				var lat = data[i].location.latitude;
+				var lon = data[i].location.longitude;
+				var openClosed = data[i].ticket_status;
+				var fill = t_yellow;
+				var color = yellow;
+				var title = data[i].issue_type;
+				
+				issuesRaw.push(title);
+				
+				var marker = L.circleMarker([lat, lon], {
+		        radius: 5,
+		        fillColor: fill,
+		        color: color,
+		        weight: 1,
+		        opacity: 1,
+		        fillOpacity: 0.8
+		    }).addTo(map);
+			
+				marker.bindPopup(title);
+        marker.on('mouseover', function (e) {
+            this.openPopup();
+        });
+        marker.on('mouseout', function (e) {
+            this.closePopup();
+        });
+			}
+			
+			//sort the array by name	
+			issuesRaw.sort(SortByName);
+			var obj = {title: '', count: 0};
+			var current = '';
+			var newA = [obj];
+			
+			console.log('BEFORE: ', newA.length);
+			
+			for(var i = 0; i < issuesRaw.length; i++) {
+				
+				//console.log(issuesRaw[i], current)
+				
+				if(issuesRaw[i] != current) {
+					
+					current = issuesRaw[i];
+					
+					var nobj = {};
+					nobj.title = issuesRaw[i];
+					nobj.count = 1;
+					obj = nobj;
+					newA.push(obj);
+					//console.log(issuesRaw[i], current)
+					//console.log('newA:', newA.length)
+					
+				} else {
+					
+					obj.count++;
+					//console.log("THE SAME: ", obj.title, obj.count)
+					
+				}
+				
+			}
+			
+			newA.reverse();
+			
+			var labels = [];
+			var dataset = [];
+			
+			for(var i = 0; i < newA.length; i++) {
+				
+				//catch any empty objects and prevent them from displaying
+				if(newA[i].count == 0) {
+					
+					newA.splice(i,1);
+					
+				} else {
+					
+					labels[i] = newA[i].title;
+					dataset[i] = newA[i].count;
+				}
+				
+				//console.log(newA[i].count, i);
+				
+				
+			}			
+			var bctx = $("#viotype").get(0).getContext("2d");
+			
+			var bdata = {
+			    labels: labels,
+			    datasets: [
+			        {
+			            label: "My First dataset",
+			            fillColor: t_purple,
+			            strokeColor: purple,
+			            data: dataset
+			        },
+			        
+			    ]
+			};
+
+			var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata	);
+		})
+	
+		//This will sort your array
+		function SortByName(a, b){
+		  var aName = a.toLowerCase();
+		  var bName = b.toLowerCase(); 
+		  return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+		}
+
+
+	
 	/***************************** star ratings *****************************/
 	
 	$('#star-rating').raty({
 		score: function() {
 			console.log($(this).find('.hidden').text(), 'is value')
-			return $(this).find('.hidden').text();
+			return $(this).find('.invisible').text();
 		},
 		path: 'static/images',
 		half: true,

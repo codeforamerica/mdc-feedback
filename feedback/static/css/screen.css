@@ -107,13 +107,22 @@ h1 {
   display: none !important;
 }
 
-/* when you need it invisible but taking up space */
-/* line 131, ../sass/screen.scss */
-.invisible {
+/* when you need it invisible _but_ taking up space*/
+/* line 132, ../sass/screen.scss */
+.invisible-button {
   visibility: collapse;
 }
 
-/* line 136, ../sass/screen.scss */
+/* when you need it invisible but taking up space */
+/* line 138, ../sass/screen.scss */
+.invisible {
+  visibility: collapse;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 147, ../sass/screen.scss */
 .active {
   background-color: #4BC3FF;
   color: white !important;
@@ -121,7 +130,7 @@ h1 {
 }
 
 /* GLOBAL CONTAINER, NAV */
-/* line 145, ../sass/screen.scss */
+/* line 156, ../sass/screen.scss */
 #container {
   width: 90%;
   min-height: 800px;
@@ -129,61 +138,61 @@ h1 {
   margin: 0 auto;
 }
 
-/* line 154, ../sass/screen.scss */
+/* line 165, ../sass/screen.scss */
 .main-nav {
   text-align: right;
 }
 
-/* line 159, ../sass/screen.scss */
+/* line 170, ../sass/screen.scss */
 .main-nav li {
   display: inline;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .main-nav li:first-child:after {
   content: ' | ';
 }
 
-/* line 170, ../sass/screen.scss */
+/* line 181, ../sass/screen.scss */
 .button {
   min-height: 38px !important;
   height: auto !important;
 }
 
 /* NAV */
-/* line 179, ../sass/screen.scss */
+/* line 190, ../sass/screen.scss */
 #logo img {
   width: 150px;
   height: auto;
 }
 
-/* line 186, ../sass/screen.scss */
+/* line 197, ../sass/screen.scss */
 #breadcrumb {
   margin-left: 5%;
 }
 
-/* line 191, ../sass/screen.scss */
+/* line 202, ../sass/screen.scss */
 #breadcrumb-nav-parent {
   margin-right: 10%;
 }
 
-/* line 196, ../sass/screen.scss */
+/* line 207, ../sass/screen.scss */
 .breadcrumb-nav:after {
   content: ' | ';
 }
 
-/* line 202, ../sass/screen.scss */
+/* line 213, ../sass/screen.scss */
 .breadcrumb-nav:last-child:after {
   content: '';
 }
 
-/* line 207, ../sass/screen.scss */
+/* line 218, ../sass/screen.scss */
 .breadcrumb-empty {
   margin-left: 20px;
 }
 
 /* ADMIN PANEL-SPECIFIC */
-/* line 214, ../sass/screen.scss */
+/* line 225, ../sass/screen.scss */
 #admin-nav li {
   display: list-item;
   min-width: 25%;
@@ -195,32 +204,32 @@ h1 {
   text-align: center;
 }
 
-/* line 226, ../sass/screen.scss */
+/* line 237, ../sass/screen.scss */
 #survey-existing {
   margin-top: 30px;
   margin-bottom: 30px;
 }
 
-/* line 232, ../sass/screen.scss */
+/* line 243, ../sass/screen.scss */
 #survey-existing li {
   max-width: 100% !important;
 }
 
-/* line 237, ../sass/screen.scss */
+/* line 248, ../sass/screen.scss */
 .secondary {
   color: white;
   background-color: grey;
 }
 
 /* SURVEY BUILDER */
-/* line 245, ../sass/screen.scss */
+/* line 256, ../sass/screen.scss */
 #survey-questions {
   padding: 20px;
   border: 1px solid #cccccc;
   margin-top: 0;
 }
 
-/* line 253, ../sass/screen.scss */
+/* line 264, ../sass/screen.scss */
 #survey-questions h3 {
   width: 100%;
   background-color: #eeeeee;
@@ -229,14 +238,14 @@ h1 {
   margin-top: -20px;
 }
 
-/* line 262, ../sass/screen.scss */
+/* line 273, ../sass/screen.scss */
 .survey-question {
   height: auto;
   overflow: auto;
   background-color: white;
 }
 
-/* line 270, ../sass/screen.scss */
+/* line 281, ../sass/screen.scss */
 #add-question-wrapper {
   border-top: 1px solid #cccccc;
   padding-top: 20px;
@@ -245,14 +254,14 @@ h1 {
   margin-right: -20px;
 }
 
-/* line 279, ../sass/screen.scss */
+/* line 290, ../sass/screen.scss */
 #add-question {
   margin-left: 20px;
   background-color: white;
   margin-top: 10px;
 }
 
-/* line 286, ../sass/screen.scss */
+/* line 297, ../sass/screen.scss */
 .delete-survey,
 .delete-option,
 .delete {
@@ -261,7 +270,7 @@ h1 {
   margin-left: 5px;
 }
 
-/* line 295, ../sass/screen.scss */
+/* line 306, ../sass/screen.scss */
 .sortable-placeholder {
   border: 1px solid #e0e0e0;
   list-style: none;
@@ -269,13 +278,13 @@ h1 {
   background-color: #e0e0e0;
 }
 
-/* line 303, ../sass/screen.scss */
+/* line 314, ../sass/screen.scss */
 .dragger img {
   width: 40px;
   height: auto;
 }
 
-/* line 309, ../sass/screen.scss */
+/* line 320, ../sass/screen.scss */
 .ui-sortable-handle,
 #survey-nav li,
 li.survey-question {
@@ -283,44 +292,55 @@ li.survey-question {
 }
 
 /* DASHBOARD */
-/* line 319, ../sass/screen.scss */
+/* line 330, ../sass/screen.scss */
 canvas {
   width: 90%;
-  height: 200px;
+  height: 192px;
 }
 
-/* line 326, ../sass/screen.scss */
+/* line 337, ../sass/screen.scss */
 .panel {
   border: 5px solid #f7fafa;
   height: 300px;
   margin: 5px;
 }
 
-/* line 333, ../sass/screen.scss */
+/* line 345, ../sass/screen.scss */
 .double-height {
   height: 610px;
 }
 
-/* line 338, ../sass/screen.scss */
+/* line 351, ../sass/screen.scss */
 .double-height canvas {
-  height: 500px;
+  height: 502px;
 }
 
-/* line 343, ../sass/screen.scss */
+/* line 356, ../sass/screen.scss */
 .content-container {
   padding: 10px;
   text-align: center;
   margin: 0 auto;
   vertical-align: middle;
-  height: 200px;
+  height: 199px;
 }
 
-/* line 352, ../sass/screen.scss */
+/* line 365, ../sass/screen.scss */
+.double-height .content-container {
+  height: 510px;
+}
+
+/* line 371, ../sass/screen.scss */
+#leaflet {
+  height: inherit;
+  width: inherit;
+}
+
+/* line 378, ../sass/screen.scss */
 .first-panel {
   margin-left: 0 !important;
 }
 
-/* line 357, ../sass/screen.scss */
+/* line 383, ../sass/screen.scss */
 .headline {
   background-color: #f7fafa;
   color: #1a1a1a;
@@ -328,23 +348,22 @@ canvas {
   font-weight: bold;
 }
 
-/* line 366, ../sass/screen.scss */
+/* line 392, ../sass/screen.scss */
 .details {
-  position: relative;
   background-color: #f7fafa;
   text-align: center;
   margin: 0 auto;
   padding-bottom: 1px;
 }
 
-/* line 376, ../sass/screen.scss */
+/* line 402, ../sass/screen.scss */
 .details a {
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: .1rem;
 }
 
-/* line 384, ../sass/screen.scss */
+/* line 410, ../sass/screen.scss */
 #star-rating {
   padding-top: 50px;
 }
