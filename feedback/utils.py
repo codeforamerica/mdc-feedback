@@ -12,11 +12,8 @@ def flash_errors(form, category="warning"):
                   .format(getattr(form, field).label.text, error), category)
 
 
-'''
 def thispage():
     try:
-        ''
-        print request.view_args.items(), request.args.to_dict().items()
         args = dict(request.view_args.items() + request.args.to_dict().items())
         args['thispage'] = '{path}?{query}'.format(
             path=request.path, query=request.query_string
@@ -25,4 +22,3 @@ def thispage():
     # pass for favicon
     except AttributeError:
         pass
-'''
