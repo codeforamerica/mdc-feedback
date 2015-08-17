@@ -545,18 +545,12 @@ $(document).ready(function() {
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
 }).addTo(map);
 
-	//var marker = L.marker([51.5, -0.09]).addTo(map);
-	
-	var issuesRaw = [];	
-
+	//data map
 	$.ajax({
 		  url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$where=ticket_created_date_time%20%3E%20%272015-01-01%27",
 		  
 		  context: document.body
 		}).done(function(data) {
-			
-			console.log(data[0]);
-			//console.log(data[0].location.latitude);
 			
 			for(var i = 0; i < data.length; i++) {
 				
@@ -566,8 +560,6 @@ $(document).ready(function() {
 				var fill = t_yellow;
 				var color = yellow;
 				var title = data[i].issue_type;
-				
-				issuesRaw.push(title);
 				
 				var marker = L.circleMarker([lat, lon], {
 		        radius: 5,
@@ -586,62 +578,42 @@ $(document).ready(function() {
             this.closePopup();
         });
 			}
+							
+		})
+	
+		$.ajax({
+		  url: "https://opendata.miamidade.gov/resource/dj6j-qg5t.json?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-11%27",
+		  
+		  context: document.body
+		
+		}).done(function(data) {
 			
-			//sort the array by name	
-			issuesRaw.sort(SortByName);
-			var obj = {title: '', count: 0};
-			var current = '';
-			var newA = [obj];
-			
-			console.log('BEFORE: ', newA.length);
-			
-			for(var i = 0; i < issuesRaw.length; i++) {
-				
-				//console.log(issuesRaw[i], current)
-				
-				if(issuesRaw[i] != current) {
-					
-					current = issuesRaw[i];
-					
-					var nobj = {};
-					nobj.title = issuesRaw[i];
-					nobj.count = 1;
-					obj = nobj;
-					newA.push(obj);
-					//console.log(issuesRaw[i], current)
-					//console.log('newA:', newA.length)
-					
-				} else {
-					
-					obj.count++;
-					//console.log("THE SAME: ", obj.title, obj.count)
-					
-				}
-				
-			}
-			
-			newA.reverse();
+			//console.log('data: ', data);
 			
 			var labels = [];
 			var dataset = [];
 			
-			for(var i = 0; i < newA.length; i++) {
+			//the 'total' isn't an integer. make it one, or the sort will fail.
+			for(var i = 0; i < data.length; i++) {
 				
-				//catch any empty objects and prevent them from displaying
-				if(newA[i].count == 0) {
-					
-					newA.splice(i,1);
-					
-				} else {
-					
-					labels[i] = newA[i].title;
-					dataset[i] = newA[i].count;
-				}
+				data[i].total = parseInt(data[i].total);
 				
-				//console.log(newA[i].count, i);
+			}
+			
+			//sort on the number of each violation type
+			data = data.sortOn("total");
+			data.reverse();
+			
+			//set the data up for Charts.js
+			for(var i = 0; i < 19; i++) {
 				
+				labels[i] = data[i].issue_type;
+				dataset[i] = data[i].total;
+				console.log(data[i].issue_type, i);
 				
-			}			
+			}
+			
+			//create the chart
 			var bctx = $("#viotype").get(0).getContext("2d");
 			
 			var bdata = {
@@ -658,16 +630,20 @@ $(document).ready(function() {
 			};
 
 			var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata	);
+
 		})
-	
-		//This will sort your array
-		function SortByName(a, b){
-		  var aName = a.toLowerCase();
-		  var bName = b.toLowerCase(); 
-		  return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
-		}
-
-
+		
+		Array.prototype.sortOn = function(){ 
+		  var dup = this.slice();
+		  if(!arguments.length) return dup.sort();
+		  var args = Array.prototype.slice.call(arguments);
+		  return dup.sort(function(a,b){
+		    var props = args.slice();
+		    var prop = props.shift();
+		    while(a[prop] == b[prop] && props.length) prop = props.shift();
+		    return a[prop] == b[prop] ? 0 : a[prop] > b[prop] ? 1 : -1;
+		  });
+		};
 	
 	/***************************** star ratings *****************************/
 	
