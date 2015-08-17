@@ -10,7 +10,7 @@ from feedback.extensions import (
     migrate, debug_toolbar,
     cache
 )
-# from feedback.utils import thispage
+from feedback.utils import thispage
 
 from feedback import (
     public, user,
@@ -29,6 +29,7 @@ def create_app(config_object=ProductionConfig):
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
+    register_jinja_extensions(app)
     return app
 
 def register_extensions(app):
@@ -46,7 +47,10 @@ def register_blueprints(app):
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(dashboard.views.blueprint)
     app.register_blueprint(surveys.views.blueprint)
-    # app.jinja_env.globals['thispage'] = thispage
+    return None
+
+def register_jinja_extensions(app):
+    app.jinja_env.globals['thispage'] = thispage
     return None
 
 def register_errorhandlers(app):
