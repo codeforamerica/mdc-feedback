@@ -57,6 +57,7 @@ def auth():
     req = urllib2.Request('https://verifier.login.persona.org/verify', data)
 
     response = json.loads(urllib2.urlopen(req).read())
+    current_app.logger.debug('LOGIN: status from persona: {}'.format(response))
     if response.get('status') != 'okay':
         current_app.logger.debug('REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
         abort(403)
