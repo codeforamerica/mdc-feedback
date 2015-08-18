@@ -35,6 +35,8 @@
 {% endwith %}
 
 <!-- nav active states -->
+<!-- begin stuff that requires authentication check -->
+
 {% if active_page == 'Dashboard' %}
 
 			{% set navigation_bar = [
@@ -61,30 +63,37 @@
 			] -%}
 		{% endif %}
 
+		{% if current_user and current_user.is_authenticated() %}
 
-<div class='row u-pull-left' id='breadcrumb'>
+		<div class='row u-pull-left' id='breadcrumb'>
+	
+			<ul class='list-nav'>
+		
+				<li class='breadcrumb-text'>You're looking at:</li>
+				<li id='breadcrumb-location' class='bold'>{{ title }}</li>
+			</ul>
+		
+		</div>
+		
+		<div class='row u-pull-right' id='breadcrumb-nav-parent'>
+		
+			<ul>
+		
+				<li class='breadcrumb-text'>Go back to:</li>
+		
+				{% for href, id in navigation_bar %}
+				<li class='breadcrumb-nav'><a href='{{ href|e}}'>{{id|e}}</a></li>
+				{% endfor %}
+		
+			</ul>
+		
+		</div>
 
-	<ul class='list-nav'>
+		{% endif %}
 
-		<li class='breadcrumb-text'>You're looking at:</li>
-		<li id='breadcrumb-location' class='bold'>{{ title }}</li>
-	</ul>
+<!-- end stuff that requires authentication check -->
 
-</div>
 
-<div class='row u-pull-right' id='breadcrumb-nav-parent'>
-
-	<ul>
-
-		<li class='breadcrumb-text'>Go back to:</li>
-
-		{% for href, id in navigation_bar %}
-		<li class='breadcrumb-nav'><a href='{{ href|e}}'>{{id|e}}</a></li>
-		{% endfor %}
-
-	</ul>
-
-</div>
 
 
 <div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
