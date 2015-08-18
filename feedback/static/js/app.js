@@ -80,7 +80,9 @@ $(document).ready(function() {
 	
 	$('.user .delete').click(function() {
 		
+		//probably should warn a user that this is permanent.
 		$(this).parent().detach();
+		
 	})
 
 	/************************* SURVEY BUILDER *************************/

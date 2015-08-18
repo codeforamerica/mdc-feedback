@@ -114,6 +114,12 @@ h1 {
 	font-size:.5em;
 }
 
+.small {
+	
+	font-size:.75em;
+	font-weight:normal;
+}
+
 .huge {
 	
 	font-size:3em;
@@ -159,6 +165,8 @@ h1 {
 	min-height:800px;
 	padding:10px;
 	margin:0 auto;
+	height:auto;
+	overflow:auto;
 	
 }
 
@@ -262,6 +270,14 @@ h1 {
 	
 	color:white;
 	background-color:grey;
+}
+
+/* USER MANAGEMENT */
+
+#add-user-form label,
+#add-user-form input {
+	
+	display:inline-block;
 }
 
 /* SURVEY BUILDER */

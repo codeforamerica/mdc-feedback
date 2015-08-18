@@ -43,14 +43,32 @@
 		<section id='add-user-form' class='row twelve columns hidden'>
 			
 			<h3>Add a new user.</h3>
-			<input type='text' placeholder="First and last name">
-			<input type="email" placeholder='name@miamidade.gov'><label>
-			<input type="radio" value='superuser'><label>Superuser</label>
-			<input type="radio" value='user'><label>User</label>
-			<span class='button' id='generate-password'>Generate password</span>
+			
+			<div>
+				<h4>What's your user's name?</h4>
+				<input type='text' placeholder="First and last name">
+			</div>
+			
+			<div>
+				<h4>What's your user's e-mail address?</h4>
+				<input type="email" placeholder='name@miamidade.gov'>
+			</div>
+						
+			<div>
+				<h4>What permissions should your user have?</h4>
+				<p><input type="radio" value='superuser'><label>Superuser <span class='small'>Can edit everything.</span></label></p>
+				<p><input type="radio" value='user'><label>User <span class='small'>Can do everything but manage users.</span></label></p>
+			</div>
+			
+			<div>
+				<h4>Assign your user a password.</h4>
+				<span class='button' id='generate-password'>Generate password</span>
+			</div>
+			
 			<span class='button' id='submit-new-user'>Create new user</span>
 			
 		</section>
+		
 	</div><!--!/#container -->
 
 {% endblock %}
