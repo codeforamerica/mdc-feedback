@@ -84,7 +84,7 @@ def auth():
 
     else:
         current_app.logger.debug('NOTINDB: User {} not in DB -- aborting!'.format(email))
-        abort(403)
+        return '/users/profile'
 
 
 
@@ -110,7 +110,7 @@ def admin():
 @blueprint.route("/create-survey/",  methods=['GET'])
 def create_survey():
     return render_template("public/create-survey.html", title='Survey Builder')
-    
+
 @blueprint.route("/saved-survey/",  methods=['GET'])
 def save_survey():
     return render_template("public/saved-survey.html", title='Survey Builder')

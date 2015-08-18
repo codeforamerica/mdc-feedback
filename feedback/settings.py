@@ -24,7 +24,7 @@ class StagingConfig(Config):
     ENV = 'stage'
     DEVELOPMENT = True
     DEBUG = True
-    BROWSERID_URL = 'http://mdc-feedback-stage.herokuapp.com'
+    BROWSERID_URL = 'http://mdc-feedback-stage.heroku.com'
 
 
 class DevelopmentConfig(Config):
