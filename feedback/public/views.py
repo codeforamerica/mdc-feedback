@@ -2,7 +2,6 @@
 """Public section, including homepage and signup."""
 
 import json
-import urllib
 
 try:
     import urllib.request as urllib2
@@ -10,19 +9,19 @@ except ImportError:
     import urllib2
 
 from flask import (
-    Blueprint, request, render_template, flash, url_for,
-    current_app, abort, redirect, session
+    Blueprint, request, render_template, flash,
+    current_app, abort, redirect
 )
 
 from flask.ext.login import current_user, login_user, login_required, logout_user
 from feedback.extensions import login_manager
 from feedback.user.models import User
-from feedback.public.forms import LoginForm
+# from feedback.public.forms import LoginForm
 # from feedback.user.forms import RegisterForm
 from feedback.utils import flash_errors
-from feedback.database import db
 
 blueprint = Blueprint('public', __name__, static_folder="../static")
+
 
 @login_manager.user_loader
 def load_user(id):
@@ -44,13 +43,14 @@ def logout():
         flash('You are logged out.', 'info')
         return render_template('user/logout.html')
 
+
 @blueprint.route('/auth', methods=['POST'])
 def auth():
     '''
     Endpoint from AJAX request for authentication from persona
     '''
 
-    data = urllib.urlencode({
+    data = urllib2.urlencode({
         'assertion': request.form.get('assertion'),
         'audience': current_app.config.get('BROWSERID_URL')
     })
@@ -90,7 +90,6 @@ def auth():
         return '/users/profile'
 
 
-
 @blueprint.route("/register/", methods=['GET', 'POST'])
 def register():
     form = RegisterForm(request.form, csrf_enabled=False)
@@ -105,6 +104,7 @@ def register():
         flash_errors(form)
     return render_template('public/register.html', form=form)
 
+
 @blueprint.route("/admin/",  methods=['GET'])
 def admin():
     return render_template("public/admin.html", title='Admin')
@@ -113,6 +113,7 @@ def admin():
 @blueprint.route("/create-survey/",  methods=['GET'])
 def create_survey():
     return render_template("public/create-survey.html", title='Survey Builder')
+
 
 @blueprint.route("/saved-survey/",  methods=['GET'])
 def save_survey():

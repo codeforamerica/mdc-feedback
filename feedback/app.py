@@ -4,7 +4,7 @@
 import sys
 import logging
 
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template
 
 from feedback.settings import ProductionConfig, DevelopmentConfig, StagingConfig
 from feedback.assets import assets, test_assets
@@ -21,6 +21,7 @@ from feedback import (
 )
 
 login_manager.login_view = "public.login"
+
 
 def create_app(config_object=ProductionConfig):
     """An application factory, as explained here:
@@ -64,6 +65,7 @@ def create_app(config_object=ProductionConfig):
     app.logger.debug('hello world')
     return app
 
+
 def register_extensions(app):
     test_assets.init_app(app) if app.config.get('TESTING') else assets.init_app(app)
     db.init_app(app)
@@ -74,6 +76,7 @@ def register_extensions(app):
     debug_toolbar.init_app(app)
     return None
 
+
 def register_blueprints(app):
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(user.views.blueprint)
@@ -81,9 +84,11 @@ def register_blueprints(app):
     app.register_blueprint(surveys.views.blueprint)
     return None
 
+
 def register_jinja_extensions(app):
     app.jinja_env.globals['thispage'] = thispage
     return None
+
 
 def register_errorhandlers(app):
     def render_error(error):
