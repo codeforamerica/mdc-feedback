@@ -37,6 +37,7 @@ def create_app(config_object=ProductionConfig):
 
     @app.before_first_request
     def before_first_request():
+
         if app.config.get('ENV') == 'stage':
             stdout = logging.StreamHandler(sys.stdout)
             stdout.setFormatter(logging.Formatter(
@@ -61,6 +62,7 @@ def create_app(config_object=ProductionConfig):
             ))
             app.logger.addHandler(stdout)
             app.logger.setLevel(logging.DEBUG)
+    app.logger.debug('hello world')
     return app
 
 
