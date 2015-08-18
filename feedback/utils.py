@@ -14,7 +14,9 @@ def flash_errors(form, category="warning"):
 
 def thispage():
     try:
-        args = dict(request.view_args.items() + request.args.to_dict().items())
+        args = request.view_args.items().copy()
+        args.update(request.args.to_dict().items())
+
         args['thispage'] = '{path}?{query}'.format(
             path=request.path, query=request.query_string
         )
