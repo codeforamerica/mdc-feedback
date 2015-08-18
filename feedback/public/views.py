@@ -10,19 +10,19 @@ except ImportError:
     import urllib2
 
 from flask import (
-    Blueprint, request, render_template, flash, url_for,
-    current_app, abort, redirect, session
+    Blueprint, request, render_template, flash,
+    current_app, abort, redirect
 )
 
 from flask.ext.login import current_user, login_user, login_required, logout_user
 from feedback.extensions import login_manager
 from feedback.user.models import User
-from feedback.public.forms import LoginForm
+# from feedback.public.forms import LoginForm
 # from feedback.user.forms import RegisterForm
 from feedback.utils import flash_errors
-from feedback.database import db
 
 blueprint = Blueprint('public', __name__, static_folder="../static")
+
 
 @login_manager.user_loader
 def load_user(id):
@@ -44,6 +44,7 @@ def logout():
         flash('You are logged out.', 'info')
         return render_template('user/logout.html')
 
+
 @blueprint.route('/auth', methods=['POST'])
 def auth():
     '''
@@ -60,7 +61,9 @@ def auth():
     current_app.logger.debug('LOGIN: status from persona: {}'.format(response))
     if response.get('status') != 'okay':
         current_app.logger.debug('REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
-        abort(403)
+        # abort(403)
+        # FIXME - we think abort is FUBARing staging
+        return '/login-error'
 
     next_url = request.args.get('next', None)
     email = response.get('email')
@@ -90,7 +93,6 @@ def auth():
         return '/users/profile'
 
 
-
 @blueprint.route("/register/", methods=['GET', 'POST'])
 def register():
     form = RegisterForm(request.form, csrf_enabled=False)
@@ -105,6 +107,7 @@ def register():
         flash_errors(form)
     return render_template('public/register.html', form=form)
 
+
 @blueprint.route("/admin/",  methods=['GET'])
 def admin():
     return render_template("public/admin.html", title='Admin')
@@ -113,6 +116,7 @@ def admin():
 @blueprint.route("/create-survey/",  methods=['GET'])
 def create_survey():
     return render_template("public/create-survey.html", title='Survey Builder')
+
 
 @blueprint.route("/saved-survey/",  methods=['GET'])
 def save_survey():

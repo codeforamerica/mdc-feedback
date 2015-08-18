@@ -1,1 +1,1 @@
-web: gunicorn feedback.app:create_app\(\)
+web: gunicorn feedback.app:create_app\($CONFIG\)
