@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """The app module, containing the app factory function."""
 
+import sys
 import logging
 
 from flask import Flask, render_template, redirect
 
-from feedback.settings import ProductionConfig, DevelopmentConfig
+from feedback.settings import ProductionConfig, DevelopmentConfig, StagingConfig
 from feedback.assets import assets, test_assets
 from feedback.extensions import (
     db, login_manager,
@@ -35,13 +36,15 @@ def create_app(config_object=ProductionConfig):
 
     @app.before_first_request
     def before_first_request():
-        if app.debug and app.config.get('ENV') == 'stage':
+        # import pdb; pdb.set_trace()
+        if app.config.get('ENV') == 'stage':
             stdout = logging.StreamHandler(sys.stdout)
             stdout.setFormatter(logging.Formatter(
                 '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'
             ))
             app.logger.addHandler(stdout)
             app.logger.setLevel(logging.DEBUG)
+
         elif app.debug and not app.testing:
             # log to console for dev
             app.logger.setLevel(logging.DEBUG)
@@ -58,6 +61,7 @@ def create_app(config_object=ProductionConfig):
             ))
             app.logger.addHandler(stdout)
             app.logger.setLevel(logging.DEBUG)
+    app.logger.debug('hello world')
     return app
 
 def register_extensions(app):
