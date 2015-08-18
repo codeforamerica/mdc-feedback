@@ -243,20 +243,65 @@ h1 {
 
 /* USER MANAGEMENT */
 /* line 277, ../sass/screen.scss */
+#user-list h1 {
+  padding-bottom: 30px;
+}
+
+/* line 283, ../sass/screen.scss */
+#add-user-form {
+  border-top: 1px #f7fafa solid;
+  padding-top: 30px;
+}
+
+/* line 289, ../sass/screen.scss */
 #add-user-form label,
 #add-user-form input {
   display: inline-block;
 }
 
+/* line 295, ../sass/screen.scss */
+#add-user-form p {
+  margin-bottom: 0px;
+}
+
+/* line 301, ../sass/screen.scss */
+.radio {
+  margin-right: 5px;
+}
+
+/* line 306, ../sass/screen.scss */
+.user {
+  list-style: none;
+  padding-left: 30px;
+}
+
+/* line 314, ../sass/screen.scss */
+.user span {
+  margin-right: 5px;
+  display: list-item;
+}
+
+/* line 321, ../sass/screen.scss */
+.user-name {
+  font-weight: 600;
+  font-size: 1.5em;
+}
+
+/* line 328, ../sass/screen.scss */
+.user-permissions,
+.user-permissions span {
+  display: inline-block;
+}
+
 /* SURVEY BUILDER */
-/* line 285, ../sass/screen.scss */
+/* line 335, ../sass/screen.scss */
 #survey-questions {
   padding: 20px;
   border: 1px solid #cccccc;
   margin-top: 0;
 }
 
-/* line 293, ../sass/screen.scss */
+/* line 343, ../sass/screen.scss */
 #survey-questions h3 {
   width: 100%;
   background-color: #eeeeee;
@@ -265,14 +310,14 @@ h1 {
   margin-top: -20px;
 }
 
-/* line 302, ../sass/screen.scss */
+/* line 352, ../sass/screen.scss */
 .survey-question {
   height: auto;
   overflow: auto;
   background-color: white;
 }
 
-/* line 310, ../sass/screen.scss */
+/* line 360, ../sass/screen.scss */
 #add-question-wrapper {
   border-top: 1px solid #cccccc;
   padding-top: 20px;
@@ -281,14 +326,14 @@ h1 {
   margin-right: -20px;
 }
 
-/* line 319, ../sass/screen.scss */
+/* line 369, ../sass/screen.scss */
 #add-question {
   margin-left: 20px;
   background-color: white;
   margin-top: 10px;
 }
 
-/* line 326, ../sass/screen.scss */
+/* line 376, ../sass/screen.scss */
 .delete-survey,
 .delete-option,
 .delete {
@@ -297,7 +342,7 @@ h1 {
   margin-left: 5px;
 }
 
-/* line 335, ../sass/screen.scss */
+/* line 385, ../sass/screen.scss */
 .sortable-placeholder {
   border: 1px solid #e0e0e0;
   list-style: none;
@@ -305,13 +350,13 @@ h1 {
   background-color: #e0e0e0;
 }
 
-/* line 343, ../sass/screen.scss */
+/* line 393, ../sass/screen.scss */
 .dragger img {
   width: 40px;
   height: auto;
 }
 
-/* line 349, ../sass/screen.scss */
+/* line 399, ../sass/screen.scss */
 .ui-sortable-handle,
 #survey-nav li,
 li.survey-question {
@@ -319,40 +364,40 @@ li.survey-question {
 }
 
 /* DASHBOARD */
-/* line 359, ../sass/screen.scss */
+/* line 409, ../sass/screen.scss */
 canvas {
   width: 90%;
   height: 192px;
 }
 
-/* line 366, ../sass/screen.scss */
+/* line 416, ../sass/screen.scss */
 .panel {
   border: 5px solid #f7fafa;
   height: 300px;
   margin: 5px;
 }
 
-/* line 374, ../sass/screen.scss */
+/* line 424, ../sass/screen.scss */
 .double-height {
   height: 610px;
 }
 
-/* line 380, ../sass/screen.scss */
+/* line 430, ../sass/screen.scss */
 .double-height canvas {
   height: 502px;
 }
 
-/* line 385, ../sass/screen.scss */
+/* line 435, ../sass/screen.scss */
 .triple-height {
   height: 1000px;
 }
 
-/* line 390, ../sass/screen.scss */
+/* line 440, ../sass/screen.scss */
 .triple-height canvas {
   height: 900px;
 }
 
-/* line 395, ../sass/screen.scss */
+/* line 445, ../sass/screen.scss */
 .content-container {
   padding: 10px;
   text-align: center;
@@ -361,23 +406,23 @@ canvas {
   height: 199px;
 }
 
-/* line 404, ../sass/screen.scss */
+/* line 454, ../sass/screen.scss */
 .double-height .content-container {
   height: 510px;
 }
 
-/* line 410, ../sass/screen.scss */
+/* line 460, ../sass/screen.scss */
 #leaflet {
   height: inherit;
   width: inherit;
 }
 
-/* line 417, ../sass/screen.scss */
+/* line 467, ../sass/screen.scss */
 .first-panel {
   margin-left: 0 !important;
 }
 
-/* line 422, ../sass/screen.scss */
+/* line 472, ../sass/screen.scss */
 .headline {
   background-color: #f7fafa;
   color: #1a1a1a;
@@ -385,7 +430,7 @@ canvas {
   font-weight: bold;
 }
 
-/* line 431, ../sass/screen.scss */
+/* line 481, ../sass/screen.scss */
 .details {
   background-color: #f7fafa;
   text-align: center;
@@ -393,14 +438,14 @@ canvas {
   padding-bottom: 1px;
 }
 
-/* line 441, ../sass/screen.scss */
+/* line 491, ../sass/screen.scss */
 .details a {
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: .1rem;
 }
 
-/* line 449, ../sass/screen.scss */
+/* line 499, ../sass/screen.scss */
 #star-rating {
   padding-top: 50px;
 }

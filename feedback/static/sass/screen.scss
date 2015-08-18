@@ -274,12 +274,62 @@ h1 {
 
 /* USER MANAGEMENT */
 
+#user-list h1 {
+	
+	padding-bottom:30px;
+	
+}
+
+#add-user-form {
+	
+	border-top:1px $grey solid;
+	padding-top:30px;
+}
+
 #add-user-form label,
 #add-user-form input {
 	
 	display:inline-block;
 }
 
+#add-user-form p {
+	
+	margin-bottom:0px;
+	
+}
+
+.radio {
+	
+	margin-right:5px;
+}
+
+.user {
+	
+	list-style: none;
+	padding-left:30px;
+}
+
+
+
+.user span {
+	
+	margin-right:5px;
+	display:list-item;
+	
+}
+
+.user-name {
+	
+	font-weight:600;
+	font-size:1.5em;
+	
+}
+
+.user-permissions, 
+.user-permissions span {
+	
+	display:inline-block;
+}
 /* SURVEY BUILDER */
 
 #survey-questions {

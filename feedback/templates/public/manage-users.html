@@ -4,36 +4,32 @@
 		
 	<div id="container">
 	
-		<section class='row twelve columns'>
+		<section id='user-list' class='row twelve columns'>
 			
 			<h1>Manage your users.</h1>
 						
-		</section>
-		 
-		<section id='user-list' class='row twelve columns'>
-						
-			<li class='user' id='0'>
+			<li class='user twelve columns' id='0'>
 				<span class='user-name'>Sophia Dengo</span>
 				<span class='user-mail'>sdengo@codeforamerica.org</span>
-				<span class='user-permissions'>Superuser</span>
-				<span class='button password'>Change Password</span>
-				<span class='button delete'>x</span>
+				<span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
+				<p class='button password three columns'>Change Password</p>
+				<p class='button delete three columns'>delete user</p>
 			</li>
 			
-			<li class='user' id='1'>
+			<li class='user twelve columns' id='1'>
 				<span class='user-name'>Ernie Hsiung</span>
 				<span class='user-mail'>ehsiung@codeforamerica.org</span>
-				<span class='user-permissions'>Superuser</span>
-				<span class='button password'>Change Password</span>
-				<span class='button delete'>x</span>
+				<span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
+				<p class='button password three columns'>Change Password</p>
+				<p class='button delete three columns'>delete user</p>
 			</li>
 			
-			<li class='user' id='2'>
+			<li class='user twelve columns' id='2'>
 				<span class='user-name'>Mathias Gibson</span>
 				<span class='user-mail'>mathias@codeforamerica.org</span>
-				<span class='user-permissions'>Superuser</span>
-				<span class='button password'>Change Password</span>
-				<span class='button delete'>x</span>
+				<span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
+				<p class='button password three columns'>Change Password</p>
+				<p class='button delete three columns'>delete user</p>
 			</li>
 			
 			<li class='add-user button'>Add a new user</li>
@@ -44,23 +40,23 @@
 			
 			<h3>Add a new user.</h3>
 			
-			<div>
+			<div class='row'>
 				<h4>What's your user's name?</h4>
-				<input type='text' placeholder="First and last name">
+				<input class='six columns' type='text' placeholder="First and last name">
 			</div>
 			
-			<div>
+			<div class='row'>
 				<h4>What's your user's e-mail address?</h4>
-				<input type="email" placeholder='name@miamidade.gov'>
+				<input class='six columns' type="email" placeholder='name@miamidade.gov'>
 			</div>
 						
-			<div>
+			<div class='row'>
 				<h4>What permissions should your user have?</h4>
-				<p><input type="radio" value='superuser'><label>Superuser <span class='small'>Can edit everything.</span></label></p>
-				<p><input type="radio" value='user'><label>User <span class='small'>Can do everything but manage users.</span></label></p>
+				<p><input class='radio' type="radio" value='superuser'><label>Superuser <span class='small'>Can edit everything.</span></label></p>
+				<p><input class='radio' type="radio" value='user'><label>User <span class='small'>Can do everything but manage users.</span></label></p>
 			</div>
 			
-			<div>
+			<div class='row'>
 				<h4>Assign your user a password.</h4>
 				<span class='button' id='generate-password'>Generate password</span>
 			</div>
