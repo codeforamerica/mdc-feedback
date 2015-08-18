@@ -41,10 +41,11 @@
 
 			{% set navigation_bar = [
 				('/admin/', 'Admin Panel'),
-				('/create-survey/', 'Survey Builder')
+				('/create-survey/', 'Survey Builder'),
+				('/manage-users/', 'Manage Users')
 			] -%}
 
-		{% elif active_page == 'Survey Builder' %}
+		{% elif active_page == 'Survey Builder' or active_page == 'Manage Users' %}
 
 			{% set navigation_bar = [
 
