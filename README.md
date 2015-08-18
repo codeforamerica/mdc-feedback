@@ -11,6 +11,7 @@ A lot of early development for this application was based on this tutorial, so a
 #### Requirements
 
 * PostgreSQL Database - [How To](https://github.com/codeforamerica/howto/blob/master/PostgreSQL.md)
+* Compass - [Get started with Compass](http://compass-style.org/)
 
 #### A note on VIM
 
@@ -27,6 +28,8 @@ If you're not used to it see [VIM Adventures](http://vim-adventures.com/), becau
 
 * Use the following commands to bootstrap your development environment:
 (kudos go to [Team Pittsburgh](https://github.com/codeforamerica/pittsburgh-purchasing-suite))
+
+* After installing Compass, run `compass watch` inside your Compass directory, so that Compass will automatically compile your .scss files into .css.
 
 ```
 # clone the repo

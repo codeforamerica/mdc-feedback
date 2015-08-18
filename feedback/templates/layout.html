@@ -19,8 +19,8 @@
   <link href='//fonts.googleapis.com/css?family=Raleway:400,600,300' rel='stylesheet' type='text/css'>
 
 	<!-- leaflet mapping -->
-	<link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-	<script src="//cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+	<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 
   {% block assets %}
     {% assets "css_all" %}
@@ -162,10 +162,15 @@ navigator.id.watch({
     // 2. Update your UI.
     $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
       type: 'POST',
-      url: '{{ url_for("public.auth") }}', // This is a URL on your website.
+      url: '{{ url_for("public.auth", next=thispage()) }}', // This is a URL on your website.
       data: {assertion: assertion},
       success: function(res, status, xhr) {
-        window.location.href = '/';
+        if (res.split('thispage')[0]) {
+          window.location.href = res.split('thispage')[0];
+        } else {
+          window.location.reload();
+        }
+
       },
       error: function(xhr, status, err) {
         alert("Login failure: " + err);
