@@ -42,8 +42,7 @@ def create_app(config_object=ProductionConfig):
             ))
             app.logger.addHandler(stdout)
             app.logger.setLevel(logging.DEBUG)
-
-        if app.debug and not app.testing:
+        elif app.debug and not app.testing:
             # log to console for dev
             app.logger.setLevel(logging.DEBUG)
         elif app.testing:

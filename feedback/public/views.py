@@ -60,7 +60,9 @@ def auth():
     current_app.logger.debug('LOGIN: status from persona: {}'.format(response))
     if response.get('status') != 'okay':
         current_app.logger.debug('REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
-        abort(403)
+        # abort(403)
+        # FIXME - we think abort is FUBARing staging
+        return '/login-error'
 
     next_url = request.args.get('next', None)
     email = response.get('email')
@@ -73,9 +75,7 @@ def auth():
         flash('Logged in successfully!', 'alert-success')
 
         current_app.logger.debug('LOGIN: User {} logged in successfully'.format(user.email))
-        # FIXME - I think returning next_url is FUBARing staging. Address this later.
-        # return next_url if next_url else '/'
-        return '/'
+        return next_url if next_url else '/'
 
     # FIXME - originally domain == current_app.config.get('CITY_DOMAIN'):
     elif domain is not None:
