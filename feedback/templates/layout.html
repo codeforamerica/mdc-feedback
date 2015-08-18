@@ -156,7 +156,12 @@ navigator.id.watch({
       url: '{{ url_for("public.auth", next=thispage()) }}', // This is a URL on your website.
       data: {assertion: assertion},
       success: function(res, status, xhr) {
-        window.location.href = res.split('thispage')[0];;
+        if (res.split('thispage')[0]) {
+          window.location.href = res.split('thispage')[0];
+        } else {
+          window.location.reload();
+        }
+
       },
       error: function(xhr, status, err) {
         alert("Login failure: " + err);
