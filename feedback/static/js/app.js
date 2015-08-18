@@ -359,6 +359,18 @@ $(document).ready(function() {
 	var purple = "rgba(61, 51, 119, 1)";
 	var t_purple = "rgba(61, 51, 119, 0.2)";
 	
+	var purple_1 = 'rgba(172, 75, 173, 1)';
+	var t_purple_1 = 'rgba(172, 75, 173, 0.2)';
+	
+	var purple_2 = 'rgba(122, 0, 134, 1)';
+	var t_purple_2 = 'rgba(122, 0, 134, 0.2))';
+	
+	var purple_3 = 'rgba(75, 0, 94, 1)';
+	var t_purple_3 = 'rgba(75, 0, 94, 0.2)';
+	
+	var purple_4 = 'rgba(219, 172, 217, 1)';
+	var t_purple_4 = 'rgba(219, 172, 217, 0.2)';
+	
 	
 	if($("#dashboard")[0] != undefined) {
 		
@@ -400,26 +412,26 @@ $(document).ready(function() {
 	var pieData = [
     {
         value: surveyData.data.web_en,
-        color:orange,
-        highlight: t_orange,
+        color:purple_1,
+        highlight: t_purple_1,
         label: surveyData.labels.web_en
     },
     {
         value: surveyData.data.web_es,
-        color: purple,
-        highlight: t_purple,
+        color: purple_2,
+        highlight: t_purple_2,
         label: surveyData.labels.web_es
     },
     {
         value: surveyData.data.sms_en,
-        color: yellow,
-        highlight: t_yellow,
+        color: purple_3,
+        highlight: t_purple_3,
         label: surveyData.labels.sms_en
     },
     {
 	    	value: surveyData.data.sms_es,
-        color: green,
-        highlight: t_green,
+        color: purple_4,
+        highlight: t_purple_4,
         label: surveyData.labels.sms_es
 	    
     }
@@ -516,9 +528,9 @@ $(document).ready(function() {
 									scaleStepWidth: 200,
 			            scaleBeginAtZero:true,
 			            scaleStartValue:0,
-			            fillColor: t_purple,
-			            strokeColor: purple,
-			            pointColor: purple,
+			            fillColor: t_orange,
+			            strokeColor: orange,
+			            pointColor: orange,
 			            pointStrokeColor: "#fff",
 			            pointHighlightFill: "#fff",
 			            pointHighlightStroke: purple,
@@ -541,6 +553,7 @@ $(document).ready(function() {
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
+    minZoom: 10,
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
 }).addTo(map);
@@ -621,8 +634,8 @@ $(document).ready(function() {
 			    datasets: [
 			        {
 			            label: "My First dataset",
-			            fillColor: t_purple,
-			            strokeColor: purple,
+			            fillColor: t_purple_1,
+			            strokeColor: purple_1,
 			            data: dataset
 			        },
 			        
