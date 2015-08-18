@@ -2,6 +2,7 @@
 """Public section, including homepage and signup."""
 
 import json
+import urllib
 
 try:
     import urllib.request as urllib2
@@ -50,7 +51,7 @@ def auth():
     Endpoint from AJAX request for authentication from persona
     '''
 
-    data = urllib2.urlencode({
+    data = urllib.urlencode({
         'assertion': request.form.get('assertion'),
         'audience': current_app.config.get('BROWSERID_URL')
     })

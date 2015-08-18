@@ -11,20 +11,20 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    BROWSERID_URL = 'http://localhost:9000'
+    BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://localhost:9000')
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
 
 
 class ProductionConfig(Config):
     ENV = 'prod'
     DEBUG = False
-    BROWSERID_URL = 'http://mdc-feedback.herokuapp.com/'
+    BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://mdc-feedback.herokuapp.com/')
 
 class StagingConfig(Config):
     ENV = 'stage'
     DEVELOPMENT = True
     DEBUG = True
-    BROWSERID_URL = 'http://mdc-feedback-stage.heroku.com'
+    BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://mdc-feedback-stage.heroku.com')
 
 
 class DevelopmentConfig(Config):
@@ -35,7 +35,7 @@ class DevelopmentConfig(Config):
     DEBUG_TB_ENABLED = True
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
-    BROWSERID_URL = 'http://localhost:9000'
+    BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://localhost:9000')
 
 
 class TestingConfig(Config):
