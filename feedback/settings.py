@@ -24,7 +24,7 @@ class StagingConfig(Config):
     ENV = 'stage'
     DEVELOPMENT = True
     DEBUG = True
-    BROWSERID_URL = 'http://mdc-feedback-stage.herokuapp.com'
+    BROWSERID_URL = 'http://mdc-feedback-stage.heroku.com'
 
 
 class DevelopmentConfig(Config):
@@ -35,6 +35,7 @@ class DevelopmentConfig(Config):
     DEBUG_TB_ENABLED = True
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
+    BROWSERID_URL = 'http://localhost:9000'
 
 
 class TestingConfig(Config):

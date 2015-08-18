@@ -316,6 +316,16 @@ canvas {
 }
 
 /* line 356, ../sass/screen.scss */
+.triple-height {
+  height: 1000px;
+}
+
+/* line 361, ../sass/screen.scss */
+.triple-height canvas {
+  height: 900px;
+}
+
+/* line 366, ../sass/screen.scss */
 .content-container {
   padding: 10px;
   text-align: center;
@@ -324,23 +334,23 @@ canvas {
   height: 199px;
 }
 
-/* line 365, ../sass/screen.scss */
+/* line 375, ../sass/screen.scss */
 .double-height .content-container {
   height: 510px;
 }
 
-/* line 371, ../sass/screen.scss */
+/* line 381, ../sass/screen.scss */
 #leaflet {
   height: inherit;
   width: inherit;
 }
 
-/* line 378, ../sass/screen.scss */
+/* line 388, ../sass/screen.scss */
 .first-panel {
   margin-left: 0 !important;
 }
 
-/* line 383, ../sass/screen.scss */
+/* line 393, ../sass/screen.scss */
 .headline {
   background-color: #f7fafa;
   color: #1a1a1a;
@@ -348,7 +358,7 @@ canvas {
   font-weight: bold;
 }
 
-/* line 392, ../sass/screen.scss */
+/* line 402, ../sass/screen.scss */
 .details {
   background-color: #f7fafa;
   text-align: center;
@@ -356,14 +366,14 @@ canvas {
   padding-bottom: 1px;
 }
 
-/* line 402, ../sass/screen.scss */
+/* line 412, ../sass/screen.scss */
 .details a {
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: .1rem;
 }
 
-/* line 410, ../sass/screen.scss */
+/* line 420, ../sass/screen.scss */
 #star-rating {
   padding-top: 50px;
 }

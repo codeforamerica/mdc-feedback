@@ -57,6 +57,7 @@ def auth():
     req = urllib2.Request('https://verifier.login.persona.org/verify', data)
 
     response = json.loads(urllib2.urlopen(req).read())
+    current_app.logger.debug('LOGIN: status from persona: {}'.format(response))
     if response.get('status') != 'okay':
         current_app.logger.debug('REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
         abort(403)
@@ -72,7 +73,9 @@ def auth():
         flash('Logged in successfully!', 'alert-success')
 
         current_app.logger.debug('LOGIN: User {} logged in successfully'.format(user.email))
-        return next_url if next_url else '/'
+        # FIXME - I think returning next_url is FUBARing staging. Address this later.
+        # return next_url if next_url else '/'
+        return '/'
 
     # FIXME - originally domain == current_app.config.get('CITY_DOMAIN'):
     elif domain is not None:
@@ -84,7 +87,7 @@ def auth():
 
     else:
         current_app.logger.debug('NOTINDB: User {} not in DB -- aborting!'.format(email))
-        abort(403)
+        return '/users/profile'
 
 
 
@@ -110,7 +113,7 @@ def admin():
 @blueprint.route("/create-survey/",  methods=['GET'])
 def create_survey():
     return render_template("public/create-survey.html", title='Survey Builder')
-    
+
 @blueprint.route("/saved-survey/",  methods=['GET'])
 def save_survey():
     return render_template("public/saved-survey.html", title='Survey Builder')
