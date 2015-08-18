@@ -35,6 +35,14 @@ def create_app(config_object=ProductionConfig):
 
     @app.before_first_request
     def before_first_request():
+        if app.debug and app.config.get('ENV') == 'stage':
+            stdout = logging.StreamHandler(sys.stdout)
+            stdout.setFormatter(logging.Formatter(
+                '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'
+            ))
+            app.logger.addHandler(stdout)
+            app.logger.setLevel(logging.DEBUG)
+
         if app.debug and not app.testing:
             # log to console for dev
             app.logger.setLevel(logging.DEBUG)
