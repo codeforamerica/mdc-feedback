@@ -57,7 +57,33 @@ $(document).ready(function() {
 
 	})
 
-
+	/************************* USER MANAGEMENT *************************/
+	
+	$('.add-user').click(function() {
+		
+		console.log('clicked');
+		$('#add-user-form').removeClass('hidden');
+		
+	})
+	
+	$('#generate-password').click(function() {
+		
+		alert("Clicking this should generate a password randomly.");
+		
+	})
+	
+	$('#submit-new-user').click(function() {
+		
+		alert("Clicking this should write new user to database, which should also trigger a refresh of the user-list above.");
+		
+	})
+	
+	$('.user .delete').click(function() {
+		
+		//probably should warn a user that this is permanent.
+		$(this).parent().detach();
+		
+	})
 
 	/************************* SURVEY BUILDER *************************/
 
@@ -549,7 +575,6 @@ $(document).ready(function() {
 
 	//25.7667° N, 80.2000° W
 	var map = L.map('leaflet').setView([25.7667, -80.2000], 10);
-
 	L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 	    maxZoom: 18,
@@ -557,6 +582,7 @@ $(document).ready(function() {
 	    id: 'phiden.e64a2341',
 	    accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
 	}).addTo(map);
+	
 
 	//data map
 	$.ajax({
