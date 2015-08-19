@@ -8,29 +8,17 @@
 
       <h1>Manage your users.</h1>
 
+      {% for user in users %}
       <li class='user twelve columns' id='0'>
-        <span class='user-name'>Sophia Dengo</span>
-        <span class='user-mail'>sdengo@codeforamerica.org</span>
+        <span class='user-name'>{{ user.print_pretty_name() }}</span>
         <span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
         <p class='button password three columns'>Change Password</p>
-        <p class='button delete three columns'>delete user</p>
-      </li>
 
-      <li class='user twelve columns' id='1'>
-        <span class='user-name'>Ernie Hsiung</span>
-        <span class='user-mail'>ehsiung@codeforamerica.org</span>
-        <span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
-        <p class='button password three columns'>Change Password</p>
-        <p class='button delete three columns'>delete user</p>
+        <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
+          <button class="button delete three columns" type="submit">delete user</button>
+        </form>
       </li>
-
-      <li class='user twelve columns' id='2'>
-        <span class='user-name'>Mathias Gibson</span>
-        <span class='user-mail'>mathias@codeforamerica.org</span>
-        <span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
-        <p class='button password three columns'>Change Password</p>
-        <p class='button delete three columns'>delete user</p>
-      </li>
+      {% endfor %}
 
       <li class='add-user button'>Add a new user</li>
 

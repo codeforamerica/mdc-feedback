@@ -42,7 +42,7 @@
 			{% set navigation_bar = [
 				('/admin/', 'Admin Panel'),
 				('/create-survey/', 'Survey Builder'),
-				('/manage-users/', 'Manage Users')
+				('/users/manage', 'Manage Users')
 			] -%}
 
 		{% elif active_page == 'Survey Builder' or active_page == 'Manage Users' %}
@@ -67,27 +67,27 @@
 		{% if current_user and current_user.is_authenticated() %}
 
 		<div class='row u-pull-left' id='breadcrumb'>
-	
+
 			<ul class='list-nav'>
-		
+
 				<li class='breadcrumb-text'>You're looking at:</li>
 				<li id='breadcrumb-location' class='bold'>{{ title }}</li>
 			</ul>
-		
+
 		</div>
-		
+
 		<div class='row u-pull-right' id='breadcrumb-nav-parent'>
-		
+
 			<ul>
-		
+
 				<li class='breadcrumb-text'>Go back to:</li>
-		
+
 				{% for href, id in navigation_bar %}
 				<li class='breadcrumb-nav'><a href='{{ href|e}}'>{{id|e}}</a></li>
 				{% endfor %}
-		
+
 			</ul>
-		
+
 		</div>
 
 		{% endif %}

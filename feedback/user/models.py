@@ -38,3 +38,9 @@ class User(Model, UserMixin):
 
     def get_id(self):
         return self.email
+
+    def print_pretty_name(self):
+        if self.first_name and self.last_name:
+            return self.full_name
+        else:
+            return self.email
