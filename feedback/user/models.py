@@ -3,7 +3,7 @@ import datetime as dt
 
 from flask_login import UserMixin
 from feedback.database import (
-    Column, Model, db, SurrogatePK
+    Column, Model, db, ReferenceCol, SurrogatePK
 )
 
 
@@ -27,6 +27,7 @@ class User(Model, UserMixin):
     first_name = db.Column(db.String(30), nullable=True)
     last_name = db.Column(db.String(30), nullable=True)
     active = db.Column(db.Boolean(), default=True)
+    role_id = ReferenceCol('roles', ondelete='SET NULL', nullable=True)
 
     @property
     def full_name(self):
