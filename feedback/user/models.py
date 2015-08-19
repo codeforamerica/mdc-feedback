@@ -2,7 +2,22 @@
 import datetime as dt
 
 from flask_login import UserMixin
-from feedback.database import Column, Model, db
+from feedback.database import (
+    Column, Model, db, SurrogatePK
+)
+
+
+class Role(SurrogatePK, Model):
+    __tablename__ = 'roles'
+    name = Column(db.String(80), unique=True, nullable=False)
+    users = db.relationship('User', lazy='dynamic', backref='role')
+
+    def __repr__(self):
+        return '<Role({name})>'.format(name=self.name)
+
+    def __unicode__(self):
+        return self.name
+
 
 class User(Model, UserMixin):
     __tablename__ = 'user'
