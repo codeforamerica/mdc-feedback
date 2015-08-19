@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% set active_page = 'Survey Builder' %}
+{% block content %}
+
+  <div id="container">
+
+    <section id='user-list' class='row twelve columns'>
+
+      <h1>Manage your users.</h1>
+
+      <li class='user twelve columns' id='0'>
+        <span class='user-name'>Sophia Dengo</span>
+        <span class='user-mail'>sdengo@codeforamerica.org</span>
+        <span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
+        <p class='button password three columns'>Change Password</p>
+        <p class='button delete three columns'>delete user</p>
+      </li>
+
+      <li class='user twelve columns' id='1'>
+        <span class='user-name'>Ernie Hsiung</span>
+        <span class='user-mail'>ehsiung@codeforamerica.org</span>
+        <span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
+        <p class='button password three columns'>Change Password</p>
+        <p class='button delete three columns'>delete user</p>
+      </li>
+
+      <li class='user twelve columns' id='2'>
+        <span class='user-name'>Mathias Gibson</span>
+        <span class='user-mail'>mathias@codeforamerica.org</span>
+        <span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
+        <p class='button password three columns'>Change Password</p>
+        <p class='button delete three columns'>delete user</p>
+      </li>
+
+      <li class='add-user button'>Add a new user</li>
+
+    </section>
+
+    <section id='add-user-form' class='row twelve columns hidden'>
+
+      <h3>Add a new user.</h3>
+
+      <div class='row'>
+        <h4>What's your user's name?</h4>
+        <input class='six columns' type='text' placeholder="First and last name">
+      </div>
+
+      <div class='row'>
+        <h4>What's your user's e-mail address?</h4>
+        <input class='six columns' type="email" placeholder='name@miamidade.gov'>
+      </div>
+
+      <div class='row'>
+        <h4>What permissions should your user have?</h4>
+        <p><input class='radio' type="radio" value='superuser'><label>Superuser <span class='small'>Can edit everything.</span></label></p>
+        <p><input class='radio' type="radio" value='user'><label>User <span class='small'>Can do everything but manage users.</span></label></p>
+      </div>
+
+      <div class='row'>
+        <h4>Assign your user a password.</h4>
+        <span class='button' id='generate-password'>Generate password</span>
+      </div>
+
+      <span class='button' id='submit-new-user'>Create new user</span>
+
+    </section>
+
+  </div><!--!/#container -->
+
+{% endblock %}

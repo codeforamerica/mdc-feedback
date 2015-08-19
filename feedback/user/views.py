@@ -13,6 +13,13 @@ blueprint = Blueprint(
     static_folder="../static"
 )
 
+
+@blueprint.route('/manage', methods=['GET', 'POST'])
+@login_required
+def user_manage():
+    return render_template("user/manage.html", title='Manage Users')
+
+
 @blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -40,4 +47,3 @@ def profile():
         return redirect(url_for('profile'))
 
     return render_template('users/profile.html', form=form, user=current_user)
-
