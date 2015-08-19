@@ -85,16 +85,6 @@ $(document).ready(function() {
 		
 	})
 	
-	$('.password').click(function() {
-		
-			$('.change-password').removeClass('hidden');
-			$('.change-password').slideDown();
-	})
-
-	$('.save').click(function() {
-		
-		$('.change-password').slideUp();
-	})
 	/************************* SURVEY BUILDER *************************/
 
 	var globalQuestion = $('.survey-question').clone(true);
