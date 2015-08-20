@@ -37,8 +37,7 @@
         {{ form.csrf_token }}
         <div class='row'>
           <h4>What's your user's name?</h4>
-          {{ macros.with_errors(form.first_name, class_="six columns", placeholder="First Name") }}
-          {{ macros.with_errors(form.last_name, class_="six columns", placeholder="Last Name") }}
+          {{ macros.with_errors(form.full_name, class_="six columns", placeholder="Full Name") }}
         </div>
 
         <div class='row'>

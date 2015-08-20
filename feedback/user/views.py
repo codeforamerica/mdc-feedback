@@ -27,8 +27,7 @@ def user_create():
             'USER CREATED with email {}'.format(form.email.data)
         )
         User.create(email=form.email.data,
-                    first_name=form.first_name.data,
-                    last_name=form.last_name.data,
+                    full_name=form.full_name.data,
                     role_id=form.role_id.data)
 
     flash('Created a new profile.', 'alert-success')

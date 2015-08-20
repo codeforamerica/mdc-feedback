@@ -24,15 +24,11 @@ class User(Model, UserMixin):
 
     email = db.Column(db.String(80), primary_key=True, nullable=False, index=True)
     created_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
-    first_name = db.Column(db.String(30), nullable=True)
-    last_name = db.Column(db.String(30), nullable=True)
+    full_name = db.Column(db.String(60), nullable=True)
     active = db.Column(db.Boolean(), default=True)
     role_id = ReferenceCol('roles', ondelete='SET NULL', nullable=True)
 
     @property
-    def full_name(self):
-        return "{0} {1}".format(self.first_name, self.last_name)
-
     def __repr__(self):
         return '<User({email!r})>'.format(email=self.email)
 
@@ -40,7 +36,7 @@ class User(Model, UserMixin):
         return self.email
 
     def print_pretty_name(self):
-        if self.first_name and self.last_name:
+        if self.full_name:
             return self.full_name
         else:
             return self.email
