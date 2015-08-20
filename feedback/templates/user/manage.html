@@ -17,7 +17,7 @@
           <span class='bold'>Permissions: </span>
           {{ user.role.name }}
         </span>
-        <p class='button password three columns'>Edit user</p>
+          <button class="button password three columns" type="submit">Edit user</button>
 
         <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
           <button class="button delete three columns" type="submit">Delete user</button>
