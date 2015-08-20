@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
+{% import "user/macro_field_with_errors.html" as macros %}
 {% set active_page = 'Survey Builder' %}
-{% block content %}
 
+{% block content %}
   <div id="container">
 
     <section id='user-list' class='row twelve columns'>
@@ -12,10 +13,10 @@
       <li class='user twelve columns' id='0'>
         <span class='user-name'>{{ user.print_pretty_name() }}</span>
         <span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
-        <p class='button password three columns'>Change Password</p>
+        <p class='button password three columns'>Edit user</p>
 
         <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
-          <button class="button delete three columns" type="submit">delete user</button>
+          <button class="button delete three columns" type="submit">Delete user</button>
         </form>
       </li>
       {% endfor %}
@@ -28,28 +29,28 @@
 
       <h3>Add a new user.</h3>
 
-      <div class='row'>
-        <h4>What's your user's name?</h4>
-        <input class='six columns' type='text' placeholder="First and last name">
-      </div>
+      <form action="{{ url_for('user.user_create') }}" method="POST">
+        {{ form.csrf_token }}
+        <div class='row'>
+          <h4>What's your user's name?</h4>
+          {{ macros.with_errors(form.first_name, class_="six columns", placeholder="First Name") }}
+          {{ macros.with_errors(form.last_name, class_="six columns", placeholder="Last Name") }}
+        </div>
 
-      <div class='row'>
-        <h4>What's your user's e-mail address?</h4>
-        <input class='six columns' type="email" placeholder='name@miamidade.gov'>
-      </div>
+        <div class='row'>
+          <h4>What's your user's e-mail address?</h4>
+          {{ macros.with_errors(form.email, class_="six columns", placeholder="name@miamidade.gov") }}
+        </div>
 
-      <div class='row'>
-        <h4>What permissions should your user have?</h4>
-        <p><input class='radio' type="radio" value='superuser'><label>Superuser <span class='small'>Can edit everything.</span></label></p>
-        <p><input class='radio' type="radio" value='user'><label>User <span class='small'>Can do everything but manage users.</span></label></p>
-      </div>
+        <div class='row'>
+          <h4>What permissions should your user have?</h4>
+          {% for subfield in form.role_id %}
+          <p>{{ subfield(class=radio) }}<label>{{ subfield.label}}</label></p>
+          {% endfor %}
+        </div>
 
-      <div class='row'>
-        <h4>Assign your user a password.</h4>
-        <span class='button' id='generate-password'>Generate password</span>
-      </div>
-
-      <span class='button' id='submit-new-user'>Create new user</span>
+        <button class='button' type="submit" id='submit-new-user'>Create new user</button>
+      </form>
 
     </section>
 

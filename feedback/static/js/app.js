@@ -8,23 +8,17 @@ $(document).ready(function() {
 		var container = $(this).parent().find('.content-container');
 		var details = $(this).parent().find('.details');
 
-		console.log('headline is ', h, details.height() )
+		// console.log('headline is ', h, details.height() )
 		//a single line of text is 25px high.
 		//if we have a 2x tall headline, need to reposition .details
 		//we do this by adjusting .content-container height
 		if(h > 25) {
-
 			var offset = 300 - h - details.height() * 2 - 26;	//300 is fixed height, 20 is padding
-			console.log(offset);
-
+			// console.log(offset);
 			$(container).css('height', offset);
-
-
 		}
-
 		$(details).removeClass("invisible-button");
-
-	})
+	});
 
 
 	/************************* ADMIN PANEL *************************/
@@ -58,31 +52,20 @@ $(document).ready(function() {
 	})
 
 	/************************* USER MANAGEMENT *************************/
-	
+
 	$('.add-user').click(function() {
-		
+
 		console.log('clicked');
 		$('#add-user-form').removeClass('hidden');
-		
+
 	})
-	
-	$('#generate-password').click(function() {
-		
-		alert("Clicking this should generate a password randomly.");
-		
-	})
-	
-	$('#submit-new-user').click(function() {
-		
-		alert("Clicking this should write new user to database, which should also trigger a refresh of the user-list above.");
-		
-	})
-	
+
+
 	$('.user .delete').click(function() {
-		
+
 		//probably should warn a user that this is permanent.
 		$(this).parent().detach();
-		
+
 	})
 
 	/************************* SURVEY BUILDER *************************/
@@ -582,7 +565,7 @@ $(document).ready(function() {
 	    id: 'phiden.e64a2341',
 	    accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
 	}).addTo(map);
-	
+
 
 	//data map
 	$.ajax({
