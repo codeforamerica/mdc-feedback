@@ -9,10 +9,14 @@
 			<h1>Manage your users.</h1>
 						
 			<li class='user twelve columns' id='0'>
-				<span class='user-name'>Sophia Dengo</span>
-				<span class='user-mail'>sdengo@codeforamerica.org</span>
-				<span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
-				<p class='button password three columns'>Change Password</p>
+			
+				<div>
+					<span class='user-name'>Sophia Dengo</span>
+					<span class='user-mail'>sdengo@codeforamerica.org</span>
+					<span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
+					<i>Passwords are managed through <a href=#>Persona.</a></i>
+				</div>
+				
 				<p class='button delete three columns'>delete user</p>
 			</li>
 			
@@ -20,7 +24,7 @@
 				<span class='user-name'>Ernie Hsiung</span>
 				<span class='user-mail'>ehsiung@codeforamerica.org</span>
 				<span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
-				<p class='button password three columns'>Change Password</p>
+				<i>Passwords are managed through <a href=#>Persona.</a></i>
 				<p class='button delete three columns'>delete user</p>
 			</li>
 			
@@ -28,7 +32,7 @@
 				<span class='user-name'>Mathias Gibson</span>
 				<span class='user-mail'>mathias@codeforamerica.org</span>
 				<span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
-				<p class='button password three columns'>Change Password</p>
+				<i>Passwords are managed through <a href=#>Persona.</a></i>
 				<p class='button delete three columns'>delete user</p>
 			</li>
 			
@@ -55,12 +59,7 @@
 				<p><input class='radio' type="radio" value='superuser'><label>Superuser <span class='small'>Can edit everything.</span></label></p>
 				<p><input class='radio' type="radio" value='user'><label>User <span class='small'>Can do everything but manage users.</span></label></p>
 			</div>
-			
-			<div class='row'>
-				<h4>Assign your user a password.</h4>
-				<span class='button' id='generate-password'>Generate password</span>
-			</div>
-			
+						
 			<span class='button' id='submit-new-user'>Create new user</span>
 			
 		</section>

@@ -84,7 +84,7 @@ $(document).ready(function() {
 		$(this).parent().detach();
 		
 	})
-
+	
 	/************************* SURVEY BUILDER *************************/
 
 	var globalQuestion = $('.survey-question').clone(true);
