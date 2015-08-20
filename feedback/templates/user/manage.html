@@ -12,7 +12,11 @@
       {% for user in users %}
       <li class='user twelve columns' id='0'>
         <span class='user-name'>{{ user.print_pretty_name() }}</span>
-        <span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
+        <span class='user-mail'>{{ user.email }}</span>
+        <span class='user-permissions'>
+          <span class='bold'>Permissions: </span>
+          {{ user.role.name }}
+        </span>
         <p class='button password three columns'>Edit user</p>
 
         <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
