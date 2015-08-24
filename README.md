@@ -97,6 +97,19 @@ Deployment is typically on Heroku. Follow [this tutorial](https://devcenter.hero
 
 #### Project setup
 
+**login and user accounts**
+
+Right now, the app uses [persona](https://login.persona.org/about) to handle authentication. The app uses its own user database to manage roles and object-based authorization. You will need to sign in through persona and then enter yourself into the database in order to have access to admin and other pages.
+
+A manage task has been created to allow you to quickly create a user to access the admin and other staff-only tasks. To add an email, run the following command (NOTE: if you updated your database as per above, you will probably want to give youself a role of 1, which will give you superadmin privledges), putting your email/desired role in the appropriate places:
+
+```bash
+python manage.py seed_user -e <your-email-here> -r <your-desired-role>
+```
+
+Now, logging in through persona should also give you access to the app.
+
+
 ### Tests
 
 In order to run the tests, you will need to create a test database. You can follow the same procedures outlined in the install section. By default, the database should be named purchasing_test:
