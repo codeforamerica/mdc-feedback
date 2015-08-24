@@ -35,6 +35,9 @@ class User(Model, UserMixin):
     def get_id(self):
         return self.email
 
+    def is_superadmin(self):
+        return self.role.name == 'superadmin'
+
     def print_pretty_name(self):
         if self.full_name:
             return self.full_name

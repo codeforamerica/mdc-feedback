@@ -17,15 +17,20 @@
           <span class='bold'>Permissions: </span>
           {{ user.role.name }}
         </span>
+        {% if current_user.is_superadmin() %}
           <button class="button password three columns" type="submit">Edit user</button>
-
+        {% endif %}
+        {% if current_user.is_superadmin() %}
         <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
           <button class="button delete three columns" type="submit">Delete user</button>
         </form>
+        {% endif %}
       </li>
       {% endfor %}
 
+      {% if current_user.is_superadmin() %}
       <li class='add-user button'>Add a new user</li>
+      {% endif %}
 
     </section>
 
@@ -53,6 +58,7 @@
         </div>
 
         <button class='button' type="submit" id='submit-new-user'>Create new user</button>
+
       </form>
 
     </section>

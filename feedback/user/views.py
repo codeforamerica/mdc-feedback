@@ -5,7 +5,7 @@ from flask import (
     url_for, flash, current_app
 )
 from flask.ext.login import (
-    login_required
+    current_user, login_required
 )
 from feedback.user.models import User
 from feedback.user.forms import UserForm
@@ -47,14 +47,14 @@ def user_delete(id):
 
 
 @blueprint.route('/manage', methods=['GET', 'POST'])
-@requires_roles('superadmin')
+@requires_roles('superadmin', 'admin')
 def user_manage():
     form = UserForm()
     users = User.query.order_by(User.role_id).all()
-    return render_template("user/manage.html", users=users, form=form, title='Manage Users')
+    return render_template("user/manage.html", current_user=current_user, users=users, form=form, title='Manage Users')
 
 
 @blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('users/profile.html', user=current_user)
+    return render_template('users/profile.html', current_user=current_user)
