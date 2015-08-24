@@ -3,6 +3,7 @@ from feedback.database import (
     Column, db, Model
 )
 
+
 # https://pythonhosted.org/Flask-SQLAlchemy/models.html
 class Survey(Model):
     __tablename__ = 'survey'
@@ -16,6 +17,7 @@ class Survey(Model):
 
     def __repr__(self):
         return '<Survey {0}: {1}>'.format(self.id, self.title_en)
+
 
 class Question(Model):
     __tablename__ = 'question'
