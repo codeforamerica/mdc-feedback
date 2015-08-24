@@ -5,7 +5,7 @@
 <section class='row' id='dashboard'>
 
 	<div class='row twelve columns'>
-		<h3>Metrics from user surveys at the PIC</h3>
+		<h3>Miami-Dade County Permitting and Inspection Center User Survey Metrics</h3>
 	</div>
 
 	<div class='six columns panel first-panel'>
@@ -77,19 +77,38 @@
 
 		<div class='six columns panel'>
 
-			<div class='headline'>Average # of inspections per permit - Last 30 Days</div>
+			<div class='headline'>{{ dash_obj[3].title }}</div>
 			<div class='content-container'>
-				<p>data</p>
+				<p style="font-size:350%;font-weight:bold;margin:0;">
+          {{ dash_obj[3].data.val }}</p><br />
+        <p>Versus previous 30 days:<br />
+          {% if dash_obj[3].data.yoy > 0 %}
+          <span style="color:red;font-weight:bold;">Up
+          {% else %}
+          <span style="color:green;font-weight:bold;">Down
+          {% endif %}
+          {{ '%0.2f'| format(dash_obj[3].data.yoy|float) }}%
+          </span>
+        </p>
 			</div>
 			<p class='details invisible-button'><a href=#>View Details</a></p>
 		</div>
 
 		<div class='six columns panel'>
 
-			<div class='headline'>% of Permits Completed Within 15 Days</div>
-			<div class='content-container'>
-				data
-			</div>
+			<div class='headline'>{{ dash_obj[4].title }}</div>
+      <div class='content-container'>
+        <p style="font-size:350%;font-weight:bold;margin:0;">{{ dash_obj[4].data.val }}</p><br />
+        <p>Versus previous 30 days:<br />
+          {% if dash_obj[4].data.yoy > 0 %}
+          <span style="color:red;font-weight:bold;">Up
+          {% else %}
+          <span style="color:green;font-weight:bold;">Down
+          {% endif %}
+          {{ '%0.2f'| format(dash_obj[4].data.yoy|float) }}%
+          </span>
+        </p>
+      </div>
 			<p class='details invisible-button'><a href=#>View Details</a></p>
 
 		</div>
@@ -106,9 +125,8 @@
 
 		<div class='six columns panel'>
 
-			<div class='headline'>Average # of inspections per permit - Last 30 Days</div>
+			<div class='headline'></div>
 			<div class='content-container'>
-				<p>data</p>
 
 			</div>
 			<p class='details invisible-button'><a href=#>View Details</a></p>

@@ -3,7 +3,6 @@
 import datetime
 import requests
 import json
-import pprint
 import pytz
 
 from flask import (
@@ -13,6 +12,8 @@ from flask.ext.login import (
     login_required
 )
 from tzlocal import get_localzone
+
+from feedback.dashboard.permits import get_lifespan
 
 blueprint = Blueprint(
     "dashboard", __name__,
@@ -41,9 +42,11 @@ surveys_value_array = []
 
 local_tz = get_localzone()
 
+
 def utc_to_local(utc_dt):
     local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
-    return local_tz.normalize(local_dt) # .normalize might be unnecessary
+    return local_tz.normalize(local_dt)  # .normalize might be unnecessary
+
 
 def make_typeform_call(timestamp):
     '''
@@ -57,6 +60,7 @@ def make_typeform_call(timestamp):
     response = requests.get(API)
     json_result = response.json()
     return json_result
+
 
 def get_typeform_by_meta(json_result):
     web_en = 0
@@ -82,6 +86,7 @@ def get_typeform_by_meta(json_result):
         "total": total,
         "completed": int(json_result['stats']['responses']['showing'])
     }
+
 
 def get_textit_by_meta(json_result):
     sms_en = 0
@@ -112,16 +117,16 @@ def get_textit_by_meta(json_result):
         "completed": sms_completed_responses
     }
 
+
 def get_typeform_by_date(json_result, surveys_by_date):
     for survey_response in json_result['responses']:
 
         # Iterate through the metadata. In the API there is a date_land field in the format of "2015-08-04 22:13:38". Parse this into our surveys_by_date array and increase these by 1.
-        date_object = datetime.datetime.strptime(
-                        survey_response['metadata']['date_submit'],
-                        '%Y-%m-%d %H:%M:%S'
-                        )
+        date_object = datetime.datetime.strptime(survey_response['metadata']['date_submit'],
+                        '%Y-%m-%d %H:%M:%S')
         surveys_by_date[date_object.strftime("%m-%d")] += 1
     return surveys_by_date
+
 
 def get_textit_by_date(json_result, surveys_by_date):
     obj_completed = [result for result in json_result['results'] if result['completed'] == True]
@@ -142,6 +147,7 @@ def get_textit_by_date(json_result, surveys_by_date):
 
     return surveys_by_date
 
+
 def make_textit_call(timestamp):
     '''
     Takes in the timestamp in unix form
@@ -155,6 +161,7 @@ def make_textit_call(timestamp):
 
     json_result = response2.json()
     return json_result
+
 
 for i in range(7, -1, -1):
     time_i = (datetime.date.today() - datetime.timedelta(i))
@@ -183,9 +190,9 @@ sms_date = get_textit_by_date(sms_result, surveys_by_date)
 # ANALYTICS CODE
 
 try:
-  rating = (web_meta['total'] + sms_meta['total']) / (web_meta['completed'] + sms_meta['completed'])
+    rating = (web_meta['total'] + sms_meta['total']) / (web_meta['completed'] + sms_meta['completed'])
 except ZeroDivisionError:
-  rating = 0
+    rating = 0
 
 for i in range(7, -1, -1):
     time_i = (datetime.date.today() - datetime.timedelta(i))
@@ -229,11 +236,20 @@ dashboard_collection = [
             "sms_en": "SMS (EN)",
             "sms_es": "SMS (ES)"
         }
+    },
+    {
+        "title": "Average Commercial Permit Lifespan in the Last 30 Days",
+        "data": get_lifespan('c')
+    },
+    {
+        "title": "Average Residential Permit Lifespan in the Last 30 Days",
+        "data": get_lifespan('r')
     }
 ]
 
 json_obj['test'] = json.dumps(dashboard_collection[0]['data']['graph'])
 json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
+
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
@@ -244,11 +260,11 @@ def home():
                 stats=stats,
                 json_obj=json_obj,
                 dash_obj=dashboard_collection,
-                title='Dashboard'	#sophia added
+                title='Dashboard'
             )
+
 
 @blueprint.route('/dashboard', methods=['GET', 'POST'])
 def survey_index():
     form = {}
     return render_template('dashboard/home.html', form=form)
-
