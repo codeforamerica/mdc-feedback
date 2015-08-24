@@ -103,7 +103,7 @@ def register():
         return redirect('/')
     else:
         flash_errors(form)
-    return render_template('public/register.html', form=form)
+    return render_template('public/register.html', form=form, title='Register')
 
 
 @blueprint.route("/admin/",  methods=['GET'])
@@ -119,3 +119,13 @@ def create_survey():
 @blueprint.route("/saved-survey/",  methods=['GET'])
 def save_survey():
     return render_template("public/saved-survey.html", title='Survey Builder')
+
+
+@blueprint.route("/manage-users/",  methods=['GET'])
+def manage_users():
+    return render_template("public/manage-users.html", title='Manage Users')
+
+
+@blueprint.route("/violations-detail/",  methods=['GET'])
+def violations_detail():
+    return render_template("public/violations-detail.html", title='Violations by Type: Detail')

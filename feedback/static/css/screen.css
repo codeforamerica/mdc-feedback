@@ -275,33 +275,33 @@ h1 {
   padding-left: 30px;
 }
 
-/* line 314, ../sass/screen.scss */
+/* line 312, ../sass/screen.scss */
 .user span {
   margin-right: 5px;
   display: list-item;
 }
 
-/* line 321, ../sass/screen.scss */
+/* line 319, ../sass/screen.scss */
 .user-name {
   font-weight: 600;
   font-size: 1.5em;
 }
 
-/* line 328, ../sass/screen.scss */
+/* line 326, ../sass/screen.scss */
 .user-permissions,
 .user-permissions span {
   display: inline-block;
 }
 
 /* SURVEY BUILDER */
-/* line 335, ../sass/screen.scss */
+/* line 333, ../sass/screen.scss */
 #survey-questions {
   padding: 20px;
   border: 1px solid #cccccc;
   margin-top: 0;
 }
 
-/* line 343, ../sass/screen.scss */
+/* line 341, ../sass/screen.scss */
 #survey-questions h3 {
   width: 100%;
   background-color: #eeeeee;
@@ -310,14 +310,14 @@ h1 {
   margin-top: -20px;
 }
 
-/* line 352, ../sass/screen.scss */
+/* line 350, ../sass/screen.scss */
 .survey-question {
   height: auto;
   overflow: auto;
   background-color: white;
 }
 
-/* line 360, ../sass/screen.scss */
+/* line 358, ../sass/screen.scss */
 #add-question-wrapper {
   border-top: 1px solid #cccccc;
   padding-top: 20px;
@@ -326,14 +326,14 @@ h1 {
   margin-right: -20px;
 }
 
-/* line 369, ../sass/screen.scss */
+/* line 367, ../sass/screen.scss */
 #add-question {
   margin-left: 20px;
   background-color: white;
   margin-top: 10px;
 }
 
-/* line 376, ../sass/screen.scss */
+/* line 374, ../sass/screen.scss */
 .delete-survey,
 .delete-option,
 .delete {
@@ -342,7 +342,7 @@ h1 {
   margin-left: 5px;
 }
 
-/* line 385, ../sass/screen.scss */
+/* line 383, ../sass/screen.scss */
 .sortable-placeholder {
   border: 1px solid #e0e0e0;
   list-style: none;
@@ -350,13 +350,13 @@ h1 {
   background-color: #e0e0e0;
 }
 
-/* line 393, ../sass/screen.scss */
+/* line 391, ../sass/screen.scss */
 .dragger img {
   width: 40px;
   height: auto;
 }
 
-/* line 399, ../sass/screen.scss */
+/* line 397, ../sass/screen.scss */
 .ui-sortable-handle,
 #survey-nav li,
 li.survey-question {
@@ -364,40 +364,40 @@ li.survey-question {
 }
 
 /* DASHBOARD */
-/* line 409, ../sass/screen.scss */
+/* line 407, ../sass/screen.scss */
 canvas {
   width: 90%;
   height: 192px;
 }
 
-/* line 416, ../sass/screen.scss */
+/* line 414, ../sass/screen.scss */
 .panel {
   border: 5px solid #f7fafa;
   height: 300px;
   margin: 5px;
 }
 
-/* line 424, ../sass/screen.scss */
+/* line 422, ../sass/screen.scss */
 .double-height {
   height: 610px;
 }
 
-/* line 430, ../sass/screen.scss */
+/* line 428, ../sass/screen.scss */
 .double-height canvas {
   height: 502px;
 }
 
-/* line 435, ../sass/screen.scss */
+/* line 433, ../sass/screen.scss */
 .triple-height {
   height: 1000px;
 }
 
-/* line 440, ../sass/screen.scss */
+/* line 438, ../sass/screen.scss */
 .triple-height canvas {
   height: 900px;
 }
 
-/* line 445, ../sass/screen.scss */
+/* line 443, ../sass/screen.scss */
 .content-container {
   padding: 10px;
   text-align: center;
@@ -406,23 +406,23 @@ canvas {
   height: 199px;
 }
 
-/* line 454, ../sass/screen.scss */
+/* line 452, ../sass/screen.scss */
 .double-height .content-container {
   height: 510px;
 }
 
-/* line 460, ../sass/screen.scss */
+/* line 458, ../sass/screen.scss */
 #leaflet {
   height: inherit;
   width: inherit;
 }
 
-/* line 467, ../sass/screen.scss */
+/* line 465, ../sass/screen.scss */
 .first-panel {
   margin-left: 0 !important;
 }
 
-/* line 472, ../sass/screen.scss */
+/* line 470, ../sass/screen.scss */
 .headline {
   background-color: #f7fafa;
   color: #1a1a1a;
@@ -430,7 +430,7 @@ canvas {
   font-weight: bold;
 }
 
-/* line 481, ../sass/screen.scss */
+/* line 479, ../sass/screen.scss */
 .details {
   background-color: #f7fafa;
   text-align: center;
@@ -438,14 +438,32 @@ canvas {
   padding-bottom: 1px;
 }
 
-/* line 491, ../sass/screen.scss */
+/* line 489, ../sass/screen.scss */
 .details a {
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: .1rem;
 }
 
-/* line 499, ../sass/screen.scss */
+/* line 497, ../sass/screen.scss */
 #star-rating {
   padding-top: 50px;
+}
+
+/* DETAILS VIEWS */
+/* line 504, ../sass/screen.scss */
+#details-view {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* line 510, ../sass/screen.scss */
+.fluid-height {
+  height: 1000px;
+  overflow: display;
+}
+
+/* line 517, ../sass/screen.scss */
+.fluid-height canvas {
+  height: 900px;
 }
