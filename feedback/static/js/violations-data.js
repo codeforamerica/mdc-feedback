@@ -1,6 +1,4 @@
 $(document).ready(function() {
-
-	console.log('violations suck.');
 	
 	Array.prototype.sortOn = function(){
 	  var dup = this.slice();
