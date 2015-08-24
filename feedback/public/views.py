@@ -76,9 +76,7 @@ def auth():
         flash('Logged in successfully!', 'alert-success')
 
         current_app.logger.debug('LOGIN: User {} logged in successfully'.format(user.email))
-        # FIXME - I think returning next_url is FUBARing staging. Address this later.
-        # return next_url if next_url else '/'
-        return '/'
+        return next_url if next_url else '/'
 
     # FIXME - originally domain == current_app.config.get('CITY_DOMAIN'):
     elif domain is not None:
