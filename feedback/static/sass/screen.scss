@@ -432,6 +432,15 @@ canvas {
 	height:502px;
 }
 
+.fluid-height canvas,
+.fluid-height {
+	
+	height:auto;
+	overflow:auto;
+	
+}
+
+
 .triple-height {
 	
 	height:1000px;

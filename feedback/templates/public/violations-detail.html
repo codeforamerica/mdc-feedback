@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% set active_page = 'Dashboard' %}
+{% block content %}
+
+<section class='row' id='dashboard'>
+
+	<h3>Violations by Type: Detail View</h3>
+
+	<div class='twelve columns panel fluid-height'>
+
+			<div class='headline'>Top 20 Violations by Type</div>
+			<div class='content-container'>
+				<canvas id='viotype'></canvas>
+			</div>
+			
+		</div>
+
+</section> <!-- close row -->
+
+{% endblock %}
