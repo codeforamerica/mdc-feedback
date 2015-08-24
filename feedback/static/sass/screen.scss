@@ -309,8 +309,6 @@ h1 {
 	padding-left:30px;
 }
 
-
-
 .user span {
 	
 	margin-right:5px;
@@ -432,15 +430,6 @@ canvas {
 	height:502px;
 }
 
-.fluid-height canvas,
-.fluid-height {
-	
-	height:auto;
-	overflow:auto;
-	
-}
-
-
 .triple-height {
 	
 	height:1000px;
@@ -508,4 +497,24 @@ canvas {
 #star-rating {
 	
 	padding-top:50px;
+}
+
+/* DETAILS VIEWS */
+
+#details-view {
+	
+	padding-top:0;
+	margin-top:0;
+}
+
+.fluid-height {
+	
+	height:1000px;
+	overflow:display;
+	
+}
+
+.fluid-height canvas {
+	
+	height:900px;
 }

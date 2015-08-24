@@ -37,7 +37,7 @@
 <!-- nav active states -->
 <!-- begin stuff that requires authentication check -->
 
-{% if active_page == 'Dashboard' %}
+	{% if active_page == 'Dashboard' %}
 
 			{% set navigation_bar = [
 				('/admin/', 'Admin Panel'),
@@ -62,6 +62,15 @@
 				('/create-survey/', 'Survey Builder')
 
 			] -%}
+			
+		{% else %}
+		
+				{% set navigation_bar = [
+
+				('/', 'Dashboard')
+
+			] -%}
+			
 		{% endif %}
 
 		{% if current_user and current_user.is_authenticated() %}
@@ -94,9 +103,6 @@
 
 <!-- end stuff that requires authentication check -->
 
-
-
-
 <div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
 
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -122,16 +128,38 @@
 
 
 </body>
+
 <!-- FIXME: move jquery into a bower and use grunt -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/static/js/chart.min.js"></script>
-<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
-<script type="text/javascript" src="/static/js/remodal.min.js"></script>
-<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
-
 <script src="https://login.persona.org/include.js"></script>
 
+<!-- JS blocking -->
+
+	{% if active_page == 'Dashboard' %}
+	
+		<script type="text/javascript" src="/static/js/chart.min.js"></script>
+		<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
+		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
+		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
+
+	{% elif active_page == 'Violations' %}
+	
+		<script type="text/javascript" src="/static/js/chart.min.js"></script>
+		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
+		<script type="text/javascript" src="/static/js/violations-data.js"></script>
+		
+	{% elif active_page == 'Survey Builder' or active_page == 'Manage Users' %}
+	
+		
+	{% elif active_page == 'Admin' %}
+	
+		
+	{% endif %}
+
+<!-- JS blocking -->
+
+ 
 {% block js %}
   {% assets "js_all" %}
       <script type="text/javascript" src="{{ ASSET_URL }}"></script>
