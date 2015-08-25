@@ -123,14 +123,24 @@
 
 		</div>
 
-		<div class='six columns panel'>
+    <div class='six columns panel'>
 
-			<div class='headline'></div>
-			<div class='content-container'>
+      <div class='headline'>{{ dash_obj[5].title }}</div>
+      <div class='content-container'>
+        <p style="font-size:350%;font-weight:bold;margin:0;">{{ dash_obj[5].data.val }}</p><br />
+        <p>Versus previous 30 days:<br />
+          {% if dash_obj[5].data.yoy > 0 %}
+          <span style="color:red;font-weight:bold;">Up
+          {% else %}
+          <span style="color:green;font-weight:bold;">Down
+          {% endif %}
+          {{ '%0.2f'| format(dash_obj[5].data.yoy|float) }}%
+          </span>
+        </p>
+      </div>
+      <p class='details invisible-button'><a href=#>View Details</a></p>
 
-			</div>
-			<p class='details invisible-button'><a href=#>View Details</a></p>
-		</div>
+    </div>
 
 	</div>
 

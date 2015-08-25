@@ -15,13 +15,21 @@ def json_to_dateobj(jsondate):
 def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     '''
     Run the API call between arg1 days ago and arg2 days ago.
-    property_type should either be 'r' or 'c'. Defaults to 'c'
+    property_type should either be 'r', 'h' or 'c'. If it's an 'h',
+    we take out the residential_commercial clause and we'll check
+    if it's an owner/builder, if "contractor_name" = 'OWNER.'
+    Defaults to 'c'
     Return the integer mean lifespan.
     '''
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
-    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$where=co_cc_date%20%3E=%20%27' + days_30 + '%27%20AND%20co_cc_date%20<%20%27' + days_0 + '%27%20AND%20residential_commercial%20=%20%27' + property_type + '%27&$order=co_cc_date%20desc'
+    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$where=co_cc_date%20%3E=%20%27' + days_30 + '%27%20AND%20co_cc_date%20<%20%27' + days_0 + '%27%20AND%20'
+    if property_type == 'h':
+        API = API + 'contractor_name=%27OWNER%27'
+    else:
+        API = API + 'residential_commercial%20=%20%27' + property_type + '%27'
+    API = API + '&$order=co_cc_date%20desc'
     response = requests.get(API)
     json_result = response.json()
     lifespan_array = []
