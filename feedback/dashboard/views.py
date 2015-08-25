@@ -6,14 +6,11 @@ import json
 import pytz
 
 from flask import (
-    Blueprint, render_template, request, flash
-)
-from flask.ext.login import (
-    login_required
+    Blueprint, render_template
 )
 from tzlocal import get_localzone
 
-from feedback.dashboard.permits import get_lifespan
+from feedback.dashboard.permits import get_lifespan, get_avg_cost
 
 blueprint = Blueprint(
     "dashboard", __name__,
@@ -248,6 +245,18 @@ dashboard_collection = [
     {
         "title": "Avg Owner/Builder Permit Lifespan in the Last 30 Days",
         "data": get_lifespan('h')
+    },
+    {
+        "title": "Avg Cost of an Open Commercial Permit",
+        "data": get_avg_cost('c')
+    },
+    {
+        "title": "Avg Cost of an Open Residential Permit",
+        "data": get_avg_cost('r')
+    },
+    {
+        "title": "Avg Cost of an Owner/Builder Permit",
+        "data": get_avg_cost('h')
     }
 ]
 
@@ -258,14 +267,7 @@ json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
     today = datetime.date.today()
-    return render_template(
-                "public/home.html",
-                date=today.strftime('%B %d, %Y'),
-                stats=stats,
-                json_obj=json_obj,
-                dash_obj=dashboard_collection,
-                title='Dashboard'
-            )
+    return render_template("public/home.html", date=today.strftime('%B %d, %Y'), stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard')
 
 
 @blueprint.route('/dashboard', methods=['GET', 'POST'])

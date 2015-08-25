@@ -44,9 +44,26 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     return np.mean(lifespan_array)
 
 
+def get_avg_cost(property_type='c'):
+    '''
+    property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
+    Returns an integer
+    '''
+    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=AVG(permit_total_fee)&$where='
+    if property_type == 'h':
+        API = API + 'contractor_name=%27OWNER%27'
+    else:
+        API = API + 'residential_commercial%20=%20%27' + property_type + '%27'
+    API = API + '%20and%20co_cc_date%20IS%20NULL'
+
+    response = requests.get(API)
+    result = response.json()
+    return result[0]['avg_permit_total_fee']
+
+
 def get_lifespan(property_type='c'):
     '''
-    property_type should either be 'r' or 'c'. Defaults to 'c'.
+    property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
     Returns an object:
         val = the current lifespace
         yoy = the year over year increase or decrease (100 to -100)

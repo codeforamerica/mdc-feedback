@@ -113,17 +113,7 @@
 
 		</div>
 
-		<div class='six columns panel first-panel'>
-
-			<div class='headline'>Cost per permit / Average</div>
-			<div class='content-container'>
-				<p>data</p>
-			</div>
-			<p class='details invisible-button'><a href=#>View Details</a></p>
-
-		</div>
-
-    <div class='six columns panel'>
+    <div class='six columns panel first-panel'>
 
       <div class='headline'>{{ dash_obj[5].title }}</div>
       <div class='content-container'>
@@ -139,7 +129,36 @@
         </p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
+    </div>
 
+    <div class='six columns panel'>
+      <div class='headline'>{{ dash_obj[6].title }}</div>
+      <div class='content-container'>
+        <p style="font-weight:bold; font-size:250%">
+          ${{ '%0.2f'| format(dash_obj[6].data|float) }}
+        </p>
+      </div>
+      <p class='details invisible-button'><a href=#>View Details</a></p>
+    </div>
+
+    <div class='six columns panel first-panel'>
+      <div class='headline'>{{ dash_obj[7].title }}</div>
+      <div class='content-container'>
+        <p style="font-weight:bold; font-size:250%">
+          ${{ '%0.2f'| format(dash_obj[7].data|float) }}
+        </p>
+      </div>
+      <p class='details invisible-button'><a href=#>View Details</a></p>
+    </div>
+
+    <div class='six columns panel'>
+      <div class='headline'>{{ dash_obj[8].title }}</div>
+      <div class='content-container'>
+        <p style="font-weight:bold; font-size:250%">
+          ${{ '%0.2f'| format(dash_obj[8].data|float) }}
+        </p>
+      </div>
+      <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 
 	</div>
