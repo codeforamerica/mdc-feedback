@@ -1,7 +1,6 @@
  # -*- coding: utf-8 -*-
 
 import datetime
-import requests
 import json
 import pytz
 
@@ -10,7 +9,13 @@ from flask import (
 )
 from tzlocal import get_localzone
 
-from feedback.dashboard.permits import get_lifespan, get_avg_cost
+from feedback.dashboard.vendorsurveys import (
+    make_typeform_call, make_textit_call
+)
+
+from feedback.dashboard.permits import (
+    get_lifespan, get_avg_cost
+)
 
 blueprint = Blueprint(
     "dashboard", __name__,
@@ -18,13 +23,8 @@ blueprint = Blueprint(
     static_folder="../static"
 )
 
-TYPEFORM_API = 'https://api.typeform.com/v0/form/UYZYtI?key='
-TYPEFORM_API_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
-
-TEXTIT_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
 TEXTIT_UUID_EN = 'cd8cd1b5-ab4c-4c85-b623-9f28c56cc753'
-TEXTIT_UUID_ES = 'abc55a5c-2d4a-468f-ae76-a5a1e31865e0'
-TEXTIT_AUTH_KEY = '41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9'
+TEXTIT_UUID_OPINION = '0a77d0af-2685-4d8d-b4be-732e376f2f85'
 
 
 json_obj = {}
@@ -43,20 +43,6 @@ local_tz = get_localzone()
 def utc_to_local(utc_dt):
     local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
     return local_tz.normalize(local_dt)  # .normalize might be unnecessary
-
-
-def make_typeform_call(timestamp):
-    '''
-    Takes in the timestamp in unix form
-    Returns the JSON of the actual API. Let's just start simple.
-    '''
-    unix_time = timestamp.strftime("%s")
-
-    API = TYPEFORM_API + TYPEFORM_API_KEY + '&completed=true&since=' + unix_time
-
-    response = requests.get(API)
-    json_result = response.json()
-    return json_result
 
 
 def get_typeform_by_meta(json_result):
@@ -100,12 +86,14 @@ def get_textit_by_meta(json_result):
             sms_es += 1
 
         # filter for the node ID of the opinion scale,
-        # which is 8b04d9e3-9bdb-4b1b-b258-aaa3c7062083
-        opinion_node = [result for result in obj['values'] if result['node'] == '8b04d9e3-9bdb-4b1b-b258-aaa3c7062083']
-        try:
-            sms_total = sms_total + float(opinion_node[0]['value'])
-        except IndexError:
-            pass
+        # which is 0a77d0af-2685-4d8d-b4be-732e376f2f85
+        values_array = obj['values']
+        for value in values_array:
+            if value['node'] == TEXTIT_UUID_OPINION and value['category'] == '1 - 7':
+                try:
+                    sms_total = sms_total + float(value['value'])
+                except IndexError:
+                    pass
 
     return {
         "en": sms_en,
@@ -117,10 +105,8 @@ def get_textit_by_meta(json_result):
 
 def get_typeform_by_date(json_result, surveys_by_date):
     for survey_response in json_result['responses']:
-
         # Iterate through the metadata. In the API there is a date_land field in the format of "2015-08-04 22:13:38". Parse this into our surveys_by_date array and increase these by 1.
-        date_object = datetime.datetime.strptime(survey_response['metadata']['date_submit'],
-                        '%Y-%m-%d %H:%M:%S')
+        date_object = datetime.datetime.strptime(survey_response['metadata']['date_submit'], '%Y-%m-%d %H:%M:%S')
         surveys_by_date[date_object.strftime("%m-%d")] += 1
     return surveys_by_date
 
@@ -130,10 +116,7 @@ def get_textit_by_date(json_result, surveys_by_date):
 
     for obj in obj_completed:
         # obj['created_on'] "2015-08-03T16:51:48.661Z"
-        date_object = datetime.datetime.strptime(
-                        obj['created_on'],
-                        '%Y-%m-%dT%H:%M:%S.%fZ'
-                        )
+        date_object = datetime.datetime.strptime(obj['created_on'], '%Y-%m-%dT%H:%M:%S.%fZ')
 
         # http://stackoverflow.com/questions/4563272/how-to-convert-a-python-utc-datetime-to-a-local-datetime-using-only-python-stand
         date_object = utc_to_local(date_object)
@@ -145,21 +128,6 @@ def get_textit_by_date(json_result, surveys_by_date):
     return surveys_by_date
 
 
-def make_textit_call(timestamp):
-    '''
-    Takes in the timestamp in unix form
-    Returns the JSON of the actual API.
-    '''
-    sms_query_date = timestamp.strftime("%Y-%m-%dT%H:%M:%S.000")
-
-    SMS_API = TEXTIT_API + TEXTIT_UUID_ES + ',' + TEXTIT_UUID_EN + '&after=' + sms_query_date
-
-    response2 = requests.get(SMS_API, headers={'Authorization': 'Token ' + TEXTIT_AUTH_KEY})
-
-    json_result = response2.json()
-    return json_result
-
-
 for i in range(7, -1, -1):
     time_i = (datetime.date.today() - datetime.timedelta(i))
     date_index = time_i.strftime("%m-%d")
@@ -169,8 +137,6 @@ for i in range(7, -1, -1):
 # Get unix timestamp of a week ago
 timestamp = datetime.date.today() - datetime.timedelta(7)
 json_result = make_typeform_call(timestamp)
-# print get_typeform_by_meta(json_result)
-# print get_typeform_by_date(json_result, surveys_by_date)
 
 web_meta = get_typeform_by_meta(json_result)
 web_date = get_typeform_by_date(json_result, surveys_by_date)

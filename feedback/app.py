@@ -62,7 +62,6 @@ def create_app(config_object=ProductionConfig):
             ))
             app.logger.addHandler(stdout)
             app.logger.setLevel(logging.DEBUG)
-    app.logger.debug('hello world')
     return app
 
 
