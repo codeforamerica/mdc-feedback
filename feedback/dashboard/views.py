@@ -244,6 +244,10 @@ dashboard_collection = [
     {
         "title": "Average Residential Permit Lifespan in the Last 30 Days",
         "data": get_lifespan('r')
+    },
+    {
+        "title": "Avg Owner/Builder Permit Lifespan in the Last 30 Days",
+        "data": get_lifespan('h')
     }
 ]
 
