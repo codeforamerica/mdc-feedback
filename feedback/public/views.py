@@ -91,21 +91,6 @@ def auth():
         return '/users/profile'
 
 
-@blueprint.route("/register/", methods=['GET', 'POST'])
-def register():
-    form = RegisterForm(request.form, csrf_enabled=False)
-    if form.validate_on_submit():
-        new_user = User.create(username=form.username.data,
-                        email=form.email.data,
-                        password=form.password.data,
-                        active=True)
-        flash("Thank you for registering. You can now log in.", 'success')
-        return redirect('/')
-    else:
-        flash_errors(form)
-    return render_template('public/register.html', form=form, title='Register')
-
-
 @blueprint.route("/admin/",  methods=['GET'])
 def admin():
     return render_template("public/admin.html", title='Admin')
