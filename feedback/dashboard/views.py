@@ -14,7 +14,7 @@ from feedback.dashboard.vendorsurveys import (
 )
 
 from feedback.dashboard.permits import (
-    get_lifespan, get_avg_cost
+    get_lifespan, get_avg_cost, get_permit_types
 )
 
 blueprint = Blueprint(
@@ -223,11 +223,15 @@ dashboard_collection = [
     {
         "title": "Avg Cost of an Owner/Builder Permit",
         "data": get_avg_cost('h')
+    },
+    {
+        "data": get_permit_types()
     }
 ]
 
 json_obj['test'] = json.dumps(dashboard_collection[0]['data']['graph'])
 json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
+json_obj['permits_type'] = json.dumps(dashboard_collection[9])
 
 
 @blueprint.route("/", methods=["GET", "POST"])

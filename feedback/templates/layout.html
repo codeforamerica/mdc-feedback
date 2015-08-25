@@ -62,15 +62,15 @@
 				('/create-survey/', 'Survey Builder')
 
 			] -%}
-			
+
 		{% else %}
-		
+
 				{% set navigation_bar = [
 
 				('/', 'Dashboard')
 
 			] -%}
-			
+
 		{% endif %}
 
 		{% if current_user and current_user.is_authenticated() %}
@@ -137,7 +137,7 @@
 <!-- JS blocking -->
 
 	{% if active_page == 'Dashboard' %}
-	
+
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
 		<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
@@ -145,29 +145,29 @@
 		<script type="text/javascript" src="/static/js/dashboard.js"></script>
 
 	{% elif active_page == 'Violations' %}
-	
+
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
 		<script type="text/javascript" src="/static/js/violations-data.js"></script>
-		
+
 	{% elif active_page == 'Survey Builder' %}
-		
+
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/survey-builder.js"></script>
-		
+
 	{% elif active_page == 'Manage Users' %}
-	
+
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/manage-users.js"></script>
-		
+
 	{% elif active_page == 'Admin' %}
-	
-		
+
+
 	{% endif %}
 
 <!-- JS blocking -->
 
- 
+
 {% block js %}
   {% assets "js_all" %}
       <script type="text/javascript" src="{{ ASSET_URL }}"></script>
@@ -180,6 +180,9 @@
 </script>
 <script type="application/json" id="surveydata">
 {{ json_obj.surveys_type|safe }}
+</script>
+<script type="application/json" id="permitstype">
+{{ json_obj.permits_type|safe }}
 </script>
 {% endif %}
 

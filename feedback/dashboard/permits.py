@@ -61,6 +61,22 @@ def get_avg_cost(property_type='c'):
     return result[0]['avg_permit_total_fee']
 
 
+def get_permit_types(arg1=0, arg2=30):
+    '''
+    This should print out the pie chart of all permit types.
+    Defaults from 0 to 30 days but you can change it in
+    arg1 and arg2. The entire JSON should be printed out
+    so that the graph can be created in JS.
+    '''
+    days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
+    days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
+
+    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=permit_type,%20count(*)&$group=permit_type&$where=application_date%20%3E=%20%27' + days_30 + '%27%20AND%20application_date%20<%20%27' + days_0 + '%27'
+    response = requests.get(API)
+    json_result = response.json()
+    return json_result
+
+
 def get_lifespan(property_type='c'):
     '''
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
