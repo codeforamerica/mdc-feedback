@@ -1,7 +1,6 @@
  # -*- coding: utf-8 -*-
 
 import requests
-from flask import current_app
 
 TYPEFORM_API = 'https://api.typeform.com/v0/form/UYZYtI?key='
 TYPEFORM_API_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
@@ -20,7 +19,7 @@ def make_typeform_call(timestamp):
     unix_time = timestamp.strftime("%s")
 
     API = TYPEFORM_API + TYPEFORM_API_KEY + '&completed=true&since=' + unix_time
-    current_app.logger.debug('TYPEFORM API: {}'.format(API))
+    # print 'TYPEFORM API', API
 
     response = requests.get(API)
     json_result = response.json()
@@ -35,7 +34,7 @@ def make_textit_call(timestamp):
     sms_query_date = timestamp.strftime("%Y-%m-%dT%H:%M:%S.000")
 
     SMS_API = TEXTIT_API + TEXTIT_UUID_ES + ',' + TEXTIT_UUID_EN + '&after=' + sms_query_date
-    current_app.logger.debug('TEXTIT API: {}'.format(SMS_API))
+    # print 'TEXTIT API', SMS_API
 
     response2 = requests.get(SMS_API, headers={'Authorization': 'Token ' + TEXTIT_AUTH_KEY})
 
