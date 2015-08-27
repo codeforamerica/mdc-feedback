@@ -12,6 +12,10 @@ $purple: #3D3377;
 $grey: #f7fafa;
 $charcoal: #1a1a1a;
 
+//$transparent_green: rgba('76, 216, 132, .5')
+//$transparent_yellow: rgba('245, 201, 61, .5');
+//$transparent_red: rgba('196, 2, 50, .5');
+
 /* OVERRIDES - SKELETON */
 .column,
 .columns {
@@ -517,4 +521,61 @@ canvas {
 .fluid-height canvas {
 	
 	height:900px;
+}
+
+/********** ALERTS ************/
+
+.alert {
+	
+	width:80%;
+	margin: 0 auto;
+	padding-top:10px;
+	padding-bottom:10px;
+	margin-bottom:20px;
+	
+}
+
+.alert .close {
+	
+	width:40px;
+	height:40px;
+	font-size:1.5em;
+	
+}
+
+.alert-alert-success {
+	
+	border:1px solid $green;
+	background-color: rgba($green, 0.1);
+	color:$green;
+	
+		.close {
+			
+			color: $green;
+		}
+}
+
+.alert-message {
+	
+	border:1px solid $yellow;
+	background-color: rgba($yellow, 0.1);
+	color:$yellow;
+	
+		.close {
+			
+			color: $yellow;
+		}
+	
+}
+
+.alert-alert-danger {
+	
+	border:1px solid $red;
+	background-color:rgba($red, 0.1);
+	color:$red;
+	
+		.close {
+			
+			color:$red;
+		}
 }
