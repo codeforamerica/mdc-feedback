@@ -20,7 +20,7 @@ $charcoal: #1a1a1a;
 .column,
 .columns {
 	
-	margin-left:0;
+	//margin-left:0;
 	
 }
 
@@ -127,6 +127,29 @@ h1 {
 .huge {
 	
 	font-size:3em;
+	margin-bottom:0;
+	
+}
+
+.red {
+	
+	color:$red;
+}
+
+.green {
+	
+	color:$green;
+}
+
+.no-bottom-margin {
+	
+	margin-bottom:0;
+}
+
+/* used for content-container on the dashboard. */
+.vertical-center-35 {
+	
+	padding-top:35px !important;
 	
 }
 
@@ -420,6 +443,7 @@ canvas {
 	border:5px solid $grey;
 	height:300px;
 	margin:5px;
+	margin-right:3.53333%;
 	
 }
 
@@ -469,6 +493,11 @@ canvas {
 .first-panel {
 	
 	margin-left:0 !important;
+}
+
+.last-panel {
+	
+	margin-right:0 !important;
 }
 
 .headline {
