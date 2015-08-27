@@ -75,61 +75,11 @@
 
 	<div class='six columns'>
 
-		<div class='six columns panel'>
+    {{ lifespan_panel(dash_obj[3].title, dash_obj[3].data.val, dash_obj[3].data.waittime, dash_obj[3].data.yoy, false) }}
 
-			<div class='headline'>{{ dash_obj[3].title }}</div>
-			<div class='content-container'>
-				<p style="font-size:350%;font-weight:bold;margin:0;">
-          {{ dash_obj[3].data.val }}</p><br />
-        <p>Versus previous 30 days:<br />
-          {% if dash_obj[3].data.yoy > 0 %}
-          <span style="color:red;font-weight:bold;">Up
-          {% else %}
-          <span style="color:green;font-weight:bold;">Down
-          {% endif %}
-          {{ '%0.2f'| format(dash_obj[3].data.yoy|float) }}%
-          </span>
-        </p>
-			</div>
-			<p class='details invisible-button'><a href=#>View Details</a></p>
-		</div>
+    {{ lifespan_panel(dash_obj[4].title, dash_obj[4].data.val, dash_obj[4].data.waittime, dash_obj[4].data.yoy, false) }}
 
-		<div class='six columns panel'>
-
-			<div class='headline'>{{ dash_obj[4].title }}</div>
-      <div class='content-container'>
-        <p style="font-size:350%;font-weight:bold;margin:0;">{{ dash_obj[4].data.val }}</p><br />
-        <p>Versus previous 30 days:<br />
-          {% if dash_obj[4].data.yoy > 0 %}
-          <span style="color:red;font-weight:bold;">Up
-          {% else %}
-          <span style="color:green;font-weight:bold;">Down
-          {% endif %}
-          {{ '%0.2f'| format(dash_obj[4].data.yoy|float) }}%
-          </span>
-        </p>
-      </div>
-			<p class='details invisible-button'><a href=#>View Details</a></p>
-
-		</div>
-
-    <div class='six columns panel first-panel'>
-
-      <div class='headline'>{{ dash_obj[5].title }}</div>
-      <div class='content-container'>
-        <p style="font-size:350%;font-weight:bold;margin:0;">{{ dash_obj[5].data.val }}</p><br />
-        <p>Versus previous 30 days:<br />
-          {% if dash_obj[5].data.yoy > 0 %}
-          <span style="color:red;font-weight:bold;">Up
-          {% else %}
-          <span style="color:green;font-weight:bold;">Down
-          {% endif %}
-          {{ '%0.2f'| format(dash_obj[5].data.yoy|float) }}%
-          </span>
-        </p>
-      </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
-    </div>
+    {{ lifespan_panel(dash_obj[5].title, dash_obj[5].data.val, dash_obj[5].data.waittime, dash_obj[5].data.yoy) }}
 
     <div class='six columns panel'>
       <div class='headline'>{{ dash_obj[6].title }}</div>
@@ -273,3 +223,24 @@
 </section> <!-- close row -->
 
 {% endblock %}
+
+{% macro lifespan_panel(title='', val=0, waittime=0, yoy=0, firstpanel=True) -%}
+    <div class='six columns panel{% if firstpanel==True %} first-panel{% endif %}'>
+      <div class='headline'>{{ title }}</div>
+      <div class='content-container'>
+        <p style="font-size:350%;line-height:100%;font-weight:bold;margin:0;">
+          {{ val }}</p><br />
+          <strong>~{{ '%0.1f'|format(waittime|float) }} weeks app to permit</strong>
+        <p>Versus previous 30 days:<br />
+          {% if yoy > 0 %}
+          <span style="color:red;font-weight:bold;">Up
+          {% else %}
+          <span style="color:green;font-weight:bold;">Down
+          {% endif %}
+          {{ '%0.2f'| format(yoy|float) }}%
+          </span>
+        </p>
+      </div>
+      <p class='details invisible-button'><a href=#>View Details</a></p>
+    </div>
+{%- endmacro %}
