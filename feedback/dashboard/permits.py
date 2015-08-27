@@ -33,15 +33,20 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     response = requests.get(API)
     json_result = response.json()
     lifespan_array = []
+    application_to_permit_array = []
 
     for resp in json_result:
         start_date = json_to_dateobj(resp['application_date'])
-        end_date = json_to_dateobj(resp['co_cc_date'])
-        # print resp['permit_number'], resp['application_date'], resp['co_cc_date'], (end_date-start_date).days
-        lifespan_array.append((end_date-start_date).days)
+        permit_date = json_to_dateobj(resp['permit_issued_date'])
 
-    # print np.mean(lifespan_array), np.median(lifespan_array)
-    return np.mean(lifespan_array)
+        end_date = json_to_dateobj(resp['co_cc_date'])
+
+        lifespan_array.append((end_date-start_date).days)
+        application_to_permit_array.append((permit_date-start_date).days)
+        # permit_to_close_array.append((end_date-permit_date).days)
+
+    # print np.mean(lifespan_array), np.mean(application_to_permit_array), np.mean(permit_to_close_array)
+    return np.mean(lifespan_array), np.mean(application_to_permit_array)
 
 
 def get_avg_cost(property_type='c'):
@@ -85,12 +90,13 @@ def get_lifespan(property_type='c'):
         yoy = the year over year increase or decrease (100 to -100)
     '''
 
-    lifespan_now = lifespan_api_call(0, 30, property_type)
-    lifespan_then = lifespan_api_call(30, 60, property_type)
+    lifespan_now, waittime_now = lifespan_api_call(0, 30, property_type)
+    lifespan_then, waittime_then = lifespan_api_call(30, 60, property_type)
     yoy = ((lifespan_now-lifespan_then)/lifespan_then)*100
 
     # print lifespan_now, lifespan_then, yoy
     return {
         'val': int(lifespan_now),
+        'waittime': waittime_now * 0.03333333,
         'yoy': yoy
     }

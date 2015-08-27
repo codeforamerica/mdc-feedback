@@ -31,7 +31,7 @@ def make_textit_call(timestamp):
     Takes in the timestamp in unix form
     Returns the JSON of the actual API.
     '''
-    sms_query_date = timestamp.strftime("%Y-%m-%dT%H:%M:%S.000")
+    sms_query_date = timestamp.strftime("%Y-%m-%dT00:00:00.000")
 
     SMS_API = TEXTIT_API + TEXTIT_UUID_ES + ',' + TEXTIT_UUID_EN + '&after=' + sms_query_date
     # print 'TEXTIT API', SMS_API

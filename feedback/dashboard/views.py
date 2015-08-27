@@ -76,7 +76,7 @@ def get_textit_by_meta(json_result):
     sms_es = 0
     sms_total = 0
 
-    obj_completed = [result for result in json_result['results'] if result['completed'] == True]
+    obj_completed = [result for result in json_result['results'] if result['completed']]
     sms_completed_responses = len(obj_completed)
 
     for obj in obj_completed:
@@ -112,19 +112,15 @@ def get_typeform_by_date(json_result, surveys_by_date):
 
 
 def get_textit_by_date(json_result, surveys_by_date):
-    obj_completed = [result for result in json_result['results'] if result['completed'] == True]
-
-    for obj in obj_completed:
-        # obj['created_on'] "2015-08-03T16:51:48.661Z"
-        date_object = datetime.datetime.strptime(obj['created_on'], '%Y-%m-%dT%H:%M:%S.%fZ')
-
-        # http://stackoverflow.com/questions/4563272/how-to-convert-a-python-utc-datetime-to-a-local-datetime-using-only-python-stand
-        date_object = utc_to_local(date_object)
-        try:
-            surveys_by_date[date_object.strftime("%m-%d")] += 1
-        except KeyError:
-            pass
-
+    for result in json_result['results']:
+        if result['completed']:
+            obj = result['modified_on']
+            obj = datetime.datetime.strptime(obj, '%Y-%m-%dT%H:%M:%S.%fZ')
+            date_object = utc_to_local(obj)
+            try:
+                surveys_by_date[date_object.strftime("%m-%d")] += 1
+            except KeyError:
+                pass
     return surveys_by_date
 
 
