@@ -5,7 +5,7 @@
 <section class='row' id='dashboard'>
 
 	<div class='row twelve columns'>
-		<h3>Miami-Dade County Permitting and Inspection Center User Survey Metrics</h3>
+		<h3>Permitting &amp; Inspection Center User Survey Metrics</h3>
 	</div>
 
 	<div class='six columns panel first-panel'>
@@ -20,13 +20,11 @@
 			<canvas id='myChart'></canvas>
 		</div>
 
-		<p class='details invisible-button'><a href=#>View Details</a></p>
+		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 
 	</div>
 
-	<div class='six columns'>
-
-		<div class='six columns panel'>
+	<div class='three columns panel'>
 
 			<div class='headline'>{{ dash_obj[1].title }}</div>
 
@@ -38,11 +36,11 @@
 				<p class='label'>Visitors to the PIC are rating their experience as {{ dash_obj[1].data }} out of seven stars.</p>
 			</div>
 
-			<p class='details invisible-button'><a href=#>View Details</a></p>
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 
 		</div>
 
-		<div class='six columns panel'>
+		<div class='three columns panel last-panel'>
 
 			<!-- the content -->
 			<div class='headline'></div>
@@ -50,10 +48,9 @@
 				<canvas id='surveyChart'></canvas>
 			</div>
 
-			<p class='details invisible-button'><a href=#>View Details</a></p>
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 		</div>
 
-	</div>
 
 </section> <!-- close row -->
 
@@ -61,7 +58,7 @@
 
 	<div class='row twelve columns'><h3>Permit Metrics</h3></div>
 
-	<div class='six columns panel double-height first-panel'>
+	<div class='twelve columns panel first-panel'>
 
 			<div class='headline'>Permits opened per month</div>
 
@@ -69,19 +66,23 @@
 				<canvas id='openPermits'></canvas>
 			</div>
 
-			<p class='details invisible-button'><a href=#>View Details</a></p>
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 
 		</div>
 
-	<div class='six columns'>
+	<div class='twelve columns'>
 
     {{ lifespan_panel(dash_obj[3].title, dash_obj[3].data.val, dash_obj[3].data.waittime, dash_obj[3].data.yoy, false) }}
 
     {{ lifespan_panel(dash_obj[4].title, dash_obj[4].data.val, dash_obj[4].data.waittime, dash_obj[4].data.yoy, false) }}
 
     {{ lifespan_panel(dash_obj[5].title, dash_obj[5].data.val, dash_obj[5].data.waittime, dash_obj[5].data.yoy) }}
+    
+	</div>
+	
+	<div class='twelve columns'>
 
-    <div class='six columns panel'>
+    <div class='four columns panel first-panel'>
       <div class='headline'>{{ dash_obj[6].title }}</div>
       <div class='content-container'>
         <p style="font-weight:bold; font-size:250%">
@@ -91,7 +92,7 @@
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 
-    <div class='six columns panel first-panel'>
+    <div class='four columns panel'>
       <div class='headline'>{{ dash_obj[7].title }}</div>
       <div class='content-container'>
         <p style="font-weight:bold; font-size:250%">
@@ -101,7 +102,7 @@
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 
-    <div class='six columns panel'>
+    <div class='four columns panel last-panel'>
       <div class='headline'>{{ dash_obj[8].title }}</div>
       <div class='content-container'>
         <p style="font-weight:bold; font-size:250%">
@@ -115,101 +116,34 @@
 
 </section> <!-- close row -->
 
-<!-- plans data that we don't have -->
-<!--
-<section class='row'>
-
-	<div class='row twelve columns'><h3>Plans</h3></div>
-
-	<div class='twelve columns panel'>
-
-		<table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Team Name</th>
-            <th>Late Plans</th>
-            <th>Plans in Area</th>
-            <th>Completed Ratio</th>
-            <th>Avg Handle Time</th>
-            <th>Health</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>A-Team</td>
-            <td>0</td>
-            <td>0</td>
-            <td>100% [SPARKLINE]</td>
-            <td>31 days [SPARKLINE]</td>
-            <td>Good</td>
-          </tr>
-          <tr>
-            <td>Public Works A-Team</td>
-            <td>133</td>
-            <td>143</td>
-            <td>6% [SPARKLINE]</td>
-            <td>31 days [SPARKLINE]</td>
-            <td>Good</td>
-          </tr>
-        </tbody>
-      </table>
-
-		<a href=#>View Details</a>
-
-	</div>
-
-</section> --><!-- close row -->
-
-<section class='row'>
+<section class='row' id='regulation'>
 
 	<div class='row twelve columns'><h3>Neighborhood Compliance</h3></div>
 
-	<div class='six columns'>
-
-		<div class='twelve columns panel'>
-
-			<div class='headline'>Violations per month</div>
-			<div class='content-container'>
-				<canvas id='violations'></canvas>
-			</div>
-			<p class='details invisible-button'><a href=#>View Details</a></p>
-
+	<div class='row twelve columns'>
+		
+		<div class='six columns panel first-panel double-height'>
+	
+				<div class='headline'>Violations per month</div>
+				<div class='content-container'>
+					<canvas id='violations'></canvas>
+				</div>
+				<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+	
 		</div>
 
-
-
-		<div class='six columns panel first-panel'>
-
-			<div class='headline'>Building regulation</div>
-			<div class='content-container'>
-				<p>data</p>
-			</div>
-			<p class='details invisible-button'><a href=#>View Details</a></p>
-
-		</div>
-
-		<div class='six columns panel'>
-
-			<div class='headline'>Placeholder</div>
-			<div class='content-container'>
-				<canvas id='#'></canvas>
-							</div>
-			<p class='details invisible-button'><a href=#>View Details</a></p>
-
-		</div>
-
-	</div>
-
-	<div class='six columns panel double-height'>
+		<div class='six columns panel double-height last-panel'>
 
 		<div class='headline'>Violation Locations</div>
 		<div class='content-container'>
 			<div id='leaflet'></div>
 		</div>
-		<p class='details invisible-button'><a href=#>View Details</a></p>
+		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 	</div>
-
-	<div class='twelve columns panel double-height'>
+	
+	</div>
+	
+	<div class='row twelve columns panel double-height'>
 
 			<div class='headline'>Top 20 Violations by Type</div>
 			<div class='content-container'>
@@ -224,23 +158,25 @@
 
 {% endblock %}
 
-{% macro lifespan_panel(title='', val=0, waittime=0, yoy=0, firstpanel=True) -%}
-    <div class='six columns panel{% if firstpanel==True %} first-panel{% endif %}'>
+{% macro lifespan_panel(title='', val=0, waittime=0, yoy=0, lastpanel=True) -%}
+
+    <div class='four columns panel{% if lastpanel==True %} last-panel{% endif %}'>
+	    
       <div class='headline'>{{ title }}</div>
-      <div class='content-container'>
-        <p style="font-size:350%;line-height:100%;font-weight:bold;margin:0;">
-          {{ val }}</p><br />
-          <strong>~{{ '%0.1f'|format(waittime|float) }} weeks app to permit</strong>
-        <p>Versus previous 30 days:<br />
+      <div class='content-container vertical-center-35'>
+	      
+        <p class='huge bold'>{{ val }}</p>
+        <p class='bold no-bottom-margin'>~{{ '%0.1f'|format(waittime|float) }} weeks, application to permit</p>
+        <p>Versus previous 30 days:
           {% if yoy > 0 %}
-          <span style="color:red;font-weight:bold;">Up
+          <span class='bold red'>Up
           {% else %}
-          <span style="color:green;font-weight:bold;">Down
+          <span class='bold green'>Down
           {% endif %}
           {{ '%0.2f'| format(yoy|float) }}%
           </span>
         </p>
       </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
+      <p class='hidden details invisible-button'><a href=#>View Details</a></p>
     </div>
 {%- endmacro %}
