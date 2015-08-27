@@ -42,7 +42,7 @@
 			{% set navigation_bar = [
 				('/admin/', 'Admin Panel'),
 				('/create-survey/', 'Survey Builder'),
-				('/manage-users/', 'Manage Users')
+				('/users/manage', 'Manage Users')
 			] -%}
 
 		{% elif active_page == 'Survey Builder' or active_page == 'Manage Users' %}
@@ -62,41 +62,41 @@
 				('/create-survey/', 'Survey Builder')
 
 			] -%}
-			
+
 		{% else %}
-		
+
 				{% set navigation_bar = [
 
 				('/', 'Dashboard')
 
 			] -%}
-			
+
 		{% endif %}
 
 		{% if current_user and current_user.is_authenticated() %}
 
 		<div class='row u-pull-left' id='breadcrumb'>
-	
+
 			<ul class='list-nav'>
-		
+
 				<li class='breadcrumb-text'>You're looking at:</li>
 				<li id='breadcrumb-location' class='bold'>{{ title }}</li>
 			</ul>
-		
+
 		</div>
-		
+
 		<div class='row u-pull-right' id='breadcrumb-nav-parent'>
-		
+
 			<ul>
-		
+
 				<li class='breadcrumb-text'>Go back to:</li>
-		
+
 				{% for href, id in navigation_bar %}
 				<li class='breadcrumb-nav'><a href='{{ href|e}}'>{{id|e}}</a></li>
 				{% endfor %}
-		
+
 			</ul>
-		
+
 		</div>
 
 		{% endif %}
@@ -137,7 +137,7 @@
 <!-- JS blocking -->
 
 	{% if active_page == 'Dashboard' %}
-	
+
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
 		<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
@@ -145,29 +145,29 @@
 		<script type="text/javascript" src="/static/js/dashboard.js"></script>
 
 	{% elif active_page == 'Violations' %}
-	
+
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
 		<script type="text/javascript" src="/static/js/violations-data.js"></script>
-		
+
 	{% elif active_page == 'Survey Builder' %}
-		
+
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/survey-builder.js"></script>
-		
+
 	{% elif active_page == 'Manage Users' %}
-	
+
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/manage-users.js"></script>
-		
+
 	{% elif active_page == 'Admin' %}
-	
-		
+
+
 	{% endif %}
 
 <!-- JS blocking -->
 
- 
+
 {% block js %}
   {% assets "js_all" %}
       <script type="text/javascript" src="{{ ASSET_URL }}"></script>
@@ -180,6 +180,9 @@
 </script>
 <script type="application/json" id="surveydata">
 {{ json_obj.surveys_type|safe }}
+</script>
+<script type="application/json" id="permitstype">
+{{ json_obj.permits_type|safe }}
 </script>
 {% endif %}
 

@@ -41,13 +41,25 @@ class CRUDMixin(object):
         db.session.delete(self)
         return commit and db.session.commit()
 
+
 class Model(CRUDMixin, db.Model):
     """Base model class that includes CRUD convenience methods."""
     __abstract__ = True
 
+    def unicode_helper(self, field):
+        if field:
+            return field.encode('utf-8').strip()
+        return u''
+
+    def serialize_dates(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+        else:
+            return obj
+
     def as_dict(self):
         return {
-            c.name: getattr(self, c.name) for c in self.__table__.columns
+            c.name: self.serialize_dates(getattr(self, c.name)) for c in self.__table__.columns
         }
 
 
@@ -71,12 +83,12 @@ class SurrogatePK(object):
         return None
 
 
-def ReferenceCol(tablename, nullable=False, pk_name='id', **kwargs):
+def ReferenceCol(tablename, nullable=False, ondelete=None, pk_name='id', **kwargs):
     """Column that adds primary key foreign key reference.
     Usage: ::
         category_id = ReferenceCol('category')
         category = relationship('Category', backref='categories')
     """
     return db.Column(
-        db.ForeignKey("{0}.{1}".format(tablename, pk_name)),
+        db.ForeignKey("{0}.{1}".format(tablename, pk_name), ondelete=ondelete),
         nullable=nullable, **kwargs)
