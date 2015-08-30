@@ -134,11 +134,20 @@
     </div>
 
     <div class='four columns panel last-panel'>
-      <div class='headline'>Inspections Completed, Last 30 Days</div>
+      <div class='headline'>{{ dash_obj[11].title }}</div>
       <div class='content-container'>
-        <p class="huge bold">X</p>
-        <p>Versus previous 30 days: <span class="bold green">Up X%</span>
+        <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
+        <!--
+        <p>Versus this time a year ago:
+          {% if dash_obj[11].data.yoy > 0 %}
+          <span class='bold green'>Up
+          {% else %}
+          <span class='bold red'>Down
+          {% endif %}
+          {{ '%0.2f'| format(dash_obj[11].data.yoy|float) }}%
+          </span>
         </p>
+      -->
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
@@ -196,7 +205,7 @@
       <div class='content-container vertical-center-35'>
 
         <p class='huge bold'>{{ val }}</p>
-        <p class='bold no-bottom-margin'>{{ waittime }} days, application to permit</p>
+        <p class='bold no-bottom-margin'>{{ waittime }} days from application to permit</p>
         <p>Versus previous 30 days:
           {% if yoy > 0 %}
           <span class='bold red'>Up

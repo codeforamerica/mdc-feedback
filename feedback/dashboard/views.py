@@ -15,7 +15,8 @@ from feedback.dashboard.vendorsurveys import (
 
 from feedback.dashboard.permits import (
     get_lifespan, get_avg_cost,
-    get_permit_types, get_open_permit_lifespan
+    get_permit_types, get_open_permit_lifespan,
+    get_inspection_counts
 )
 
 blueprint = Blueprint(
@@ -227,6 +228,10 @@ dashboard_collection = [
     {
         "title": "Average age of an Open Permit (in Days)",
         "data": get_open_permit_lifespan()
+    },
+    {
+        "title": "Inspections Completed, Last 30 Days",
+        "data": get_inspection_counts()
     }
 ]
 

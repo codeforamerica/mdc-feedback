@@ -113,6 +113,28 @@ def get_lifespan(property_type='c'):
     # print lifespan_now, lifespan_then, yoy
     return {
         'val': int(lifespan_now),
-        'waittime': waittime_now,
+        'waittime': int(waittime_now),
+        'yoy': yoy
+    }
+
+
+def inspection_api_call(arg1=0, arg2=30):
+    days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
+    days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
+
+    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=count(*)%20as%20total&$where=master_permit_number=0%20AND%20last_inspection_date%20%3E%20%27' + days_30 + '%27%20AND%20last_inspection_date%20<%20%27' + days_0 + '%27'
+    response = requests.get(API)
+    json_result = response.json()
+    return float(json_result[0]['total'])
+
+
+def get_inspection_counts():
+    inspections_now = inspection_api_call(0, 30)
+    inspections_then = inspection_api_call(365, 395)
+    yoy = ((inspections_now-inspections_then)/inspections_then)*100
+    print yoy
+
+    return {
+        'val': int(inspections_now),
         'yoy': yoy
     }
