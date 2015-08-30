@@ -38,7 +38,6 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     for resp in json_result:
         start_date = json_to_dateobj(resp['application_date'])
         permit_date = json_to_dateobj(resp['permit_issued_date'])
-
         end_date = json_to_dateobj(resp['co_cc_date'])
 
         lifespan_array.append((end_date-start_date).days)
@@ -47,6 +46,23 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
 
     # print np.mean(lifespan_array), np.mean(application_to_permit_array), np.mean(permit_to_close_array)
     return np.mean(lifespan_array), np.mean(application_to_permit_array)
+
+
+def get_open_permit_lifespan():
+    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=application_date&$where=co_cc_date%20IS%20NULL%20and%20master_permit_number=0'
+    response = requests.get(API)
+    json_result = response.json()
+
+    today_str = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+    today_obj = json_to_dateobj(today_str)
+
+    lifespan_array = []
+
+    for resp in json_result:
+        start_date = json_to_dateobj(resp['application_date'])
+        lifespan_array.append((today_obj-start_date).days)
+
+    return int(np.mean(lifespan_array))
 
 
 def get_avg_cost(property_type='c'):
@@ -97,6 +113,6 @@ def get_lifespan(property_type='c'):
     # print lifespan_now, lifespan_then, yoy
     return {
         'val': int(lifespan_now),
-        'waittime': waittime_now * 0.03333333,
+        'waittime': waittime_now,
         'yoy': yoy
     }
