@@ -326,7 +326,7 @@ $(document).ready(function() {
 
 			//sort on the number of each violation type
 			data = data.sortOn("total");
-			data.reverse();
+			//data.reverse();
 
 			//set the data up for Charts.js
 			for(var i = 0; i < 19; i++) {
