@@ -1,5 +1,6 @@
  # -*- coding: utf-8 -*-
 
+import math
 import datetime
 import requests
 import numpy as np
@@ -20,6 +21,7 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     if it's an owner/builder, if "contractor_name" = 'OWNER.'
     Defaults to 'c'
     Return the integer mean lifespan.
+    If the return value is -1 the API is down.
     '''
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
@@ -32,6 +34,7 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     API = API + '&$order=co_cc_date%20desc'
     response = requests.get(API)
     json_result = response.json()
+
     lifespan_array = []
     application_to_permit_array = []
 
@@ -44,11 +47,16 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
         application_to_permit_array.append((permit_date-start_date).days)
         # permit_to_close_array.append((end_date-permit_date).days)
 
-    # print np.mean(lifespan_array), np.mean(application_to_permit_array), np.mean(permit_to_close_array)
-    return np.mean(lifespan_array), np.mean(application_to_permit_array)
+    result1 = np.mean(lifespan_array)
+    result2 = np.mean(application_to_permit_array)
+
+    return result1 if not math.isnan(result1) else -1, result2 if not math.isnan(result2) else -1
 
 
 def get_open_permit_lifespan():
+    '''
+    If the return value is -1 the API is down.
+    '''
     API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=application_date&$where=co_cc_date%20IS%20NULL%20and%20master_permit_number=0'
     response = requests.get(API)
     json_result = response.json()
@@ -62,13 +70,13 @@ def get_open_permit_lifespan():
         start_date = json_to_dateobj(resp['application_date'])
         lifespan_array.append((today_obj-start_date).days)
 
-    return int(np.mean(lifespan_array))
+    return int(np.mean(lifespan_array)) if not math.isnan(np.mean(lifespan_array)) else -1
 
 
 def get_avg_cost(property_type='c'):
     '''
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
-    Returns an integer
+    Returns an integer. -1 if the API returns blank.
     '''
     API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=AVG(permit_total_fee)&$where='
     if property_type == 'h':
@@ -79,7 +87,11 @@ def get_avg_cost(property_type='c'):
 
     response = requests.get(API)
     result = response.json()
-    return result[0]['avg_permit_total_fee']
+    try:
+        result = result[0]['avg_permit_total_fee']
+        return result
+    except KeyError:
+        return -1
 
 
 def get_permit_types(arg1=0, arg2=30):
@@ -107,10 +119,10 @@ def get_lifespan(property_type='c'):
     '''
 
     lifespan_now, waittime_now = lifespan_api_call(0, 30, property_type)
+
     lifespan_then, waittime_then = lifespan_api_call(30, 60, property_type)
     yoy = ((lifespan_now-lifespan_then)/lifespan_then)*100
 
-    # print lifespan_now, lifespan_then, yoy
     return {
         'val': int(lifespan_now),
         'waittime': int(waittime_now),
@@ -131,8 +143,10 @@ def inspection_api_call(arg1=0, arg2=30):
 def get_inspection_counts():
     inspections_now = inspection_api_call(0, 30)
     inspections_then = inspection_api_call(365, 395)
-    yoy = ((inspections_now-inspections_then)/inspections_then)*100
-    print yoy
+    try:
+        yoy = ((inspections_now-inspections_then)/inspections_then)*100
+    except ZeroDivisionError:
+        yoy = 0
 
     return {
         'val': int(inspections_now),

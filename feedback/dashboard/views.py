@@ -223,6 +223,7 @@ dashboard_collection = [
         "data": float(get_avg_cost('h'))/1000
     },
     {
+        "title": "Permit Types",
         "data": get_permit_types()
     },
     {
