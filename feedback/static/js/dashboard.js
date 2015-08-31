@@ -1,4 +1,42 @@
 $(document).ready(function() {
+	
+	/* API HEALTH CHECK */
+	window.REMODAL_GLOBALS = {
+	  NAMESPACE: 'modal',
+	  DEFAULTS: {
+	    hashTracking: false
+	  }
+	};
+
+	var apiStatus = parseInt($('#api-health').text());
+	var apiModal = $('[data-remodal-id=modal]').remodal();
+
+	
+	if(apiStatus === -1) {
+		
+		//county error.
+		$('.remodal').find('#status').text("Uhoh, something went wrong!");
+		$('.remodal').find('p').text("It looks like we've had a problem with our data. Check back later for an update.");
+		apiModal.open();
+		
+		
+	} else if(apiStatus === 1) {
+		
+		//mostly so I can test the modals
+		$('.remodal').find('#status').text("All is well.");
+		//apiModal.open();
+		
+	} else {
+		
+		//http error code.
+		$('.remodal').find('#status').text("Uhoh, something went wrong!");
+		$('.remodal').find('p').text("It looks like our Socrata link is down (error" + apiStatus + "). Check back later for an update.");
+		apiModal.open();
+		
+	}
+	
+	
+	console.log(apiStatus)
 
 	/************************* dashboard css *************************/
 
@@ -8,7 +46,7 @@ $(document).ready(function() {
 		var container = $(this).parent().find('.content-container');
 		var details = $(this).parent().find('.details');
 
-		console.log('headline is ', h, details.height() )
+		//console.log('headline is ', h, details.height() )
 		//a single line of text is 25px high.
 		//if we have a 2x tall headline, need to reposition .details
 		//we do this by adjusting .content-container height
@@ -52,7 +90,7 @@ $(document).ready(function() {
 	//confirm delete, peace out, survey.
 	$('.remodal-confirm').click(function() {
 
-		console.log('click confirm', deleteSurvey);
+		//console.log('click confirm', deleteSurvey);
 		$(deleteSurvey).detach();
 
 	})
@@ -117,7 +155,7 @@ $(document).ready(function() {
 	var myLineChart = new Chart(ctx).Line(data);
 	var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
 
-	console.log(surveyData);
+	//console.log(surveyData);
 
 	var	pctx = $("#surveyChart").get(0).getContext("2d");
 
@@ -333,7 +371,7 @@ $(document).ready(function() {
 
 				labels[i] = data[i].issue_type;
 				dataset[i] = data[i].total;
-				console.log(data[i].issue_type, i);
+				//console.log(data[i].issue_type, i);
 
 			}
 

@@ -4,7 +4,7 @@
 	
 	$('.add-user').click(function() {
 		
-		console.log('clicked');
+		//console.log('clicked');
 		$('#add-user-form').removeClass('hidden');
 		
 	})
