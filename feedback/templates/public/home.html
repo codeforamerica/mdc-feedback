@@ -2,7 +2,18 @@
 {% set active_page = 'Dashboard' %}
 {% block content %}
 
-<span style="color:red;">API HEALTH CHECK CODE: {{ api }}</span>
+<span id='api-health' class='hidden' style="color:red;">{{ api }}</span>
+
+<div class="remodal" data-remodal-id="modal">
+			
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h1 id='status'>Warning!<br>You can't undo this!</h1>
+  <p></p>
+  <br>
+  <button data-remodal-action="confirm" class="remodal-confirm">OK, thanks!</button>
+  
+</div>
+		
 
 <section class='row' id='dashboard'>
 
