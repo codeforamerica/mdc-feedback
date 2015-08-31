@@ -5,6 +5,29 @@ import datetime
 import requests
 import numpy as np
 
+API_URL = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json'
+
+
+def api_health():
+    '''
+    Run the API to see if its even working.
+    If it is, pass 1.
+    If the county did a bad import, pass -1.
+    If Socrata is down, the HTTP result code. (404, 500, etc)
+    '''
+    OK = 1
+    COUNTY_EMPTY_DATA = -1
+
+    r = requests.get(API_URL)
+    if r.status_code == requests.codes.ok:
+        json = r.json()
+        if len(json[0]) == 0:
+            return COUNTY_EMPTY_DATA
+        else:
+            return OK
+    else:
+        return r.status_code
+
 
 def json_to_dateobj(jsondate):
     '''
@@ -26,7 +49,7 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
-    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$where=co_cc_date%20%3E=%20%27' + days_30 + '%27%20AND%20co_cc_date%20<%20%27' + days_0 + '%27%20AND%20'
+    API = API_URL + '?$where=co_cc_date%20%3E=%20%27' + days_30 + '%27%20AND%20co_cc_date%20<%20%27' + days_0 + '%27%20AND%20'
     if property_type == 'h':
         API = API + 'contractor_name=%27OWNER%27'
     else:
@@ -57,7 +80,7 @@ def get_open_permit_lifespan():
     '''
     If the return value is -1 the API is down.
     '''
-    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=application_date&$where=co_cc_date%20IS%20NULL%20and%20master_permit_number=0'
+    API = API_URL + '?$select=application_date&$where=co_cc_date%20IS%20NULL%20and%20master_permit_number=0'
     response = requests.get(API)
     json_result = response.json()
 
@@ -78,7 +101,7 @@ def get_avg_cost(property_type='c'):
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
     Returns an integer. -1 if the API returns blank.
     '''
-    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=AVG(permit_total_fee)&$where='
+    API = API_URL + '?$select=AVG(permit_total_fee)&$where='
     if property_type == 'h':
         API = API + 'contractor_name=%27OWNER%27'
     else:
@@ -104,7 +127,7 @@ def get_permit_types(arg1=0, arg2=30):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
-    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=permit_type,%20count(*)&$group=permit_type&$where=application_date%20%3E=%20%27' + days_30 + '%27%20AND%20application_date%20<%20%27' + days_0 + '%27'
+    API = API_URL + '?$select=permit_type,%20count(*)&$group=permit_type&$where=application_date%20%3E=%20%27' + days_30 + '%27%20AND%20application_date%20<%20%27' + days_0 + '%27'
     response = requests.get(API)
     json_result = response.json()
     return json_result
@@ -134,7 +157,7 @@ def inspection_api_call(arg1=0, arg2=30):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
-    API = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=count(*)%20as%20total&$where=master_permit_number=0%20AND%20last_inspection_date%20%3E%20%27' + days_30 + '%27%20AND%20last_inspection_date%20<%20%27' + days_0 + '%27'
+    API = API_URL + '?$select=count(*)%20as%20total&$where=master_permit_number=0%20AND%20last_inspection_date%20%3E%20%27' + days_30 + '%27%20AND%20last_inspection_date%20<%20%27' + days_0 + '%27'
     response = requests.get(API)
     json_result = response.json()
     return float(json_result[0]['total'])
