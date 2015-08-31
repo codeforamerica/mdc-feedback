@@ -10,7 +10,6 @@ $(document).ready(function() {
 
 	var apiStatus = parseInt($('#api-health').text());
 	var apiModal = $('[data-remodal-id=modal]').remodal();
-
 	
 	if(apiStatus === -1) {
 		
@@ -36,7 +35,7 @@ $(document).ready(function() {
 	}
 	
 	
-	console.log(apiStatus)
+	//console.log(apiStatus)
 
 	/************************* dashboard css *************************/
 
@@ -53,7 +52,7 @@ $(document).ready(function() {
 		if(h > 25) {
 
 			var offset = 300 - h - details.height() * 2 - 26;	//300 is fixed height, 20 is padding
-			console.log(offset);
+			//console.log(offset);
 
 			$(container).css('height', offset);
 
@@ -412,7 +411,7 @@ $(document).ready(function() {
 
 	$('#star-rating').raty({
 		score: function() {
-			console.log($(this).find('.hidden').text(), 'is value')
+			//console.log($(this).find('.hidden').text(), 'is value')
 			return $(this).find('.invisible').text();
 		},
 		path: 'static/images',
