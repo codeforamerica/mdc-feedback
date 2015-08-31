@@ -14,7 +14,9 @@ from feedback.dashboard.vendorsurveys import (
 )
 
 from feedback.dashboard.permits import (
-    get_lifespan, get_avg_cost, get_permit_types
+    api_health, get_lifespan, get_avg_cost,
+    get_permit_types, get_open_permit_lifespan,
+    get_inspection_counts
 )
 
 blueprint = Blueprint(
@@ -158,7 +160,6 @@ for i in range(7, -1, -1):
     date_index = time_i.strftime("%m-%d")
     surveys_value_array.append(surveys_by_date[date_index])
 
-
 dashboard_collection = [
     {
         "id": "graph",
@@ -197,31 +198,40 @@ dashboard_collection = [
         }
     },
     {
-        "title": "Average Commercial Permit Lifespan in the Last 30 Days",
+        "title": "Average Commercial Permit Lifespan, Last 30 Days",
         "data": get_lifespan('c')
     },
     {
-        "title": "Average Residential Permit Lifespan in the Last 30 Days",
+        "title": "Average Residential Permit Lifespan, Last 30 Days",
         "data": get_lifespan('r')
     },
     {
-        "title": "Avg Owner/Builder Permit Lifespan in the Last 30 Days",
+        "title": "Avg Owner/Builder Permit Lifespan, Last 30 Days",
         "data": get_lifespan('h')
     },
     {
         "title": "Avg Cost of an Open Commercial Permit",
-        "data": get_avg_cost('c')
+        "data": float(get_avg_cost('c'))/1000
     },
     {
         "title": "Avg Cost of an Open Residential Permit",
-        "data": get_avg_cost('r')
+        "data": float(get_avg_cost('r'))/1000
     },
     {
         "title": "Avg Cost of an Owner/Builder Permit",
-        "data": get_avg_cost('h')
+        "data": float(get_avg_cost('h'))/1000
     },
     {
+        "title": "Permit Types",
         "data": get_permit_types()
+    },
+    {
+        "title": "Average age of an Open Permit (in Days)",
+        "data": get_open_permit_lifespan()
+    },
+    {
+        "title": "Inspections Completed, Last 30 Days",
+        "data": get_inspection_counts()
     }
 ]
 
@@ -233,7 +243,7 @@ json_obj['permits_type'] = json.dumps(dashboard_collection[9])
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
     today = datetime.date.today()
-    return render_template("public/home.html", date=today.strftime('%B %d, %Y'), stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard')
+    return render_template("public/home.html", api=api_health(), date=today.strftime('%B %d, %Y'), stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard')
 
 
 @blueprint.route('/dashboard', methods=['GET', 'POST'])
