@@ -14,7 +14,7 @@ from feedback.dashboard.vendorsurveys import (
 )
 
 from feedback.dashboard.permits import (
-    get_lifespan, get_avg_cost,
+    api_health, get_lifespan, get_avg_cost,
     get_permit_types, get_open_permit_lifespan,
     get_inspection_counts
 )
@@ -160,7 +160,6 @@ for i in range(7, -1, -1):
     date_index = time_i.strftime("%m-%d")
     surveys_value_array.append(surveys_by_date[date_index])
 
-
 dashboard_collection = [
     {
         "id": "graph",
@@ -244,7 +243,7 @@ json_obj['permits_type'] = json.dumps(dashboard_collection[9])
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
     today = datetime.date.today()
-    return render_template("public/home.html", date=today.strftime('%B %d, %Y'), stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard')
+    return render_template("public/home.html", api=api_health(), date=today.strftime('%B %d, %Y'), stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard')
 
 
 @blueprint.route('/dashboard', methods=['GET', 'POST'])

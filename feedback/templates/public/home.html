@@ -2,6 +2,8 @@
 {% set active_page = 'Dashboard' %}
 {% block content %}
 
+<span style="color:red;">API HEALTH CHECK CODE: {{ api }}</span>
+
 <section class='row' id='dashboard'>
 
 	<div class='row twelve columns'>
@@ -191,8 +193,6 @@
 			<p class='details invisible-button'><a href='/violations-detail/'>View Complete Dataset</a></p>
 
 		</div>
-
-
 </section> <!-- close row -->
 
 {% endblock %}
