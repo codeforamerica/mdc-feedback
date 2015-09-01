@@ -16,7 +16,7 @@ from feedback.dashboard.vendorsurveys import (
 from feedback.dashboard.permits import (
     api_health, get_lifespan, get_avg_cost,
     get_permit_types, get_open_permit_lifespan,
-    get_inspection_counts
+    get_master_permit_counts
 )
 
 blueprint = Blueprint(
@@ -231,7 +231,11 @@ dashboard_collection = [
     },
     {
         "title": "Inspections Completed, Last 30 Days",
-        "data": get_inspection_counts()
+        "data": get_master_permit_counts('last_inspection_date')
+    },
+    {
+        "title": "Master Permits Issued, Last 30 Days",
+        "data": get_master_permit_counts('permit_issued_date')
     }
 ]
 

@@ -22,10 +22,13 @@ def api_health():
     if r.status_code == requests.codes.ok:
         json = r.json()
         if len(json[0]) == 0:
+            # print 'EMPTY'
             return COUNTY_EMPTY_DATA
         else:
+            # print 'OK'
             return OK
     else:
+        # print 'socrataerr', r.status_code
         return r.status_code
 
 
@@ -153,25 +156,31 @@ def get_lifespan(property_type='c'):
     }
 
 
-def inspection_api_call(arg1=0, arg2=30):
+def api_count_call(arg1=0, arg2=30, field=''):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
-    API = API_URL + '?$select=count(*)%20as%20total&$where=master_permit_number=0%20AND%20last_inspection_date%20%3E%20%27' + days_30 + '%27%20AND%20last_inspection_date%20<%20%27' + days_0 + '%27'
+    API = API_URL + '?$select=count(*)%20as%20total&$where=master_permit_number=0%20AND%20' + field + '%20%3E%20%27' + days_30 + '%27%20AND%20' + field + '%20<%20%27' + days_0 + '%27'
     response = requests.get(API)
     json_result = response.json()
     return float(json_result[0]['total'])
 
 
-def get_inspection_counts():
-    inspections_now = inspection_api_call(0, 30)
-    inspections_then = inspection_api_call(365, 395)
+def get_master_permit_counts(arg1):
+    '''
+    Run the API call of all master permits where date field arg1 is checked between 0-30 days ago and the same period a year previous.
+    Returns an object:
+        val = the current count
+        yoy = the percentage increase or decrease (100 to -100)
+    '''
+    now = api_count_call(0, 30, arg1)
+    then = api_count_call(365, 395, arg1)
     try:
-        yoy = ((inspections_now-inspections_then)/inspections_then)*100
+        yoy = ((now-then)/then)*100
     except ZeroDivisionError:
         yoy = 0
 
     return {
-        'val': int(inspections_now),
+        'val': int(now),
         'yoy': yoy
     }
