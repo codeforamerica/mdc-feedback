@@ -25,8 +25,11 @@ blueprint = Blueprint(
     static_folder="../static"
 )
 
-TEXTIT_UUID_EN = 'cd8cd1b5-ab4c-4c85-b623-9f28c56cc753'
-TEXTIT_UUID_OPINION = '0a77d0af-2685-4d8d-b4be-732e376f2f85'
+TYPEFORM_SCALE_EN = 'opinionscale_9825055'
+TYPEFORM_SCALE_ES = 'opinionscale_9825056'
+
+TEXTIT_UUID_EN = '920cec13-ffc0-4fe9-92c3-1cced2073498'
+TEXTIT_UUID_OPINION = '53249739-7b72-43c2-9463-e4cd4963a408'
 
 
 json_obj = {}
@@ -55,11 +58,11 @@ def get_typeform_by_meta(json_result):
     for survey_response in json_result['responses']:
         # Go through each entry in responses, and pull out opinionscale_7205022 / opinionscale_8228843, whichever is not null. Convert to integer.
         try:
-            ans = survey_response['answers']['opinionscale_7205022']
+            ans = survey_response['answers'][TYPEFORM_SCALE_EN]
             web_en = web_en + 1
         except KeyError:
             try:
-                ans = survey_response['answers']['opinionscale_8228843']
+                ans = survey_response['answers'][TYPEFORM_SCALE_ES]
                 web_es = web_es + 1
             except KeyError:
                 # print 'ERROR! one of these opinion scales should show up.'
