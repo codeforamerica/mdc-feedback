@@ -35,14 +35,14 @@ def login():
 
 
 @blueprint.route('/logout', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def logout():
     logout_user()
     if request.args.get('persona', None):
         return 'OK'
     else:
         flash('You are logged out.', 'info')
-        return render_template('user/logout.html')
+        return render_template('public/home.html')
 
 
 @blueprint.route('/auth', methods=['POST'])
