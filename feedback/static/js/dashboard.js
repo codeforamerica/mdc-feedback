@@ -363,7 +363,7 @@ $(document).ready(function() {
 
 			//sort on the number of each violation type
 			data = data.sortOn("total");
-			//data.reverse();
+			data.reverse();
 
 			//set the data up for Charts.js
 			for(var i = 0; i < 19; i++) {
@@ -373,6 +373,9 @@ $(document).ready(function() {
 				//console.log(data[i].issue_type, i);
 
 			}
+			
+			labels.reverse();
+			dataset.reverse();
 
 			//create the chart
 			var bctx = $("#viotype").get(0).getContext("2d");
