@@ -26,7 +26,7 @@
 	
 	$('.user .edit').click(function() {
 		
-		console.log($(this).parent());
+		//console.log($(this).parent());
 		var p = $(this).parent();
 		var form = '#edit-user-form';
 		
@@ -35,17 +35,17 @@
 		$(form).find('#email').val(p.find('.user-mail').text());
 		
 		var permission = $(p).find('.user-permissions').text().toLowerCase().split(' ')[1];
-		console.log(permission);
+		//console.log(permission);
 		
 		if(permission === 'superuser') {
 			
-			console.log('if', permission);	
+			//console.log('if', permission);	
 			$(form).find('#superuser').prop('checked', true);
 			$(form).find('#user').prop('checked', false);
 			
 		} else {
 			
-			console.log('else', permission)
+			//console.log('else', permission)
 			$(form).find("#user").prop('checked', true);
 			$(form).find('#superuser').prop('checked', false);
 		}
@@ -53,6 +53,12 @@
 		$(form).removeClass('hidden');
 		
 		
+	})
+	
+	$('#save-user-changes').click(function() {
+		
+		alert("save user changes to the database");
+		$("#edit-user-form").addClass("hidden");
 	})
 	
 }) //close ready
