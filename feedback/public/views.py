@@ -115,10 +115,4 @@ def manage_users():
 def violations_detail():
     return render_template("public/violations-detail.html", title='Violations by Type: Detail')
     
-@blueprint.route("/edit-public/",  methods=['GET'])
-def edit_public():
-    return render_template("public/edit-public.html", title='Dashboard Editor - Public')
-    
-@blueprint.route("/edit-internal/",  methods=['GET'])
-def edit_internal():
-    return render_template("public/edit-internal.html", title='Dashboard Editor - Internal')
+

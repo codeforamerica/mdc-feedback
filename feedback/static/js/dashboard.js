@@ -11,7 +11,11 @@ $(document).ready(function() {
 	var apiStatus = parseInt($('#api-health').text());
 	var apiModal = $('[data-remodal-id=modal]').remodal();
 	
-	if(apiStatus === -1) {
+	console.log(apiModal);
+	
+	if(apiModal != undefined) {
+		
+		if(apiStatus === -1) {
 		
 		//county error.
 		$('.remodal').find('#status').text("Uhoh, something went wrong!");
@@ -19,21 +23,24 @@ $(document).ready(function() {
 		apiModal.open();
 		
 		
-	} else if(apiStatus === 1) {
-		
-		//mostly so I can test the modals
-		$('.remodal').find('#status').text("All is well.");
-		//apiModal.open();
-		
-	} else {
-		
-		//http error code.
-		$('.remodal').find('#status').text("Uhoh, something went wrong!");
-		$('.remodal').find('p').text("It looks like our Socrata link is down (error" + apiStatus + "). Check back later for an update.");
-		apiModal.open();
-		
+		} else if(apiStatus === 1) {
+			
+			//mostly so I can test the modals
+			$('.remodal').find('#status').text("All is well.");
+			//apiModal.open();
+			
+		} else {
+			
+			//http error code.
+			$('.remodal').find('#status').text("Uhoh, something went wrong!");
+			$('.remodal').find('p').text("It looks like our Socrata link is down (error" + apiStatus + "). Check back later for an update.");
+			apiModal.open();
+			
+		}
+
 	}
 	
+		
 	
 	//console.log(apiStatus)
 

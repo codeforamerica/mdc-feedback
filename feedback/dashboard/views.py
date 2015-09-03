@@ -250,3 +250,12 @@ def home():
 def survey_index():
     form = {}
     return render_template('dashboard/home.html', form=form)
+    
+@blueprint.route("/edit-public/",  methods=['GET'])
+def edit_public():
+    return render_template("public/edit-public.html", stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard Editor - Public')
+    
+@blueprint.route("/edit-internal/",  methods=['GET'])
+def edit_internal():
+    return render_template("public/edit-internal.html", stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard Editor - Internal')
+    
