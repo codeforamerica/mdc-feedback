@@ -597,7 +597,8 @@ canvas {
 	
 }
 
-.alert-alert-danger {
+.alert-alert-danger,
+.alert-alert-warning {
 	
 	border:1px solid $red;
 	background-color:rgba($red, 0.1);

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% import "user/macro_field_with_errors.html" as macros %}
-{% set active_page = 'Survey Builder' %}
+{% set active_page = 'Manage Users' %}
 
 {% block content %}
   <div id="container">
@@ -62,6 +62,40 @@
       </form>
 
     </section>
+    
+    <section id='edit-user-form' class='row twelve columns hidden'>
+			
+			<h3>Edit this user.</h3>
+			
+			<form action="{{ url_for('user.user_edit') }}" method="POST">
+        {{ form.csrf_token }}
+			
+			<div class='row'>
+				<h4>Name</h4>
+				<!--<input id='name' class='six columns' type='text' placeholder="First and last name">-->
+				{{ macros.with_errors(form.full_name, id_="name", class_="six columns", placeholder="Full Name") }}
+			</div>
+			
+			<div class='row'>
+				<h4>E-mail</h4>
+				<input id='email' class='six columns' type="email" placeholder='name@miamidade.gov'>
+				{{ macros.with_errors(form.email, id_="email", class_="six columns", placeholder="name@miamidade.gov") }}
+			</div>
+						
+			<div class='row'>
+				<h4>Permissions</h4>
+				<!--<p><input id='superuser' class='radio' type="radio" value='superuser'><label>Superuser <span class='small'>Can edit everything.</span></label></p>
+				<p><input id='user' class='radio' type="radio" value='user'><label>User <span class='small'>Can do everything but manage users.</span></label></p>-->
+				
+				{% for subfield in form.role_id %}
+        <p>{{ subfield(class=radio) }}<label>{{ subfield.label}}</label></p>
+        {% endfor %}
+          
+			</div>
+						
+			<span class='button' id='save-user-changes'>Save changes</span>
+			
+		</section>
 
   </div><!--!/#container -->
 
