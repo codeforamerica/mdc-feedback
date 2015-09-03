@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% set active_page = 'Survey Builder' %}
+{% set active_page = 'Manage Users' %}
 {% block content %}
 		
 	<div id="container">
@@ -18,6 +18,7 @@
 				</div>
 				
 				<p class='button delete three columns'>delete user</p>
+				<p class='button edit three columns'>edit user</p>
 			</li>
 			
 			<li class='user twelve columns' id='1'>
@@ -26,6 +27,7 @@
 				<span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
 				<i>Passwords are managed through <a href=#>Persona.</a></i>
 				<p class='button delete three columns'>delete user</p>
+				<p class='button edit three columns'>edit user</p>
 			</li>
 			
 			<li class='user twelve columns' id='2'>
@@ -34,6 +36,7 @@
 				<span class='user-permissions'><span class='bold'>Permissions: </span>Superuser</span>
 				<i>Passwords are managed through <a href=#>Persona.</a></i>
 				<p class='button delete three columns'>delete user</p>
+				<p class='button edit three columns'>edit user</p>
 			</li>
 			
 			<li class='add-user button'>Add a new user</li>
@@ -61,6 +64,30 @@
 			</div>
 						
 			<span class='button' id='submit-new-user'>Create new user</span>
+			
+		</section>
+		
+		<section id='edit-user-form' class='row twelve columns hidden'>
+			
+			<h3>Edit this user.</h3>
+			
+			<div class='row'>
+				<h4>Name</h4>
+				<input id='name' class='six columns' type='text' placeholder="First and last name">
+			</div>
+			
+			<div class='row'>
+				<h4>E-mail</h4>
+				<input id='email' class='six columns' type="email" placeholder='name@miamidade.gov'>
+			</div>
+						
+			<div class='row'>
+				<h4>Permissions</h4>
+				<p><input id='superuser' class='radio' type="radio" value='superuser'><label>Superuser <span class='small'>Can edit everything.</span></label></p>
+				<p><input id='user' class='radio' type="radio" value='user'><label>User <span class='small'>Can do everything but manage users.</span></label></p>
+			</div>
+						
+			<span class='button' id='save-user-changes'>Save changes</span>
 			
 		</section>
 		
