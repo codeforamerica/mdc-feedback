@@ -530,12 +530,14 @@ canvas {
 }
 
 /* line 600, ../sass/screen.scss */
-.alert-alert-danger {
+.alert-alert-danger,
+.alert-alert-warning {
   border: 1px solid #C40232;
   background-color: rgba(196, 2, 50, 0.1);
   color: #C40232;
 }
-/* line 606, ../sass/screen.scss */
-.alert-alert-danger .close {
+/* line 607, ../sass/screen.scss */
+.alert-alert-danger .close,
+.alert-alert-warning .close {
   color: #C40232;
 }
