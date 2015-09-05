@@ -52,35 +52,33 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
-    API = API_URL + '?$where=co_cc_date%20%3E=%20%27' + days_30 + '%27%20AND%20co_cc_date%20<%20%27' + days_0 + '%27%20AND%20'
+    API = API_URL + '?$where=permit_issued_date%20%3E=%20%27' + days_30 + '%27%20AND%20permit_issued_date%20<%20%27' + days_0 + '%27%20AND%20'
     if property_type == 'h':
         API = API + 'contractor_name=%27OWNER%27'
     else:
         API = API + 'residential_commercial%20=%20%27' + property_type + '%27'
-    API = API + '&$order=co_cc_date%20desc'
+    API = API + '&$order=permit_issued_date%20desc'
+    # print API
     response = requests.get(API)
     json_result = response.json()
 
     lifespan_array = []
-    application_to_permit_array = []
 
     for resp in json_result:
         start_date = json_to_dateobj(resp['application_date'])
         permit_date = json_to_dateobj(resp['permit_issued_date'])
-        end_date = json_to_dateobj(resp['co_cc_date'])
 
-        lifespan_array.append((end_date-start_date).days)
-        application_to_permit_array.append((permit_date-start_date).days)
+        lifespan_array.append((permit_date-start_date).days)
         # permit_to_close_array.append((end_date-permit_date).days)
 
     result1 = np.mean(lifespan_array)
-    result2 = np.mean(application_to_permit_array)
 
-    return result1 if not math.isnan(result1) else -1, result2 if not math.isnan(result2) else -1
+    return result1 if not math.isnan(result1) else -1
 
 
 def get_open_permit_lifespan():
     '''
+    NOTE: WE ARE CURRENTLY NOT SHOWING THIS. DELETE IF NECESSARY
     If the return value is -1 the API is down.
     '''
     API = API_URL + '?$select=application_date&$where=co_cc_date%20IS%20NULL%20and%20master_permit_number=0'
@@ -130,7 +128,7 @@ def get_permit_types(arg1=0, arg2=30):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
-    API = API_URL + '?$select=permit_type,%20count(*)&$group=permit_type&$where=application_date%20%3E=%20%27' + days_30 + '%27%20AND%20application_date%20<%20%27' + days_0 + '%27'
+    API = API_URL + '?$select=permit_type,%20count(*)&$group=permit_type&$where=permit_issued_date%20%3E=%20%27' + days_30 + '%27%20AND%20permit_issued_date%20<%20%27' + days_0 + '%27'
     response = requests.get(API)
     json_result = response.json()
     return json_result
@@ -144,14 +142,13 @@ def get_lifespan(property_type='c'):
         yoy = the year over year increase or decrease (100 to -100)
     '''
 
-    lifespan_now, waittime_now = lifespan_api_call(0, 30, property_type)
+    lifespan_now = lifespan_api_call(0, 30, property_type)
 
-    lifespan_then, waittime_then = lifespan_api_call(30, 60, property_type)
+    lifespan_then = lifespan_api_call(30, 60, property_type)
     yoy = ((lifespan_now-lifespan_then)/lifespan_then)*100
 
     return {
         'val': int(lifespan_now),
-        'waittime': int(waittime_now),
         'yoy': yoy
     }
 
