@@ -11,15 +11,12 @@ except ImportError:
 
 from flask import (
     Blueprint, request, render_template, flash,
-    current_app, abort, redirect
+    current_app, redirect
 )
 
-from flask.ext.login import current_user, login_user, login_required, logout_user
+from flask.ext.login import current_user, login_user, logout_user
 from feedback.extensions import login_manager
 from feedback.user.models import User
-# from feedback.public.forms import LoginForm
-# from feedback.user.forms import RegisterForm
-from feedback.utils import flash_errors
 
 blueprint = Blueprint('public', __name__, static_folder="../static")
 
@@ -35,14 +32,13 @@ def login():
 
 
 @blueprint.route('/logout', methods=['GET', 'POST'])
-#@login_required
 def logout():
     logout_user()
     if request.args.get('persona', None):
         return 'OK'
     else:
         flash('You are logged out.', 'info')
-        return render_template('public/home.html')
+        return redirect('/')
 
 
 @blueprint.route('/auth', methods=['POST'])
@@ -114,11 +110,13 @@ def manage_users():
 @blueprint.route("/violations-detail/",  methods=['GET'])
 def violations_detail():
     return render_template("public/violations-detail.html", title='Violations by Type: Detail')
-    
+
+
 @blueprint.route("/edit-public/",  methods=['GET'])
 def edit_public():
     return render_template("public/edit-public.html", title='Dashboard Editor - Public')
-    
+
+
 @blueprint.route("/edit-internal/",  methods=['GET'])
 def edit_internal():
     return render_template("public/edit-internal.html", title='Dashboard Editor - Internal')
