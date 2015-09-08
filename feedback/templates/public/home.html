@@ -2,18 +2,18 @@
 {% set active_page = 'Dashboard' %}
 {% block content %}
 
-<span id='api-health' class='hidden' style="color:red;">{{ api }}</span>
+<span id='api-health' class='hidden'>{{ api }}</span>
 
 <div class="remodal" data-remodal-id="modal">
-			
+
   <button data-remodal-action="close" class="remodal-close"></button>
   <h1 id='status'>Warning!<br>You can't undo this!</h1>
   <p></p>
   <br>
   <button data-remodal-action="confirm" class="remodal-confirm">OK, thanks!</button>
-  
+
 </div>
-		
+
 
 <section class='row' id='dashboard'>
 
@@ -126,21 +126,25 @@
     </div>
 
     <div class='four columns panel first-panel'>
-      <div class='headline'>{{ dash_obj[10].title }}</div>
-      <div class='content-container'>
-        <p style="font-weight:bold; font-size:350%">
-          {{ dash_obj[10].data }}
-        </p>
-        <span>(Taken from 1,000 sample permits)
+      <div class='headline'>{{ dash_obj[9].title }}</div>
+      <div class='content-container' style="font-size:75%;">
+          {{ dash_obj[9].data }}<p><br>(NOTE: Sophia, JSON is at DOM id permitstype)</p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 
     <div class='four columns panel'>
-      <div class='headline'>Permits Issued, Last 30 Days</div>
+      <div class='headline'>{{ dash_obj[12].title }}</div>
       <div class='content-container'>
-        <p class="huge bold">X</p>
-        <p>Versus previous 30 days: <span class="bold green">Up X%</span>
+        <p class="huge bold">{{ '{0:,}'.format(dash_obj[12].data.val) }}</p>
+        <p>Versus the same period a year ago:
+          {% if dash_obj[12].data.yoy > 0 %}
+          <span class='bold green'>Up
+          {% else %}
+          <span class='bold red'>Down
+          {% endif %}
+          {{ '%0.2f'| format(dash_obj[12].data.yoy|float) }}%
+          </span>
         </p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
@@ -215,8 +219,7 @@
       <div class='headline'>{{ title }}</div>
       <div class='content-container vertical-center-35'>
 
-        <p class='huge bold'>{{ val }}</p>
-        <p class='bold no-bottom-margin'>{{ waittime }} days from application to permit</p>
+        <p class='huge bold'>{{ val }} days</p>
         <p>Versus previous 30 days:
           {% if yoy > 0 %}
           <span class='bold red'>Up
