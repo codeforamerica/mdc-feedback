@@ -15,7 +15,7 @@ from feedback.dashboard.vendorsurveys import (
 
 from feedback.dashboard.permits import (
     api_health, get_lifespan, get_avg_cost,
-    get_permit_types, get_open_permit_lifespan,
+    get_permit_types,
     get_master_permit_counts
 )
 
@@ -201,15 +201,15 @@ dashboard_collection = [
         }
     },
     {
-        "title": "Average Commercial Permit Lifespan, Last 30 Days",
+        "title": "Average time from application date to permit issuance, Commercial Permits, Last 30 Days",
         "data": get_lifespan('c')
     },
     {
-        "title": "Average Residential Permit Lifespan, Last 30 Days",
+        "title": "Average time from application date to permit issuance, Residential Permits, Last 30 Days",
         "data": get_lifespan('r')
     },
     {
-        "title": "Avg Owner/Builder Permit Lifespan, Last 30 Days",
+        "title": "Average time from application date to permit issuance, Owner/Builder Permits, Last 30 Days",
         "data": get_lifespan('h')
     },
     {
@@ -225,12 +225,12 @@ dashboard_collection = [
         "data": float(get_avg_cost('h'))/1000
     },
     {
-        "title": "Permit Types",
+        "title": "Permits issued by type, Last 30 Days",
         "data": get_permit_types()
     },
     {
         "title": "Average age of an Open Permit (in Days)",
-        "data": get_open_permit_lifespan()
+        "data": -1
     },
     {
         "title": "Inspections Completed, Last 30 Days",

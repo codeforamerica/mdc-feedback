@@ -126,12 +126,9 @@
     </div>
 
     <div class='four columns panel first-panel'>
-      <div class='headline'>{{ dash_obj[10].title }}</div>
-      <div class='content-container'>
-        <p style="font-weight:bold; font-size:350%">
-          {{ dash_obj[10].data }}
-        </p>
-        <span>(Taken from 1,000 sample permits)
+      <div class='headline'>{{ dash_obj[9].title }}</div>
+      <div class='content-container' style="font-size:75%;">
+          {{ dash_obj[9].data }}<p><br>(NOTE: Sophia, JSON is at DOM id permitstype)</p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
@@ -222,8 +219,7 @@
       <div class='headline'>{{ title }}</div>
       <div class='content-container vertical-center-35'>
 
-        <p class='huge bold'>{{ val }}</p>
-        <p class='bold no-bottom-margin'>{{ waittime }} days from application to permit</p>
+        <p class='huge bold'>{{ val }} days</p>
         <p>Versus previous 30 days:
           {% if yoy > 0 %}
           <span class='bold red'>Up
