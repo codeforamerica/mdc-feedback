@@ -70,37 +70,6 @@ $(document).ready(function() {
 
 	})
 
-
-	/************************* ADMIN PANEL *************************/
-
-	window.REMODAL_GLOBALS = {
-	  NAMESPACE: 'modal',
-	  DEFAULTS: {
-	    hashTracking: false
-	  }
-	};
-
-	//init modal
-	var deleteModal = $('[data-remodal-id=modal]').remodal();
-	var deleteSurvey;
-
-	//click delete! get modal.
-	$('.delete-survey').click(function() {
-
-		//console.log($(this).parent().attr('id'));	//eventually record this to delete from db
-		deleteSurvey = $(this).parent();
-		deleteModal.open();
-
-	})
-
-	//confirm delete, peace out, survey.
-	$('.remodal-confirm').click(function() {
-
-		//console.log('click confirm', deleteSurvey);
-		$(deleteSurvey).detach();
-
-	})
-
 	/***************************** CHARTS! *****************************/
 
 	var green = "rgba(76, 216, 132, 1)";
@@ -126,7 +95,16 @@ $(document).ready(function() {
 
 	var purple_4 = 'rgba(219, 172, 217, 1)';
 	var t_purple_4 = 'rgba(219, 172, 217, 0.2)';
+	
+	var red = 'rgba(0,0,0,1)';
+	var t_red = 'rgba(1,1,1,1)';
+	
+	var b = 'rgba(2,2,2,1)';
+	var t_b = 'rgba(3,3,3,1)';
+	
 
+	var colors = [green, yellow, orange, purple, purple_1, purple_2, purple_3, purple_4, red, b];
+	var t_colors = [t_green, t_yellow, t_orange, t_purple, t_purple_1, t_purple_2, t_purple_3, t_purple_4, red, t_b];
 
 	if($("#dashboard")[0] != undefined) {
 
@@ -247,7 +225,29 @@ $(document).ready(function() {
 			var myLineChart = new Chart(ctx2).Line(d);
 
 		});
+		
+		console.log(JSON.parse($("#permitstype")[0].childNodes[0].data));
+		var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data);
+		
+		var	pttx = $("#permitTypeChart").get(0).getContext("2d");
+		
+		var cleanPermitData = [];
+		
+		for(var i = 0; i < permitTypes.data.length; i++) {
+		
+			var obj = {};
+				obj.value = permitTypes.data[i].count;
+				obj.color = colors[i];
+				obj.highlight = t_colors[i];
+				obj.label = permitTypes.data[i].permit_type;
+				
+			console.log(obj.label);
+			
+			cleanPermitData.push(obj);
+		}
 
+		$('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
+		var myPieChart2 = new Chart(pttx).Pie(cleanPermitData);
 
 	/* VIOLATIONS */
 
