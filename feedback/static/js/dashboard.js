@@ -96,15 +96,15 @@ $(document).ready(function() {
 	var purple_4 = 'rgba(219, 172, 217, 1)';
 	var t_purple_4 = 'rgba(219, 172, 217, 0.2)';
 	
-	var red = 'rgba(0,0,0,1)';
-	var t_red = 'rgba(1,1,1,1)';
+	var blue = 'rgba(93, 205, 252,1)';
+	var t_blue = 'rgba(93, 205, 252, 0.2)';
 	
-	var b = 'rgba(2,2,2,1)';
-	var t_b = 'rgba(3,3,3,1)';
+	var b = 'rgba(170, 233, 254,1)';
+	var t_b = 'rgba(170, 233, 254,.2)';
 	
 
-	var colors = [green, yellow, orange, purple, purple_1, purple_2, purple_3, purple_4, red, b];
-	var t_colors = [t_green, t_yellow, t_orange, t_purple, t_purple_1, t_purple_2, t_purple_3, t_purple_4, red, t_b];
+	var colors = [green, yellow, orange, purple, purple_1, purple_2, purple_3, purple_4, blue, b];
+	var t_colors = [t_green, t_yellow, t_orange, t_purple, t_purple_1, t_purple_2, t_purple_3, t_purple_4, t_blue, t_b];
 
 	if($("#dashboard")[0] != undefined) {
 
