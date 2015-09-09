@@ -11,7 +11,7 @@ $(document).ready(function() {
 	var apiStatus = parseInt($('#api-health').text());
 	var apiModal = $('[data-remodal-id=modal]').remodal();
 	
-	console.log(apiModal);
+	//console.log(apiModal);
 	
 	if(apiModal != undefined) {
 		
@@ -113,15 +113,6 @@ $(document).ready(function() {
     // Number - Number of animation steps
     animationSteps: 60,
 
-    // String - Animation easing effect
-    // Possible effects are:
-    // [easeInOutQuart, linear, easeOutBounce, easeInBack, easeInOutQuad,
-    //  easeOutQuart, easeOutQuad, easeInOutBounce, easeOutSine, easeInOutCubic,
-    //  easeInExpo, easeInOutBack, easeInCirc, easeInOutElastic, easeOutBack,
-    //  easeInQuad, easeInOutExpo, easeInQuart, easeOutQuint, easeInOutCirc,
-    //  easeInSine, easeOutExpo, easeOutCirc, easeOutCubic, easeInQuint,
-    //  easeInElastic, easeInOutSine, easeInOutQuint, easeInBounce,
-    //  easeOutElastic, easeInCubic]
     animationEasing: "easeOutQuart",
 
     // Boolean - If we should show the scale at all
@@ -237,7 +228,6 @@ $(document).ready(function() {
     // Function - Will fire on animation completion.
     onAnimationComplete: function(){}
 }
-
 
 	if($("#dashboard")[0] != undefined) {
 
@@ -369,7 +359,7 @@ $(document).ready(function() {
 				obj.highlight = t_colors[i];
 				obj.label = permitTypes.data[i].permit_type;
 				
-			console.log(obj.label);
+			//console.log(obj.label);
 			
 			cleanPermitData.push(obj);
 		}
@@ -432,7 +422,9 @@ $(document).ready(function() {
 	/************************* LEAFLET MAPPING *************************/
 
 	//25.7667° N, 80.2000° W
-	var map = L.map('leaflet').setView([25.7667, -80.2000], 10);
+	//{lat: 25.808545671771615, lng: -80.25697231292725}
+	
+	var map = L.map('leaflet').setView([25.720735134412106, -80.31327724456787], 10);
 	L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
@@ -440,6 +432,29 @@ $(document).ready(function() {
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'		     
     }).addTo(map);
+    
+   var map2 = L.map('leaflet-open').setView([25.720735134412106, -80.31327724456787], 10);
+	L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    minZoom: 10,
+    id: 'phiden.e64a2341',
+    accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'		     
+    }).addTo(map2);
+    
+    var map3 = L.map('leaflet-lein').setView([25.720735134412106, -80.31327724456787], 10);
+	L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    minZoom: 10,
+    id: 'phiden.e64a2341',
+    accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'		     
+    }).addTo(map3);
+    
+    /*map.on('click', function(e) {
+	    
+	    console.log(e.latlng);
+    })*/
 
 	//data map
 	$.ajax({
@@ -456,6 +471,33 @@ $(document).ready(function() {
 				var fill = t_yellow;
 				var color = yellow;
 				var title = data[i].issue_type;
+				
+				//console.log(openClosed);
+				
+				if(openClosed == 'LOCKED') {
+					
+					var marker = L.circleMarker([lat, lon], {
+		        radius: 5,
+		        fillColor: t_green,
+		        color: green,
+		        weight: 1,
+		        opacity: 1,
+		        fillOpacity: 0.8
+					}).addTo(map2);
+				
+				} 
+				
+				if(openClosed == "LIEN") {
+					
+					var marker = L.circleMarker([lat, lon], {
+		        radius: 5,
+		        fillColor: t_purple,
+		        color: purple,
+		        weight: 1,
+		        opacity: 1,
+		        fillOpacity: 0.8
+					}).addTo(map3);
+				}
 
 				var marker = L.circleMarker([lat, lon], {
 		        radius: 5,

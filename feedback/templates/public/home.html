@@ -176,27 +176,45 @@
 
 	<div class='row twelve columns'><h3>Neighborhood Compliance</h3></div>
 
-	<div class='row twelve columns'>
+	<div class='row twelve columns panel'>
 
-		<div class='six columns panel first-panel double-height'>
-
-				<div class='headline'>Violations per month</div>
-				<div class='content-container'>
-					<canvas id='violations'></canvas>
-				</div>
-				<p class='hidden details invisible-button'><a href=#>View Details</a></p>
-
-		</div>
-
-		<div class='six columns panel double-height last-panel'>
-
-		<div class='headline'>Violation Locations</div>
+		<div class='headline'>Violations per month</div>
 		<div class='content-container'>
-			<div id='leaflet'></div>
+			<canvas id='violations'></canvas>
 		</div>
 		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+
 	</div>
 
+	<div class='row twelve columns'>
+		
+		<div class='four columns panel first-panel double-height'>
+
+			<div class='headline'>Violation Locations: All Violations</div>
+			<div class='content-container'>
+				<div id='leaflet'></div>
+			</div>
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		</div>
+		
+		<div class='four columns panel double-height'>
+		
+			<div class='headline'>Violation Locations: Open Violations</div>
+			<div class='content-container'>
+				<div id='leaflet-open'></div>
+			</div>
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		</div>
+		
+		<div class='four columns panel last-panel double-height'>
+		
+			<div class='headline'>Violation Locations: Locations with Liens</div>
+			<div class='content-container'>
+				<div id='leaflet-lein'></div>
+			</div>
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		</div>
+		
 	</div>
 
 	<div class='row twelve columns panel double-height'>
