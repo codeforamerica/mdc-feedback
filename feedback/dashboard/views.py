@@ -214,15 +214,15 @@ dashboard_collection = [
     },
     {
         "title": "Avg Cost of an Open Commercial Permit",
-        "data": float(get_avg_cost('c'))/1000
+        "data": float(get_avg_cost('c'))
     },
     {
         "title": "Avg Cost of an Open Residential Permit",
-        "data": float(get_avg_cost('r'))/1000
+        "data": float(get_avg_cost('r'))
     },
     {
         "title": "Avg Cost of an Owner/Builder Permit",
-        "data": float(get_avg_cost('h'))/1000
+        "data": float(get_avg_cost('h'))
     },
     {
         "title": "Permits issued by type, Last 30 Days",
@@ -257,12 +257,12 @@ def home():
 def survey_index():
     form = {}
     return render_template('dashboard/home.html', form=form)
-    
+
 @blueprint.route("/edit-public/",  methods=['GET'])
 def edit_public():
     return render_template("public/edit-public.html", stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard Editor - Public')
-    
+
 @blueprint.route("/edit-internal/",  methods=['GET'])
 def edit_internal():
     return render_template("public/edit-internal.html", stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard Editor - Internal')
-    
+

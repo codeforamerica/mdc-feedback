@@ -99,7 +99,7 @@
       <div class='headline'>{{ dash_obj[6].title }}</div>
       <div class='content-container'>
         <p style="font-weight:bold; font-size:250%">
-          ${{ '%0.1f'| format(dash_obj[6].data|float) }}k
+          ${{ '%0.2f'| format(dash_obj[6].data|float) }}
         </p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
@@ -109,7 +109,7 @@
       <div class='headline'>{{ dash_obj[7].title }}</div>
       <div class='content-container'>
         <p style="font-weight:bold; font-size:250%">
-          ${{ '%0.1f'| format(dash_obj[7].data|float) }}k
+          ${{ '%0.2f'| format(dash_obj[7].data|float) }}
         </p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
@@ -119,7 +119,7 @@
       <div class='headline'>{{ dash_obj[8].title }}</div>
       <div class='content-container'>
         <p style="font-weight:bold; font-size:250%">
-          ${{ '%0.1f'| format(dash_obj[8].data|float) }}k
+          ${{ '%0.2f'| format(dash_obj[8].data|float) }}
         </p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
@@ -187,7 +187,7 @@
 	</div>
 
 	<div class='row twelve columns'>
-		
+
 		<div class='four columns panel first-panel double-height'>
 
 			<div class='headline'>Violation Locations: Closed Violations</div>
@@ -196,25 +196,26 @@
 			</div>
 			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 		</div>
-		
+
 		<div class='four columns panel double-height'>
 		
 			<div class='headline'>Violation Locations: Locked Violations</div>
+
 			<div class='content-container'>
 				<div id='leaflet-open'></div>
 			</div>
 			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 		</div>
-		
+
 		<div class='four columns panel last-panel double-height'>
-		
+
 			<div class='headline'>Violation Locations: Locations with Liens</div>
 			<div class='content-container'>
 				<div id='leaflet-lein'></div>
 			</div>
 			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 		</div>
-		
+
 	</div>
 
 	<div class='row twelve columns panel double-height'>
