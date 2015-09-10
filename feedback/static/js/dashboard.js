@@ -301,7 +301,7 @@ $(document).ready(function() {
 	/* Permitting */
 
 		$.ajax({
-		  url: "https://opendata.miamidade.gov/resource/awsz-tanw.json?$select=date_trunc_ym(issuedate)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=2",
+		  url: "https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=master_permit_number=0&permit_type=%27BLDG%27",
 
 		  context: document.body
 		}).done(function(data) {
