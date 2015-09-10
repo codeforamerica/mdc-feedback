@@ -472,7 +472,7 @@ $(document).ready(function() {
 				var color = yellow;
 				var title = data[i].issue_type;
 				
-				//console.log(openClosed);
+				console.log(openClosed);
 				
 				if(openClosed == 'LOCKED') {
 					
@@ -498,15 +498,19 @@ $(document).ready(function() {
 		        fillOpacity: 0.8
 					}).addTo(map3);
 				}
-
-				var marker = L.circleMarker([lat, lon], {
+				
+				if(openClosed == "CLOSED") {
+					
+					var marker = L.circleMarker([lat, lon], {
 		        radius: 5,
 		        fillColor: fill,
 		        color: color,
 		        weight: 1,
 		        opacity: 1,
 		        fillOpacity: 0.8
-		    }).addTo(map);
+					}).addTo(map);
+					
+				}
 
 				marker.bindPopup(title);
         marker.on('mouseover', function (e) {
