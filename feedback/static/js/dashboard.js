@@ -422,40 +422,71 @@ $(document).ready(function() {
 	/************************* LEAFLET MAPPING *************************/
 
 	//25.7667° N, 80.2000° W
-	//{lat: 25.808545671771615, lng: -80.25697231292725}
+	//{lat: 25.626668871238568, lng: -80.44867515563963}
 	
-	var map = L.map('leaflet').setView([25.720735134412106, -80.31327724456787], 10);
-	L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+	var map = L.map('leaflet').setView([25.626668871238568, -80.44867515563963], 9);
+		L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
-    minZoom: 10,
+    minZoom: 9,
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'		     
     }).addTo(map);
     
-   var map2 = L.map('leaflet-open').setView([25.720735134412106, -80.31327724456787], 10);
-	L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+  var map2 = L.map('leaflet-open').setView([25.626668871238568, -80.44867515563963], 9);
+		L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
-    minZoom: 10,
+    minZoom: 9,
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'		     
     }).addTo(map2);
     
-    var map3 = L.map('leaflet-lein').setView([25.720735134412106, -80.31327724456787], 10);
-	L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+  var map3 = L.map('leaflet-lein').setView([25.626668871238568, -80.44867515563963], 9);
+		L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
-    minZoom: 10,
+    minZoom: 9,
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'		     
     }).addTo(map3);
     
-    /*map.on('click', function(e) {
+    map3.on('click', function(e) {
 	    
 	    console.log(e.latlng);
-    })*/
+    })
+    
+  //county shapefiles
+  $.ajax({
+		type: "GET",
+		url: "../static/geodata/municipalities_coast.json",
+		dataType: "json",
+		success: parseXML, 
+		error: logError
+	});
 
+	
+	function logError(n, textStatus, errorThrown) {
+		
+		alert("ajax shapefile error", textStatus, errorThrown);
+	}
+	
+	function parseXML(data) {
+		
+		//console.log('XML: ', data);
+		
+		var myStyle = {
+	    "color": blue,
+	    "weight": 1,
+	    "opacity": 0.65
+		};
+		
+		L.geoJson(data, {style:myStyle}).addTo(map);
+		L.geoJson(data, {style:myStyle}).addTo(map2);
+		L.geoJson(data, {style:myStyle}).addTo(map3);
+		
+	}
+	
 	//data map
 	$.ajax({
 		  url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$where=ticket_created_date_time%20%3E%20%272015-01-01%27",
@@ -472,7 +503,7 @@ $(document).ready(function() {
 				var color = yellow;
 				var title = data[i].issue_type;
 				
-				console.log(openClosed);
+				//console.log(openClosed);
 				
 				if(openClosed == 'LOCKED') {
 					
