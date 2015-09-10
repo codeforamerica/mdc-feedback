@@ -225,16 +225,12 @@ dashboard_collection = [
         "data": float(get_avg_cost('h'))
     },
     {
-        "title": "Permits issued by type, Last 30 Days",
+        "title": "Permits & sub-permits issued by type, Last 30 Days",
         "data": get_permit_types()
     },
     {
         "title": "Average age of an Open Permit (in Days)",
         "data": -1
-    },
-    {
-        "title": "Inspections Completed, Last 30 Days",
-        "data": get_master_permit_counts('last_inspection_date')
     },
     {
         "title": "Master Permits Issued, Last 30 Days",
