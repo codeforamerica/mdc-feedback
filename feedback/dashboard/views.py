@@ -214,15 +214,15 @@ dashboard_collection = [
     },
     {
         "title": "Avg Cost of an Open Commercial Permit",
-        "data": float(get_avg_cost('c'))/100
+        "data": float(get_avg_cost('c'))
     },
     {
         "title": "Avg Cost of an Open Residential Permit",
-        "data": float(get_avg_cost('r'))/100
+        "data": float(get_avg_cost('r'))
     },
     {
         "title": "Avg Cost of an Owner/Builder Permit",
-        "data": float(get_avg_cost('h'))/100
+        "data": float(get_avg_cost('h'))
     },
     {
         "title": "Permits issued by type, Last 30 Days",
