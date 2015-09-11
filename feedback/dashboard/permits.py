@@ -52,7 +52,7 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
-    API = API_URL + '?$where=master_permit_number=0%20AND%20permit_type=%27BLDG%27%20AND%20permit_issued_date%20%3E=%20%27' + days_30 + '%27%20AND%20permit_issued_date%20<%20%27' + days_0 + '%27%20AND%20'
+    API = API_URL + '?$where=starts_with(process_number,%20%27C%27)%20AND%20master_permit_number=0%20AND%20permit_type=%27BLDG%27%20AND%20permit_issued_date%20%3E=%20%27' + days_30 + '%27%20AND%20permit_issued_date%20<%20%27' + days_0 + '%27%20AND%20'
     if property_type == 'h':
         API = API + 'contractor_name=%27OWNER%27'
     else:
@@ -102,7 +102,7 @@ def get_avg_cost(property_type='c'):
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
     Returns an integer. -1 if the API returns blank.
     '''
-    API = API_URL + '?$select=AVG(permit_total_fee)&$where=master_permit_number=0%20AND%20permit_type=%27BLDG%27%20AND%20'
+    API = API_URL + '?$select=AVG(permit_total_fee)&$where=starts_with(process_number,%20%27C%27)%20AND%20master_permit_number=0%20AND%20permit_type=%27BLDG%27%20AND%20'
     if property_type == 'h':
         API = API + 'contractor_name=%27OWNER%27'
     else:
@@ -159,7 +159,7 @@ def api_count_call(arg1=0, arg2=30, field=''):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
-    API = API_URL + '?$select=count(*)%20as%20total&$where=permit_type=%27BLDG%27%20AND%20master_permit_number=0%20AND%20' + field + '%20%3E%20%27' + days_30 + '%27%20AND%20' + field + '%20<%20%27' + days_0 + '%27'
+    API = API_URL + '?$select=count(*)%20as%20total&$where=starts_with(process_number,%20%27C%27)%20AND%20permit_type=%27BLDG%27%20AND%20master_permit_number=0%20AND%20' + field + '%20%3E%20%27' + days_30 + '%27%20AND%20' + field + '%20<%20%27' + days_0 + '%27'
     response = requests.get(API)
     json_result = response.json()
     return float(json_result[0]['total'])
