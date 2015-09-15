@@ -19,6 +19,7 @@
 
 	<div class='row twelve columns'>
 		<h3>Permitting &amp; Inspection Center User Survey Metrics</h3>
+    <a href="{{ url_for('dashboard.survey_detail') }}">View Survey Answers</a>
 	</div>
 
 	<div class='six columns panel first-panel'>
@@ -134,28 +135,10 @@
     </div>
 
     <div class='four columns panel'>
-      <div class='headline'>{{ dash_obj[12].title }}</div>
-      <div class='content-container'>
-        <p class="huge bold">{{ '{0:,}'.format(dash_obj[12].data.val) }}</p>
-        <p>Versus the same period a year ago:
-          {% if dash_obj[12].data.yoy > 0 %}
-          <span class='bold green'>Up
-          {% else %}
-          <span class='bold red'>Down
-          {% endif %}
-          {{ '%0.2f'| format(dash_obj[12].data.yoy|float) }}%
-          </span>
-        </p>
-      </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
-    </div>
-
-    <div class='four columns panel last-panel'>
       <div class='headline'>{{ dash_obj[11].title }}</div>
       <div class='content-container'>
         <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
-        <!--
-        <p>Versus this time a year ago:
+        <p>Versus the same period a year ago:
           {% if dash_obj[11].data.yoy > 0 %}
           <span class='bold green'>Up
           {% else %}
@@ -164,11 +147,9 @@
           {{ '%0.2f'| format(dash_obj[11].data.yoy|float) }}%
           </span>
         </p>
-      -->
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
-
 
 </section> <!-- close row -->
 
@@ -198,7 +179,7 @@
 		</div>
 
 		<div class='four columns panel double-height'>
-		
+
 			<div class='headline'>Violation Locations: Locked Violations</div>
 
 			<div class='content-container'>
@@ -224,7 +205,7 @@
 			<div class='content-container'>
 				<canvas id='viotype'></canvas>
 			</div>
-			<p class='details invisible-button'><a href='/violations-detail/'>View Complete Dataset</a></p>
+			<p class='details invisible-button'><a href="{{ url_for('dashboard.violations_detail') }}">View Complete Dataset</a></p>
 
 		</div>
 </section> <!-- close row -->
