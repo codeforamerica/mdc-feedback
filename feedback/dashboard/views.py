@@ -10,7 +10,8 @@ from flask import (
 from tzlocal import get_localzone
 
 from feedback.dashboard.vendorsurveys import (
-    make_typeform_call, make_textit_call
+    make_typeform_call, make_textit_call, parse_typeform,
+    get_typeform_by_meta
 )
 
 from feedback.dashboard.permits import (
@@ -24,9 +25,6 @@ blueprint = Blueprint(
     template_folder='../templates',
     static_folder="../static"
 )
-
-TYPEFORM_SCALE_EN = 'opinionscale_9825055'
-TYPEFORM_SCALE_ES = 'opinionscale_9825056'
 
 TEXTIT_UUID_EN = '920cec13-ffc0-4fe9-92c3-1cced2073498'
 TEXTIT_UUID_OPINION = '53249739-7b72-43c2-9463-e4cd4963a408'
@@ -42,6 +40,8 @@ surveys_by_date = {}
 surveys_date_array = []
 surveys_value_array = []
 
+survey_table = []
+
 local_tz = get_localzone()
 
 
@@ -50,30 +50,53 @@ def utc_to_local(utc_dt):
     return local_tz.normalize(local_dt)  # .normalize might be unnecessary
 
 
-def get_typeform_by_meta(json_result):
-    web_en = 0
-    web_es = 0
-    total = 0
+def parse_textit(survey_table, json_result):
+    '''
+    Take the textit API result and do ETLs to get
+    the responses in an easy to digest format.
+    Returns an object:
+        survey_table
+    '''
 
-    for survey_response in json_result['responses']:
-        # Go through each entry in responses, and pull out opinionscale_7205022 / opinionscale_8228843, whichever is not null. Convert to integer.
+    obj_completed = [result for result in json_result['results'] if result['completed']]
+    for obj in obj_completed:
+
+        iter = {}
+        values_array = obj['values']
+        for value in values_array:
+            iter[value['label']] = {'category': value['category'], 'text': value['text']}
+
+        iter_obj = {
+            'id': 'SMS-' + str(obj['run']),
+            'method': 'sms',
+            'firsttime': iter['First Time']['category'],
+            'getdone': iter['Get it Done']['text'],
+            'role': iter['Role']['text'],
+            'rating': iter['Experience Rating']['text'],
+            'improvement': iter['Improvement']['text'],
+            'bestworst': iter['Best and Worst']['text'],
+            'followup': iter['Followup Permission']['category'],
+            'morecomments': iter['Comments']['text']
+        }
+
+        temp = obj['modified_on']
+        temp = datetime.datetime.strptime(temp, '%Y-%m-%dT%H:%M:%S.%fZ')
+        date_object = utc_to_local(temp)
+        iter_obj['date'] = date_object.strftime("%Y-%m-%d %H:%M:%S")
+
+        if obj['flow_uuid'] == TEXTIT_UUID_EN:
+            iter_obj['lang'] = 'en'
+        else:
+            iter_obj['lang'] = 'es'
+
         try:
-            ans = survey_response['answers'][TYPEFORM_SCALE_EN]
-            web_en = web_en + 1
+            iter_obj['purpose'] = iter['Purpose']['text']
         except KeyError:
-            try:
-                ans = survey_response['answers'][TYPEFORM_SCALE_ES]
-                web_es = web_es + 1
-            except KeyError:
-                # print 'ERROR! one of these opinion scales should show up.'
-                pass
-        total = total + int(ans)
-    return {
-        "en": web_en,
-        "es": web_es,
-        "total": total,
-        "completed": int(json_result['stats']['responses']['showing'])
-    }
+            iter_obj['purpose'] = ''
+
+        survey_table.append(iter_obj)
+
+    return survey_table
 
 
 def get_textit_by_meta(json_result):
@@ -93,12 +116,19 @@ def get_textit_by_meta(json_result):
         # filter for the node ID of the opinion scale,
         # which is 0a77d0af-2685-4d8d-b4be-732e376f2f85
         values_array = obj['values']
+        # print values_array
+        iter = {}
+
         for value in values_array:
+            iter[value['label']] = {'category': value['category'], 'text': value['text']}
+            # print value['label'], '/', value['category'], '/', value['text']
+
             if value['node'] == TEXTIT_UUID_OPINION and value['category'] == '1 - 7':
                 try:
                     sms_total = sms_total + float(value['value'])
                 except IndexError:
                     pass
+        # print iter
 
     return {
         "en": sms_en,
@@ -138,6 +168,7 @@ for i in range(7, -1, -1):
 # Get unix timestamp of a week ago
 timestamp = datetime.date.today() - datetime.timedelta(7)
 json_result = make_typeform_call(timestamp)
+survey_table = parse_typeform(survey_table, json_result)
 
 web_meta = get_typeform_by_meta(json_result)
 web_date = get_typeform_by_date(json_result, surveys_by_date)
@@ -148,6 +179,8 @@ Each survey is called a "flow". For now, we will hardcode two particular flows
 from textit so we can wrap our heads around how this works.
 '''
 sms_result = make_textit_call(timestamp)
+survey_table = parse_textit(survey_table, sms_result)
+
 sms_meta = get_textit_by_meta(sms_result)
 sms_date = get_textit_by_date(sms_result, surveys_by_date)
 
@@ -214,27 +247,23 @@ dashboard_collection = [
     },
     {
         "title": "Avg Cost of an Open Commercial Permit",
-        "data": float(get_avg_cost('c'))/1000
+        "data": float(get_avg_cost('c'))
     },
     {
         "title": "Avg Cost of an Open Residential Permit",
-        "data": float(get_avg_cost('r'))/1000
+        "data": float(get_avg_cost('r'))
     },
     {
         "title": "Avg Cost of an Owner/Builder Permit",
-        "data": float(get_avg_cost('h'))/1000
+        "data": float(get_avg_cost('h'))
     },
     {
-        "title": "Permits issued by type, Last 30 Days",
+        "title": "Permits & sub-permits issued by type, Last 30 Days",
         "data": get_permit_types()
     },
     {
         "title": "Average age of an Open Permit (in Days)",
         "data": -1
-    },
-    {
-        "title": "Inspections Completed, Last 30 Days",
-        "data": get_master_permit_counts('last_inspection_date')
     },
     {
         "title": "Master Permits Issued, Last 30 Days",
@@ -245,6 +274,7 @@ dashboard_collection = [
 json_obj['test'] = json.dumps(dashboard_collection[0]['data']['graph'])
 json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
 json_obj['permits_type'] = json.dumps(dashboard_collection[9])
+json_obj['app_answers'] = json.dumps(survey_table)
 
 
 @blueprint.route("/", methods=["GET", "POST"])
@@ -257,3 +287,23 @@ def home():
 def survey_index():
     form = {}
     return render_template('dashboard/home.html', form=form)
+
+
+@blueprint.route('/dashboard/feedback/', methods=['GET'])
+def survey_detail():
+    return render_template("dashboard/survey-detail.html", resp_obj=survey_table, title='Permitting & Inspection Center User Survey Metrics: Detail')
+
+
+@blueprint.route("/dashboard/violations/",  methods=['GET'])
+def violations_detail():
+    return render_template("public/violations-detail.html", title='Violations by Type: Detail')
+
+
+@blueprint.route("/edit-public/",  methods=['GET'])
+def edit_public():
+    return render_template("public/edit-public.html", stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard Editor - Public')
+
+
+@blueprint.route("/edit-internal/",  methods=['GET'])
+def edit_internal():
+    return render_template("public/edit-internal.html", stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard Editor - Internal')

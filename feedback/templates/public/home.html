@@ -19,6 +19,7 @@
 
 	<div class='row twelve columns'>
 		<h3>Permitting &amp; Inspection Center User Survey Metrics</h3>
+    <a href="{{ url_for('dashboard.survey_detail') }}">View Survey Answers</a>
 	</div>
 
 	<div class='six columns panel first-panel'>
@@ -99,7 +100,7 @@
       <div class='headline'>{{ dash_obj[6].title }}</div>
       <div class='content-container'>
         <p style="font-weight:bold; font-size:250%">
-          ${{ '%0.1f'| format(dash_obj[6].data|float) }}k
+          ${{ '%0.2f'| format(dash_obj[6].data|float) }}
         </p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
@@ -109,7 +110,7 @@
       <div class='headline'>{{ dash_obj[7].title }}</div>
       <div class='content-container'>
         <p style="font-weight:bold; font-size:250%">
-          ${{ '%0.1f'| format(dash_obj[7].data|float) }}k
+          ${{ '%0.2f'| format(dash_obj[7].data|float) }}
         </p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
@@ -119,7 +120,7 @@
       <div class='headline'>{{ dash_obj[8].title }}</div>
       <div class='content-container'>
         <p style="font-weight:bold; font-size:250%">
-          ${{ '%0.1f'| format(dash_obj[8].data|float) }}k
+          ${{ '%0.2f'| format(dash_obj[8].data|float) }}
         </p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
@@ -127,35 +128,17 @@
 
     <div class='four columns panel first-panel'>
       <div class='headline'>{{ dash_obj[9].title }}</div>
-      <div class='content-container' style="font-size:75%;">
-          {{ dash_obj[9].data }}<p><br>(NOTE: Sophia, JSON is at DOM id permitstype)</p>
+      <div class='content-container'>
+         <canvas id='permitTypeChart'>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 
     <div class='four columns panel'>
-      <div class='headline'>{{ dash_obj[12].title }}</div>
-      <div class='content-container'>
-        <p class="huge bold">{{ '{0:,}'.format(dash_obj[12].data.val) }}</p>
-        <p>Versus the same period a year ago:
-          {% if dash_obj[12].data.yoy > 0 %}
-          <span class='bold green'>Up
-          {% else %}
-          <span class='bold red'>Down
-          {% endif %}
-          {{ '%0.2f'| format(dash_obj[12].data.yoy|float) }}%
-          </span>
-        </p>
-      </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
-    </div>
-
-    <div class='four columns panel last-panel'>
       <div class='headline'>{{ dash_obj[11].title }}</div>
       <div class='content-container'>
         <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
-        <!--
-        <p>Versus this time a year ago:
+        <p>Versus the same period a year ago:
           {% if dash_obj[11].data.yoy > 0 %}
           <span class='bold green'>Up
           {% else %}
@@ -164,11 +147,9 @@
           {{ '%0.2f'| format(dash_obj[11].data.yoy|float) }}%
           </span>
         </p>
-      -->
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
-
 
 </section> <!-- close row -->
 
@@ -176,26 +157,45 @@
 
 	<div class='row twelve columns'><h3>Neighborhood Compliance</h3></div>
 
-	<div class='row twelve columns'>
+	<div class='row twelve columns panel'>
 
-		<div class='six columns panel first-panel double-height'>
-
-				<div class='headline'>Violations per month</div>
-				<div class='content-container'>
-					<canvas id='violations'></canvas>
-				</div>
-				<p class='hidden details invisible-button'><a href=#>View Details</a></p>
-
-		</div>
-
-		<div class='six columns panel double-height last-panel'>
-
-		<div class='headline'>Violation Locations</div>
+		<div class='headline'>Violations per month</div>
 		<div class='content-container'>
-			<div id='leaflet'></div>
+			<canvas id='violations'></canvas>
 		</div>
 		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+
 	</div>
+
+	<div class='row twelve columns'>
+
+		<div class='four columns panel first-panel double-height'>
+
+			<div class='headline'>Violation Locations: Closed Violations</div>
+			<div class='content-container'>
+				<div id='leaflet'></div>
+			</div>
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		</div>
+
+		<div class='four columns panel double-height'>
+
+			<div class='headline'>Violation Locations: Locked Violations</div>
+
+			<div class='content-container'>
+				<div id='leaflet-open'></div>
+			</div>
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		</div>
+
+		<div class='four columns panel last-panel double-height'>
+
+			<div class='headline'>Violation Locations: Locations with Liens</div>
+			<div class='content-container'>
+				<div id='leaflet-lein'></div>
+			</div>
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		</div>
 
 	</div>
 
@@ -205,7 +205,7 @@
 			<div class='content-container'>
 				<canvas id='viotype'></canvas>
 			</div>
-			<p class='details invisible-button'><a href='/violations-detail/'>View Complete Dataset</a></p>
+			<p class='details invisible-button'><a href="{{ url_for('dashboard.violations_detail') }}">View Complete Dataset</a></p>
 
 		</div>
 </section> <!-- close row -->
