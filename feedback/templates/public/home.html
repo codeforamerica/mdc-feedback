@@ -77,8 +77,8 @@
   
   {% endfor %}
 
-    
   </div>
+  
   <div class='four columns panel first-panel'>
     <div class='headline'>Best &amp; Worst Experiences</div>
     <div class='content-container'>
@@ -96,10 +96,35 @@
   </div>
   
   <div class='four columns panel'>
+    <div class='headline'>Suggested Improvements</div>
+    <div class='content-container'>
+      <div id='improvements-data'>
+        {% for item in resp_obj %}
+          {% if item.lang == 'en' %}
+            <p>{{ item.improvement }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+      
+    <p class='details invisible-button'><a href=#>View Details</a></p>
     
   </div>
   
   <div class='four columns panel last-panel'>
+    
+    <div class='headline'>More Comments</div>
+    <div class='content-container'>
+      <div id='morecomments-data'>
+        {% for item in resp_obj %}
+          {% if item.lang == 'en' %}
+            <p>{{ item.morecomments }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+      
+    <p class='details invisible-button'><a href=#>View Details</a></p>
     
   </div>
   

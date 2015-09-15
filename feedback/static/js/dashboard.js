@@ -626,56 +626,82 @@ $(document).ready(function() {
   }
   
   /***************************** tag clouds *****************************/
-  var words = $('#bestworst-data').text();
-  console.log(words);
-  //push the content into an array
-  wordArray = words.split(' ');
   
   //sanitize array
-  var blacklist = ['to', 'for', 'and', 'was', 'had', 'the', '' , 'there', 'were', 'their', 'but', 'with', 'that'];
+  var blacklist = ['to', 'for', 'and', 'was', 'had', 'the', '' , 'there', 'were', 'their', 'but', 'with', 'that', 'at', 'in', 'of', 'am'];
   var temp = []; 
   
-  for(var i = 0; i < blacklist.length; i++) {
+  function sanitize(array, container, hide) {
     
-    var result = wordArray.filter(function(elem){
-      
-      if(elem.length > 2) {
+     for(var i = 0; i < blacklist.length; i++) {
+    
+        var result = array.filter(function(elem){
+          
+          if(elem.length > 1) {
+            
+            return elem.toLowerCase() != blacklist[i];
+          }
+          
+        })
         
-        return elem.toLowerCase() != blacklist[i];
+        array = result; 
+        //console.log(result);
       }
+
+      //count the words remaining after sanitation
+    var newObject = {};
+    $.each(array, function (ix, val) {
+        if (newObject[val]) {
+            newObject[val]++;
+        }
+        else {
+            //console.log('that wasnt in the array', val);
+            newObject[val] = 1;
+        }
+    });
+    
+    var temp = []; //storage array
+    
+    //format for jQCloud
+    $.each(newObject, function(key, value) {
       
+      var obj = { "text" : key, "weight": value};
+      temp.push(obj);
+    
     })
     
-    wordArray = result; 
-    //console.log(result);
+    array = temp; //reassign
+    //console.log(array);
+
+    continueCloud(array, container, hide);
   }
   
-  //count the words remaining after sanitation
-  var newObject = {};
-  $.each(wordArray, function (ix, val) {
-      if (newObject[val]) {
-          newObject[val]++;
-      }
-      else {
-          //console.log('that wasnt in the array', val);
-          newObject[val] = 1;
-      }
-  });
-  
-  var temp = []; //storage array
-  
-  //format for jQCloud
-  $.each(newObject, function(key, value) {
+  //called by sanitize
+  function continueCloud(array, container, hide) {
     
-    var obj = { "text" : key, "weight": value};
-    temp.push(obj);
+    $(container).jQCloud(array, {shape: 'rectangular', height:200, autoResize: true});
+    $(hide).each(function() { $(this).addClass('hidden');})
+  }
   
-  })
+  //best & worst
+  var words = $('#bestworst-data').text();
+  var wordArray = words.split(' ');
+  sanitize(wordArray, '#bestworst-data', '#bestworst-data p');
   
-  wordArray = temp; //reassign
-  console.log(wordArray);
+  //suggested improvements
+  var suggests = $('#improvements-data').text();
+  var suggestArray = suggests.split(' ');
+  sanitize(suggestArray, '#improvements-data', '#improvements-data p');
   
-  $('#bestworst-data').jQCloud(temp, {shape: 'rectangular', height:200, autoResize: true});
-  $('#bestworst-data p').each(function() { $(this).addClass('hidden');})
+  //more comments
+  var comments = $('#morecomments-data').text();
+  var commentsArray = comments.split(' ');
+  sanitize(commentsArray, '#morecomments-data', '#morecomments-data p');
+  
+  
+  
+  
+  
+  //words = $('#improvements-data').text();
 
 }); //close ready
