@@ -54,37 +54,61 @@
 
 		</div>
 
-		<div class='three columns panel last-panel'>
+	<div class='three columns panel last-panel'>
 
-			<!-- the content -->
-			<div class='headline'></div>
-			<div class='content-container'>
-				<canvas id='surveyChart'></canvas>
-			</div>
-
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		<!-- the content -->
+		<div class='headline'></div>
+		<div class='content-container'>
+			<canvas id='surveyChart'></canvas>
 		</div>
 
+		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+	</div>
+
+  <div class='hidden data'>
+      
+  {% for item in resp_obj %}
+
+    {% if item.lang == 'en' %}
+      <td>{{ item.bestworst }}</td>
+      <td>{{ item.improvement }}</td>
+      <td>{{ item.morecomments }}</td>
+    {% endif %}
+  
+  {% endfor %}
+
+    
+  </div>
+  <div class='four columns panel first-panel'>
+    <div class='headline'>Best &amp; Worst Experiences</div>
+    <div class='content-container'>
+      <div id='bestworst-data'>
+        {% for item in resp_obj %}
+          {% if item.lang == 'en' %}
+            <p>{{ item.bestworst }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+      
+    <p class='details invisible-button'><a href=#>View Details</a></p>
+    
+  </div>
+  
+  <div class='four columns panel'>
+    
+  </div>
+  
+  <div class='four columns panel last-panel'>
+    
+  </div>
+  
 
 </section> <!-- close row -->
 
 <section class='row'>
-	<h1>Hello world</h1>
-{% for item in resp_obj %}
-            <tr>
-              <td>{{ item.date }}</td>
-              <td>{{ item.lang }}</td>
-              <td>{{ item.rating }}</td>
-              <td>{{ item.method }}</td>
-              <td>{{ item.followup }}</td>
-              <td>{{ item.role }}</td>
-              <td>{{ item.purpose }}</td>
-              <td>{{ item.getdone }}</td>
-              <td>{{ item.bestworst }}</td>
-              <td>{{ item.improvement }}</td>
-              <td>{{ item.morecomments }}</td>
-            </tr>
-            {% endfor %}
+	
+
 </section>
 
 <section class='row' id='permitting'>
