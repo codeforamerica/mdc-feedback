@@ -68,6 +68,25 @@
 
 </section> <!-- close row -->
 
+<section class='row'>
+	<h1>Hello world</h1>
+{% for item in resp_obj %}
+            <tr>
+              <td>{{ item.date }}</td>
+              <td>{{ item.lang }}</td>
+              <td>{{ item.rating }}</td>
+              <td>{{ item.method }}</td>
+              <td>{{ item.followup }}</td>
+              <td>{{ item.role }}</td>
+              <td>{{ item.purpose }}</td>
+              <td>{{ item.getdone }}</td>
+              <td>{{ item.bestworst }}</td>
+              <td>{{ item.improvement }}</td>
+              <td>{{ item.morecomments }}</td>
+            </tr>
+            {% endfor %}
+</section>
+
 <section class='row' id='permitting'>
 
 	<div class='row twelve columns'><h3>Permit Metrics</h3></div>

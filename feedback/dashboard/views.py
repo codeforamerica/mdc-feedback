@@ -280,7 +280,7 @@ json_obj['app_answers'] = json.dumps(survey_table)
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
     today = datetime.date.today()
-    return render_template("public/home.html", api=api_health(), date=today.strftime('%B %d, %Y'), stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard')
+    return render_template("public/home.html", api=api_health(), date=today.strftime('%B %d, %Y'), stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, resp_obj=survey_table, title='Dashboard')
 
 
 @blueprint.route('/dashboard', methods=['GET', 'POST'])
