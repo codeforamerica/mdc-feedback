@@ -180,7 +180,6 @@ from textit so we can wrap our heads around how this works.
 '''
 sms_result = make_textit_call(timestamp)
 survey_table = parse_textit(survey_table, sms_result)
-print survey_table
 
 sms_meta = get_textit_by_meta(sms_result)
 sms_date = get_textit_by_date(sms_result, surveys_by_date)
@@ -275,6 +274,7 @@ dashboard_collection = [
 json_obj['test'] = json.dumps(dashboard_collection[0]['data']['graph'])
 json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
 json_obj['permits_type'] = json.dumps(dashboard_collection[9])
+json_obj['app_answers'] = json.dumps(survey_table)
 
 
 @blueprint.route("/", methods=["GET", "POST"])
