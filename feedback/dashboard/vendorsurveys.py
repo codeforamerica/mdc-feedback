@@ -103,11 +103,8 @@ def fill_typeform_purpose(results):
 
 def parse_typeform(survey_table, json_result):
 
-    iter_obj = {
-        'method': 'web'
-    }
-
     for survey_response in json_result['responses']:
+        iter_obj = {'method': 'web'}
         answers_arr = survey_response['answers']
 
         # LANGUAGE CHOICE LOGIC JUMP = 'list_9825052_choice'
@@ -130,10 +127,8 @@ def parse_typeform(survey_table, json_result):
         iter_obj['morecomments'] = fill_values(answers_arr, 'textarea_9825063', 'textarea_9825066')
         iter_obj['role'] = fill_values(answers_arr, 'list_9825053_choice', 'list_9825054_choice')
         iter_obj['purpose'] = fill_typeform_purpose(answers_arr)
-
         survey_table.append(iter_obj)
 
-    # print survey_table
     return survey_table
 
 
