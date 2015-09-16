@@ -138,6 +138,31 @@ h1 {
 	color:$green;
 }
 
+.blue {
+  
+  color:$mdc-blue;
+}
+
+.button.blue {
+  
+  width:50%;
+  padding:20px;
+  background-color: $mdc-blue;
+  color:white;
+  
+}
+
+#survey-picker {
+  
+  margin:0 auto;
+  text-align: center;
+}
+
+a.blue:hover {
+  
+  background-color: rgba($mdc-blue, 0.5);
+  
+}
 .no-bottom-margin {
 	
 	margin-bottom:0;
@@ -156,6 +181,11 @@ h1 {
 	
 	display:none !important;
 	
+}
+
+.inline {
+  
+  padding-right:20px;
 }
 
 /* when you need it invisible _but_ taking up space*/
@@ -539,6 +569,12 @@ canvas {
 	margin-top:0;
 }
 
+#survey-details {
+  
+  height:auto;
+  overflow: auto;
+  
+}
 .fluid-height {
 	
 	height:1000px;
@@ -554,6 +590,22 @@ canvas {
 .jqcloud {
   
   height: inherit; 
+}
+
+.response {
+  
+  padding:40px;
+  border-bottom:1px solid $grey;
+}
+
+.response:last-child {
+  
+  border-bottom:0;
+}
+
+.response .alert-message {
+  
+  padding:20px;
 }
 
 /********** ALERTS ************/
