@@ -307,3 +307,8 @@ def edit_public():
 @blueprint.route("/edit-internal/",  methods=['GET'])
 def edit_internal():
     return render_template("public/edit-internal.html", stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard Editor - Internal')
+  
+@blueprint.route("/choose-survey/", methods=['GET'])
+def choose_survey():
+    return render_template("public/choose-survey.html", title="Choose a survey")
+    

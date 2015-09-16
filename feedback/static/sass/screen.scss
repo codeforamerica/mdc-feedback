@@ -138,6 +138,31 @@ h1 {
 	color:$green;
 }
 
+.blue {
+  
+  color:$mdc-blue;
+}
+
+.button.blue {
+  
+  width:50%;
+  padding:20px;
+  background-color: $mdc-blue;
+  color:white;
+  
+}
+
+#survey-picker {
+  
+  margin:0 auto;
+  text-align: center;
+}
+
+a.blue:hover {
+  
+  background-color: rgba($mdc-blue, 0.5);
+  
+}
 .no-bottom-margin {
 	
 	margin-bottom:0;
