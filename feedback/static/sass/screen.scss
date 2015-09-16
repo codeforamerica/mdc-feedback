@@ -567,6 +567,22 @@ canvas {
   height: inherit; 
 }
 
+.response {
+  
+  padding:40px;
+  border-bottom:1px solid $grey;
+}
+
+.response:last-child {
+  
+  border-bottom:0;
+}
+
+.response .alert-message {
+  
+  padding:20px;
+}
+
 /********** ALERTS ************/
 
 .alert {

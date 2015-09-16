@@ -508,8 +508,24 @@ canvas {
   height: inherit;
 }
 
+/* line 570, ../sass/screen.scss */
+.response {
+  padding: 40px;
+  border-bottom: 1px solid #f7fafa;
+}
+
+/* line 576, ../sass/screen.scss */
+.response:last-child {
+  border-bottom: 0;
+}
+
+/* line 581, ../sass/screen.scss */
+.response .alert-message {
+  padding: 20px;
+}
+
 /********** ALERTS ************/
-/* line 572, ../sass/screen.scss */
+/* line 588, ../sass/screen.scss */
 .alert {
   width: 80%;
   margin: 0 auto;
@@ -518,43 +534,43 @@ canvas {
   margin-bottom: 20px;
 }
 
-/* line 582, ../sass/screen.scss */
+/* line 598, ../sass/screen.scss */
 .alert .close {
   width: 40px;
   height: 40px;
   font-size: 1.5em;
 }
 
-/* line 590, ../sass/screen.scss */
+/* line 606, ../sass/screen.scss */
 .alert-alert-success {
   border: 1px solid #4CD884;
   background-color: rgba(76, 216, 132, 0.1);
   color: #4CD884;
 }
-/* line 596, ../sass/screen.scss */
+/* line 612, ../sass/screen.scss */
 .alert-alert-success .close {
   color: #4CD884;
 }
 
-/* line 602, ../sass/screen.scss */
+/* line 618, ../sass/screen.scss */
 .alert-message {
   border: 1px solid #F5C93D;
   background-color: rgba(245, 201, 61, 0.1);
   color: #F5C93D;
 }
-/* line 608, ../sass/screen.scss */
+/* line 624, ../sass/screen.scss */
 .alert-message .close {
   color: #F5C93D;
 }
 
-/* line 615, ../sass/screen.scss */
+/* line 631, ../sass/screen.scss */
 .alert-alert-danger,
 .alert-alert-warning {
   border: 1px solid #C40232;
   background-color: rgba(196, 2, 50, 0.1);
   color: #C40232;
 }
-/* line 622, ../sass/screen.scss */
+/* line 638, ../sass/screen.scss */
 .alert-alert-danger .close,
 .alert-alert-warning .close {
   color: #C40232;
