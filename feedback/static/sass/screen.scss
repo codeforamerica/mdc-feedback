@@ -158,6 +158,11 @@ h1 {
 	
 }
 
+.inline {
+  
+  padding-right:20px;
+}
+
 /* when you need it invisible _but_ taking up space*/
 .invisible-button {
 	
@@ -539,6 +544,12 @@ canvas {
 	margin-top:0;
 }
 
+#survey-details {
+  
+  height:auto;
+  overflow: auto;
+  
+}
 .fluid-height {
 	
 	height:1000px;
