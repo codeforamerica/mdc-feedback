@@ -298,7 +298,7 @@ $(document).ready(function() {
   /* Permitting */
 
     $.ajax({
-      url: "https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27",
+      url: "https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
       context: document.body
     }).done(function(data) {
 
@@ -624,9 +624,9 @@ $(document).ready(function() {
   });
 
   }
-  
+
   /***************************** tag clouds *****************************/
-  
+
   //sanitize array
   var blacklist = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you',  'your',
     'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she',
@@ -643,23 +643,23 @@ $(document).ready(function() {
     'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can',
     'will', 'just', 'don', 'should', 'now', 'id', 'var', 'function', 'js', 'd',
     'script', '\'script', 'fjs', 'document'];
-    
-  var temp = []; 
-  
+
+  var temp = [];
+
   function sanitize(array, container, hide) {
-    
+
      for(var i = 0; i < blacklist.length; i++) {
-    
+
         var result = array.filter(function(elem){
-          
+
           if(elem.length > 1) {
-            
+
             return elem.toLowerCase() != blacklist[i];
           }
-          
+
         })
-        
-        array = result; 
+
+        array = result;
         //console.log(result);
       }
 
@@ -674,44 +674,44 @@ $(document).ready(function() {
             newObject[val] = 1;
         }
     });
-    
+
     var temp = []; //storage array
-    
+
     //format for jQCloud
     $.each(newObject, function(key, value) {
-      
+
       var obj = { "text" : key, "weight": value};
       temp.push(obj);
-    
+
     })
-    
+
     array = temp; //reassign
     //console.log(array);
 
     continueCloud(array, container, hide);
   }
-  
+
   //called by sanitize
   function continueCloud(array, container, hide) {
-    
+
     $(container).jQCloud(array, {shape: 'rectangular', height:200, autoResize: true});
     $(hide).each(function() { $(this).addClass('hidden');})
   }
-  
+
   //best & worst
   var words = $('#bestworst-data').text();
   var wordArray = words.split(' ');
   sanitize(wordArray, '#bestworst-data', '#bestworst-data p');
-  
+
   //suggested improvements
   var suggests = $('#improvements-data').text();
   var suggestArray = suggests.split(' ');
   sanitize(suggestArray, '#improvements-data', '#improvements-data p');
-  
+
   //more comments
   var comments = $('#morecomments-data').text();
   var commentsArray = comments.split(' ');
   sanitize(commentsArray, '#morecomments-data', '#morecomments-data p');
-  
+
 
 }); //close ready
