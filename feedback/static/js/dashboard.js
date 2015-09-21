@@ -713,5 +713,8 @@ $(document).ready(function() {
   var commentsArray = comments.split(' ');
   sanitize(commentsArray, '#morecomments-data', '#morecomments-data p');
   
+	/***************************** tool tips *****************************/
 
+	$('#test').tipsy();
+	
 }); //close ready
