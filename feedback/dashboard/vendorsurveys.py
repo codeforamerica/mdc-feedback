@@ -14,19 +14,19 @@ TF_OPINION_ES = 'opinionscale_9825056'
 TF_BESTWORST_EN = 'textarea_9825061'
 TF_BESTWORST_ES = 'textarea_9825064'
 
-TF_ROLE_CONTRACTOR_EN = 'list_10432251_choice_12738830'
-TF_ROLE_ARCHITECT_EN = 'list_10432251_choice_12738831'
-TF_ROLE_PERMITCONSULT_EN = 'list_10432251_choice_12738832'
-TF_ROLE_HOMEOWNER_EN = 'list_10432251_choice_12738833'
-TF_ROLE_BIZOWNER_EN = 'list_10432251_choice_12738834'
-TF_ROLE_OTHER_EN = 'list_10432251_other'
+TF_PURP_PERMIT_EN = 'list_10432251_choice_12738830'
+TF_PURP_INSPECTOR_EN = 'list_10432251_choice_12738831'
+TF_PURP_PLANREVIEW_EN = 'list_10432251_choice_12738832'
+TF_PURP_VIOLATION_EN = 'list_10432251_choice_12738833'
+TF_PURP_CU_EN = 'list_10432251_choice_12738834'
+TF_PURP_OTHER_EN = 'list_10432251_other'
 
-TF_ROLE_CONTRACTOR_ES = 'list_10444324_choice_12758795'
-TF_ROLE_ARCHITECT_ES = 'list_10444324_choice_12758796'
-TF_ROLE_PERMITCONSULT_ES = 'list_10444324_choice_12758797'
-TF_ROLE_HOMEOWNER_ES = 'list_10444324_choice_12758798'
-TF_ROLE_BIZOWNER_ES = 'list_10444324_choice_12758799'
-TF_ROLE_OTHER_ES = 'list_10444324_other'
+TF_PURP_PERMIT_ES = 'list_10444324_choice_12758795'
+TF_PURP_INSPECTOR_ES = 'list_10444324_choice_12758796'
+TF_PURP_PLANREVIEW_ES = 'list_10444324_choice_12758797'
+TF_PURP_VIOLATION_ES = 'list_10444324_choice_12758798'
+TF_PURP_CU_ES = 'list_10444324_choice_12758799'
+TF_PURP_OTHER_ES = 'list_10444324_other'
 
 TEXTIT_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
 TEXTIT_UUID_EN = '920cec13-ffc0-4fe9-92c3-1cced2073498'
@@ -196,20 +196,20 @@ def fill_typeform_purpose(results):
     '''
     return_array = []
 
-    if TF_ROLE_CONTRACTOR_EN in results or TF_ROLE_CONTRACTOR_ES in results:
+    if TF_PURP_PERMIT_EN in results or TF_PURP_PERMIT_ES in results:
         return_array.append(1)
-    if TF_ROLE_ARCHITECT_EN in results or TF_ROLE_ARCHITECT_ES in results:
+    if TF_PURP_INSPECTOR_EN in results or TF_PURP_INSPECTOR_ES in results:
         return_array.append(2)
-    if TF_ROLE_PERMITCONSULT_EN in results or TF_ROLE_PERMITCONSULT_ES in results:
+    if TF_PURP_PLANREVIEW_EN in results or TF_PURP_PLANREVIEW_ES in results:
         return_array.append(3)
-    if TF_ROLE_HOMEOWNER_EN in results or TF_ROLE_HOMEOWNER_ES in results:
+    if TF_PURP_VIOLATION_EN in results or TF_PURP_VIOLATION_ES in results:
         return_array.append(4)
-    if TF_ROLE_BIZOWNER_EN in results or TF_ROLE_BIZOWNER_ES in results:
+    if TF_PURP_CU_ES in results or TF_PURP_CU_ES in results:
         return_array.append(5)
-    if TF_ROLE_OTHER_EN in results:
-        return_array.append(results[TF_ROLE_OTHER_EN])
-    if TF_ROLE_OTHER_ES in results:
-        return_array.append(results[TF_ROLE_OTHER_ES])
+    if TF_PURP_OTHER_EN in results:
+        return_array.append(results[TF_PURP_OTHER_EN])
+    if TF_PURP_OTHER_ES in results:
+        return_array.append(results[TF_PURP_OTHER_ES])
 
     return return_array
 
