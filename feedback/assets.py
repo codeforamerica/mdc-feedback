@@ -8,6 +8,8 @@ css = Bundle(
     "css/jquery.raty.css",
     "css/remodal.css",
     "css/remodal-default-theme.css",
+    #"css/jqcloud.min.css",
+    "css/tipsy.css",
     "css/screen.css",
     output="public/css/common.css"
 )

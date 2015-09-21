@@ -19,6 +19,7 @@
 
 	<div class='row twelve columns'>
 		<h3>Permitting &amp; Inspection Center User Survey Metrics</h3>
+    <a href="{{ url_for('dashboard.survey_detail') }}">View Survey Answers</a>
 	</div>
 
 	<div class='six columns panel first-panel'>
@@ -27,19 +28,19 @@
 		<p class='invisible'>{{ dash_obj[0].data.new_reviews }}</p>
 
 		<!-- the content -->
-		<div class='headline'>{{ dash_obj[0].title }}</div>
+		<div class='headline'>{{ dash_obj[0].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right' href='#' id='test'><img class='' src='static/images/question_bk.png'></a></div>
 
 		<div class='content-container'>
 			<canvas id='myChart'></canvas>
 		</div>
 
-		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		<p class='details invisible-button'><a href="{{ url_for('dashboard.survey_detail') }}">View Details</a></p>
 
 	</div>
 
 	<div class='three columns panel'>
 
-			<div class='headline'>{{ dash_obj[1].title }}</div>
+			<div class='headline'>{{ dash_obj[1].title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
 
 			<div class='content-container'>
 				<div id='star-rating'>
@@ -49,23 +50,73 @@
 				<p class='label'>Visitors to the PIC are rating their experience as {{ dash_obj[1].data }} out of seven stars.</p>
 			</div>
 
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+			<p class='details invisible-button'><a href="{{ url_for('dashboard.survey_detail') }}">View Details</a></p>
 
 		</div>
 
-		<div class='three columns panel last-panel'>
+	<div class='three columns panel last-panel'>
 
-			<!-- the content -->
-			<div class='headline'></div>
-			<div class='content-container'>
-				<canvas id='surveyChart'></canvas>
-			</div>
-
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		<!-- the content -->
+		<div class='headline'><a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='content-container'>
+			<canvas id='surveyChart'></canvas>
 		</div>
 
+		<p class='details invisible-button'><a href="{{ url_for('dashboard.survey_detail') }}">View Details</a></p>
+	</div>
+  
+  <div class='four columns panel first-panel'>
+    <div class='headline'>Best &amp; Worst Experiences<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='content-container'>
+      <div id='bestworst-data'>
+        {% for item in resp_obj %}
+          {% if item.lang == 'en' %}
+            <p>{{ item.bestworst }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+      
+    <p class='details invisible-button'><a href="{{ url_for('dashboard.survey_detail') }}">View Details</a></p>
+    
+  </div>
+  
+  <div class='four columns panel'>
+    <div class='headline'>Suggested Improvements<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='content-container'>
+      <div id='improvements-data'>
+        {% for item in resp_obj %}
+          {% if item.lang == 'en' %}
+            <p>{{ item.improvement }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+      
+    <p class='details invisible-button'><a href="{{ url_for('dashboard.survey_detail') }}">View Details</a></p>
+    
+  </div>
+  
+  <div class='four columns panel last-panel'>
+    
+    <div class='headline'>More Comments<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='content-container'>
+      <div id='morecomments-data'>
+        {% for item in resp_obj %}
+          {% if item.lang == 'en' %}
+            <p>{{ item.morecomments }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+      
+    <p class='details invisible-button'><a href="{{ url_for('dashboard.survey_detail') }}">View Details</a></p>
+    
+  </div>
+  
 
 </section> <!-- close row -->
+
 
 <section class='row' id='permitting'>
 
@@ -73,7 +124,7 @@
 
 	<div class='twelve columns panel first-panel'>
 
-			<div class='headline'>Permits opened per month</div>
+			<div class='headline'>Permits opened per month<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
 
 			<div class='content-container'>
 				<canvas id='openPermits'></canvas>
@@ -94,7 +145,7 @@
 	</div>
 
 	<div class='twelve columns'>
-
+<!--
     <div class='four columns panel first-panel'>
       <div class='headline'>{{ dash_obj[6].title }}</div>
       <div class='content-container'>
@@ -124,9 +175,9 @@
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
-
+-->
     <div class='four columns panel first-panel'>
-      <div class='headline'>{{ dash_obj[9].title }}</div>
+      <div class='headline'>{{ dash_obj[9].title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container'>
          <canvas id='permitTypeChart'>
       </div>
@@ -134,28 +185,10 @@
     </div>
 
     <div class='four columns panel'>
-      <div class='headline'>{{ dash_obj[12].title }}</div>
-      <div class='content-container'>
-        <p class="huge bold">{{ '{0:,}'.format(dash_obj[12].data.val) }}</p>
-        <p>Versus the same period a year ago:
-          {% if dash_obj[12].data.yoy > 0 %}
-          <span class='bold green'>Up
-          {% else %}
-          <span class='bold red'>Down
-          {% endif %}
-          {{ '%0.2f'| format(dash_obj[12].data.yoy|float) }}%
-          </span>
-        </p>
-      </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
-    </div>
-
-    <div class='four columns panel last-panel'>
-      <div class='headline'>{{ dash_obj[11].title }}</div>
+      <div class='headline'>{{ dash_obj[11].title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container'>
         <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
-        <!--
-        <p>Versus this time a year ago:
+        <p>Versus the same period a year ago:
           {% if dash_obj[11].data.yoy > 0 %}
           <span class='bold green'>Up
           {% else %}
@@ -164,11 +197,9 @@
           {{ '%0.2f'| format(dash_obj[11].data.yoy|float) }}%
           </span>
         </p>
-      -->
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
-
 
 </section> <!-- close row -->
 
@@ -178,7 +209,7 @@
 
 	<div class='row twelve columns panel'>
 
-		<div class='headline'>Violations per month</div>
+		<div class='headline'>Violations per month<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
 		<div class='content-container'>
 			<canvas id='violations'></canvas>
 		</div>
@@ -190,7 +221,7 @@
 
 		<div class='four columns panel first-panel double-height'>
 
-			<div class='headline'>Violation Locations: All Violations</div>
+			<div class='headline'>Violation Locations: Closed Violations<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
 			<div class='content-container'>
 				<div id='leaflet'></div>
 			</div>
@@ -199,7 +230,8 @@
 
 		<div class='four columns panel double-height'>
 
-			<div class='headline'>Violation Locations: Open Violations</div>
+			<div class='headline'>Violation Locations: Locked Violations<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
+
 			<div class='content-container'>
 				<div id='leaflet-open'></div>
 			</div>
@@ -208,7 +240,7 @@
 
 		<div class='four columns panel last-panel double-height'>
 
-			<div class='headline'>Violation Locations: Locations with Liens</div>
+			<div class='headline'>Violation Locations: Locations with Liens<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
 			<div class='content-container'>
 				<div id='leaflet-lein'></div>
 			</div>
@@ -219,11 +251,11 @@
 
 	<div class='row twelve columns panel double-height'>
 
-			<div class='headline'>Top 20 Violations by Type</div>
+			<div class='headline'>Top 20 Violations by Type<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
 			<div class='content-container'>
 				<canvas id='viotype'></canvas>
 			</div>
-			<p class='details invisible-button'><a href='/violations-detail/'>View Complete Dataset</a></p>
+			<p class='details invisible-button'><a href="{{ url_for('dashboard.violations_detail') }}">View Complete Dataset</a></p>
 
 		</div>
 </section> <!-- close row -->
@@ -234,7 +266,7 @@
 
     <div class='four columns panel{% if lastpanel==True %} last-panel{% endif %}'>
 
-      <div class='headline'>{{ title }}</div>
+      <div class='headline'>{{ title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container vertical-center-35'>
 
         <p class='huge bold'>{{ val }} days</p>

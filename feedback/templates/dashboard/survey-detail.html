@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% set active_page = 'Details' %}
+{% block content %}
+
+<section class='row' id='details-view'>
+
+  <div class='twelve columns panel' id='survey-details'>
+
+      <div class='headline'>Survey questions: Detail View</div>
+      
+      {% for item in resp_obj %}
+      
+        <div class='row twelve columns response'>
+          
+          <p>
+            <span class='bold'>Date: </span>{{ item.date }}
+          </p>
+          
+          <p>
+             <span class='bold'>Rating: </span><span class='inline'>{{ item.rating }}</span><span class='bold'>Source: </span><span class='inline'>{{ item.method }}</span><span class='bold'>Language: </span><span class='inline'>{{ item.lang }}</span>
+          </p>
+          
+          <p><span class='bold'>This respondent identifies as a: </span>{{ item.role }}</p>
+          
+          <!-- make this a yes or no based on logic -->
+          <p class='alert-message'><span class='bold'>This respondent would like you to follow up with them: </span>{{ item.followup }}</p>
+          
+          <p><span class='bold'>Purpose in visiting the PIC:</span> {{ item.purpose }}</p>
+          <p><span class='bold'>Respondent succeeded?</span> {{ item.getdone }}</p>
+          
+          <p class='alert-message'>The following responses are open-ended commentary.</p>
+          
+          <p class='bold'>When asked for best and worst experiences, this person responded with:</p>
+          <p>{{ item.bestworst }}</p>
+          
+          <p class='bold'>When asked for suggestions for improvement, this person responded with:</p>
+          <p>{{ item.improvement }}</p>
+          
+          <p class='bold'>When asked for general comments, this person responded with:</p>
+          <p>{{ item.morecomments }}</p>
+                
+        </div>
+
+        {% endfor %}
+        
+    </div>
+
+</section> <!-- close row -->
+
+{% endblock %}
+

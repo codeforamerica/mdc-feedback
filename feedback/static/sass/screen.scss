@@ -12,9 +12,6 @@ $purple: #3D3377;
 $grey: #f7fafa;
 $charcoal: #1a1a1a;
 
-//$transparent_green: rgba('76, 216, 132, .5')
-//$transparent_yellow: rgba('245, 201, 61, .5');
-//$transparent_red: rgba('196, 2, 50, .5');
 
 /* OVERRIDES - SKELETON */
 .column,
@@ -141,6 +138,31 @@ h1 {
 	color:$green;
 }
 
+.blue {
+  
+  color:$mdc-blue;
+}
+
+.button.blue {
+  
+  width:50%;
+  padding:20px;
+  background-color: $mdc-blue;
+  color:white;
+  
+}
+
+#survey-picker {
+  
+  margin:0 auto;
+  text-align: center;
+}
+
+a.blue:hover {
+  
+  background-color: rgba($mdc-blue, 0.5);
+  
+}
 .no-bottom-margin {
 	
 	margin-bottom:0;
@@ -159,6 +181,11 @@ h1 {
 	
 	display:none !important;
 	
+}
+
+.inline {
+  
+  padding-right:20px;
 }
 
 /* when you need it invisible _but_ taking up space*/
@@ -182,6 +209,19 @@ h1 {
 	background-color:#4BC3FF;
 	color:white !important;
 	border-color:#4BC3FF;
+}
+
+a.what-is-this {
+	
+	width:20px;
+	height:20px;
+	display:block;
+}
+
+.what-is-this img {
+	
+	width:100%;
+	height:auto;
 }
 
 /* GLOBAL CONTAINER, NAV */
@@ -542,6 +582,12 @@ canvas {
 	margin-top:0;
 }
 
+#survey-details {
+  
+  height:auto;
+  overflow: auto;
+  
+}
 .fluid-height {
 	
 	height:1000px;
@@ -552,6 +598,27 @@ canvas {
 .fluid-height canvas {
 	
 	height:900px;
+}
+
+.jqcloud {
+  
+  height: inherit; 
+}
+
+.response {
+  
+  padding:40px;
+  border-bottom:1px solid $grey;
+}
+
+.response:last-child {
+  
+  border-bottom:0;
+}
+
+.response .alert-message {
+  
+  padding:20px;
 }
 
 /********** ALERTS ************/

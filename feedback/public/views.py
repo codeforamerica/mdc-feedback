@@ -109,10 +109,3 @@ def save_survey():
 @blueprint.route("/manage-users/",  methods=['GET'])
 def manage_users():
     return render_template("public/manage-users.html", title='Manage Users')
-
-
-@blueprint.route("/violations-detail/",  methods=['GET'])
-def violations_detail():
-    return render_template("public/violations-detail.html", title='Violations by Type: Detail')
-    
-
