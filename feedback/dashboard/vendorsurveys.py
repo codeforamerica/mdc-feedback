@@ -1,6 +1,9 @@
  # -*- coding: utf-8 -*-
 
+import datetime
 import requests
+
+from feedback.utils import utc_to_local
 
 TYPEFORM_API = 'https://api.typeform.com/v0/form/aaz1iK?key='
 TYPEFORM_API_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
@@ -29,6 +32,7 @@ TEXTIT_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
 TEXTIT_UUID_EN = '920cec13-ffc0-4fe9-92c3-1cced2073498'
 TEXTIT_UUID_ES = '7001c507-1c9e-46dd-aea3-603b986c3d89'
 TEXTIT_AUTH_KEY = '41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9'
+TEXTIT_UUID_OPINION = '53249739-7b72-43c2-9463-e4cd4963a408'
 
 
 def fill_values(array, arg1, arg2):
@@ -75,6 +79,115 @@ def make_textit_call(timestamp):
     json_result = response2.json()
     # print json_result
     return json_result
+
+
+def parse_textit(survey_table, json_result):
+    '''
+    Take the textit API result and do ETLs to get
+    the responses in an easy to digest format.
+    Returns an object:
+        survey_table
+    '''
+
+    obj_completed = [result for result in json_result['results'] if result['completed']]
+    for obj in obj_completed:
+
+        iter = {}
+        values_array = obj['values']
+        for value in values_array:
+            iter[value['label']] = {'category': value['category'], 'text': value['text']}
+
+        iter_obj = {
+            'id': 'SMS-' + str(obj['run']),
+            'method': 'sms',
+            'firsttime': iter['First Time']['category'],
+            'getdone': iter['Get it Done']['text'],
+            'role': iter['Role']['text'],
+            'rating': iter['Experience Rating']['text'],
+            'improvement': iter['Improvement']['text'],
+            'bestworst': iter['Best and Worst']['text'],
+            'followup': iter['Followup Permission']['category'],
+            'morecomments': iter['Comments']['text']
+        }
+
+        temp = obj['modified_on']
+        temp = datetime.datetime.strptime(temp, '%Y-%m-%dT%H:%M:%S.%fZ')
+        date_object = utc_to_local(temp)
+        iter_obj['date'] = date_object.strftime("%Y-%m-%d %H:%M:%S")
+
+        if obj['flow_uuid'] == TEXTIT_UUID_EN:
+            iter_obj['lang'] = 'en'
+        else:
+            iter_obj['lang'] = 'es'
+
+        try:
+            iter_obj['purpose'] = iter['Purpose']['text']
+        except KeyError:
+            iter_obj['purpose'] = ''
+
+        survey_table.append(iter_obj)
+
+    return survey_table
+
+
+def get_textit_by_meta(json_result):
+    sms_en = 0
+    sms_es = 0
+    sms_total = 0
+
+    obj_completed = [result for result in json_result['results'] if result['completed']]
+    sms_completed_responses = len(obj_completed)
+
+    for obj in obj_completed:
+        if obj['flow_uuid'] == TEXTIT_UUID_EN:
+            sms_en += 1
+        else:
+            sms_es += 1
+
+        # filter for the node ID of the opinion scale,
+        # which is 0a77d0af-2685-4d8d-b4be-732e376f2f85
+        values_array = obj['values']
+        # print values_array
+        iter = {}
+
+        for value in values_array:
+            iter[value['label']] = {'category': value['category'], 'text': value['text']}
+            # print value['label'], '/', value['category'], '/', value['text']
+
+            if value['node'] == TEXTIT_UUID_OPINION and value['category'] == '1 - 7':
+                try:
+                    sms_total = sms_total + float(value['value'])
+                except IndexError:
+                    pass
+        # print iter
+
+    return {
+        "en": sms_en,
+        "es": sms_es,
+        "total": sms_total,
+        "completed": sms_completed_responses
+    }
+
+
+def get_typeform_by_date(json_result, surveys_by_date):
+    for survey_response in json_result['responses']:
+        # Iterate through the metadata. In the API there is a date_land field in the format of "2015-08-04 22:13:38". Parse this into our surveys_by_date array and increase these by 1.
+        date_object = datetime.datetime.strptime(survey_response['metadata']['date_submit'], '%Y-%m-%d %H:%M:%S')
+        surveys_by_date[date_object.strftime("%m-%d")] += 1
+    return surveys_by_date
+
+
+def get_textit_by_date(json_result, surveys_by_date):
+    for result in json_result['results']:
+        if result['completed']:
+            obj = result['modified_on']
+            obj = datetime.datetime.strptime(obj, '%Y-%m-%dT%H:%M:%S.%fZ')
+            date_object = utc_to_local(obj)
+            try:
+                surveys_by_date[date_object.strftime("%m-%d")] += 1
+            except KeyError:
+                pass
+    return surveys_by_date
 
 
 def fill_typeform_purpose(results):
