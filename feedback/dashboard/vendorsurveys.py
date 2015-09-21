@@ -83,19 +83,19 @@ def fill_typeform_purpose(results):
     '''
     return_array = []
 
-    if results[TF_ROLE_CONTRACTOR_EN] or results[TF_ROLE_CONTRACTOR_ES]:
+    if TF_ROLE_CONTRACTOR_EN in results or TF_ROLE_CONTRACTOR_ES in results:
         return_array.append(1)
-    if results[TF_ROLE_ARCHITECT_EN] or results[TF_ROLE_ARCHITECT_ES]:
+    if TF_ROLE_ARCHITECT_EN in results or TF_ROLE_ARCHITECT_ES in results:
         return_array.append(2)
-    if results[TF_ROLE_PERMITCONSULT_EN] or results[TF_ROLE_PERMITCONSULT_ES]:
+    if TF_ROLE_PERMITCONSULT_EN in results or TF_ROLE_PERMITCONSULT_ES in results:
         return_array.append(3)
-    if results[TF_ROLE_HOMEOWNER_EN] or results[TF_ROLE_HOMEOWNER_ES]:
+    if TF_ROLE_HOMEOWNER_EN in results or TF_ROLE_HOMEOWNER_ES in results:
         return_array.append(4)
-    if results[TF_ROLE_BIZOWNER_EN] or results[TF_ROLE_BIZOWNER_ES]:
+    if TF_ROLE_BIZOWNER_EN in results or TF_ROLE_BIZOWNER_ES in results:
         return_array.append(5)
-    if results[TF_ROLE_OTHER_EN]:
+    if TF_ROLE_OTHER_EN in results:
         return_array.append(results[TF_ROLE_OTHER_EN])
-    if results[TF_ROLE_OTHER_ES]:
+    if TF_ROLE_OTHER_ES in results:
         return_array.append(results[TF_ROLE_OTHER_ES])
 
     return return_array
