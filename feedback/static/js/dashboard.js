@@ -99,11 +99,11 @@ $(document).ready(function() {
 
   var b = 'rgba(170, 233, 254,1)';
   var t_b = 'rgba(170, 233, 254,.2)';
-  
+
 
   var colors = [green, yellow, orange, purple, purple_1, purple_2, purple_3, purple_4, blue, b];
   var t_colors = [t_green, t_yellow, t_orange, t_purple, t_purple_1, t_purple_2, t_purple_3, t_purple_4, t_blue, t_b];
-  
+
   var pie_colors = ['rgba(64, 0, 76, 1)', 'rgba(118, 42, 131,1)', 'rgba(153, 112, 171, 1)', 'rgba(194, 165, 207, 1)', 'rgba(231, 212, 232, 1)', 'rgba(217 240 211, 1)', 'rgba(166, 219, 160, 1)', 'rgba(90, 174, 97, 1)', 'rgba(27, 120, 55, 1)', 'rgba(0, 68, 27, 1)', b, blue]
 
   Chart.defaults.global = {
@@ -300,7 +300,7 @@ $(document).ready(function() {
   /* Permitting */
 
     $.ajax({
-      url: "https://opendata.miamidade.gov/resource/kw55-e2dj.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
+      url: "https://opendata.miamidade.gov/resource/vvjq-pfmc.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
       context: document.body
     }).done(function(data) {
 
@@ -467,34 +467,34 @@ $(document).ready(function() {
 
    var muni = [];
    var umsa = [];
-    
+
     //sort for county to control style
     for(var i = 0; i < data.features.length; i++) {
-	    
+
 	    if(data.features[i].properties.NAME == 'UNINCORPORATED MIAMI-DADE') {
-		    
+
 		    umsa.push(data.features[i]);
-	    
+
 	    } else {
-		    
+
 		    muni.push(data.features[i]);
-		    
+
 	    }
-    
+
     }
-    
+
     var myStyle = {
       "color": blue,
       "weight": 1,
       "opacity": 0.65
     };
-    
+
     var umsaStyle = {
-	    
+
 	    "color": 'rgba(0,0,0)',
       "weight": 1,
       "opacity": 0.65
-	    
+
     }
 
     L.geoJson(muni, {style:umsaStyle}).addTo(map);
@@ -503,7 +503,7 @@ $(document).ready(function() {
     L.geoJson(umsa, {style:myStyle}).addTo(map2);
     L.geoJson(muni, {style:umsaStyle}).addTo(map3);
     L.geoJson(umsa, {style:myStyle}).addTo(map3);
-    
+
     //data map
   $.ajax({
       url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$where=ticket_created_date_time%20%3E%20%272015-01-01%27",
@@ -624,10 +624,10 @@ $(document).ready(function() {
       var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata  );
 
     });
-  
+
   }
 
-  
+
 
     Array.prototype.sortOn = function(){
       var dup = this.slice();
@@ -743,9 +743,9 @@ $(document).ready(function() {
   var comments = $('#morecomments-data').text();
   var commentsArray = comments.split(' ');
   sanitize(commentsArray, '#morecomments-data', '#morecomments-data p');
-  
+
 	/***************************** tool tips *****************************/
 
 	$('#test').tipsy();
-	
+
 }); //close ready
