@@ -5,7 +5,7 @@ import datetime
 import requests
 import numpy as np
 
-API_URL = 'https://opendata.miamidade.gov/resource/kw55-e2dj.json'
+API_URL = 'https://opendata.miamidade.gov/resource/vvjq-pfmc.json'
 
 
 def api_health():
@@ -36,7 +36,7 @@ def json_to_dateobj(jsondate):
     '''
     Take a string of format 2015-07-29T00:00:00 and return a datetime obj
     '''
-    return datetime.datetime.strptime(jsondate, '%Y-%m-%dT%H:%M:%S')
+    return datetime.datetime.strptime(jsondate, '%Y-%m-%dT%H:%M:%S.000')
 
 
 def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
@@ -56,7 +56,7 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     if property_type == 'h':
         API = API + 'contractor_name=%27OWNER%27'
     else:
-        API = API + 'residential_commercial%20=%20%27' + property_type + '%27'
+        API = API + 'residential_commercial%20=%20%27' + property_type.upper() + '%27'
     API = API + '&$order=permit_issued_date%20desc'
     # print API
     response = requests.get(API)
@@ -102,11 +102,12 @@ def get_avg_cost(property_type='c'):
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
     Returns an integer. -1 if the API returns blank.
     '''
+
     API = API_URL + '?$select=AVG(permit_total_fee)&$where=starts_with(process_number,%20%27C%27)%20AND%20master_permit_number=0%20AND%20permit_type=%27BLDG%27%20AND%20'
     if property_type == 'h':
         API = API + 'contractor_name=%27OWNER%27'
     else:
-        API = API + 'residential_commercial%20=%20%27' + property_type + '%27'
+        API = API + 'residential_commercial%20=%20%27' + property_type.upper() + '%27'
 
     # Why do we care if the permit itself isn't closed?
     # API = API + '%20and%20co_cc_date%20IS%20NULL'
