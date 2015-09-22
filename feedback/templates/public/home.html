@@ -26,7 +26,7 @@
 		<p class='invisible'>{{ dash_obj[0].data.new_reviews }}</p>
 
 		<!-- the content -->
-		<div class='headline'>{{ dash_obj[0].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='s-submitted'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='headline'>{{ dash_obj[0].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-submitted'><img class='' src='static/images/question_bk.png'></a></div>
 
 		<div class='content-container'>
 			<canvas id='myChart'></canvas>
@@ -38,7 +38,7 @@
 
 	<div class='three columns panel'>
 
-			<div class='headline'>{{ dash_obj[1].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='s-rating'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='headline'>{{ dash_obj[1].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-rating'><img class='' src='static/images/question_bk.png'></a></div>
 
 			<div class='content-container'>
 				<div id='star-rating'>
@@ -55,7 +55,7 @@
 	<div class='three columns panel last-panel'>
 
 		<!-- the content -->
-		<div class='headline'><a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='s-type'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='headline'><a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-type'><img class='' src='static/images/question_bk.png'></a></div>
 		<div class='content-container'>
 			<canvas id='surveyChart'></canvas>
 		</div>
@@ -64,13 +64,13 @@
 	</div>
 
   <div class='three columns panel first-panel'>
-    <div class='headline'>{{ dash_obj[10].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='headline'>{{ dash_obj[10].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
     {{ dash_obj[10].data }}
     <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveyrole</code>. In each array element, the first digit is a constant for user type, the second is occurance.</p>
   </div>
 
   <div class='four columns panel first-panel'>
-    <div class='headline'>Best &amp; Worst Experiences<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='s-best'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='headline'>Best &amp; Worst Experiences<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-best'><img class='' src='static/images/question_bk.png'></a></div>
     <div class='content-container'>
       <div id='bestworst-data'>
         {% for item in resp_obj %}
@@ -86,7 +86,7 @@
   </div>
 
   <div class='four columns panel'>
-    <div class='headline'>Suggested Improvements<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='s-improve'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='headline'>Suggested Improvements<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-improve'><img class='' src='static/images/question_bk.png'></a></div>
     <div class='content-container'>
       <div id='improvements-data'>
         {% for item in resp_obj %}
@@ -103,7 +103,7 @@
 
   <div class='four columns panel last-panel'>
 
-    <div class='headline'>More Comments<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='s-comments'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='headline'>More Comments<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-comments'><img class='' src='static/images/question_bk.png'></a></div>
     <div class='content-container'>
       <div id='morecomments-data'>
         {% for item in resp_obj %}
@@ -127,7 +127,7 @@
 
 	<div class='twelve columns panel first-panel'>
 
-			<div class='headline'>Permits opened per month<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='p-monthly'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='headline'>Permits opened per month<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-monthly'><img class='' src='static/images/question_bk.png'></a></div>
 
 			<div class='content-container'>
 				<canvas id='openPermits'></canvas>
@@ -181,7 +181,7 @@
 -->
     
     <div class='four columns panel first-panel'>
-      <div class='headline'>{{ dash_obj[9].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='p-type'><img class='' src='static/images/question_bk.png'></a></div>
+      <div class='headline'>{{ dash_obj[9].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-type'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container'>
          <canvas id='permitTypeChart'>
       </div>
@@ -189,7 +189,7 @@
     </div>
 
     <div class='four columns panel'>
-      <div class='headline'>{{ dash_obj[11].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a></div>
+      <div class='headline'>{{ dash_obj[11].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container'>
         <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
         <p>Versus the same period a year ago:
@@ -213,7 +213,7 @@
 
 	<div class='row twelve columns panel'>
 
-		<div class='headline'>Violations per month<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='v-monthly'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='headline'>Violations per month<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-monthly'><img class='' src='static/images/question_bk.png'></a></div>
 		<div class='content-container'>
 			<canvas id='violations'></canvas>
 		</div>
@@ -225,7 +225,7 @@
 
 		<div class='four columns panel first-panel double-height'>
 
-			<div class='headline'>Violation Locations: Closed Violations<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='v-closed'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='headline'>Violation Locations: Closed Violations<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-closed'><img class='' src='static/images/question_bk.png'></a></div>
 			<div class='content-container'>
 				<div id='leaflet'></div>
 			</div>
@@ -234,7 +234,7 @@
 
 		<div class='four columns panel double-height'>
 
-			<div class='headline'>Violation Locations: Locked Violations<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='v-locked'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='headline'>Violation Locations: Locked Violations<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-locked'><img class='' src='static/images/question_bk.png'></a></div>
 
 			<div class='content-container'>
 				<div id='leaflet-open'></div>
@@ -244,7 +244,7 @@
 
 		<div class='four columns panel last-panel double-height'>
 
-			<div class='headline'>Violation Locations: Locations with Liens<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='v-liens'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='headline'>Violation Locations: Locations with Liens<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-liens'><img class='' src='static/images/question_bk.png'></a></div>
 			<div class='content-container'>
 				<div id='leaflet-lein'></div>
 			</div>
@@ -255,7 +255,7 @@
 
 	<div class='row twelve columns panel double-height'>
 
-			<div class='headline'>Top 20 Violations by Type<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy' href='#' id='v-type'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='headline'>Top 20 Violations by Type<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-type'><img class='' src='static/images/question_bk.png'></a></div>
 			<div class='content-container'>
 				<canvas id='viotype'></canvas>
 			</div>
