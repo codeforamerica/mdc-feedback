@@ -11,7 +11,8 @@ from feedback.dashboard.vendorsurveys import (
     parse_textit, get_textit_by_meta, get_textit_by_date,
     make_typeform_call, make_textit_call, parse_typeform,
     get_typeform_by_meta, get_typeform_by_date,
-    get_rating_scale, get_surveys_by_role
+    get_rating_scale, get_surveys_by_role,
+    get_surveys_by_completion, get_surveys_by_purpose
 )
 
 from feedback.dashboard.permits import (
@@ -145,6 +146,14 @@ dashboard_collection = [
     {
         "title": "Master Permits Issued, Last 30 Days",
         "data": get_master_permit_counts('permit_issued_date')
+    },
+    {
+        "title": "How many completions?",
+        "data": get_surveys_by_completion(survey_table)
+    },
+    {
+        "title": "Purpose",
+        "data": get_surveys_by_purpose(survey_table)
     }
 ]
 
@@ -152,6 +161,8 @@ json_obj['test'] = json.dumps(dashboard_collection[0]['data']['graph'])
 json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
 json_obj['permits_type'] = json.dumps(dashboard_collection[9])
 json_obj['survey_role'] = json.dumps(dashboard_collection[10])
+json_obj['survey_complete'] = json.dumps(dashboard_collection[12])
+json_obj['survey_purpose'] = json.dumps(dashboard_collection[13])
 json_obj['app_answers'] = json.dumps(survey_table)
 
 
