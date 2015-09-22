@@ -2,16 +2,16 @@
 
 import datetime
 import json
-import pytz
 
 from flask import (
     Blueprint, render_template
 )
-from tzlocal import get_localzone
 
 from feedback.dashboard.vendorsurveys import (
+    parse_textit, get_textit_by_meta, get_textit_by_date,
     make_typeform_call, make_textit_call, parse_typeform,
-    get_typeform_by_meta
+    get_typeform_by_meta, get_typeform_by_date,
+    get_rating_scale, get_surveys_by_role
 )
 
 from feedback.dashboard.permits import (
@@ -26,9 +26,6 @@ blueprint = Blueprint(
     static_folder="../static"
 )
 
-TEXTIT_UUID_EN = '920cec13-ffc0-4fe9-92c3-1cced2073498'
-TEXTIT_UUID_OPINION = '53249739-7b72-43c2-9463-e4cd4963a408'
-
 
 json_obj = {}
 stats = {}
@@ -42,131 +39,16 @@ surveys_value_array = []
 
 survey_table = []
 
-local_tz = get_localzone()
+SURVEY_DAYS = 31
 
-
-def utc_to_local(utc_dt):
-    local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
-    return local_tz.normalize(local_dt)  # .normalize might be unnecessary
-
-
-def parse_textit(survey_table, json_result):
-    '''
-    Take the textit API result and do ETLs to get
-    the responses in an easy to digest format.
-    Returns an object:
-        survey_table
-    '''
-
-    obj_completed = [result for result in json_result['results'] if result['completed']]
-    for obj in obj_completed:
-
-        iter = {}
-        values_array = obj['values']
-        for value in values_array:
-            iter[value['label']] = {'category': value['category'], 'text': value['text']}
-
-        iter_obj = {
-            'id': 'SMS-' + str(obj['run']),
-            'method': 'sms',
-            'firsttime': iter['First Time']['category'],
-            'getdone': iter['Get it Done']['text'],
-            'role': iter['Role']['text'],
-            'rating': iter['Experience Rating']['text'],
-            'improvement': iter['Improvement']['text'],
-            'bestworst': iter['Best and Worst']['text'],
-            'followup': iter['Followup Permission']['category'],
-            'morecomments': iter['Comments']['text']
-        }
-
-        temp = obj['modified_on']
-        temp = datetime.datetime.strptime(temp, '%Y-%m-%dT%H:%M:%S.%fZ')
-        date_object = utc_to_local(temp)
-        iter_obj['date'] = date_object.strftime("%Y-%m-%d %H:%M:%S")
-
-        if obj['flow_uuid'] == TEXTIT_UUID_EN:
-            iter_obj['lang'] = 'en'
-        else:
-            iter_obj['lang'] = 'es'
-
-        try:
-            iter_obj['purpose'] = iter['Purpose']['text']
-        except KeyError:
-            iter_obj['purpose'] = ''
-
-        survey_table.append(iter_obj)
-
-    return survey_table
-
-
-def get_textit_by_meta(json_result):
-    sms_en = 0
-    sms_es = 0
-    sms_total = 0
-
-    obj_completed = [result for result in json_result['results'] if result['completed']]
-    sms_completed_responses = len(obj_completed)
-
-    for obj in obj_completed:
-        if obj['flow_uuid'] == TEXTIT_UUID_EN:
-            sms_en += 1
-        else:
-            sms_es += 1
-
-        # filter for the node ID of the opinion scale,
-        # which is 0a77d0af-2685-4d8d-b4be-732e376f2f85
-        values_array = obj['values']
-        # print values_array
-        iter = {}
-
-        for value in values_array:
-            iter[value['label']] = {'category': value['category'], 'text': value['text']}
-            # print value['label'], '/', value['category'], '/', value['text']
-
-            if value['node'] == TEXTIT_UUID_OPINION and value['category'] == '1 - 7':
-                try:
-                    sms_total = sms_total + float(value['value'])
-                except IndexError:
-                    pass
-        # print iter
-
-    return {
-        "en": sms_en,
-        "es": sms_es,
-        "total": sms_total,
-        "completed": sms_completed_responses
-    }
-
-
-def get_typeform_by_date(json_result, surveys_by_date):
-    for survey_response in json_result['responses']:
-        # Iterate through the metadata. In the API there is a date_land field in the format of "2015-08-04 22:13:38". Parse this into our surveys_by_date array and increase these by 1.
-        date_object = datetime.datetime.strptime(survey_response['metadata']['date_submit'], '%Y-%m-%d %H:%M:%S')
-        surveys_by_date[date_object.strftime("%m-%d")] += 1
-    return surveys_by_date
-
-
-def get_textit_by_date(json_result, surveys_by_date):
-    for result in json_result['results']:
-        if result['completed']:
-            obj = result['modified_on']
-            obj = datetime.datetime.strptime(obj, '%Y-%m-%dT%H:%M:%S.%fZ')
-            date_object = utc_to_local(obj)
-            try:
-                surveys_by_date[date_object.strftime("%m-%d")] += 1
-            except KeyError:
-                pass
-    return surveys_by_date
-
-
-for i in range(7, -1, -1):
+for i in range(SURVEY_DAYS, -1, -1):
     time_i = (datetime.date.today() - datetime.timedelta(i))
     date_index = time_i.strftime("%m-%d")
     surveys_by_date[date_index] = 0
     surveys_date_array.append(date_index)
 
 # Get unix timestamp of a week ago
-timestamp = datetime.date.today() - datetime.timedelta(7)
+timestamp = datetime.date.today() - datetime.timedelta(SURVEY_DAYS)
 json_result = make_typeform_call(timestamp)
 survey_table = parse_typeform(survey_table, json_result)
 
@@ -186,12 +68,7 @@ sms_date = get_textit_by_date(sms_result, surveys_by_date)
 
 # ANALYTICS CODE
 
-try:
-    rating = (web_meta['total'] + sms_meta['total']) / (web_meta['completed'] + sms_meta['completed'])
-except ZeroDivisionError:
-    rating = 0
-
-for i in range(7, -1, -1):
+for i in range(SURVEY_DAYS, -1, -1):
     time_i = (datetime.date.today() - datetime.timedelta(i))
     date_index = time_i.strftime("%m-%d")
     surveys_value_array.append(surveys_by_date[date_index])
@@ -199,7 +76,7 @@ for i in range(7, -1, -1):
 dashboard_collection = [
     {
         "id": "graph",
-        "title": "Surveys Submitted - Last 7 Days",
+        "title": "Surveys Submitted - Last {0} Days".format(SURVEY_DAYS),
         "data": {
             "new_reviews": web_meta['completed'] + sms_meta['completed'],
             "graph": {
@@ -215,11 +92,11 @@ dashboard_collection = [
         }
     },
     {
-        "title": "Satisfaction Rating - Last 7 Days",
-        "data": "{0:.2f}".format(rating)
+        "title": "Satisfaction Rating - Last {0} Days".format(SURVEY_DAYS),
+        "data": "{0:.2f}".format(get_rating_scale(survey_table))
     },
     {
-        "title": "Survey Type - Last 7 Days",
+        "title": "Survey Type - Last {0} Days".format(SURVEY_DAYS),
         "data": {
             "web_en": web_meta['en'],
             "web_es": web_meta['es'],
@@ -262,8 +139,8 @@ dashboard_collection = [
         "data": get_permit_types()
     },
     {
-        "title": "Average age of an Open Permit (in Days)",
-        "data": -1
+        "title": "Surveys by Survey Role",
+        "data": get_surveys_by_role(survey_table)
     },
     {
         "title": "Master Permits Issued, Last 30 Days",
@@ -274,6 +151,7 @@ dashboard_collection = [
 json_obj['test'] = json.dumps(dashboard_collection[0]['data']['graph'])
 json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
 json_obj['permits_type'] = json.dumps(dashboard_collection[9])
+json_obj['survey_role'] = json.dumps(dashboard_collection[10])
 json_obj['app_answers'] = json.dumps(survey_table)
 
 
@@ -307,8 +185,8 @@ def edit_public():
 @blueprint.route("/edit-internal/",  methods=['GET'])
 def edit_internal():
     return render_template("public/edit-internal.html", stats=stats, json_obj=json_obj, dash_obj=dashboard_collection, title='Dashboard Editor - Internal')
-  
+
+
 @blueprint.route("/choose-survey/", methods=['GET'])
 def choose_survey():
     return render_template("public/choose-survey.html", title="Choose a survey")
-    

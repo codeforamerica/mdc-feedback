@@ -1,6 +1,10 @@
  # -*- coding: utf-8 -*-
 
+import datetime
 import requests
+
+from feedback.utils import utc_to_local
+from collections import Counter
 
 TYPEFORM_API = 'https://api.typeform.com/v0/form/aaz1iK?key='
 TYPEFORM_API_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
@@ -11,24 +15,25 @@ TF_OPINION_ES = 'opinionscale_9825056'
 TF_BESTWORST_EN = 'textarea_9825061'
 TF_BESTWORST_ES = 'textarea_9825064'
 
-TF_ROLE_CONTRACTOR_EN = 'list_10432251_choice_12738830'
-TF_ROLE_ARCHITECT_EN = 'list_10432251_choice_12738831'
-TF_ROLE_PERMITCONSULT_EN = 'list_10432251_choice_12738832'
-TF_ROLE_HOMEOWNER_EN = 'list_10432251_choice_12738833'
-TF_ROLE_BIZOWNER_EN = 'list_10432251_choice_12738834'
-TF_ROLE_OTHER_EN = 'list_10432251_other'
+TF_PURP_PERMIT_EN = 'list_10432251_choice_12738830'
+TF_PURP_INSPECTOR_EN = 'list_10432251_choice_12738831'
+TF_PURP_PLANREVIEW_EN = 'list_10432251_choice_12738832'
+TF_PURP_VIOLATION_EN = 'list_10432251_choice_12738833'
+TF_PURP_CU_EN = 'list_10432251_choice_12738834'
+TF_PURP_OTHER_EN = 'list_10432251_other'
 
-TF_ROLE_CONTRACTOR_ES = 'list_10444324_choice_12758795'
-TF_ROLE_ARCHITECT_ES = 'list_10444324_choice_12758796'
-TF_ROLE_PERMITCONSULT_ES = 'list_10444324_choice_12758797'
-TF_ROLE_HOMEOWNER_ES = 'list_10444324_choice_12758798'
-TF_ROLE_BIZOWNER_ES = 'list_10444324_choice_12758799'
-TF_ROLE_OTHER_ES = 'list_10444324_other'
+TF_PURP_PERMIT_ES = 'list_10444324_choice_12758795'
+TF_PURP_INSPECTOR_ES = 'list_10444324_choice_12758796'
+TF_PURP_PLANREVIEW_ES = 'list_10444324_choice_12758797'
+TF_PURP_VIOLATION_ES = 'list_10444324_choice_12758798'
+TF_PURP_CU_ES = 'list_10444324_choice_12758799'
+TF_PURP_OTHER_ES = 'list_10444324_other'
 
 TEXTIT_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
 TEXTIT_UUID_EN = '920cec13-ffc0-4fe9-92c3-1cced2073498'
 TEXTIT_UUID_ES = '7001c507-1c9e-46dd-aea3-603b986c3d89'
 TEXTIT_AUTH_KEY = '41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9'
+TEXTIT_UUID_OPINION = '53249739-7b72-43c2-9463-e4cd4963a408'
 
 
 def fill_values(array, arg1, arg2):
@@ -77,26 +82,156 @@ def make_textit_call(timestamp):
     return json_result
 
 
+def parse_textit(survey_table, json_result):
+    '''
+    Take the textit API result and do ETLs to get
+    the responses in an easy to digest format.
+    Returns an object:
+        survey_table
+    '''
+
+    obj_completed = [result for result in json_result['results'] if result['completed']]
+    for obj in obj_completed:
+
+        iter = {}
+        values_array = obj['values']
+        for value in values_array:
+            iter[value['label']] = {'category': value['category'], 'text': value['text']}
+
+        iter_obj = {
+            'id': 'SMS-' + str(obj['run']),
+            'method': 'sms',
+            'firsttime': iter['First Time']['category'],
+            'getdone': iter['Get it Done']['text'],
+            'role': filter_role(iter['Role']['text']),
+            'rating': iter['Experience Rating']['text'],
+            'improvement': iter['Improvement']['text'],
+            'bestworst': iter['Best and Worst']['text'],
+            'followup': iter['Followup Permission']['category'],
+            'morecomments': iter['Comments']['text']
+        }
+
+        temp = obj['modified_on']
+        temp = datetime.datetime.strptime(temp, '%Y-%m-%dT%H:%M:%S.%fZ')
+        date_object = utc_to_local(temp)
+        iter_obj['date'] = date_object.strftime("%Y-%m-%d %H:%M:%S")
+
+        if obj['flow_uuid'] == TEXTIT_UUID_EN:
+            iter_obj['lang'] = 'en'
+        else:
+            iter_obj['lang'] = 'es'
+
+        try:
+            iter_obj['purpose'] = iter['Purpose']['text']
+        except KeyError:
+            iter_obj['purpose'] = ''
+
+        survey_table.append(iter_obj)
+
+    return survey_table
+
+
+def get_textit_by_meta(json_result):
+    sms_en = 0
+    sms_es = 0
+    sms_total = 0
+
+    obj_completed = [result for result in json_result['results'] if result['completed']]
+    sms_completed_responses = len(obj_completed)
+
+    for obj in obj_completed:
+        if obj['flow_uuid'] == TEXTIT_UUID_EN:
+            sms_en += 1
+        else:
+            sms_es += 1
+
+        # filter for the node ID of the opinion scale,
+        # which is 0a77d0af-2685-4d8d-b4be-732e376f2f85
+        values_array = obj['values']
+        # print values_array
+        iter = {}
+
+        for value in values_array:
+            iter[value['label']] = {'category': value['category'], 'text': value['text']}
+            # print value['label'], '/', value['category'], '/', value['text']
+
+            if value['node'] == TEXTIT_UUID_OPINION and value['category'] == '1 - 7':
+                try:
+                    sms_total = sms_total + float(value['value'])
+                except IndexError:
+                    pass
+        # print iter
+
+    return {
+        "en": sms_en,
+        "es": sms_es,
+        "total": sms_total,
+        "completed": sms_completed_responses
+    }
+
+
+def get_typeform_by_date(json_result, surveys_by_date):
+    for survey_response in json_result['responses']:
+        # Iterate through the metadata. In the API there is a date_land field in the format of "2015-08-04 22:13:38". Parse this into our surveys_by_date array and increase these by 1.
+        date_object = datetime.datetime.strptime(survey_response['metadata']['date_submit'], '%Y-%m-%d %H:%M:%S')
+        surveys_by_date[date_object.strftime("%m-%d")] += 1
+    return surveys_by_date
+
+
+def get_textit_by_date(json_result, surveys_by_date):
+    for result in json_result['results']:
+        if result['completed']:
+            obj = result['modified_on']
+            obj = datetime.datetime.strptime(obj, '%Y-%m-%dT%H:%M:%S.%fZ')
+            date_object = utc_to_local(obj)
+            try:
+                surveys_by_date[date_object.strftime("%m-%d")] += 1
+            except KeyError:
+                pass
+    return surveys_by_date
+
+
+def filter_role(arg1):
+    '''
+    The role returns either a string (both EN/ES) or a int depending on the API. This is a filter that converms them into integers for filter_table in the prase functions. Will try to find the first number if it's mixed e.g. "Number 5"
+    Returns an integer or False if it doesn't know what to do with itself.
+    '''
+    if arg1.isdigit():
+        return int(arg1)
+    else:
+        if arg1 in ['contractor', 'contratista']:
+            return 1
+        if arg1 in ['architect', 'arquitecto']:
+            return 2
+        if arg1 in ['permit consultant', 'consultor de permiso']:
+            return 3
+        if arg1 in ['homeowner', u'due\xf1o/a de casa']:
+            return 4
+        if arg1 in ['business owner', u'due\xf1o/a de negocio']:
+            return 5
+        return [int(s) for s in arg1.split() if s.isdigit()][0]
+
+
 def fill_typeform_purpose(results):
     '''
     Returns an array of integers for purposes mapped to the possible purposes. If there is a string that means someone typed in a result in the "other" column
     '''
     return_array = []
 
-    if TF_ROLE_CONTRACTOR_EN in results or TF_ROLE_CONTRACTOR_ES in results:
+    if TF_PURP_PERMIT_EN in results or TF_PURP_PERMIT_ES in results:
         return_array.append(1)
-    if TF_ROLE_ARCHITECT_EN in results or TF_ROLE_ARCHITECT_ES in results:
+    if TF_PURP_INSPECTOR_EN in results or TF_PURP_INSPECTOR_ES in results:
         return_array.append(2)
-    if TF_ROLE_PERMITCONSULT_EN in results or TF_ROLE_PERMITCONSULT_ES in results:
+    if TF_PURP_PLANREVIEW_EN in results or TF_PURP_PLANREVIEW_ES in results:
         return_array.append(3)
-    if TF_ROLE_HOMEOWNER_EN in results or TF_ROLE_HOMEOWNER_ES in results:
+    if TF_PURP_VIOLATION_EN in results or TF_PURP_VIOLATION_ES in results:
         return_array.append(4)
-    if TF_ROLE_BIZOWNER_EN in results or TF_ROLE_BIZOWNER_ES in results:
+    if TF_PURP_CU_ES in results or TF_PURP_CU_ES in results:
         return_array.append(5)
-    if TF_ROLE_OTHER_EN in results:
-        return_array.append(results[TF_ROLE_OTHER_EN])
-    if TF_ROLE_OTHER_ES in results:
-        return_array.append(results[TF_ROLE_OTHER_ES])
+    if TF_PURP_OTHER_EN in results:
+        return_array.append(results[TF_PURP_OTHER_EN])
+    if TF_PURP_OTHER_ES in results:
+        return_array.append(results[TF_PURP_OTHER_ES])
 
     return return_array
 
@@ -125,7 +260,7 @@ def parse_typeform(survey_table, json_result):
         iter_obj['followup'] = fill_values(answers_arr, '', '')
 
         iter_obj['morecomments'] = fill_values(answers_arr, 'textarea_9825063', 'textarea_9825066')
-        iter_obj['role'] = fill_values(answers_arr, 'list_9825053_choice', 'list_9825054_choice')
+        iter_obj['role'] = filter_role(fill_values(answers_arr, 'list_9825053_choice', 'list_9825054_choice'))
         iter_obj['purpose'] = fill_typeform_purpose(answers_arr)
         survey_table.append(iter_obj)
 
@@ -155,3 +290,19 @@ def get_typeform_by_meta(json_result):
         "total": total,
         "completed": int(json_result['stats']['responses']['showing'])
     }
+
+
+def get_surveys_by_role(survey_table):
+    valid_roles = [x['role'] for x in survey_table]
+    return Counter(valid_roles).most_common()
+
+
+def get_rating_scale(survey_table):
+    '''
+    Given the table of all the responses, find the values of all roles.
+    '''
+    valid_weights = [int(x['rating']) for x in survey_table if x['rating'].isdigit()]
+    try:
+        return (sum(valid_weights) / float(len(valid_weights)))
+    except ZeroDivisionError:
+        return 0
