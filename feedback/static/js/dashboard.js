@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+	
   /* API HEALTH CHECK */
   window.REMODAL_GLOBALS = {
     NAMESPACE: 'modal',
@@ -757,6 +757,56 @@ $(document).ready(function() {
 
 	/***************************** tool tips *****************************/
 
+	/******** Documentation from Google sheets, using Tabletop.js **********/
+	
+	var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/170neJyhcBkg3sgABsqKk1B6WJa51r6oo6PEMAlwOBB8/pubhtml';
+
+  function initTabletop(){
+    Tabletop.init( { key: public_spreadsheet_url,
+                     callback: buildTipsy,
+                     simpleSheet: true,
+                     prettyColumnNames: false } )
+  }
+
+	var tableData = [];
+	
+  function buildTipsy(data, tabletop) {
+    //alert("Successfully processed!")
+    console.log(data);
+    
+    for(var i = 0; i < data.length; i++) {
+	    
+	    console.log(data[i].hoverid);
+	    var obj = {}
+		    
+		    obj.hID = data[i].hoverid;
+		    obj.text = data[i].descriptionforhover;
+		  
+	    tableData.push(obj);
+	    
+    }
+    
+    $('.tipsy').each(function() {
+	    
+	    var id = $(this).attr('id');
+	    //console.log(id);
+	    
+	    for(var i = 0; i < data.length; i++) {
+		    
+		    if(id == data[i].hoverid) {
+			    
+			    $(this).attr('title', data[i].descriptionforhover);
+			    var mid = '#' + data[i].hoverid;
+			    $(mid).tipsy();
+			    console.log(mid);
+		    }
+	    }
+    })
+  }
+    
+  initTabletop();
+  
+  
 	$('#test').tipsy();
 
 }); //close ready
