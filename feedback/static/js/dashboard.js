@@ -343,26 +343,37 @@ $(document).ready(function() {
     //console.log(JSON.parse($("#permitstype")[0].childNodes[0].data));
     var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data);
 
-    var  pttx = $("#permitTypeChart").get(0).getContext("2d");
+    var pttx = $("#permitTypeChart").get(0).getContext("2d");
 
     var cleanPermitData = [];
-
+    var cleanPermitLabels = [];
+    
+    //set the data up for Charts.js
     for(var i = 0; i < permitTypes.data.length; i++) {
 
-      var obj = {};
-        obj.value = permitTypes.data[i].count;
-        obj.color = pie_colors[i];
-        obj.highlight = pie_colors[i];
-        obj.label = permitTypes.data[i].permit_type;
+      cleanPermitLabels[i] = permitTypes.data[i].permit_type;
+      cleanPermitData[i] = permitTypes.data[i].count;
+      //console.log(data[i].issue_type, i);
 
-     // console.log(pie_colors[i], i);
-
-      cleanPermitData.push(obj);
     }
+    
+    var vdata = {
+      labels: cleanPermitLabels,
+      datasets: [
+          {
+              label: "Permits by Type",
+
+              fillColor: t_purple_1,
+              strokeColor: purple_1,
+              data: cleanPermitData
+          },
+
+      ]
+    };
 
     $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
-    var myPieChart2 = new Chart(pttx).Pie(cleanPermitData);
-
+    var barChart2 = new Chart(pttx).Bar(vdata);
+   
   /* VIOLATIONS */
 
   $.ajax({
@@ -621,7 +632,7 @@ $(document).ready(function() {
           ]
       };
 
-      var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata  );
+      var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
 
     });
 
