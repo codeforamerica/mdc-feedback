@@ -50,6 +50,20 @@ def fill_values(array, arg1, arg2):
             return ''
 
 
+def fill_purpose(array, arg1, arg2):
+    # if TF_PURP_PERMIT_EN in results or TF_PURP_PERMIT_ES in results:
+    try:
+        if not array[arg1]:
+            return False
+        else:
+            return array[arg1]
+    except KeyError:
+        if not array[arg2]:
+            return False
+        else:
+            return array[arg2]
+
+
 def make_typeform_call(timestamp):
     '''
     Takes in the timestamp in unix form
@@ -122,9 +136,9 @@ def parse_textit(survey_table, json_result):
             iter_obj['lang'] = 'es'
 
         try:
-            iter_obj['purpose'] = iter['Purpose']['text']
+            iter_obj['purpose'] = [int(iter['Purpose']['text'])]
         except KeyError:
-            iter_obj['purpose'] = ''
+            iter_obj['purpose'] = []
 
         survey_table.append(iter_obj)
 
@@ -200,15 +214,15 @@ def filter_role(arg1):
         return int(arg1)
     else:
         if arg1 in ['contractor', 'contratista']:
-            return 1
+            return '1'
         if arg1 in ['architect', 'arquitecto']:
-            return 2
+            return '2'
         if arg1 in ['permit consultant', 'consultor de permiso']:
-            return 3
+            return '3'
         if arg1 in ['homeowner', u'due\xf1o/a de casa']:
-            return 4
+            return '4'
         if arg1 in ['business owner', u'due\xf1o/a de negocio']:
-            return 5
+            return '5'
         return [int(s) for s in arg1.split() if s.isdigit()][0]
 
 
@@ -218,19 +232,20 @@ def fill_typeform_purpose(results):
     '''
     return_array = []
 
-    if TF_PURP_PERMIT_EN in results or TF_PURP_PERMIT_ES in results:
+    if fill_purpose(results, TF_PURP_PERMIT_EN, TF_PURP_PERMIT_ES):
         return_array.append(1)
-    if TF_PURP_INSPECTOR_EN in results or TF_PURP_INSPECTOR_ES in results:
+    if fill_purpose(results, TF_PURP_INSPECTOR_EN, TF_PURP_INSPECTOR_ES):
         return_array.append(2)
-    if TF_PURP_PLANREVIEW_EN in results or TF_PURP_PLANREVIEW_ES in results:
+    if fill_purpose(results, TF_PURP_PLANREVIEW_EN, TF_PURP_PLANREVIEW_ES):
         return_array.append(3)
-    if TF_PURP_VIOLATION_EN in results or TF_PURP_VIOLATION_ES in results:
+    if fill_purpose(results, TF_PURP_VIOLATION_EN, TF_PURP_VIOLATION_ES):
         return_array.append(4)
-    if TF_PURP_CU_ES in results or TF_PURP_CU_ES in results:
+    if fill_purpose(results, TF_PURP_CU_EN, TF_PURP_CU_ES):
         return_array.append(5)
-    if TF_PURP_OTHER_EN in results:
+
+    if results[TF_PURP_OTHER_EN]:
         return_array.append(results[TF_PURP_OTHER_EN])
-    if TF_PURP_OTHER_ES in results:
+    if results[TF_PURP_OTHER_ES]:
         return_array.append(results[TF_PURP_OTHER_ES])
 
     return return_array
@@ -295,6 +310,23 @@ def get_typeform_by_meta(json_result):
 def get_surveys_by_role(survey_table):
     valid_roles = [x['role'] for x in survey_table]
     return Counter(valid_roles).most_common()
+
+
+def get_surveys_by_completion(survey_table):
+    items = [x['getdone'] for x in survey_table]
+    return {
+        "yes": items.count('Yes') + items.count('1'),
+        "total": len(items)
+    }
+
+
+def get_surveys_by_purpose(survey_table):
+    i = [x['purpose'] for x in survey_table if x['purpose']]
+
+    # flattens list. See:http://stackoverflow.com/questions/952914/making-a-flat-list-out-of-list-of-lists-in-python
+    items = sum(i, [])
+
+    return Counter(items).most_common()
 
 
 def get_rating_scale(survey_table):
