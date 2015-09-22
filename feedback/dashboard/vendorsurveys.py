@@ -4,6 +4,7 @@ import datetime
 import requests
 
 from feedback.utils import utc_to_local
+from collections import Counter
 
 TYPEFORM_API = 'https://api.typeform.com/v0/form/aaz1iK?key='
 TYPEFORM_API_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
@@ -102,7 +103,7 @@ def parse_textit(survey_table, json_result):
             'method': 'sms',
             'firsttime': iter['First Time']['category'],
             'getdone': iter['Get it Done']['text'],
-            'role': iter['Role']['text'],
+            'role': filter_role(iter['Role']['text']),
             'rating': iter['Experience Rating']['text'],
             'improvement': iter['Improvement']['text'],
             'bestworst': iter['Best and Worst']['text'],
@@ -190,6 +191,27 @@ def get_textit_by_date(json_result, surveys_by_date):
     return surveys_by_date
 
 
+def filter_role(arg1):
+    '''
+    The role returns either a string (both EN/ES) or a int depending on the API. This is a filter that converms them into integers for filter_table in the prase functions. Will try to find the first number if it's mixed e.g. "Number 5"
+    Returns an integer or False if it doesn't know what to do with itself.
+    '''
+    if arg1.isdigit():
+        return int(arg1)
+    else:
+        if arg1 in ['contractor', 'contratista']:
+            return 1
+        if arg1 in ['architect', 'arquitecto']:
+            return 2
+        if arg1 in ['permit consultant', 'consultor de permiso']:
+            return 3
+        if arg1 in ['homeowner', u'due\xf1o/a de casa']:
+            return 4
+        if arg1 in ['business owner', u'due\xf1o/a de negocio']:
+            return 5
+        return [int(s) for s in arg1.split() if s.isdigit()][0]
+
+
 def fill_typeform_purpose(results):
     '''
     Returns an array of integers for purposes mapped to the possible purposes. If there is a string that means someone typed in a result in the "other" column
@@ -238,7 +260,7 @@ def parse_typeform(survey_table, json_result):
         iter_obj['followup'] = fill_values(answers_arr, '', '')
 
         iter_obj['morecomments'] = fill_values(answers_arr, 'textarea_9825063', 'textarea_9825066')
-        iter_obj['role'] = fill_values(answers_arr, 'list_9825053_choice', 'list_9825054_choice')
+        iter_obj['role'] = filter_role(fill_values(answers_arr, 'list_9825053_choice', 'list_9825054_choice'))
         iter_obj['purpose'] = fill_typeform_purpose(answers_arr)
         survey_table.append(iter_obj)
 
@@ -268,3 +290,19 @@ def get_typeform_by_meta(json_result):
         "total": total,
         "completed": int(json_result['stats']['responses']['showing'])
     }
+
+
+def get_surveys_by_role(survey_table):
+    valid_roles = [x['role'] for x in survey_table]
+    return Counter(valid_roles).most_common()
+
+
+def get_rating_scale(survey_table):
+    '''
+    Given the table of all the responses, find the values of all roles.
+    '''
+    valid_weights = [int(x['rating']) for x in survey_table if x['rating'].isdigit()]
+    try:
+        return (sum(valid_weights) / float(len(valid_weights)))
+    except ZeroDivisionError:
+        return 0

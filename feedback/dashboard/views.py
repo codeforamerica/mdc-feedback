@@ -10,7 +10,8 @@ from flask import (
 from feedback.dashboard.vendorsurveys import (
     parse_textit, get_textit_by_meta, get_textit_by_date,
     make_typeform_call, make_textit_call, parse_typeform,
-    get_typeform_by_meta, get_typeform_by_date
+    get_typeform_by_meta, get_typeform_by_date,
+    get_rating_scale, get_surveys_by_role
 )
 
 from feedback.dashboard.permits import (
@@ -67,11 +68,6 @@ sms_date = get_textit_by_date(sms_result, surveys_by_date)
 
 # ANALYTICS CODE
 
-try:
-    rating = (web_meta['total'] + sms_meta['total']) / (web_meta['completed'] + sms_meta['completed'])
-except ZeroDivisionError:
-    rating = 0
-
 for i in range(SURVEY_DAYS, -1, -1):
     time_i = (datetime.date.today() - datetime.timedelta(i))
     date_index = time_i.strftime("%m-%d")
@@ -97,7 +93,7 @@ dashboard_collection = [
     },
     {
         "title": "Satisfaction Rating - Last {0} Days".format(SURVEY_DAYS),
-        "data": "{0:.2f}".format(rating)
+        "data": "{0:.2f}".format(get_rating_scale(survey_table))
     },
     {
         "title": "Survey Type - Last {0} Days".format(SURVEY_DAYS),
@@ -143,8 +139,8 @@ dashboard_collection = [
         "data": get_permit_types()
     },
     {
-        "title": "Average age of an Open Permit (in Days)",
-        "data": -1
+        "title": "Surveys by Survey Role",
+        "data": get_surveys_by_role(survey_table)
     },
     {
         "title": "Master Permits Issued, Last 30 Days",
@@ -155,6 +151,7 @@ dashboard_collection = [
 json_obj['test'] = json.dumps(dashboard_collection[0]['data']['graph'])
 json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
 json_obj['permits_type'] = json.dumps(dashboard_collection[9])
+json_obj['survey_role'] = json.dumps(dashboard_collection[10])
 json_obj['app_answers'] = json.dumps(survey_table)
 
 

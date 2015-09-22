@@ -21,7 +21,7 @@
 	<!-- leaflet mapping -->
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
 	<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-	
+
   {% block assets %}
     {% assets "css_all" %}
   <link rel="stylesheet" href="{{ ASSET_URL }}">
@@ -62,7 +62,7 @@
 				('/create-survey/', 'Survey Builder')
 
 			] -%}
-			
+
 		{% else %}
 
 				{% set navigation_bar = [
@@ -190,6 +190,9 @@
 </script>
 <script type="application/json" id="appanswers">
 {{ json_obj.app_answers|safe }}
+</script>
+<script type="application/json" id="surveyrole">
+{{ json_obj.survey_role|safe }}
 </script>
 {% endif %}
 
