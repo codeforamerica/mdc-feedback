@@ -786,7 +786,7 @@ $(document).ready(function() {
 	    
     }
     
-    $('.tipsy').each(function() {
+    $('.tipsy-hook').each(function() {
 	    
 	    var id = $(this).attr('id');
 	    //console.log(id);
