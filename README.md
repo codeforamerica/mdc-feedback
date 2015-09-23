@@ -31,6 +31,8 @@ If you're not used to it see [VIM Adventures](http://vim-adventures.com/), becau
 
 * After installing Compass, run `compass watch` inside your Compass directory, so that Compass will automatically compile your .scss files into .css.
 
+* This repo uses Google Sheets as an information source for the 'what is this' UI on the dashboard. Tabletop.js is included in the repo, but you still need to publish your Sheet to web and replace the URL found in `dashboard.js` to enable this functionality.
+
 ```
 # clone the repo
 git clone https://github.com/codeforamerica/mdc-feedback.git
