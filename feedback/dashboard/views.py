@@ -113,15 +113,15 @@ dashboard_collection = [
     },
     {
         "title": "Average time from application date to permit issuance, Commercial Permits, Last 30 Days",
-        "data": get_lifespan('c')
+        "data": 0
     },
     {
         "title": "Average time from application date to permit issuance, Residential Permits, Last 30 Days",
-        "data": get_lifespan('r')
+        "data": 0
     },
     {
         "title": "Average time from application date to permit issuance, Owner/Builder Permits, Last 30 Days",
-        "data": get_lifespan('h')
+        "data": 0
     },
     {
         "title": "(UNUSED) Avg Cost of an Open Commercial Permit",
@@ -164,6 +164,9 @@ json_obj['survey_role'] = json.dumps(dashboard_collection[10])
 json_obj['survey_complete'] = json.dumps(dashboard_collection[12])
 json_obj['survey_purpose'] = json.dumps(dashboard_collection[13])
 json_obj['app_answers'] = json.dumps(survey_table)
+json_obj['lifespanc'] = json.dumps(get_lifespan('c'))
+json_obj['lifespanr'] = json.dumps(get_lifespan('r'))
+json_obj['lifespanh'] = json.dumps(get_lifespan('h'))
 
 
 @blueprint.route("/", methods=["GET", "POST"])
