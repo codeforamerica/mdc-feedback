@@ -15,6 +15,19 @@ TF_OPINION_ES = 'opinionscale_9825056'
 TF_BESTWORST_EN = 'textarea_9825061'
 TF_BESTWORST_ES = 'textarea_9825064'
 
+TF_1STTIME_EN = 'yesno_9825058'
+TF_1STTIME_ES = 'yesno_9825060'
+TF_GETDONE_EN = 'yesno_9825057'
+TF_GETDONE_ES = 'yesno_10444681'
+
+TF_IMPROVE_EN = 'textarea_9825062'
+TF_IMPROVE_ES = 'textarea_9825065'
+
+TF_COMMENTS_EN = 'textarea_9825063'
+TF_COMMENTS_ES = 'textarea_9825066'
+TF_ROLE_EN = 'list_9825053_choice'
+TF_ROLE_ES = 'list_9825054_choice'
+
 TF_PURP_PERMIT_EN = 'list_10432251_choice_12738830'
 TF_PURP_INSPECTOR_EN = 'list_10432251_choice_12738831'
 TF_PURP_PLANREVIEW_EN = 'list_10432251_choice_12738832'
@@ -213,6 +226,7 @@ def filter_role(arg1):
     if arg1.isdigit():
         return int(arg1)
     else:
+        arg1 = arg1.lower()
         if arg1 in ['contractor', 'contratista']:
             return '1'
         if arg1 in ['architect', 'arquitecto']:
@@ -265,17 +279,17 @@ def parse_typeform(survey_table, json_result):
 
         iter_obj['id'] = 'WEB-' + survey_response['id']
         iter_obj['date'] = survey_response['metadata']['date_submit']
-        iter_obj['firsttime'] = fill_values(answers_arr, 'yesno_9825058', 'yesno_9825060')
-        iter_obj['getdone'] = fill_values(answers_arr, 'yesno_9825057', 'yesno_10444681')
+        iter_obj['firsttime'] = fill_values(answers_arr, TF_1STTIME_EN, TF_1STTIME_ES)
+        iter_obj['getdone'] = fill_values(answers_arr, TF_GETDONE_EN, TF_GETDONE_ES)
         iter_obj['rating'] = fill_values(answers_arr, TF_OPINION_EN, TF_OPINION_ES)
-        iter_obj['improvement'] = fill_values(answers_arr, 'textarea_9825062', 'textarea_9825065')
+        iter_obj['improvement'] = fill_values(answers_arr, TF_IMPROVE_EN, TF_IMPROVE_ES)
         iter_obj['bestworst'] = fill_values(answers_arr, TF_BESTWORST_EN, TF_BESTWORST_ES)
 
         # FIXME: THERE'S NO FOLLOW UP IN THE WEB FORM
         iter_obj['followup'] = fill_values(answers_arr, '', '')
 
-        iter_obj['morecomments'] = fill_values(answers_arr, 'textarea_9825063', 'textarea_9825066')
-        iter_obj['role'] = filter_role(fill_values(answers_arr, 'list_9825053_choice', 'list_9825054_choice'))
+        iter_obj['morecomments'] = fill_values(answers_arr, TF_COMMENTS_EN, TF_COMMENTS_ES)
+        iter_obj['role'] = filter_role(fill_values(answers_arr, TF_ROLE_EN, TF_ROLE_ES))
         iter_obj['purpose'] = fill_typeform_purpose(answers_arr)
         survey_table.append(iter_obj)
 

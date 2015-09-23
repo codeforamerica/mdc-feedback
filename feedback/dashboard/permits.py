@@ -140,20 +140,14 @@ def get_permit_types(arg1=0, arg2=30):
 def get_lifespan(property_type='c'):
     '''
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
-    Returns an object:
-        val = the current lifespace
-        yoy = the year over year increase or decrease (100 to -100)
+    Returns an array of the lifespan from the most recent 30 days, the 30 days before, etc up to a year previous
     '''
+    lifespan_array = []
 
-    lifespan_now = lifespan_api_call(0, 30, property_type)
+    for i in range(0, 11):
+        lifespan_array.append(lifespan_api_call(i*30, (i+1)*30, property_type))
 
-    lifespan_then = lifespan_api_call(30, 60, property_type)
-    yoy = ((lifespan_now-lifespan_then)/lifespan_then)*100
-
-    return {
-        'val': int(lifespan_now),
-        'yoy': yoy
-    }
+    return lifespan_array
 
 
 def api_count_call(arg1=0, arg2=30, field=''):

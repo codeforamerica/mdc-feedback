@@ -191,7 +191,7 @@
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 -->
-    
+
     <div class='four columns panel first-panel'>
       <div class='headline'>{{ dash_obj[9].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-type'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container'>
@@ -283,19 +283,10 @@
     <div class='four columns panel{% if lastpanel==True %} last-panel{% endif %}'>
 
       <div class='headline'>{{ title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
-      
+
       <div class='content-container vertical-center-35'>
 
-        <p class='huge bold'>{{ val }} days</p>
-        <p>Versus previous 30 days:
-          {% if yoy > 0 %}
-          <span class='bold red'>Up
-          {% else %}
-          <span class='bold green'>Down
-          {% endif %}
-          {{ '%0.2f'| format(yoy|float) }}%
-          </span>
-        </p>
+
       </div>
       <p class='hidden details invisible-button'><a href=#>View Details</a></p>
     </div>

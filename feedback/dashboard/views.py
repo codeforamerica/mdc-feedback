@@ -16,7 +16,7 @@ from feedback.dashboard.vendorsurveys import (
 )
 
 from feedback.dashboard.permits import (
-    api_health, get_lifespan, get_avg_cost,
+    api_health, get_lifespan,
     get_permit_types,
     get_master_permit_counts
 )
@@ -113,27 +113,27 @@ dashboard_collection = [
     },
     {
         "title": "Average time from application date to permit issuance, Commercial Permits, Last 30 Days",
-        "data": get_lifespan('c')
+        "data": 0
     },
     {
         "title": "Average time from application date to permit issuance, Residential Permits, Last 30 Days",
-        "data": get_lifespan('r')
+        "data": 0
     },
     {
         "title": "Average time from application date to permit issuance, Owner/Builder Permits, Last 30 Days",
-        "data": get_lifespan('h')
+        "data": 0
     },
     {
-        "title": "Avg Cost of an Open Commercial Permit",
-        "data": float(get_avg_cost('c'))
+        "title": "(UNUSED) Avg Cost of an Open Commercial Permit",
+        "data": 0
     },
     {
-        "title": "Avg Cost of an Open Residential Permit",
-        "data": float(get_avg_cost('r'))
+        "title": "(UNUSED) Avg Cost of an Open Residential Permit",
+        "data": 0
     },
     {
-        "title": "Avg Cost of an Owner/Builder Permit",
-        "data": float(get_avg_cost('h'))
+        "title": "(UNUSED) Avg Cost of an Owner/Builder Permit",
+        "data": 0
     },
     {
         "title": "Permits & sub-permits issued by type, Last 30 Days",
@@ -164,6 +164,9 @@ json_obj['survey_role'] = json.dumps(dashboard_collection[10])
 json_obj['survey_complete'] = json.dumps(dashboard_collection[12])
 json_obj['survey_purpose'] = json.dumps(dashboard_collection[13])
 json_obj['app_answers'] = json.dumps(survey_table)
+json_obj['lifespanc'] = json.dumps(get_lifespan('c'))
+json_obj['lifespanr'] = json.dumps(get_lifespan('r'))
+json_obj['lifespanh'] = json.dumps(get_lifespan('h'))
 
 
 @blueprint.route("/", methods=["GET", "POST"])
