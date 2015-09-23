@@ -26,7 +26,7 @@
 		<p class='invisible'>{{ dash_obj[0].data.new_reviews }}</p>
 
 		<!-- the content -->
-		<div class='headline'>{{ dash_obj[0].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-submitted'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='headline'>{{ dash_obj[0].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-submitted'><img class='' src='static/images/question_bk.png'></a></div>
 
 		<div class='content-container'>
 			<canvas id='myChart'></canvas>
@@ -55,7 +55,7 @@
 	<div class='three columns panel last-panel'>
 
 		<!-- the content -->
-		<div class='headline'><a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-type'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='headline'><a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-type'><img class='' src='static/images/question_bk.png'></a></div>
 		<div class='content-container'>
 			<canvas id='surveyChart'></canvas>
 		</div>
@@ -63,14 +63,15 @@
 		<p class='details invisible-button'><a href="{{ url_for('dashboard.survey_detail') }}">View Details</a></p>
 	</div>
 
-  <div class='three columns panel first-panel'>
-    <div class='headline'>{{ dash_obj[10].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
-    {{ dash_obj[10].data }}
-    <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveyrole</code>. In each array element, the first digit is a constant for user type, the second is occurance.</p>
+  <div class='four columns panel first-panel'>
+    <div class='headline'>{{ dash_obj[10].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='content-container'>
+			<canvas id='s-role-chart'></canvas>
+		</div>
   </div>
 
-  <div class='three columns panel'>
-    <div class='headline'>{{ dash_obj[12].title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
+  <div class='four columns panel'>
+    <div class='headline'>{{ dash_obj[12].title }}<a class='what-is-this u-pull-right tipsy-hook' href='#' id='s-complete'><img class='' src='static/images/question_bk.png'></a></div>
     {{ dash_obj[12].data }}
     <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveycomplete</code>.</p>
   </div>

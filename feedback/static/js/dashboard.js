@@ -230,153 +230,212 @@ $(document).ready(function() {
 }
 
   if($("#dashboard")[0] != undefined) {
+	  
+	  //surveys by role
+	  var sctx = $("#s-role-chart").get(0).getContext("2d");
+	  var sctxdata = JSON.parse($("#surveyrole")[0].childNodes[0].data);
+	  
+	  var sctxseries = [];
+	  var sctxlabels = [];
+	  
+	  //this only works because it's a known quantity.	  
+	  var homeowners = {label:'Homeowner', count:0};
+	  var architects = {label:'Architect', count:0};
+	  var contractors = {label:'Contractor', count:0};
+	  var consultants = {label:'Permit Consultant', count:0};
+	  var owners = {label:'Business Owner', count:0};
+	  var sorter = [architects, owners, consultants, contractors, homeowners];
 
-  // Get context with jQuery - using jQuery's .get() method.
-  var ctx = $("#myChart").get(0).getContext("2d");
+	  for(var i = 0; i < sctxdata.data.length;i ++) {
 
-  var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
-  //console.log(jsondata);
-
-  var series = jsondata.series[0].data;
-  var datetime = jsondata.datetime.data;
-  //console.log(series, datetime);
-
-  var data = {
-    labels: datetime,
-    scaleBeginAtZero: true,
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: t_orange,
-            strokeColor: orange,
-            pointColor: orange,
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: series,
-            scaleStartValue: 0
-        }
-    ]
-  };
-
-  var myLineChart = new Chart(ctx).Line(data);
-  var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
-
-  //console.log(surveyData);
-
-  var  pctx = $("#surveyChart").get(0).getContext("2d");
-
-  var pieData = [
-    {
-      value: surveyData.data.web_en,
-      color:purple_1,
-      highlight: t_purple_1,
-      label: surveyData.labels.web_en
-    },
-    {
-      value: surveyData.data.web_es,
-      color: purple_2,
-      highlight: t_purple_2,
-      label: surveyData.labels.web_es
-    },
-    {
-      value: surveyData.data.sms_en,
-      color: purple_3,
-      highlight: t_purple_3,
-      label: surveyData.labels.sms_en
-    },
-    {
-      value: surveyData.data.sms_es,
-      color: purple_4,
-      highlight: t_purple_4,
-      label: surveyData.labels.sms_es
-
-    }
-  ];
-
-  $('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
-  var myPieChart = new Chart(pctx).Pie(pieData);/**/
-
-  /* Permitting */
-
-    $.ajax({
-      url: "https://opendata.miamidade.gov/resource/vvjq-pfmc.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
-      context: document.body
-    }).done(function(data) {
-
-      var ctx2 = $("#openPermits").get(0).getContext("2d");
-      //console.log(data);
-
-      var series = [];
-      var datetime = [];
-
-      for(var i = 0; i < data.length; i++) {
-
-        datetime.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
-        series.push(data[i].total);
-
-      }
-
-      //socrata pushes the data backwards. fix that.
-      datetime.reverse();
-      series.reverse();
-
-      var d = {
-          labels:datetime,
-          datasets: [
-            {
-                fillColor: t_orange,
-                strokeColor: orange,
-                pointColor: orange,
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: series
-            }
-          ]
-      };
-
-      var myLineChart = new Chart(ctx2).Line(d);
-
-    });
-
-    //console.log(JSON.parse($("#permitstype")[0].childNodes[0].data));
-    var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data);
-
-    var pttx = $("#permitTypeChart").get(0).getContext("2d");
-
-    var cleanPermitData = [];
-    var cleanPermitLabels = [];
-    
-    //set the data up for Charts.js
-    for(var i = 0; i < permitTypes.data.length; i++) {
-
-      cleanPermitLabels[i] = permitTypes.data[i].permit_type;
-      cleanPermitData[i] = permitTypes.data[i].count;
-      //console.log(data[i].issue_type, i);
-
+			switch(parseInt(sctxdata.data[i][0])) {
+				
+				case 1:
+					contractors.count++;
+					break;
+				case 2:
+					architects.count++;
+					break;
+				case 3:
+					consultants.count++;
+					break;
+				case 4:
+					homeowners.count++;
+					break;
+				case 5:
+					owners.count++;
+					break;
+					
+			}
+			
     }
     
-    var vdata = {
-      labels: cleanPermitLabels,
+    for(var i = 0; i < sorter.length; i++) {
+	    
+	    sctxseries[i] = sorter[i].count;
+	    sctxlabels[i] = sorter[i].label;
+    }
+    	
+		var vdata = {
+      labels: sctxlabels,
       datasets: [
           {
-              label: "Permits by Type",
-
+              label: "Respondents by Role",
               fillColor: t_purple_1,
               strokeColor: purple_1,
-              data: cleanPermitData
+              data: sctxseries
           },
 
       ]
     };
+	
+	  var sctxBar = new Chart(sctx).HorizontalBar(vdata);
+		// end surveys by role
+		
+		
+	  // Get context with jQuery - using jQuery's .get() method.
+	  var ctx = $("#myChart").get(0).getContext("2d");
+	
+	  var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
+	  //console.log(jsondata);
+	
+	  var series = jsondata.series[0].data;
+	  var datetime = jsondata.datetime.data;
+	  //console.log(series, datetime);
+	
+	  var data = {
+	    labels: datetime,
+	    scaleBeginAtZero: true,
+	    datasets: [
+	        {
+	            label: "My First dataset",
+	            fillColor: t_orange,
+	            strokeColor: orange,
+	            pointColor: orange,
+	            pointStrokeColor: "#fff",
+	            pointHighlightFill: "#fff",
+	            pointHighlightStroke: "rgba(220,220,220,1)",
+	            data: series,
+	            scaleStartValue: 0
+	        }
+	    ]
+	  };
+	
+	  var myLineChart = new Chart(ctx).Line(data);
+	  var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
+	
+	  var  pctx = $("#surveyChart").get(0).getContext("2d");
+	
+	  var pieData = [
+	    {
+	      value: surveyData.data.web_en,
+	      color:purple_1,
+	      highlight: t_purple_1,
+	      label: surveyData.labels.web_en
+	    },
+	    {
+	      value: surveyData.data.web_es,
+	      color: purple_2,
+	      highlight: t_purple_2,
+	      label: surveyData.labels.web_es
+	    },
+	    {
+	      value: surveyData.data.sms_en,
+	      color: purple_3,
+	      highlight: t_purple_3,
+	      label: surveyData.labels.sms_en
+	    },
+	    {
+	      value: surveyData.data.sms_es,
+	      color: purple_4,
+	      highlight: t_purple_4,
+	      label: surveyData.labels.sms_es
+	
+	    }
+	  ];
 
-    $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
-    var barChart2 = new Chart(pttx).Bar(vdata);
+	  $('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
+	  var myPieChart = new Chart(pctx).Pie(pieData);/**/
+	
+	  /* Permitting */
+	
+	    $.ajax({
+	      url: "https://opendata.miamidade.gov/resource/vvjq-pfmc.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
+	      context: document.body
+	    }).done(function(data) {
+	
+	      var ctx2 = $("#openPermits").get(0).getContext("2d");
+	      //console.log(data);
+	
+	      var series = [];
+	      var datetime = [];
+	
+	      for(var i = 0; i < data.length; i++) {
+	
+	        datetime.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
+	        series.push(data[i].total);
+	
+	      }
+	
+	      //socrata pushes the data backwards. fix that.
+	      datetime.reverse();
+	      series.reverse();
+	
+	      var d = {
+	          labels:datetime,
+	          datasets: [
+	            {
+	                fillColor: t_orange,
+	                strokeColor: orange,
+	                pointColor: orange,
+	                pointStrokeColor: "#fff",
+	                pointHighlightFill: "#fff",
+	                pointHighlightStroke: "rgba(220,220,220,1)",
+	                data: series
+	            }
+	          ]
+	      };
+	
+	      var myLineChart = new Chart(ctx2).Line(d);
+	
+	    });
+	
+	    //console.log(JSON.parse($("#permitstype")[0].childNodes[0].data));
+	    var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data);
+	
+	    var pttx = $("#permitTypeChart").get(0).getContext("2d");
+	
+	    var cleanPermitData = [];
+	    var cleanPermitLabels = [];
+	    
+	    //set the data up for Charts.js
+	    for(var i = 0; i < permitTypes.data.length; i++) {
+	
+	      cleanPermitLabels[i] = permitTypes.data[i].permit_type;
+	      cleanPermitData[i] = permitTypes.data[i].count;
+	      //console.log(data[i].issue_type, i);
+	
+	    }
+	    
+	    var vdata = {
+	      labels: cleanPermitLabels,
+	      datasets: [
+	          {
+	              label: "Permits by Type",
+	              fillColor: t_purple_1,
+	              strokeColor: purple_1,
+	              data: cleanPermitData
+	          },
+	
+	      ]
+	    };
+	
+	    $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
+	    var barChart2 = new Chart(pttx).Bar(vdata);
    
   /* VIOLATIONS */
 
-  $.ajax({
+  	$.ajax({
       url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1",
       context: document.body
     }).done(function(data) {
@@ -402,12 +461,6 @@ $(document).ready(function() {
         labels:datetime,
         datasets: [
           {
-            label: "My First dataset",
-            scaleOverride: true,
-            scaleSteps: 50,
-            scaleStepWidth: 200,
-            scaleBeginAtZero:true,
-            scaleStartValue:0,
             fillColor: t_orange,
             strokeColor: orange,
             pointColor: orange,
@@ -587,8 +640,6 @@ $(document).ready(function() {
 
     }).done(function(data) {
 
-      //console.log('data: ', data);
-
       var labels = [];
       var dataset = [];
 
@@ -622,11 +673,9 @@ $(document).ready(function() {
           labels: labels,
           datasets: [
               {
-                  label: "My First dataset",
-
-                  fillColor: t_purple_1,
-                  strokeColor: purple_1,
-                  data: dataset
+                fillColor: t_purple_1,
+                strokeColor: purple_1,
+                data: dataset
               },
 
           ]
@@ -638,19 +687,17 @@ $(document).ready(function() {
 
   }
 
-
-
-    Array.prototype.sortOn = function(){
-      var dup = this.slice();
-      if(!arguments.length) return dup.sort();
-      var args = Array.prototype.slice.call(arguments);
-      return dup.sort(function(a,b){
-        var props = args.slice();
-        var prop = props.shift();
-        while(a[prop] == b[prop] && props.length) prop = props.shift();
-        return a[prop] == b[prop] ? 0 : a[prop] > b[prop] ? 1 : -1;
-      });
-    };
+  Array.prototype.sortOn = function(){
+    var dup = this.slice();
+    if(!arguments.length) return dup.sort();
+    var args = Array.prototype.slice.call(arguments);
+    return dup.sort(function(a,b){
+      var props = args.slice();
+      var prop = props.shift();
+      while(a[prop] == b[prop] && props.length) prop = props.shift();
+      return a[prop] == b[prop] ? 0 : a[prop] > b[prop] ? 1 : -1;
+    });
+  };
 
   /***************************** star ratings *****************************/
 
@@ -806,7 +853,4 @@ $(document).ready(function() {
     
   initTabletop();
   
-  
-	$('#test').tipsy();
-
 }); //close ready
