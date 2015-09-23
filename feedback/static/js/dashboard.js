@@ -292,10 +292,35 @@ $(document).ready(function() {
 	  var sctxBar = new Chart(sctx).HorizontalBar(vdata);
 		// end surveys by role
 		
+		// successful task completion
+		var cctx = $("#s-complete-chart").get(0).getContext("2d");
+	  var cctxdata = JSON.parse($("#surveycomplete")[0].childNodes[0].data);
+	  
+	  var total = cctxdata.data.total;
+	  var completeTrue = cctxdata.data.yes;
+	  var completeFalse = total - completeTrue;
+	 
+	  var cctxPie = [
+	    {
+	      value: completeTrue,
+	      color:purple_1,
+	      highlight: t_purple_1,
+	      label: 'Successfully completed task'
+	    },
+	    {
+	      value: completeFalse,
+	      color: purple_4,
+	      highlight: t_purple_4,
+	      label: 'Failed to complete task'
+	    }
+	  ];
+
+	  var cctxPieChart = new Chart(cctx).Pie(cctxPie);/**/
+		
+		// end successful task completion
 		
 	  // Get context with jQuery - using jQuery's .get() method.
 	  var ctx = $("#myChart").get(0).getContext("2d");
-	
 	  var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
 	  //console.log(jsondata);
 	
@@ -322,9 +347,9 @@ $(document).ready(function() {
 	  };
 	
 	  var myLineChart = new Chart(ctx).Line(data);
+	  
 	  var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
-	
-	  var  pctx = $("#surveyChart").get(0).getContext("2d");
+		var  pctx = $("#surveyChart").get(0).getContext("2d");
 	
 	  var pieData = [
 	    {
