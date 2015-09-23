@@ -16,7 +16,7 @@ from feedback.dashboard.vendorsurveys import (
 )
 
 from feedback.dashboard.permits import (
-    api_health, get_lifespan, get_avg_cost,
+    api_health, get_lifespan,
     get_permit_types,
     get_master_permit_counts
 )
@@ -124,16 +124,16 @@ dashboard_collection = [
         "data": get_lifespan('h')
     },
     {
-        "title": "Avg Cost of an Open Commercial Permit",
-        "data": float(get_avg_cost('c'))
+        "title": "(UNUSED) Avg Cost of an Open Commercial Permit",
+        "data": 0
     },
     {
-        "title": "Avg Cost of an Open Residential Permit",
-        "data": float(get_avg_cost('r'))
+        "title": "(UNUSED) Avg Cost of an Open Residential Permit",
+        "data": 0
     },
     {
-        "title": "Avg Cost of an Owner/Builder Permit",
-        "data": float(get_avg_cost('h'))
+        "title": "(UNUSED) Avg Cost of an Owner/Builder Permit",
+        "data": 0
     },
     {
         "title": "Permits & sub-permits issued by type, Last 30 Days",
