@@ -5,6 +5,9 @@ import datetime
 import requests
 import numpy as np
 
+# from flask import current_app
+from feedback.extensions import cache
+
 API_URL = 'https://opendata.miamidade.gov/resource/vvjq-pfmc.json'
 
 
@@ -39,6 +42,7 @@ def json_to_dateobj(jsondate):
     return datetime.datetime.strptime(jsondate, '%Y-%m-%dT%H:%M:%S.000')
 
 
+@cache.memoize(timeout=86400)
 def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     '''
     Run the API call between arg1 days ago and arg2 days ago.
@@ -143,8 +147,7 @@ def get_lifespan(property_type='c'):
     Returns an array of the lifespan from the most recent 30 days, the 30 days before, etc up to a year previous
     '''
     lifespan_array = []
-
-    for i in range(0, 11):
+    for i in range(0, 5):
         lifespan_array.append(lifespan_api_call(i*30, (i+1)*30, property_type))
 
     return lifespan_array
@@ -155,9 +158,11 @@ def api_count_call(arg1=0, arg2=30, field=''):
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
     API = API_URL + '?$select=count(*)%20as%20total&$where=starts_with(process_number,%20%27C%27)%20AND%20permit_type=%27BLDG%27%20AND%20master_permit_number=0%20AND%20' + field + '%20%3E%20%27' + days_30 + '%27%20AND%20' + field + '%20<%20%27' + days_0 + '%27'
+    # print API
     response = requests.get(API)
     json_result = response.json()
-    return float(json_result[0]['total'])
+    total = float(json_result[0]['total'])
+    return total
 
 
 def get_master_permit_counts(arg1):

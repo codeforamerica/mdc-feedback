@@ -64,6 +64,25 @@
 	</div>
 
   <div class='three columns panel first-panel'>
+    <div class='headline'>{{ dash_obj[14].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
+    <ul>
+      <li>English: {{ dash_obj[14].data.en }}</li><br />
+      <li>Spanish: {{ dash_obj[14].data.es }}</li><br />
+      <li>Apply for a Permit: {{ dash_obj[14].data.p1 }}</li><br />
+      <li>Meet w/ Inspector: {{ dash_obj[14].data.p2 }}</li><br />
+      <li>Meet w/ Plan Reviewer: {{ dash_obj[14].data.p3 }}</li><br />
+      <li>Violations/Liens: {{ dash_obj[14].data.p4 }}</li><br />
+      <li>CU/CO: {{ dash_obj[14].data.p5 }}</li><br />
+      <li>Role 1: {{ dash_obj[14].data.r1 }}</li><br />
+      <li>Role 2: {{ dash_obj[14].data.r2 }}</li><br />
+      <li>Role 3: {{ dash_obj[14].data.r3 }}</li><br />
+      <li>Role 4: {{ dash_obj[14].data.r4 }}</li><br />
+      <li>Role 5: {{ dash_obj[14].data.r5 }}</li>
+    </ul>
+
+  </div>
+
+  <div class='three columns panel'>
     <div class='headline'>{{ dash_obj[10].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
     {{ dash_obj[10].data }}
     <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveyrole</code>. In each array element, the first digit is a constant for user type, the second is occurance.</p>
@@ -71,11 +90,11 @@
 
   <div class='three columns panel'>
     <div class='headline'>{{ dash_obj[12].title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
-    {{ dash_obj[12].data }}
-    <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveycomplete</code>.</p>
+    <p>{{ dash_obj[12].data.yes }} out of {{ dash_obj[12].data.total }} people stated they had completed the task they set out to do.</p>
+    <p><code>#surveycomplete</code></p>
   </div>
 
-  <div class='three columns panel'>
+  <div class='three columns panel last-panel'>
     <div class='headline'>{{ dash_obj[13].title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
     {{ dash_obj[13].data }}
     <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveypurpose</code>. In each array element, the first digit is a constant for user type, the second is occurance. If it's a full sentence then they wrote it out via typeform.</p>

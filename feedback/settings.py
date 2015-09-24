@@ -36,7 +36,6 @@ class DevelopmentConfig(Config):
     DEBUG = True
     DEBUG_TB_ENABLED = True
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
-    CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://localhost:9000')
 
 
