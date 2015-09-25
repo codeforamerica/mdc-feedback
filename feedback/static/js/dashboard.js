@@ -319,6 +319,35 @@ $(document).ready(function() {
 		
 		// end successful task completion
 		
+		// surveys by purpose
+		var sptx = $("#s-purpose-chart").get(0).getContext("2d");
+	  var sptxdata = JSON.parse($("#surveypurpose")[0].childNodes[0].data);
+	  
+	  console.log(sptxdata);
+	  
+	  var total = cctxdata.data.total;
+	  var completeTrue = cctxdata.data.yes;
+	  var completeFalse = total - completeTrue;
+	 
+	  var sptxPie = [
+	    {
+	      value: completeTrue,
+	      color:purple_1,
+	      highlight: t_purple_1,
+	      label: 'Successfully completed task'
+	    },
+	    {
+	      value: completeFalse,
+	      color: purple_4,
+	      highlight: t_purple_4,
+	      label: 'Failed to complete task'
+	    }
+	  ];
+
+	  var sptxPieChart = new Chart(sptx).Pie(sptxPie);/**/
+		
+		// end surveys by purpose
+		
 	  // Get context with jQuery - using jQuery's .get() method.
 	  var ctx = $("#myChart").get(0).getContext("2d");
 	  var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
@@ -844,11 +873,10 @@ $(document).ready(function() {
 	
   function buildTipsy(data, tabletop) {
     //alert("Successfully processed!")
-    console.log(data);
+    //console.log(data);
     
     for(var i = 0; i < data.length; i++) {
 	    
-	    console.log(data[i].hoverid);
 	    var obj = {}
 		    
 		    obj.hID = data[i].hoverid;
@@ -870,7 +898,7 @@ $(document).ready(function() {
 			    $(this).attr('title', data[i].descriptionforhover);
 			    var mid = '#' + data[i].hoverid;
 			    $(mid).tipsy();
-			    console.log(mid);
+			    //console.log(mid);
 		    }
 	    }
     })

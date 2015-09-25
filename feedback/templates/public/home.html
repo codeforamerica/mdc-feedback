@@ -77,8 +77,12 @@
 		</div>
   </div>
 
-  <div class='three columns panel'>
-    <div class='headline'>{{ dash_obj[13].title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
+  <div class='four columns panel last-panel'>
+    <div class='headline'>{{ dash_obj[13].title }}<a class='what-is-this u-pull-right' href='#' id='s-purpose'><img class='' src='static/images/question_bk.png'></a></div>
+    
+    <div class='content-container'>
+			<canvas id='s-purpose-chart'></canvas>
+		</div>
     {{ dash_obj[13].data }}
     <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveypurpose</code>. In each array element, the first digit is a constant for user type, the second is occurance. If it's a full sentence then they wrote it out via typeform.</p>
   </div>
