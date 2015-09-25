@@ -8,6 +8,12 @@ from feedback.utils import utc_to_local
 from collections import Counter
 import numpy as np
 
+ROLES = {}
+ROLES['1'] = 'Business Owner'
+ROLES['2'] = 'Architect'
+ROLES['3'] = 'Permit Consultant'
+ROLES['4'] = 'Contractor'
+ROLES['5'] = 'Homeowner'
 
 TYPEFORM_API = 'https://api.typeform.com/v0/form/aaz1iK?key='
 TYPEFORM_API_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
@@ -50,6 +56,10 @@ TEXTIT_UUID_EN = '920cec13-ffc0-4fe9-92c3-1cced2073498'
 TEXTIT_UUID_ES = '7001c507-1c9e-46dd-aea3-603b986c3d89'
 TEXTIT_AUTH_KEY = '41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9'
 TEXTIT_UUID_OPINION = '53249739-7b72-43c2-9463-e4cd4963a408'
+
+
+def roles_const_to_string(arg):
+    return ROLES[str(arg)]
 
 
 def fill_values(array, arg1, arg2):
