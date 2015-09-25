@@ -62,7 +62,7 @@
 
 		<p class='details invisible-button'><a href="{{ url_for('dashboard.survey_detail') }}">View Details</a></p>
 	</div>
-
+<!-- merge conflict began here -->
   <div class='four columns panel first-panel'>
     <div class='headline'>{{ dash_obj[10].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
     <div class='content-container'>
@@ -83,6 +83,43 @@
     <div class='content-container'>
 			<canvas id='s-purpose-chart'></canvas>
 		</div>
+
+<!-- merge conflict ended here -->
+
+  <div class='three columns panel first-panel'>
+    <div class='headline'>{{ dash_obj[14].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
+    <ul>
+      <li>English: {{ dash_obj[14].data.en }}</li><br />
+      <li>Spanish: {{ dash_obj[14].data.es }}</li><br />
+      <li>Apply for a Permit: {{ dash_obj[14].data.p1 }}</li><br />
+      <li>Meet w/ Inspector: {{ dash_obj[14].data.p2 }}</li><br />
+      <li>Meet w/ Plan Reviewer: {{ dash_obj[14].data.p3 }}</li><br />
+      <li>Violations/Liens: {{ dash_obj[14].data.p4 }}</li><br />
+      <li>CU/CO: {{ dash_obj[14].data.p5 }}</li><br />
+      <li>Role 1: {{ dash_obj[14].data.r1 }}</li><br />
+      <li>Role 2: {{ dash_obj[14].data.r2 }}</li><br />
+      <li>Role 3: {{ dash_obj[14].data.r3 }}</li><br />
+      <li>Role 4: {{ dash_obj[14].data.r4 }}</li><br />
+      <li>Role 5: {{ dash_obj[14].data.r5 }}</li>
+    </ul>
+
+  </div>
+
+  <div class='three columns panel'>
+    <div class='headline'>{{ dash_obj[10].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
+    {{ dash_obj[10].data }}
+    <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveyrole</code>. In each array element, the first digit is a constant for user type, the second is occurance.</p>
+  </div>
+
+  <div class='three columns panel'>
+    <div class='headline'>{{ dash_obj[12].title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
+    <p>{{ dash_obj[12].data.yes }} out of {{ dash_obj[12].data.total }} people stated they had completed the task they set out to do.</p>
+    <p><code>#surveycomplete</code></p>
+  </div>
+
+  <div class='three columns panel last-panel'>
+    <div class='headline'>{{ dash_obj[13].title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
+>>>>>>> 06a994f6b3fdd8e7aaf33d4438e5bdd017afe034
     {{ dash_obj[13].data }}
     <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveypurpose</code>. In each array element, the first digit is a constant for user type, the second is occurance. If it's a full sentence then they wrote it out via typeform.</p>
   </div>
@@ -197,7 +234,7 @@
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 -->
-    
+
     <div class='four columns panel first-panel'>
       <div class='headline'>{{ dash_obj[9].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-type'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container'>
@@ -289,19 +326,10 @@
     <div class='four columns panel{% if lastpanel==True %} last-panel{% endif %}'>
 
       <div class='headline'>{{ title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
-      
+
       <div class='content-container vertical-center-35'>
 
-        <p class='huge bold'>{{ val }} days</p>
-        <p>Versus previous 30 days:
-          {% if yoy > 0 %}
-          <span class='bold red'>Up
-          {% else %}
-          <span class='bold green'>Down
-          {% endif %}
-          {{ '%0.2f'| format(yoy|float) }}%
-          </span>
-        </p>
+
       </div>
       <p class='hidden details invisible-button'><a href=#>View Details</a></p>
     </div>
