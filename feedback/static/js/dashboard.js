@@ -323,28 +323,65 @@ $(document).ready(function() {
 		var sptx = $("#s-purpose-chart").get(0).getContext("2d");
 	  var sptxdata = JSON.parse($("#surveypurpose")[0].childNodes[0].data);
 	  
-	  console.log(sptxdata);
+	  /*   <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveypurpose</code>. In each array element, the first digit is a constant for user type, the second is occurance. If it's a full sentence then they wrote it out via typeform.</p> */
+		  
+		//this only works because it's a known quantity.	  
+	  homeowners = {label:'Find out about a violation/lien', count:0};
+	  architects = {label:'Meet with an inspector', count:0};
+	  contractors = {label:'Apply for a permit', count:0};
+	  consultants = {label:'Meet with a plan reviewer', count:0};
+	  owners = {label:'Obtain a certificate of use/occupancy', count:0};
+	  sorter = [architects, owners, consultants, contractors, homeowners];
 	  
-	  var total = cctxdata.data.total;
-	  var completeTrue = cctxdata.data.yes;
-	  var completeFalse = total - completeTrue;
-	 
-	  var sptxPie = [
-	    {
-	      value: completeTrue,
-	      color:purple_1,
-	      highlight: t_purple_1,
-	      label: 'Successfully completed task'
-	    },
-	    {
-	      value: completeFalse,
-	      color: purple_4,
-	      highlight: t_purple_4,
-	      label: 'Failed to complete task'
-	    }
-	  ];
+	  var sptxseries = [];
+	  var sptxlabels = [];
 
-	  var sptxPieChart = new Chart(sptx).Pie(sptxPie);/**/
+	  for(var i = 0; i < sptxdata.data.length;i ++) {
+
+			switch(parseInt(sptxdata.data[i][0])) {
+				
+				case 1:
+					contractors.count++;
+					break;
+				case 2:
+					architects.count++;
+					break;
+				case 3:
+					consultants.count++;
+					break;
+				case 4:
+					homeowners.count++;
+					break;
+				case 5:
+					owners.count++;
+					break;
+					
+			}
+			
+    }
+    
+    for(var i = 0; i < sorter.length; i++) {
+	    
+	    sptxseries[i] = sorter[i].count;
+	    sptxlabels[i] = sorter[i].label;
+    }
+	  
+	  console.log(sptxseries, sptxlabels);
+	  
+	  var sptxCdata = {
+      labels: sptxlabels,
+      datasets: [
+          {
+              label: "Respondents by Purpose",
+              fillColor: t_purple_1,
+              strokeColor: purple_1,
+              data: sptxseries
+          },
+
+      ]
+    };
+
+	  var sptxBarChart = new Chart(sptx).HorizontalBar(sptxCdata);/**/
 		
 		// end surveys by purpose
 		
