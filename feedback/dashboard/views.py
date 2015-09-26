@@ -11,7 +11,8 @@ from feedback.dashboard.vendorsurveys import (
     get_rating_scale, get_surveys_by_role,
     get_surveys_by_completion, get_surveys_by_purpose,
     get_all_survey_responses, get_rating_by_lang,
-    get_rating_by_purpose, get_rating_by_role
+    get_rating_by_purpose, get_rating_by_role,
+    roles_const_to_string
 )
 
 from feedback.dashboard.permits import (
@@ -176,7 +177,15 @@ def survey_index():
 
 
 @blueprint.route('/dashboard/feedback/', methods=['GET'])
-def survey_detail():
+def all_surveys():
+    survey_table = get_all_survey_responses(SURVEY_DAYS)
+    for row in survey_table:
+        row['role'] = roles_const_to_string(row['role'])
+    return render_template("dashboard/all-surveys.html", resp_obj=survey_table, title='Permitting & Inspection Center User Survey Metrics: Detail')
+
+
+@blueprint.route('/dashboard/feedback/<id>', methods=['GET'])
+def survey_detail(id):
     survey_table = get_all_survey_responses(SURVEY_DAYS)
     return render_template("dashboard/survey-detail.html", resp_obj=survey_table, title='Permitting & Inspection Center User Survey Metrics: Detail')
 
