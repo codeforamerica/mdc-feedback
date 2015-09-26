@@ -8,76 +8,120 @@ from feedback.utils import utc_to_local
 from collections import Counter
 import numpy as np
 
+ROLES = {}
+# FIXME: VERIFY CONSTANTS AGAINST V4 TEXTIT
+ROLES['1'] = 'Contractor'
+ROLES['2'] = 'Architect'
+ROLES['3'] = 'Permit Consultant'
+ROLES['4'] = 'Homeowner'
+ROLES['5'] = 'Business Owner'
 
-TYPEFORM_API = 'https://api.typeform.com/v0/form/aaz1iK?key='
+TYPEFORM_API = 'https://api.typeform.com/v0/form/NNCQGT?key='
 TYPEFORM_API_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
 
-TF_OPINION_EN = 'opinionscale_9825055'
-TF_OPINION_ES = 'opinionscale_9825056'
+TF_LANG_EN = 'list_11278243_choice'
+TF_ROLE_EN = 'list_11029984_choice'
+TF_ROLE_ES = 'list_11029987_choice'
 
-TF_BESTWORST_EN = 'textarea_9825061'
-TF_BESTWORST_ES = 'textarea_9825064'
+TF_PURP_EN = 'list_11029985_choice'
+TF_PURP_OTHER_EN = 'list_11029985_other'
+TF_PURP_ES = 'list_11422502_choice'
+TF_PURP_OTHER_ES = 'list_11422502_other'
 
-TF_1STTIME_EN = 'yesno_9825058'
-TF_1STTIME_ES = 'yesno_9825060'
-TF_GETDONE_EN = 'yesno_9825057'
-TF_GETDONE_ES = 'yesno_10444681'
+TF_OPINION_EN = 'opinionscale_11029990'
+TF_OPINION_ES = 'opinionscale_11029991'
 
-TF_IMPROVE_EN = 'textarea_9825062'
-TF_IMPROVE_ES = 'textarea_9825065'
+TF_GETDONE_EN = 'yesno_11029979'
+TF_GETDONE_ES = 'yesno_11278208'
 
-TF_COMMENTS_EN = 'textarea_9825063'
-TF_COMMENTS_ES = 'textarea_9825066'
-TF_ROLE_EN = 'list_9825053_choice'
-TF_ROLE_ES = 'list_9825054_choice'
+TF_BEST_EN = 'list_11277420_choice'
+TF_BEST_OTHER_EN = 'list_11277420_other'
+TF_WORST_EN = 'list_11277432_choice'
+TF_WORST_OTHER_EN = 'list_11277432_other'
+TF_BEST_ES = 'list_11277910_choice'
+TF_BEST_OTHER_ES = 'list_11277910_other'
+TF_WORST_ES = 'list_11277952_choice'
+TF_WORST_OTHER_ES = 'list_11277952_other'
 
-TF_PURP_PERMIT_EN = 'list_10432251_choice_12738830'
-TF_PURP_INSPECTOR_EN = 'list_10432251_choice_12738831'
-TF_PURP_PLANREVIEW_EN = 'list_10432251_choice_12738832'
-TF_PURP_VIOLATION_EN = 'list_10432251_choice_12738833'
-TF_PURP_CU_EN = 'list_10432251_choice_12738834'
-TF_PURP_OTHER_EN = 'list_10432251_other'
+TF_IMPROVE_EN = 'list_11277447_choice'
+TF_IMPROVE_OTHER_EN = 'list_11277447_other'
+TF_IMPROVE_ES = 'list_11278117_choice'
+TF_IMPROVE_OTHER_ES = 'list_11278117_other'
 
-TF_PURP_PERMIT_ES = 'list_10444324_choice_12758795'
-TF_PURP_INSPECTOR_ES = 'list_10444324_choice_12758796'
-TF_PURP_PLANREVIEW_ES = 'list_10444324_choice_12758797'
-TF_PURP_VIOLATION_ES = 'list_10444324_choice_12758798'
-TF_PURP_CU_ES = 'list_10444324_choice_12758799'
-TF_PURP_OTHER_ES = 'list_10444324_other'
+TF_COMMENTS_EN = 'textarea_11029995'
+TF_COMMENTS_ES = 'textarea_11029999'
+
+TF_ROUTE_BLDG_EN = 'list_11029986_choice_13530136'
+TF_ROUTE_CASHIER_EN = 'list_11029986_choice_13530137'
+TF_ROUTE_CONTRACTOR_EN = 'list_11029986_choice_13530138'
+TF_ROUTE_ELEC_EN = 'list_11029986_choice_13530139'
+TF_ROUTE_DERM_EN = 'list_11029986_choice_13530140'
+TF_ROUTE_FIRE_EN = 'list_11029986_choice_13530141'
+TF_ROUTE_HRS_EN = 'list_11029986_choice_13530142'
+TF_ROUTE_MICRO_EN = 'list_11029986_choice_13530143'
+TF_ROUTE_CODE_EN = 'list_11029986_choice_13530144'
+TF_ROUTE_MECH_EN = 'list_11029986_choice_13530145'
+TF_ROUTE_PAI_EN = 'list_11029986_choice_13530146'
+TF_ROUTE_PLUM_EN = 'list_11029986_choice_14067645'
+TF_ROUTE_WASD_EN = 'list_11029986_choice_13530147'
+TF_ROUTE_ZONE_EN = 'list_11029986_choice_13530148'
+TF_ROUTE_OTHER_EN = 'list_11029986_other'
+
+TF_ROUTE_BLDG_ES = 'list_11029989_choice_13530159'
+TF_ROUTE_CASHIER_ES = 'list_11029989_choice_13530160'
+TF_ROUTE_CONTRACTOR_ES = 'list_11029989_choice_13530161'
+TF_ROUTE_ELEC_ES = 'list_11029989_choice_13530162'
+TF_ROUTE_DERM_ES = 'list_11029989_choice_13530163'
+TF_ROUTE_FIRE_ES = 'list_11029989_choice_13530164'
+TF_ROUTE_HRS_ES = 'list_11029989_choice_13530165'
+TF_ROUTE_MICRO_ES = 'list_11029989_choice_13530166'
+TF_ROUTE_CODE_ES = 'list_11029989_choice_13530167'
+TF_ROUTE_MECH_ES = 'list_11029989_choice_13530168'
+TF_ROUTE_PAI_ES = 'list_11029989_choice_13530169'
+TF_ROUTE_PLUM_ES = 'list_11029989_choice_14067669'
+TF_ROUTE_WASD_ES = 'list_11029989_choice_13530170'
+TF_ROUTE_ZONE_ES = 'list_11029989_choice_13530171'
+TF_ROUTE_OTHER_ES = 'list_11029989_other'
+
+TF_FOLLOWUP_EN = 'yesno_11029980'
+TF_FOLLOWUP_ES = 'yesno_11029983'
+TF_CONTACT_EN = 'textfield_11277574'
+TF_CONTACT_ES = 'textfield_11278128'
 
 TEXTIT_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
-TEXTIT_UUID_EN = '920cec13-ffc0-4fe9-92c3-1cced2073498'
-TEXTIT_UUID_ES = '7001c507-1c9e-46dd-aea3-603b986c3d89'
+TEXTIT_UUID_EN = 'bdb57073-ab32-4c1b-a3a5-25f866b9626b'
+TEXTIT_UUID_ES = '0aa9f77b-d775-4bc9-952a-1a6636258841'
 TEXTIT_AUTH_KEY = '41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9'
-TEXTIT_UUID_OPINION = '53249739-7b72-43c2-9463-e4cd4963a408'
 
 
-def fill_values(array, arg1, arg2):
-    try:
-        if array[arg1]:
-            return array[arg1]
-        else:
-            return array[arg2]
-    except KeyError:
-        try:
-            if array[arg2]:
-                return array[arg2]
-        except KeyError:
-            return ''
+def roles_const_to_string(arg):
+    return ROLES[str(arg)]
 
 
-def fill_purpose(array, arg1, arg2):
-    # if TF_PURP_PERMIT_EN in results or TF_PURP_PERMIT_ES in results:
-    try:
-        if not array[arg1]:
+def fill_values(array, en, es):
+    if not array[en]:
+        if not array[es]:
             return False
         else:
-            return array[arg1]
-    except KeyError:
-        if not array[arg2]:
-            return False
+            return array[es]
+    else:
+        return array[en]
+
+
+def fill_values_other(array, en, es, en_other, es_other):
+    if not array[en] and not array[en_other]:
+        if not array[es]:
+            if not array[es_other]:
+                return False
+            else:
+                return array[es_other]
         else:
-            return array[arg2]
+            return array[es]
+    else:
+        if not array[en]:
+            return array[en_other]
+        else:
+            return array[en]
 
 
 def make_typeform_call(timestamp):
@@ -108,7 +152,7 @@ def make_textit_call(timestamp):
     response2 = requests.get(SMS_API, headers={'Authorization': 'Token ' + TEXTIT_AUTH_KEY})
 
     json_result = response2.json()
-    # print json_result
+    # print 'json', json_result
     return json_result
 
 
@@ -131,12 +175,13 @@ def parse_textit(survey_table, json_result):
         iter_obj = {
             'id': 'SMS-' + str(obj['run']),
             'method': 'sms',
-            'firsttime': iter['First Time']['category'],
-            'getdone': iter['Get it Done']['text'],
+            'route': iter['Section']['text'],
+            'getdone': iter['Tasks']['text'],
             'role': filter_role(iter['Role']['text']),
             'rating': iter['Experience Rating']['text'],
             'improvement': iter['Improvement']['text'],
-            'bestworst': iter['Best and Worst']['text'],
+            'best': iter['Best']['text'],
+            'worst': iter['Worst']['text'],
             'followup': iter['Followup Permission']['category'],
             'morecomments': iter['Comments']['text']
         }
@@ -163,7 +208,7 @@ def parse_textit(survey_table, json_result):
 
 def filter_role(arg1):
     '''
-    The role returns either a string (both EN/ES) or a int depending on the API. This is a filter that converms them into integers for filter_table in the prase functions. Will try to find the first number if it's mixed e.g. "Number 5"
+    The role returns int. This is a filter that converts into integers for filter_table in the prase functions. Will try to find the first number if it's mixed e.g. "Number 5"
     Returns an integer or False if it doesn't know what to do with itself.
     '''
     if arg1.isdigit():
@@ -172,7 +217,7 @@ def filter_role(arg1):
         arg1 = arg1.lower()
         if arg1 in ['contractor', 'contratista']:
             return 1
-        if arg1 in ['architect', 'arquitecto']:
+        if arg1 in ['architect / engineer', 'arquitecto / ingeniero']:
             return 2
         if arg1 in ['permit consultant', 'consultor de permiso']:
             return 3
@@ -183,27 +228,63 @@ def filter_role(arg1):
         return [int(s) for s in arg1.split() if s.isdigit()][0]
 
 
-def fill_typeform_purpose(results):
+def filter_purpose(arg1):
+    if arg1.isdigit():
+        return int(arg1)
+    else:
+        arg1 = arg1.lower()
+        if 'permit' in arg1 or 'permiso' in arg1:
+            return 1
+        if 'inspector' in arg1:
+            return 2
+        if 'reviewer' in arg1 or 'revisador' in arg1:
+            return 3
+        if 'violation' in arg1 or 'gravamen' in arg1:
+            return 4
+        if 'certificate' in arg1 or 'certificado' in arg1:
+            return 5
+        return [int(s) for s in arg1.split() if s.isdigit()][0]
+
+
+def fill_typeform_route(results):
     '''
     Returns an array of integers for purposes mapped to the possible purposes. If there is a string that means someone typed in a result in the "other" column
     '''
     return_array = []
 
-    if fill_purpose(results, TF_PURP_PERMIT_EN, TF_PURP_PERMIT_ES):
+    if fill_values(results, TF_ROUTE_BLDG_EN, TF_ROUTE_BLDG_ES):
         return_array.append(1)
-    if fill_purpose(results, TF_PURP_INSPECTOR_EN, TF_PURP_INSPECTOR_ES):
+    if fill_values(results, TF_ROUTE_CASHIER_EN, TF_ROUTE_CASHIER_ES):
         return_array.append(2)
-    if fill_purpose(results, TF_PURP_PLANREVIEW_EN, TF_PURP_PLANREVIEW_ES):
+    if fill_values(results, TF_ROUTE_CONTRACTOR_EN, TF_ROUTE_CONTRACTOR_ES):
         return_array.append(3)
-    if fill_purpose(results, TF_PURP_VIOLATION_EN, TF_PURP_VIOLATION_ES):
+    if fill_values(results, TF_ROUTE_ELEC_EN, TF_ROUTE_ELEC_ES):
         return_array.append(4)
-    if fill_purpose(results, TF_PURP_CU_EN, TF_PURP_CU_ES):
+    if fill_values(results, TF_ROUTE_DERM_EN, TF_ROUTE_DERM_ES):
         return_array.append(5)
+    if fill_values(results, TF_ROUTE_FIRE_EN, TF_ROUTE_FIRE_ES):
+        return_array.append(6)
+    if fill_values(results, TF_ROUTE_HRS_EN, TF_ROUTE_HRS_ES):
+        return_array.append(7)
+    if fill_values(results, TF_ROUTE_MICRO_EN, TF_ROUTE_MICRO_ES):
+        return_array.append(8)
+    if fill_values(results, TF_ROUTE_CODE_EN, TF_ROUTE_CODE_ES):
+        return_array.append(9)
+    if fill_values(results, TF_ROUTE_MECH_EN, TF_ROUTE_MECH_ES):
+        return_array.append(10)
+    if fill_values(results, TF_ROUTE_PAI_EN, TF_ROUTE_PAI_ES):
+        return_array.append(11)
+    if fill_values(results, TF_ROUTE_PLUM_EN, TF_ROUTE_PLUM_ES):
+        return_array.append(12)
+    if fill_values(results, TF_ROUTE_WASD_EN, TF_ROUTE_HRS_ES):
+        return_array.append(13)
+    if fill_values(results, TF_ROUTE_ZONE_EN, TF_ROUTE_MICRO_ES):
+        return_array.append(14)
 
-    if results[TF_PURP_OTHER_EN]:
-        return_array.append(results[TF_PURP_OTHER_EN])
-    if results[TF_PURP_OTHER_ES]:
-        return_array.append(results[TF_PURP_OTHER_ES])
+    if results[TF_ROUTE_OTHER_EN]:
+        return_array.append(results[TF_ROUTE_OTHER_EN])
+    if results[TF_ROUTE_OTHER_ES]:
+        return_array.append(results[TF_ROUTE_OTHER_ES])
 
     return return_array
 
@@ -214,8 +295,7 @@ def parse_typeform(survey_table, json_result):
         iter_obj = {'method': 'web'}
         answers_arr = survey_response['answers']
 
-        # LANGUAGE CHOICE LOGIC JUMP = 'list_9825052_choice'
-        if "English" in answers_arr['list_9825052_choice']:
+        if "English" in answers_arr[TF_LANG_EN]:
             iter_obj['lang'] = 'en'
         else:
             iter_obj['lang'] = 'es'
@@ -227,18 +307,20 @@ def parse_typeform(survey_table, json_result):
         date_object = utc_to_local(temp)
         iter_obj['date'] = date_object.strftime("%m-%d")
 
-        iter_obj['firsttime'] = fill_values(answers_arr, TF_1STTIME_EN, TF_1STTIME_ES)
         iter_obj['getdone'] = fill_values(answers_arr, TF_GETDONE_EN, TF_GETDONE_ES)
         iter_obj['rating'] = fill_values(answers_arr, TF_OPINION_EN, TF_OPINION_ES)
         iter_obj['improvement'] = fill_values(answers_arr, TF_IMPROVE_EN, TF_IMPROVE_ES)
-        iter_obj['bestworst'] = fill_values(answers_arr, TF_BESTWORST_EN, TF_BESTWORST_ES)
-
-        # FIXME: THERE'S NO FOLLOW UP IN THE WEB FORM
-        iter_obj['followup'] = fill_values(answers_arr, '', '')
+        iter_obj['best'] = fill_values_other(answers_arr, TF_BEST_EN, TF_BEST_ES, TF_BEST_OTHER_EN, TF_BEST_OTHER_ES)
+        iter_obj['worst'] = fill_values_other(answers_arr, TF_WORST_EN, TF_WORST_ES, TF_WORST_OTHER_EN, TF_WORST_OTHER_ES)
+        iter_obj['followup'] = fill_values(answers_arr, TF_FOLLOWUP_EN, TF_FOLLOWUP_ES)
+        iter_obj['contact'] = fill_values(answers_arr, TF_CONTACT_EN, TF_CONTACT_ES)
 
         iter_obj['morecomments'] = fill_values(answers_arr, TF_COMMENTS_EN, TF_COMMENTS_ES)
         iter_obj['role'] = filter_role(fill_values(answers_arr, TF_ROLE_EN, TF_ROLE_ES))
-        iter_obj['purpose'] = fill_typeform_purpose(answers_arr)
+        iter_obj['purpose'] = [filter_purpose(fill_values_other(answers_arr, TF_PURP_EN, TF_PURP_ES, TF_PURP_OTHER_EN, TF_PURP_OTHER_ES))]
+
+        iter_obj['route'] = fill_typeform_route(answers_arr)
+
         survey_table.append(iter_obj)
 
     return survey_table
@@ -281,7 +363,7 @@ def get_rating_by_lang(survey_table, lang='en'):
 
 def get_rating_by_role(survey_table, role):
     arr = [int(x['rating']) for x in survey_table if x['rating'].isdigit() and x['role'] == role]
-    print role, arr
+    # print role, arr
     return np.mean(arr)
 
 
