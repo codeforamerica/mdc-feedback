@@ -796,12 +796,139 @@ $(document).ready(function() {
     score: function() {
       //console.log($(this).find('.hidden').text(), 'is value')
       return $(this).find('.invisible').text();
-    },
-    path: 'static/images',
-    half: true,
-    readOnly:true,
-    number:7
-  });
+	    },
+	    path: 'static/images',
+	    half: true,
+	    readOnly:true,
+	    number:7
+	  });
+	  
+	  $('#s-lang-rate-en').raty({
+    score: function() {
+      //console.log($(this).find('.hidden').text(), 'is value')
+      return $('#rate-en').text();
+	    },
+	    path: 'static/images',
+	    half: true,
+	    readOnly:true,
+	    number:7
+	  });
+	  
+	  $('#s-lang-rate-es').raty({
+	    score: function() {
+	      return $('#rate-en').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
+	  
+	  $('#s-purpose-rate-permit').raty({
+	    score: function() {
+	      return $('#rate-permit').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
+	  
+	  $('#s-purpose-rate-inspect').raty({
+	    score: function() {
+	      return $('#rate-inspect').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
+	  
+	  $('#s-purpose-rate-review').raty({
+	    score: function() {
+	      return $('#rate-review').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
+	  
+	  $('#s-purpose-rate-liens').raty({
+	    score: function() {
+	      return $('#rate-liens').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
+	  
+	  $('#s-purpose-rate-cu').raty({
+	    score: function() {
+	      return $('#rate-cu').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
+	  
+	  
+	  //
+	  //
+	  //s-purpose-rate
+	  //s-role-rate
+	  
+	  $('#s-role-rate-permit').raty({
+	    score: function() {
+	      return $('#role-rate-permit').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
+	  
+	  $('#s-role-rate-cu').raty({
+	    score: function() {
+	      return $('#role-rate-cu').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
+	  
+	  $('#s-role-rate-inspect').raty({
+	    score: function() {
+	      return $('role-rate-inspect').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
+	  
+	  $('#s-role-rate-review').raty({
+	    score: function() {
+	      return $('#role-rate-review').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
+	  
+	  $('#s-role-rate-lien').raty({
+	    score: function() {
+	      return $('#role-rate-lien').text();
+		    },
+		    path: 'static/images',
+		    half: true,
+		    readOnly:true,
+		    number:7
+	  });
 
   }
 
