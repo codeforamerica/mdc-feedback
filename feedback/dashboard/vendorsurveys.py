@@ -51,37 +51,8 @@ TF_IMPROVE_OTHER_ES = 'list_11278117_other'
 TF_COMMENTS_EN = 'textarea_11029995'
 TF_COMMENTS_ES = 'textarea_11029999'
 
-TF_ROUTE_BLDG_EN = 'list_11029986_choice_13530136'
-TF_ROUTE_CASHIER_EN = 'list_11029986_choice_13530137'
-TF_ROUTE_CONTRACTOR_EN = 'list_11029986_choice_13530138'
-TF_ROUTE_ELEC_EN = 'list_11029986_choice_13530139'
-TF_ROUTE_DERM_EN = 'list_11029986_choice_13530140'
-TF_ROUTE_FIRE_EN = 'list_11029986_choice_13530141'
-TF_ROUTE_HRS_EN = 'list_11029986_choice_13530142'
-TF_ROUTE_MICRO_EN = 'list_11029986_choice_13530143'
-TF_ROUTE_CODE_EN = 'list_11029986_choice_13530144'
-TF_ROUTE_MECH_EN = 'list_11029986_choice_13530145'
-TF_ROUTE_PAI_EN = 'list_11029986_choice_13530146'
-TF_ROUTE_PLUM_EN = 'list_11029986_choice_14067645'
-TF_ROUTE_WASD_EN = 'list_11029986_choice_13530147'
-TF_ROUTE_ZONE_EN = 'list_11029986_choice_13530148'
-TF_ROUTE_OTHER_EN = 'list_11029986_other'
-
-TF_ROUTE_BLDG_ES = 'list_11029989_choice_13530159'
-TF_ROUTE_CASHIER_ES = 'list_11029989_choice_13530160'
-TF_ROUTE_CONTRACTOR_ES = 'list_11029989_choice_13530161'
-TF_ROUTE_ELEC_ES = 'list_11029989_choice_13530162'
-TF_ROUTE_DERM_ES = 'list_11029989_choice_13530163'
-TF_ROUTE_FIRE_ES = 'list_11029989_choice_13530164'
-TF_ROUTE_HRS_ES = 'list_11029989_choice_13530165'
-TF_ROUTE_MICRO_ES = 'list_11029989_choice_13530166'
-TF_ROUTE_CODE_ES = 'list_11029989_choice_13530167'
-TF_ROUTE_MECH_ES = 'list_11029989_choice_13530168'
-TF_ROUTE_PAI_ES = 'list_11029989_choice_13530169'
-TF_ROUTE_PLUM_ES = 'list_11029989_choice_14067669'
-TF_ROUTE_WASD_ES = 'list_11029989_choice_13530170'
-TF_ROUTE_ZONE_ES = 'list_11029989_choice_13530171'
-TF_ROUTE_OTHER_ES = 'list_11029989_other'
+TF_ROUTE_EN = 'list_11510353_choice'
+TF_ROUTE_ES = 'list_11510726_choice'
 
 TF_FOLLOWUP_EN = 'yesno_11029980'
 TF_FOLLOWUP_ES = 'yesno_11029983'
@@ -152,7 +123,7 @@ def make_textit_call(timestamp):
     response2 = requests.get(SMS_API, headers={'Authorization': 'Token ' + TEXTIT_AUTH_KEY})
 
     json_result = response2.json()
-    # print 'json', json_result
+    print 'json', json_result
     return json_result
 
 
@@ -164,7 +135,8 @@ def parse_textit(survey_table, json_result):
         survey_table
     '''
     # print 'json_result', json_result
-    obj_completed = [result for result in json_result['results'] if result['completed']]
+    # obj_completed = [result for result in json_result['results'] if result['completed']]
+    obj_completed = [result for result in json_result['results']]
     for obj in obj_completed:
 
         iter = {}
@@ -252,40 +224,6 @@ def fill_typeform_route(results):
     '''
     return_array = []
 
-    if fill_values(results, TF_ROUTE_BLDG_EN, TF_ROUTE_BLDG_ES):
-        return_array.append(1)
-    if fill_values(results, TF_ROUTE_CASHIER_EN, TF_ROUTE_CASHIER_ES):
-        return_array.append(2)
-    if fill_values(results, TF_ROUTE_CONTRACTOR_EN, TF_ROUTE_CONTRACTOR_ES):
-        return_array.append(3)
-    if fill_values(results, TF_ROUTE_ELEC_EN, TF_ROUTE_ELEC_ES):
-        return_array.append(4)
-    if fill_values(results, TF_ROUTE_DERM_EN, TF_ROUTE_DERM_ES):
-        return_array.append(5)
-    if fill_values(results, TF_ROUTE_FIRE_EN, TF_ROUTE_FIRE_ES):
-        return_array.append(6)
-    if fill_values(results, TF_ROUTE_HRS_EN, TF_ROUTE_HRS_ES):
-        return_array.append(7)
-    if fill_values(results, TF_ROUTE_MICRO_EN, TF_ROUTE_MICRO_ES):
-        return_array.append(8)
-    if fill_values(results, TF_ROUTE_CODE_EN, TF_ROUTE_CODE_ES):
-        return_array.append(9)
-    if fill_values(results, TF_ROUTE_MECH_EN, TF_ROUTE_MECH_ES):
-        return_array.append(10)
-    if fill_values(results, TF_ROUTE_PAI_EN, TF_ROUTE_PAI_ES):
-        return_array.append(11)
-    if fill_values(results, TF_ROUTE_PLUM_EN, TF_ROUTE_PLUM_ES):
-        return_array.append(12)
-    if fill_values(results, TF_ROUTE_WASD_EN, TF_ROUTE_HRS_ES):
-        return_array.append(13)
-    if fill_values(results, TF_ROUTE_ZONE_EN, TF_ROUTE_MICRO_ES):
-        return_array.append(14)
-
-    if results[TF_ROUTE_OTHER_EN]:
-        return_array.append(results[TF_ROUTE_OTHER_EN])
-    if results[TF_ROUTE_OTHER_ES]:
-        return_array.append(results[TF_ROUTE_OTHER_ES])
-
     return return_array
 
 
@@ -319,7 +257,7 @@ def parse_typeform(survey_table, json_result):
         iter_obj['role'] = filter_role(fill_values(answers_arr, TF_ROLE_EN, TF_ROLE_ES))
         iter_obj['purpose'] = [filter_purpose(fill_values_other(answers_arr, TF_PURP_EN, TF_PURP_ES, TF_PURP_OTHER_EN, TF_PURP_OTHER_ES))]
 
-        iter_obj['route'] = fill_typeform_route(answers_arr)
+        iter_obj['route'] = fill_values(answers_arr, TF_ROUTE_EN, TF_ROUTE_ES)
 
         survey_table.append(iter_obj)
 
