@@ -60,8 +60,8 @@ TF_CONTACT_EN = 'textfield_11277574'
 TF_CONTACT_ES = 'textfield_11278128'
 
 TEXTIT_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
-TEXTIT_UUID_EN = 'bdb57073-ab32-4c1b-a3a5-25f866b9626b'
-TEXTIT_UUID_ES = '0aa9f77b-d775-4bc9-952a-1a6636258841'
+TEXTIT_UUID_EN = '0aa9f77b-d775-4bc9-952a-1a6636258841'
+TEXTIT_UUID_ES = 'bdb57073-ab32-4c1b-a3a5-25f866b9626b'
 TEXTIT_AUTH_KEY = '41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9'
 
 
@@ -152,8 +152,8 @@ def parse_textit(survey_table, json_result):
             'role': filter_role(iter['Role']['text']),
             'rating': iter['Experience Rating']['text'],
             'improvement': iter['Improvement']['text'],
-            'best': iter['Best']['text'],
-            'worst': iter['Worst']['text'],
+            'best': filter_best(iter['Best']['text']),
+            'worst': filter_worst(iter['Worst']['text']),
             'followup': iter['Followup Permission']['category'],
             'morecomments': iter['Comments']['text']
         }
@@ -169,9 +169,9 @@ def parse_textit(survey_table, json_result):
             iter_obj['lang'] = 'es'
 
         try:
-            iter_obj['purpose'] = [int(iter['Purpose']['text'])]
+            iter_obj['purpose'] = iter['Purpose']['text']
         except KeyError:
-            iter_obj['purpose'] = []
+            iter_obj['purpose'] = ''
 
         survey_table.append(iter_obj)
 
@@ -218,6 +218,38 @@ def filter_purpose(arg1):
         return [int(s) for s in arg1.split() if s.isdigit()][0]
 
 
+def filter_best(arg1):
+    if arg1.isdigit():
+        return {
+            '1': 'Getting questions answered and explained',
+            '2': 'Finishing tasks quickly',
+            '3': 'Courteous staff'
+        }.get(arg1, '')
+    else:
+        if arg1.startswith('ex. '):
+            return arg1[3:]
+        else:
+            if arg1.startswith('4 '):
+                return arg1[2:]
+    return arg1
+
+
+def filter_worst(arg1):
+    if arg1.isdigit():
+        return {
+            '1': 'Long wait time',
+            '2': 'Repeated visits for the same issue',
+            '3': 'Not being familiar to how the process works'
+        }.get(arg1, '')
+    else:
+        if arg1.startswith('ex. '):
+            return arg1[3:]
+        else:
+            if arg1.startswith('4 '):
+                return arg1[2:]
+    return arg1
+
+
 def fill_typeform_route(results):
     '''
     Returns an array of integers for purposes mapped to the possible purposes. If there is a string that means someone typed in a result in the "other" column
@@ -248,14 +280,14 @@ def parse_typeform(survey_table, json_result):
         iter_obj['getdone'] = fill_values(answers_arr, TF_GETDONE_EN, TF_GETDONE_ES)
         iter_obj['rating'] = fill_values(answers_arr, TF_OPINION_EN, TF_OPINION_ES)
         iter_obj['improvement'] = fill_values(answers_arr, TF_IMPROVE_EN, TF_IMPROVE_ES)
-        iter_obj['best'] = fill_values_other(answers_arr, TF_BEST_EN, TF_BEST_ES, TF_BEST_OTHER_EN, TF_BEST_OTHER_ES)
-        iter_obj['worst'] = fill_values_other(answers_arr, TF_WORST_EN, TF_WORST_ES, TF_WORST_OTHER_EN, TF_WORST_OTHER_ES)
+        iter_obj['best'] = filter_best(fill_values_other(answers_arr, TF_BEST_EN, TF_BEST_ES, TF_BEST_OTHER_EN, TF_BEST_OTHER_ES))
+        iter_obj['worst'] = filter_worst(fill_values_other(answers_arr, TF_WORST_EN, TF_WORST_ES, TF_WORST_OTHER_EN, TF_WORST_OTHER_ES))
         iter_obj['followup'] = fill_values(answers_arr, TF_FOLLOWUP_EN, TF_FOLLOWUP_ES)
         iter_obj['contact'] = fill_values(answers_arr, TF_CONTACT_EN, TF_CONTACT_ES)
 
         iter_obj['morecomments'] = fill_values(answers_arr, TF_COMMENTS_EN, TF_COMMENTS_ES)
         iter_obj['role'] = filter_role(fill_values(answers_arr, TF_ROLE_EN, TF_ROLE_ES))
-        iter_obj['purpose'] = [filter_purpose(fill_values_other(answers_arr, TF_PURP_EN, TF_PURP_ES, TF_PURP_OTHER_EN, TF_PURP_OTHER_ES))]
+        iter_obj['purpose'] = filter_purpose(fill_values_other(answers_arr, TF_PURP_EN, TF_PURP_ES, TF_PURP_OTHER_EN, TF_PURP_OTHER_ES))
 
         iter_obj['route'] = fill_values(answers_arr, TF_ROUTE_EN, TF_ROUTE_ES)
 
