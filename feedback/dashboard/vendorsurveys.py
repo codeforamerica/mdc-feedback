@@ -123,7 +123,7 @@ def make_textit_call(timestamp):
     response2 = requests.get(SMS_API, headers={'Authorization': 'Token ' + TEXTIT_AUTH_KEY})
 
     json_result = response2.json()
-    print 'json', json_result
+    # print 'json', json_result
     return json_result
 
 
@@ -310,12 +310,8 @@ def get_surveys_by_completion(survey_table):
 
 
 def get_surveys_by_purpose(survey_table):
-    i = [x['purpose'] for x in survey_table if x['purpose']]
-
-    # flattens list. See:http://stackoverflow.com/questions/952914/making-a-flat-list-out-of-list-of-lists-in-python
-    items = sum(i, [])
-
-    return Counter(items).most_common()
+    i = [str(x['purpose']) for x in survey_table if x['purpose']]
+    return Counter(i).most_common()
 
 
 def get_rating_scale(survey_table):
@@ -338,7 +334,7 @@ def get_rating_by_role(survey_table, role):
 
 
 def get_rating_by_purpose(survey_table, purpose):
-    arr = [x['rating'] for x in survey_table if purpose in x['purpose']]
+    arr = [x['rating'] for x in survey_table if str(purpose) == str(x['purpose'])]
     arr = [int(x) for x in arr if x.isdigit()]
     return np.mean(arr)
 
