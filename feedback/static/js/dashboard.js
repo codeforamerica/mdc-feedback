@@ -281,7 +281,7 @@ $(document).ready(function() {
       datasets: [
           {
               label: "Respondents by Role",
-              fillColor: t_purple_1,
+              fillColor: t_purple,
               strokeColor: purple_1,
               data: sctxseries
           },
@@ -735,7 +735,7 @@ $(document).ready(function() {
 			
 			if(data == '') {
 				
-				console.log('empty set');
+				//console.log('empty set');
 				
 				$('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
 			
