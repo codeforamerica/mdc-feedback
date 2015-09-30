@@ -161,7 +161,7 @@
 3) Meet with a plan reviewer 
 4) Find out about a violation/lien 
 5) Obtain a certificate of use/occupancy 
--->
+
 
   <div class='four columns panel first-panel'>
     <div class='headline'>Best &amp; Worst Experiences<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-best'><img class='' src='static/images/question_bk.png'></a></div>
@@ -177,9 +177,9 @@
 
     <p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
 
-  </div>
+  </div>-->
 
-  <div class='four columns panel'>
+  <div class='four columns panel first-panel'>
     <div class='headline'>Suggested Improvements<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-improve'><img class='' src='static/images/question_bk.png'></a></div>
     <div class='content-container'>
       <div id='improvements-data'>
@@ -231,15 +231,17 @@
 
 		</div>
 
-	<div class='twelve columns'>
+	<!-- <div class='twelve columns'>
 
     {{ lifespan_panel(dash_obj[3].title, dash_obj[3].data.val, dash_obj[3].data.waittime, dash_obj[3].data.yoy, false) }}
+    
+    {{ dash_obj[3].data.val, dash_obj[3].data.waittime, dash_obj[3].data.yoy }}
 
     {{ lifespan_panel(dash_obj[4].title, dash_obj[4].data.val, dash_obj[4].data.waittime, dash_obj[4].data.yoy, false) }}
 
     {{ lifespan_panel(dash_obj[5].title, dash_obj[5].data.val, dash_obj[5].data.waittime, dash_obj[5].data.yoy) }}
 
-	</div>
+	</div> -->
 
 	<div class='twelve columns'>
 <!--
@@ -274,7 +276,7 @@
     </div>
 -->
 
-    <div class='four columns panel first-panel'>
+    <div class='eight columns panel first-panel'>
       <div class='headline'>{{ dash_obj[9].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-type'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container'>
          <canvas id='permitTypeChart'>
@@ -282,7 +284,7 @@
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 
-    <div class='four columns panel'>
+    <div class='four columns panel last-panel'>
       <div class='headline'>{{ dash_obj[11].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container'>
         <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
