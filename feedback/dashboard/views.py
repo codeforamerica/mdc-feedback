@@ -178,15 +178,46 @@ def survey_index():
 
 @blueprint.route('/dashboard/feedback/', methods=['GET'])
 def all_surveys():
+    def followup_to_str(arg1):
+        try:
+            return arg1['base']
+        except TypeError:
+            if arg1.isdigit():
+                if arg1 == '1':
+                    return 'Yes'
+                else:
+                    return 'No'
+            else:
+                return arg1
+
+        return arg1
+
+    def purpose_to_str(arg1):
+        if arg1.isdigit():
+            return {
+                '1': 'Apply for a permit',
+                '2': 'Meet with an Inspector',
+                '3': 'Meet with a Plan Reviewer',
+                '4': 'Find out about a violation or lien on your property',
+                '5': 'Obtain a certificate of use and/or occupancy'
+            }.get(arg1, '')
+        else:
+            if arg1.startswith('6 '):
+                return arg1[2:]
+        return arg1
+
     survey_table = get_all_survey_responses(SURVEY_DAYS)
     for row in survey_table:
         row['role'] = roles_const_to_string(row['role'])
+        row['followup'] = followup_to_str(row['followup'])
+        row['purpose'] = purpose_to_str(str(row['purpose']))
     return render_template("dashboard/all-surveys.html", resp_obj=survey_table, title='Permitting & Inspection Center User Survey Metrics: Detail')
 
 
 @blueprint.route('/dashboard/feedback/<id>', methods=['GET'])
 def survey_detail(id):
     survey_table = get_all_survey_responses(SURVEY_DAYS)
+    survey_table = [x for x in survey_table if x['id'] == id]
     return render_template("dashboard/survey-detail.html", resp_obj=survey_table, title='Permitting & Inspection Center User Survey Metrics: Detail')
 
 

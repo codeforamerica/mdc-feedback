@@ -51,37 +51,8 @@ TF_IMPROVE_OTHER_ES = 'list_11278117_other'
 TF_COMMENTS_EN = 'textarea_11029995'
 TF_COMMENTS_ES = 'textarea_11029999'
 
-TF_ROUTE_BLDG_EN = 'list_11029986_choice_13530136'
-TF_ROUTE_CASHIER_EN = 'list_11029986_choice_13530137'
-TF_ROUTE_CONTRACTOR_EN = 'list_11029986_choice_13530138'
-TF_ROUTE_ELEC_EN = 'list_11029986_choice_13530139'
-TF_ROUTE_DERM_EN = 'list_11029986_choice_13530140'
-TF_ROUTE_FIRE_EN = 'list_11029986_choice_13530141'
-TF_ROUTE_HRS_EN = 'list_11029986_choice_13530142'
-TF_ROUTE_MICRO_EN = 'list_11029986_choice_13530143'
-TF_ROUTE_CODE_EN = 'list_11029986_choice_13530144'
-TF_ROUTE_MECH_EN = 'list_11029986_choice_13530145'
-TF_ROUTE_PAI_EN = 'list_11029986_choice_13530146'
-TF_ROUTE_PLUM_EN = 'list_11029986_choice_14067645'
-TF_ROUTE_WASD_EN = 'list_11029986_choice_13530147'
-TF_ROUTE_ZONE_EN = 'list_11029986_choice_13530148'
-TF_ROUTE_OTHER_EN = 'list_11029986_other'
-
-TF_ROUTE_BLDG_ES = 'list_11029989_choice_13530159'
-TF_ROUTE_CASHIER_ES = 'list_11029989_choice_13530160'
-TF_ROUTE_CONTRACTOR_ES = 'list_11029989_choice_13530161'
-TF_ROUTE_ELEC_ES = 'list_11029989_choice_13530162'
-TF_ROUTE_DERM_ES = 'list_11029989_choice_13530163'
-TF_ROUTE_FIRE_ES = 'list_11029989_choice_13530164'
-TF_ROUTE_HRS_ES = 'list_11029989_choice_13530165'
-TF_ROUTE_MICRO_ES = 'list_11029989_choice_13530166'
-TF_ROUTE_CODE_ES = 'list_11029989_choice_13530167'
-TF_ROUTE_MECH_ES = 'list_11029989_choice_13530168'
-TF_ROUTE_PAI_ES = 'list_11029989_choice_13530169'
-TF_ROUTE_PLUM_ES = 'list_11029989_choice_14067669'
-TF_ROUTE_WASD_ES = 'list_11029989_choice_13530170'
-TF_ROUTE_ZONE_ES = 'list_11029989_choice_13530171'
-TF_ROUTE_OTHER_ES = 'list_11029989_other'
+TF_ROUTE_EN = 'list_11510353_choice'
+TF_ROUTE_ES = 'list_11510726_choice'
 
 TF_FOLLOWUP_EN = 'yesno_11029980'
 TF_FOLLOWUP_ES = 'yesno_11029983'
@@ -89,8 +60,8 @@ TF_CONTACT_EN = 'textfield_11277574'
 TF_CONTACT_ES = 'textfield_11278128'
 
 TEXTIT_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
-TEXTIT_UUID_EN = 'bdb57073-ab32-4c1b-a3a5-25f866b9626b'
-TEXTIT_UUID_ES = '0aa9f77b-d775-4bc9-952a-1a6636258841'
+TEXTIT_UUID_EN = '0aa9f77b-d775-4bc9-952a-1a6636258841'
+TEXTIT_UUID_ES = 'bdb57073-ab32-4c1b-a3a5-25f866b9626b'
 TEXTIT_AUTH_KEY = '41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9'
 
 
@@ -164,7 +135,8 @@ def parse_textit(survey_table, json_result):
         survey_table
     '''
     # print 'json_result', json_result
-    obj_completed = [result for result in json_result['results'] if result['completed']]
+    # obj_completed = [result for result in json_result['results'] if result['completed']]
+    obj_completed = [result for result in json_result['results']]
     for obj in obj_completed:
 
         iter = {}
@@ -180,8 +152,8 @@ def parse_textit(survey_table, json_result):
             'role': filter_role(iter['Role']['text']),
             'rating': iter['Experience Rating']['text'],
             'improvement': iter['Improvement']['text'],
-            'best': iter['Best']['text'],
-            'worst': iter['Worst']['text'],
+            'best': filter_best(iter['Best']['text']),
+            'worst': filter_worst(iter['Worst']['text']),
             'followup': iter['Followup Permission']['category'],
             'morecomments': iter['Comments']['text']
         }
@@ -197,9 +169,9 @@ def parse_textit(survey_table, json_result):
             iter_obj['lang'] = 'es'
 
         try:
-            iter_obj['purpose'] = [int(iter['Purpose']['text'])]
+            iter_obj['purpose'] = iter['Purpose']['text']
         except KeyError:
-            iter_obj['purpose'] = []
+            iter_obj['purpose'] = ''
 
         survey_table.append(iter_obj)
 
@@ -246,45 +218,43 @@ def filter_purpose(arg1):
         return [int(s) for s in arg1.split() if s.isdigit()][0]
 
 
+def filter_best(arg1):
+    if arg1.isdigit():
+        return {
+            '1': 'Getting questions answered and explained',
+            '2': 'Finishing tasks quickly',
+            '3': 'Courteous staff'
+        }.get(arg1, '')
+    else:
+        if arg1.startswith('ex. '):
+            return arg1[3:]
+        else:
+            if arg1.startswith('4 '):
+                return arg1[2:]
+    return arg1
+
+
+def filter_worst(arg1):
+    if arg1.isdigit():
+        return {
+            '1': 'Long wait time',
+            '2': 'Repeated visits for the same issue',
+            '3': 'Not being familiar to how the process works'
+        }.get(arg1, '')
+    else:
+        if arg1.startswith('ex. '):
+            return arg1[3:]
+        else:
+            if arg1.startswith('4 '):
+                return arg1[2:]
+    return arg1
+
+
 def fill_typeform_route(results):
     '''
     Returns an array of integers for purposes mapped to the possible purposes. If there is a string that means someone typed in a result in the "other" column
     '''
     return_array = []
-
-    if fill_values(results, TF_ROUTE_BLDG_EN, TF_ROUTE_BLDG_ES):
-        return_array.append(1)
-    if fill_values(results, TF_ROUTE_CASHIER_EN, TF_ROUTE_CASHIER_ES):
-        return_array.append(2)
-    if fill_values(results, TF_ROUTE_CONTRACTOR_EN, TF_ROUTE_CONTRACTOR_ES):
-        return_array.append(3)
-    if fill_values(results, TF_ROUTE_ELEC_EN, TF_ROUTE_ELEC_ES):
-        return_array.append(4)
-    if fill_values(results, TF_ROUTE_DERM_EN, TF_ROUTE_DERM_ES):
-        return_array.append(5)
-    if fill_values(results, TF_ROUTE_FIRE_EN, TF_ROUTE_FIRE_ES):
-        return_array.append(6)
-    if fill_values(results, TF_ROUTE_HRS_EN, TF_ROUTE_HRS_ES):
-        return_array.append(7)
-    if fill_values(results, TF_ROUTE_MICRO_EN, TF_ROUTE_MICRO_ES):
-        return_array.append(8)
-    if fill_values(results, TF_ROUTE_CODE_EN, TF_ROUTE_CODE_ES):
-        return_array.append(9)
-    if fill_values(results, TF_ROUTE_MECH_EN, TF_ROUTE_MECH_ES):
-        return_array.append(10)
-    if fill_values(results, TF_ROUTE_PAI_EN, TF_ROUTE_PAI_ES):
-        return_array.append(11)
-    if fill_values(results, TF_ROUTE_PLUM_EN, TF_ROUTE_PLUM_ES):
-        return_array.append(12)
-    if fill_values(results, TF_ROUTE_WASD_EN, TF_ROUTE_HRS_ES):
-        return_array.append(13)
-    if fill_values(results, TF_ROUTE_ZONE_EN, TF_ROUTE_MICRO_ES):
-        return_array.append(14)
-
-    if results[TF_ROUTE_OTHER_EN]:
-        return_array.append(results[TF_ROUTE_OTHER_EN])
-    if results[TF_ROUTE_OTHER_ES]:
-        return_array.append(results[TF_ROUTE_OTHER_ES])
 
     return return_array
 
@@ -310,16 +280,16 @@ def parse_typeform(survey_table, json_result):
         iter_obj['getdone'] = fill_values(answers_arr, TF_GETDONE_EN, TF_GETDONE_ES)
         iter_obj['rating'] = fill_values(answers_arr, TF_OPINION_EN, TF_OPINION_ES)
         iter_obj['improvement'] = fill_values(answers_arr, TF_IMPROVE_EN, TF_IMPROVE_ES)
-        iter_obj['best'] = fill_values_other(answers_arr, TF_BEST_EN, TF_BEST_ES, TF_BEST_OTHER_EN, TF_BEST_OTHER_ES)
-        iter_obj['worst'] = fill_values_other(answers_arr, TF_WORST_EN, TF_WORST_ES, TF_WORST_OTHER_EN, TF_WORST_OTHER_ES)
+        iter_obj['best'] = filter_best(fill_values_other(answers_arr, TF_BEST_EN, TF_BEST_ES, TF_BEST_OTHER_EN, TF_BEST_OTHER_ES))
+        iter_obj['worst'] = filter_worst(fill_values_other(answers_arr, TF_WORST_EN, TF_WORST_ES, TF_WORST_OTHER_EN, TF_WORST_OTHER_ES))
         iter_obj['followup'] = fill_values(answers_arr, TF_FOLLOWUP_EN, TF_FOLLOWUP_ES)
         iter_obj['contact'] = fill_values(answers_arr, TF_CONTACT_EN, TF_CONTACT_ES)
 
         iter_obj['morecomments'] = fill_values(answers_arr, TF_COMMENTS_EN, TF_COMMENTS_ES)
         iter_obj['role'] = filter_role(fill_values(answers_arr, TF_ROLE_EN, TF_ROLE_ES))
-        iter_obj['purpose'] = [filter_purpose(fill_values_other(answers_arr, TF_PURP_EN, TF_PURP_ES, TF_PURP_OTHER_EN, TF_PURP_OTHER_ES))]
+        iter_obj['purpose'] = filter_purpose(fill_values_other(answers_arr, TF_PURP_EN, TF_PURP_ES, TF_PURP_OTHER_EN, TF_PURP_OTHER_ES))
 
-        iter_obj['route'] = fill_typeform_route(answers_arr)
+        iter_obj['route'] = fill_values(answers_arr, TF_ROUTE_EN, TF_ROUTE_ES)
 
         survey_table.append(iter_obj)
 
@@ -340,12 +310,8 @@ def get_surveys_by_completion(survey_table):
 
 
 def get_surveys_by_purpose(survey_table):
-    i = [x['purpose'] for x in survey_table if x['purpose']]
-
-    # flattens list. See:http://stackoverflow.com/questions/952914/making-a-flat-list-out-of-list-of-lists-in-python
-    items = sum(i, [])
-
-    return Counter(items).most_common()
+    i = [str(x['purpose']) for x in survey_table if x['purpose']]
+    return Counter(i).most_common()
 
 
 def get_rating_scale(survey_table):
@@ -368,7 +334,7 @@ def get_rating_by_role(survey_table, role):
 
 
 def get_rating_by_purpose(survey_table, purpose):
-    arr = [x['rating'] for x in survey_table if purpose in x['purpose']]
+    arr = [x['rating'] for x in survey_table if str(purpose) == str(x['purpose'])]
     arr = [int(x) for x in arr if x.isdigit()]
     return np.mean(arr)
 
