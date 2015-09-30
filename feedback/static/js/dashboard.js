@@ -731,49 +731,61 @@ $(document).ready(function() {
 
     }).done(function(data) {
 
-      var labels = [];
-      var dataset = [];
-
-      //the 'total' isn't an integer. make it one, or the sort will fail.
-      for(var i = 0; i < data.length; i++) {
-
-        data[i].total = parseInt(data[i].total);
-
-      }
-
-      //sort on the number of each violation type
-      data = data.sortOn("total");
-      data.reverse();
-
-      //set the data up for Charts.js
-      for(var i = 0; i < 19; i++) {
-
-        labels[i] = data[i].issue_type;
-        dataset[i] = data[i].total;
-        //console.log(data[i].issue_type, i);
-
-      }
-
-      labels.reverse();
-      dataset.reverse();
-
-      //create the chart
-      var bctx = $("#viotype").get(0).getContext("2d");
-
-      var bdata = {
-          labels: labels,
-          datasets: [
-              {
-                fillColor: t_purple_1,
-                strokeColor: purple_1,
-                data: dataset
-              },
-
-          ]
-      };
-
-      var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
-
+			//console.log("DATA", data);
+			
+			if(data == '') {
+				
+				console.log('empty set');
+				
+				$('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
+			
+			} else {
+				
+				var labels = [];
+	      var dataset = [];
+	
+	      //the 'total' isn't an integer. make it one, or the sort will fail.
+	      for(var i = 0; i < data.length; i++) {
+	
+	        data[i].total = parseInt(data[i].total);
+					console.log(data[i]);
+	      }
+	
+	      //sort on the number of each violation type
+	      data = data.sortOn("total");
+	      data.reverse();
+	
+	      //set the data up for Charts.js
+	      for(var i = 0; i < 19; i++) {
+	
+	        labels[i] = data[i].issue_type;
+	        dataset[i] = data[i].total;
+	        //console.log(data[i].issue_type, i);
+	
+	      }
+	
+	      labels.reverse();
+	      dataset.reverse();
+	
+	      //create the chart
+	      var bctx = $("#viotype").get(0).getContext("2d");
+	
+	      var bdata = {
+	          labels: labels,
+	          datasets: [
+	              {
+	                fillColor: t_purple_1,
+	                strokeColor: purple_1,
+	                data: dataset
+	              },
+	
+	          ]
+	      };
+	
+	      var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
+	      
+				}
+			
     });
 
   }
