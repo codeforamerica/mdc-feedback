@@ -1,0 +1,21 @@
+[SURVEY_NAME] #ie. Miami-Dade County Permit Inspection Center Survey
+
+
+[FIRST_NAME] [LAST_NAME],
+
+A user has submitted a survey feedback response that requires attention from the [SECTION] division of the Permit Inspection Center. Below are the details of the survey; please follow-up with the user within [SLA] days if contact information is provided.
+
+Survey Date: [SURVEY_DATE]
+Would you like to be followed-up with: [FOLLOWUP_PERMISSION]
+Contact Information: [CONTACT_INFORMATION]
+Comments: [COMMENTS]
+
+Role: [ROLE]
+Purpose: [PURPOSE]
+Experience Rating: [EXPERIENCE_RATING]
+Were you able to complete your tasks? [TASKS]
+Best Experience: [BEST}
+Worst Experience: [WORST]
+Improvement Suggestion: [IMPROVEMENT]
+
+If you have any questions about this process you can reach out to miami-dade@codeforamerica.org
