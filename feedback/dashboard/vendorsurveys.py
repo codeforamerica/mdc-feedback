@@ -135,8 +135,8 @@ def parse_textit(survey_table, json_result):
         survey_table
     '''
     # print 'json_result', json_result
-    # obj_completed = [result for result in json_result['results'] if result['completed']]
-    obj_completed = [result for result in json_result['results']]
+    obj_completed = [result for result in json_result['results'] if result['completed']]
+    # obj_completed = [result for result in json_result['results']]
     for obj in obj_completed:
 
         iter = {}
