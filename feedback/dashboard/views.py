@@ -94,15 +94,15 @@ def home():
         },
         {
             "title": "Average time from application date to permit issuance, Commercial Permits, Last 30 Days",
-            "data": 0
+            "data": get_lifespan('c')
         },
         {
             "title": "Average time from application date to permit issuance, Residential Permits, Last 30 Days",
-            "data": 0
+            "data": get_lifespan('r')
         },
         {
             "title": "Average time from application date to permit issuance, Owner/Builder Permits, Last 30 Days",
-            "data": 0
+            "data": get_lifespan('h')
         },
         {
             "title": "(UNUSED) Avg Cost of an Open Commercial Permit",
@@ -162,9 +162,6 @@ def home():
     json_obj['survey_complete'] = json.dumps(dashboard_collection[12])
     json_obj['survey_purpose'] = json.dumps(dashboard_collection[13])
     json_obj['app_answers'] = json.dumps(survey_table)
-    json_obj['lifespanc'] = json.dumps(get_lifespan('c'))
-    json_obj['lifespanr'] = json.dumps(get_lifespan('r'))
-    json_obj['lifespanh'] = json.dumps(get_lifespan('h'))
 
     today = datetime.date.today()
     return render_template("public/home.html", api=api_health(), date=today.strftime('%B %d, %Y'), json_obj=json_obj, dash_obj=dashboard_collection, resp_obj=survey_table, title='Dashboard')
