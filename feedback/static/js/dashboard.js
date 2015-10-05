@@ -281,7 +281,7 @@ $(document).ready(function() {
       datasets: [
           {
               label: "Respondents by Role",
-              fillColor: t_purple,
+              fillColor: t_purple_1,
               strokeColor: purple_1,
               data: sctxseries
           },
@@ -366,7 +366,7 @@ $(document).ready(function() {
 	    sptxlabels[i] = sorter[i].label;
     }
 	  
-	  console.log(sptxseries, sptxlabels);
+	  //console.log(sptxseries, sptxlabels);
 	  
 	  var sptxCdata = {
       labels: sptxlabels,
@@ -547,6 +547,9 @@ $(document).ready(function() {
       //socrata pushes the data backwards. fix that.
       datetime.reverse();
       series.reverse();
+      
+      //console.log(datetime);
+      //console.log(series);
 
       var d3 = {
         labels:datetime,
@@ -564,7 +567,7 @@ $(document).ready(function() {
       };
 
       var myLineChart = new Chart(ctx3).Line(d3);
-
+		
     });
 
   /************************* LEAFLET MAPPING *************************/
