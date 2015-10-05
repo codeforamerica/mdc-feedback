@@ -27,7 +27,7 @@ blueprint = Blueprint(
     static_folder="../static"
 )
 
-SURVEY_DAYS = 31
+SURVEY_DAYS = 30
 
 
 @blueprint.route("/", methods=["GET", "POST"])
