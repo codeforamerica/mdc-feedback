@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import collections
+
 from flask import render_template, current_app
 from flask_mail import Message
+
+from feedback.tasks import send_email
+
 
 class Notification(object):
     def __init__(
@@ -20,6 +25,7 @@ class Notification(object):
             self.txt_body = self.build_msg_body(txt_template, convert_args, *args, **kwargs)
         else:
             self.txt_body = ''
+        self.attachments = attachments
 
     def build_msg_body(self, template, convert_args, *args, **kwargs):
         if convert_args:
