@@ -70,13 +70,22 @@ def roles_const_to_string(arg):
 
 
 def fill_values(array, en, es):
-    if not array[en]:
-        if not array[es]:
-            return False
+    try:
+        if not array[en]:
+            if not array[es]:
+                return False
+            else:
+                return array[es]
         else:
-            return array[es]
-    else:
-        return array[en]
+            return array[en]
+    except KeyError:
+        try:
+            if not array[es]:
+                return False
+            else:
+                return array[es]
+        except KeyError:
+            return False
 
 
 def fill_values_other(array, en, es, en_other, es_other):
@@ -201,6 +210,11 @@ def filter_role(arg1):
 
 
 def filter_purpose(arg1):
+    ''' Take the hardcoded answers in English and Spanish and change them to constants.
+    If there is a completely different purpose, it's a long form and return it as is. (We change to constants for graphic purposes.)
+    '''
+    if arg1 is False:
+        return False
     if arg1.isdigit():
         return int(arg1)
     else:
@@ -215,10 +229,14 @@ def filter_purpose(arg1):
             return 4
         if 'certificate' in arg1 or 'certificado' in arg1:
             return 5
-        return [int(s) for s in arg1.split() if s.isdigit()][0]
+        try:
+            return [int(s) for s in arg1.split() if s.isdigit()][0]
+        except IndexError:
+            return arg1
 
 
 def filter_best(arg1):
+    arg1 = str(arg1)
     if arg1.isdigit():
         return {
             '1': 'Getting questions answered and explained',
@@ -235,6 +253,7 @@ def filter_best(arg1):
 
 
 def filter_worst(arg1):
+    arg1 = str(arg1)
     if arg1.isdigit():
         return {
             '1': 'Long wait time',
