@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+
   /* API HEALTH CHECK */
   window.REMODAL_GLOBALS = {
     NAMESPACE: 'modal',
@@ -230,52 +230,52 @@ $(document).ready(function() {
 }
 
   if($("#dashboard")[0] != undefined) {
-	  
+
 	  //surveys by role
 	  var sctx = $("#s-role-chart").get(0).getContext("2d");
 	  var sctxdata = JSON.parse($("#surveyrole")[0].childNodes[0].data);
-	  
+
 	  var sctxseries = [];
 	  var sctxlabels = [];
-	  
-	  //this only works because it's a known quantity.	  
-	  var homeowners = {label:'Homeowner', count:0};
-	  var architects = {label:'Architect', count:0};
-	  var contractors = {label:'Contractor', count:0};
-	  var consultants = {label:'Permit Consultant', count:0};
-	  var owners = {label:'Business Owner', count:0};
+
+	  //this only works because it's a known quantity.
+	  var homeowners = {label:'Homeowners', count:0};
+	  var architects = {label:'Architects', count:0};
+	  var contractors = {label:'Contractors', count:0};
+	  var consultants = {label:'Permit Consultants', count:0};
+	  var owners = {label:'Business Owners', count:0};
 	  var sorter = [architects, owners, consultants, contractors, homeowners];
 
 	  for(var i = 0; i < sctxdata.data.length;i ++) {
 
 			switch(parseInt(sctxdata.data[i][0])) {
-				
-				case 1:
-					contractors.count++;
+
+			  case 1:
+					contractors.count = sctxdata.data[i][1];
 					break;
 				case 2:
-					architects.count++;
+					architects.count = sctxdata.data[i][1];
 					break;
 				case 3:
-					consultants.count++;
+					consultants.count = sctxdata.data[i][1];
 					break;
 				case 4:
-					homeowners.count++;
+					homeowners.count = sctxdata.data[i][1];
 					break;
 				case 5:
-					owners.count++;
+					owners.count = sctxdata.data[i][1];
 					break;
-					
+
 			}
-			
+
     }
-    
+
     for(var i = 0; i < sorter.length; i++) {
-	    
+
 	    sctxseries[i] = sorter[i].count;
 	    sctxlabels[i] = sorter[i].label;
     }
-    	
+
 		var vdata = {
       labels: sctxlabels,
       datasets: [
@@ -288,18 +288,18 @@ $(document).ready(function() {
 
       ]
     };
-	
+
 	  var sctxBar = new Chart(sctx).HorizontalBar(vdata);
 		// end surveys by role
-		
+
 		// successful task completion
 		var cctx = $("#s-complete-chart").get(0).getContext("2d");
 	  var cctxdata = JSON.parse($("#surveycomplete")[0].childNodes[0].data);
-	  
+
 	  var total = cctxdata.data.total;
 	  var completeTrue = cctxdata.data.yes;
 	  var completeFalse = total - completeTrue;
-	 
+
 	  var cctxPie = [
 	    {
 	      value: completeTrue,
@@ -316,58 +316,55 @@ $(document).ready(function() {
 	  ];
 
 	  var cctxPieChart = new Chart(cctx).Pie(cctxPie);/**/
-		
+
 		// end successful task completion
-		
+
 		// surveys by purpose
 		var sptx = $("#s-purpose-chart").get(0).getContext("2d");
 	  var sptxdata = JSON.parse($("#surveypurpose")[0].childNodes[0].data);
-	  
+
 	  /*   <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveypurpose</code>. In each array element, the first digit is a constant for user type, the second is occurance. If it's a full sentence then they wrote it out via typeform.</p> */
-		  
-		//this only works because it's a known quantity.	  
+
+		//this only works because it's a known quantity.
 	  homeowners = {label:'Find out about a violation/lien', count:0};
 	  architects = {label:'Meet with an inspector', count:0};
 	  contractors = {label:'Apply for a permit', count:0};
 	  consultants = {label:'Meet with a plan reviewer', count:0};
 	  owners = {label:'Obtain a certificate of use/occupancy', count:0};
 	  sorter = [architects, owners, consultants, contractors, homeowners];
-	  
+
 	  var sptxseries = [];
 	  var sptxlabels = [];
 
 	  for(var i = 0; i < sptxdata.data.length;i ++) {
 
 			switch(parseInt(sptxdata.data[i][0])) {
-				
+
 				case 1:
-					contractors.count++;
+					contractors.count = sptxdata.data[i][1];
 					break;
 				case 2:
-					architects.count++;
+					architects.count = sptxdata.data[i][1];
 					break;
 				case 3:
-					consultants.count++;
+					consultants.count = sptxdata.data[i][1];
 					break;
 				case 4:
-					homeowners.count++;
+					homeowners.count = sptxdata.data[i][1];
 					break;
 				case 5:
-					owners.count++;
+					owners.count = sptxdata.data[i][1];
 					break;
-					
+
 			}
-			
+
     }
-    
+
     for(var i = 0; i < sorter.length; i++) {
-	    
 	    sptxseries[i] = sorter[i].count;
 	    sptxlabels[i] = sorter[i].label;
     }
-	  
-	  //console.log(sptxseries, sptxlabels);
-	  
+
 	  var sptxCdata = {
       labels: sptxlabels,
       datasets: [
@@ -382,18 +379,18 @@ $(document).ready(function() {
     };
 
 	  var sptxBarChart = new Chart(sptx).HorizontalBar(sptxCdata);/**/
-		
+
 		// end surveys by purpose
-		
+
 	  // Get context with jQuery - using jQuery's .get() method.
 	  var ctx = $("#myChart").get(0).getContext("2d");
 	  var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
 	  //console.log(jsondata);
-	
+
 	  var series = jsondata.series[0].data;
 	  var datetime = jsondata.datetime.data;
 	  //console.log(series, datetime);
-	
+
 	  var data = {
 	    labels: datetime,
 	    scaleBeginAtZero: true,
@@ -411,12 +408,12 @@ $(document).ready(function() {
 	        }
 	    ]
 	  };
-	
+
 	  var myLineChart = new Chart(ctx).Line(data);
-	  
+
 	  var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
 		var  pctx = $("#surveyChart").get(0).getContext("2d");
-	
+
 	  var pieData = [
 	    {
 	      value: surveyData.data.web_en,
@@ -441,37 +438,37 @@ $(document).ready(function() {
 	      color: purple_4,
 	      highlight: t_purple_4,
 	      label: surveyData.labels.sms_es
-	
+
 	    }
 	  ];
 
 	  $('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
 	  var myPieChart = new Chart(pctx).Pie(pieData);/**/
-	
+
 	  /* Permitting */
-	
+
 	    $.ajax({
 	      url: "https://opendata.miamidade.gov/resource/vvjq-pfmc.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
 	      context: document.body
 	    }).done(function(data) {
-	
+
 	      var ctx2 = $("#openPermits").get(0).getContext("2d");
 	      //console.log(data);
-	
+
 	      var series = [];
 	      var datetime = [];
-	
+
 	      for(var i = 0; i < data.length; i++) {
-	
+
 	        datetime.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
 	        series.push(data[i].total);
-	
+
 	      }
-	
+
 	      //socrata pushes the data backwards. fix that.
 	      datetime.reverse();
 	      series.reverse();
-	
+
 	      var d = {
 	          labels:datetime,
 	          datasets: [
@@ -486,28 +483,28 @@ $(document).ready(function() {
 	            }
 	          ]
 	      };
-	
+
 	      var myLineChart = new Chart(ctx2).Line(d);
-	
+
 	    });
-	
+
 	    //console.log(JSON.parse($("#permitstype")[0].childNodes[0].data));
 	    var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data);
-	
+
 	    var pttx = $("#permitTypeChart").get(0).getContext("2d");
-	
+
 	    var cleanPermitData = [];
 	    var cleanPermitLabels = [];
-	    
+
 	    //set the data up for Charts.js
 	    for(var i = 0; i < permitTypes.data.length; i++) {
-	
+
 	      cleanPermitLabels[i] = permitTypes.data[i].permit_type;
 	      cleanPermitData[i] = permitTypes.data[i].count;
 	      //console.log(data[i].issue_type, i);
-	
+
 	    }
-	    
+
 	    var vdata = {
 	      labels: cleanPermitLabels,
 	      datasets: [
@@ -517,13 +514,13 @@ $(document).ready(function() {
 	              strokeColor: purple_1,
 	              data: cleanPermitData
 	          },
-	
+
 	      ]
 	    };
-	
+
 	    $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
 	    var barChart2 = new Chart(pttx).Bar(vdata);
-   
+
   /* VIOLATIONS */
 
   	$.ajax({
@@ -547,7 +544,7 @@ $(document).ready(function() {
       //socrata pushes the data backwards. fix that.
       datetime.reverse();
       series.reverse();
-      
+
       //console.log(datetime);
       //console.log(series);
 
@@ -567,7 +564,7 @@ $(document).ready(function() {
       };
 
       var myLineChart = new Chart(ctx3).Line(d3);
-		
+
     });
 
   /************************* LEAFLET MAPPING *************************/
@@ -735,44 +732,44 @@ $(document).ready(function() {
     }).done(function(data) {
 
 			//console.log("DATA", data);
-			
+
 			if(data == '') {
-				
+
 				//console.log('empty set');
-				
+
 				$('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
-			
+
 			} else {
-				
+
 				var labels = [];
 	      var dataset = [];
-	
+
 	      //the 'total' isn't an integer. make it one, or the sort will fail.
 	      for(var i = 0; i < data.length; i++) {
-	
+
 	        data[i].total = parseInt(data[i].total);
 					console.log(data[i]);
 	      }
-	
+
 	      //sort on the number of each violation type
 	      data = data.sortOn("total");
 	      data.reverse();
-	
+
 	      //set the data up for Charts.js
 	      for(var i = 0; i < 19; i++) {
-	
+
 	        labels[i] = data[i].issue_type;
 	        dataset[i] = data[i].total;
 	        //console.log(data[i].issue_type, i);
-	
+
 	      }
-	
+
 	      labels.reverse();
 	      dataset.reverse();
-	
+
 	      //create the chart
 	      var bctx = $("#viotype").get(0).getContext("2d");
-	
+
 	      var bdata = {
 	          labels: labels,
 	          datasets: [
@@ -781,14 +778,14 @@ $(document).ready(function() {
 	                strokeColor: purple_1,
 	                data: dataset
 	              },
-	
+
 	          ]
 	      };
-	
+
 	      var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
-	      
+
 				}
-			
+
     });
 
   }
@@ -817,7 +814,7 @@ $(document).ready(function() {
 	    readOnly:true,
 	    number:7
 	  });
-	  
+
 	  $('#s-lang-rate-en').raty({
     score: function() {
       //console.log($(this).find('.hidden').text(), 'is value')
@@ -828,7 +825,7 @@ $(document).ready(function() {
 	    readOnly:true,
 	    number:7
 	  });
-	  
+
 	  $('#s-lang-rate-es').raty({
 	    score: function() {
 	      return $('#rate-en').text();
@@ -838,7 +835,7 @@ $(document).ready(function() {
 		    readOnly:true,
 		    number:7
 	  });
-	  
+
 	  $('#s-purpose-rate-permit').raty({
 	    score: function() {
 	      return $('#rate-permit').text();
@@ -848,7 +845,7 @@ $(document).ready(function() {
 		    readOnly:true,
 		    number:7
 	  });
-	  
+
 	  $('#s-purpose-rate-inspect').raty({
 	    score: function() {
 	      return $('#rate-inspect').text();
@@ -858,7 +855,7 @@ $(document).ready(function() {
 		    readOnly:true,
 		    number:7
 	  });
-	  
+
 	  $('#s-purpose-rate-review').raty({
 	    score: function() {
 	      return $('#rate-review').text();
@@ -868,7 +865,7 @@ $(document).ready(function() {
 		    readOnly:true,
 		    number:7
 	  });
-	  
+
 	  $('#s-purpose-rate-liens').raty({
 	    score: function() {
 	      return $('#rate-liens').text();
@@ -878,7 +875,7 @@ $(document).ready(function() {
 		    readOnly:true,
 		    number:7
 	  });
-	  
+
 	  $('#s-purpose-rate-cu').raty({
 	    score: function() {
 	      return $('#rate-cu').text();
@@ -888,13 +885,13 @@ $(document).ready(function() {
 		    readOnly:true,
 		    number:7
 	  });
-	  
-	  
+
+
 	  //
 	  //
 	  //s-purpose-rate
 	  //s-role-rate
-	  
+
 	  $('#s-role-rate-permit').raty({
 	    score: function() {
 	      return $('#role-rate-permit').text();
@@ -904,7 +901,7 @@ $(document).ready(function() {
 		    readOnly:true,
 		    number:7
 	  });
-	  
+
 	  $('#s-role-rate-cu').raty({
 	    score: function() {
 	      return $('#role-rate-cu').text();
@@ -914,7 +911,7 @@ $(document).ready(function() {
 		    readOnly:true,
 		    number:7
 	  });
-	  
+
 	  $('#s-role-rate-inspect').raty({
 	    score: function() {
 	      return $('role-rate-inspect').text();
@@ -924,7 +921,7 @@ $(document).ready(function() {
 		    readOnly:true,
 		    number:7
 	  });
-	  
+
 	  $('#s-role-rate-review').raty({
 	    score: function() {
 	      return $('#role-rate-review').text();
@@ -934,7 +931,7 @@ $(document).ready(function() {
 		    readOnly:true,
 		    number:7
 	  });
-	  
+
 	  $('#s-role-rate-lien').raty({
 	    score: function() {
 	      return $('#role-rate-lien').text();
@@ -1038,7 +1035,7 @@ $(document).ready(function() {
 	/***************************** tool tips *****************************/
 
 	/******** Documentation from Google sheets, using Tabletop.js **********/
-	
+
 	var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/170neJyhcBkg3sgABsqKk1B6WJa51r6oo6PEMAlwOBB8/pubhtml';
 
   function initTabletop(){
@@ -1049,31 +1046,31 @@ $(document).ready(function() {
   }
 
 	var tableData = [];
-	
+
   function buildTipsy(data, tabletop) {
     //alert("Successfully processed!")
     //console.log(data);
-    
+
     for(var i = 0; i < data.length; i++) {
-	    
+
 	    var obj = {}
-		    
+
 		    obj.hID = data[i].hoverid;
 		    obj.text = data[i].descriptionforhover;
-		  
+
 	    tableData.push(obj);
-	    
+
     }
-    
+
     $('.tipsy-hook').each(function() {
-	    
+
 	    var id = $(this).attr('id');
 	    //console.log(id);
-	    
+
 	    for(var i = 0; i < data.length; i++) {
-		    
+
 		    if(id == data[i].hoverid) {
-			    
+
 			    $(this).attr('title', data[i].descriptionforhover);
 			    var mid = '#' + data[i].hoverid;
 			    $(mid).tipsy();
@@ -1082,7 +1079,7 @@ $(document).ready(function() {
 	    }
     })
   }
-    
+
   initTabletop();
-  
+
 }); //close ready
