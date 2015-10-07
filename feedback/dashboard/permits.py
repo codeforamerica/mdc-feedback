@@ -42,7 +42,7 @@ def json_to_dateobj(jsondate):
     return datetime.datetime.strptime(jsondate, '%Y-%m-%dT%H:%M:%S.000')
 
 
-@cache.memoize(timeout=86400)
+#@cache.memoize(timeout=86400)
 def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     '''
     Run the API call between arg1 days ago and arg2 days ago.
