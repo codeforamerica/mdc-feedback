@@ -215,7 +215,7 @@ $(document).ready(function () {
     onAnimationComplete: function(){ /* empty */  } 
 };
 
-  if($("#dashboard")[0] !== undefined) {
+  //if($("#dashboard")[0] !== undefined) {
 
     //surveys by role
     var sctx = $("#s-role-chart").get(0).getContext("2d"),
@@ -573,7 +573,15 @@ $(document).ready(function () {
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
     }).addTo(map3);
- 
+  
+  //county shapefiles
+  $.ajax({
+    type: "GET",
+    url: "../static/geodata/municipalities_coast.json",
+    dataType: "json",
+    success: parseXML
+  });
+  
   function parseXML(data) {
 
     var muni = [],
@@ -760,16 +768,6 @@ $(document).ready(function () {
     });
 
   }
-  
-  //county shapefiles
-  $.ajax({
-    type: "GET",
-    url: "../static/geodata/municipalities_coast.json",
-    dataType: "json",
-    success: parseXML
-  });
-
-  
 
   Array.prototype.sortOn = function(){
     var dup = this.slice();
@@ -917,7 +915,9 @@ $(document).ready(function () {
         number:7
     });
 
-  }
+  
+  
+  //}
 
   /***************************** tag clouds *****************************/
 
