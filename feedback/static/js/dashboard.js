@@ -84,7 +84,7 @@ $(document).ready(function () {
 
   /***************************** CHARTS! *****************************/
 
-  //global charts.js defaults
+  //charts.js defaults
   Chart.defaults.global = {
     // Boolean - Whether to animate the chart
     animation: false,
@@ -255,7 +255,7 @@ $(document).ready(function () {
     ]
   };
 
-  respondentsByRoleChart = new Chart(sctx).HorizontalBar(respondentsByRole)
+  respondentsByRoleChart = new Chart(sctx).HorizontalBar(respondentsByRole);
   
   // end surveys by role
 
@@ -289,12 +289,12 @@ $(document).ready(function () {
   sptxdata = JSON.parse($("#surveypurpose")[0].childNodes[0].data),
 
   //this only works because it's a known quantity.
-  homeowners = {label:'Find out about a violation/lien', count:0},
-  architects = {label:'Meet with an inspector', count:0},
-  contractors = {label:'Apply for a permit', count:0},
-  consultants = {label:'Meet with a plan reviewer', count:0},
-  owners = {label:'Obtain a certificate of use/occupancy', count:0},
-  sorter = [architects, owners, consultants, contractors, homeowners],
+  violation = {label:'Find out about a violation/lien', count:0},
+  inspector = {label:'Meet with an inspector', count:0},
+  permit = {label:'Apply for a permit', count:0},
+  reviewer = {label:'Meet with a plan reviewer', count:0},
+  cu = {label:'Obtain a certificate of use/occupancy', count:0},
+  sorter2 = [violation, inspector, permit, reviewer, cu],
 
   sptxseries = [],
   sptxlabels = [],
@@ -309,25 +309,25 @@ $(document).ready(function () {
         contractors.count = sptxdata.data[i][1];
         break;
       case 2:
-        architects.count = sptxdata.data[i][1];
+        inspector.count = sptxdata.data[i][1];
         break;
       case 3:
-        consultants.count = sptxdata.data[i][1];
+        reviewer.count = sptxdata.data[i][1];
         break;
       case 4:
-        homeowners.count = sptxdata.data[i][1];
+        violation.count = sptxdata.data[i][1];
         break;
       case 5:
-        owners.count = sptxdata.data[i][1];
+        cu.count = sptxdata.data[i][1];
         break;
 
     }
 
   }
 
-  for(i = 0; i < sorter.length; i+=1) {
-    sptxseries[i] = sorter[i].count;
-    sptxlabels[i] = sorter[i].label;
+  for(i = 0; i < sorter2.length; i+=1) {
+    sptxseries[i] = sorter2[i].count;
+    sptxlabels[i] = sorter2[i].label;
   }
 
   surveysByPurpose = {
@@ -350,101 +350,110 @@ $(document).ready(function () {
       jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data),
       series = jsondata.series[0].data,
       datetime = jsondata.datetime.data,
-  //console.log(series, datetime);
-
-  data = {
-    labels: datetime,
-    scaleBeginAtZero: true,
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: t_orange,
-            strokeColor: orange,
-            pointColor: orange,
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: series,
-            scaleStartValue: 0
-        }
-    ]
-  },
-
-  myLineChart = new Chart(ctx).Line(data),
-  surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data),
-  pctx = $("#surveyChart").get(0).getContext("2d"),
       
-  pieData = [
-    {
-      value: surveyData.data.web_en,
-      color:purple_1,
-      highlight: t_purple_1,
-      label: surveyData.labels.web_en
-    },
-    {
-      value: surveyData.data.web_es,
-      color: purple_2,
-      highlight: t_purple_2,
-      label: surveyData.labels.web_es
-    },
-    {
-      value: surveyData.data.sms_en,
-      color: purple_3,
-      highlight: t_purple_3,
-      label: surveyData.labels.sms_en
-    },
-    {
-      value: surveyData.data.sms_es,
-      color: purple_4,
-      highlight: t_purple_4,
-      label: surveyData.labels.sms_es
-
-    }
-  ];
-
-  $('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
-  var myPieChart = new Chart(pctx).Pie(pieData);/**/
-
-  /* Permitting */
-
-    $.ajax({
-      url: "https://opendata.miamidade.gov/resource/vvjq-pfmc.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
-      context: document.body
-    }).done(function(data) {
-
-      var ctx2 = $("#openPermits").get(0).getContext("2d"),
-          series2 = [],
-          datetime2 = [];
-
-      for(i = 0; i < data.length; i+=1) {
-
-        datetime2.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
-        series2.push(data[i].total);
-
-      }
-
-      //socrata pushes the data backwards. fix that.
-      datetime2.reverse();
-      series2.reverse();
-
-      var d = {
-          labels:datetime2,
-          datasets: [
+      data = {
+        labels: datetime,
+        scaleBeginAtZero: true,
+        datasets: [
             {
+                label: "My First dataset",
                 fillColor: t_orange,
                 strokeColor: orange,
                 pointColor: orange,
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)",
-                data: series2
+                data: series,
+                scaleStartValue: 0
             }
-          ]
+        ]
       },
+      
+      myPieChart,
+      myLineChart = new Chart(ctx).Line(data),
+      surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data),
+      pctx = $("#surveyChart").get(0).getContext("2d"),
+          
+      pieData = [
+        {
+          value: surveyData.data.web_en,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: surveyData.labels.web_en
+        },
+        {
+          value: surveyData.data.web_es,
+          color: purple_2,
+          highlight: t_purple_2,
+          label: surveyData.labels.web_es
+        },
+        {
+          value: surveyData.data.sms_en,
+          color: purple_3,
+          highlight: t_purple_3,
+          label: surveyData.labels.sms_en
+        },
+        {
+          value: surveyData.data.sms_es,
+          color: purple_4,
+          highlight: t_purple_4,
+          label: surveyData.labels.sms_es
+    
+        }
+      ];
+    
+      $('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
+      myPieChart = new Chart(pctx).Pie(pieData);
 
-      myLineChart1 = new Chart(ctx2).Line(d);
+  /* Permitting */
 
-    });
+  var ctx2 = $("#openPermits").get(0).getContext("2d"),
+      series2 = [],
+      datetime2 = [],
+      openPermitData,
+      openPermitDataset,
+      openPermitChart;
+      
+  function buildOpenPermitChart() {
+        
+    //socrata pushes the data backwards. fix that.
+    datetime2.reverse();
+    series2.reverse();
+
+    openPermitDataset = {
+        labels:datetime2,
+        datasets: [
+          {
+              fillColor: t_orange,
+              strokeColor: orange,
+              pointColor: orange,
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: series2
+          }
+        ]
+    },
+
+    openPermitChart = new Chart(ctx2).Line(openPermitDataset);
+    
+  }
+  
+  $.ajax({
+    url: "https://opendata.miamidade.gov/resource/vvjq-pfmc.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
+    context: document.body
+  }).done(function(data) {
+
+    for(i = 0; i < data.length; i+=1) {
+
+      datetime2.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
+      series2.push(data[i].total);
+
+    }
+
+    buildOpenPermitChart();
+    
+  });
 
     //console.log(JSON.parse($("#permitstype")[0].childNodes[0].data));
     var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data),
@@ -517,7 +526,7 @@ $(document).ready(function () {
         ]
       },
       
-      myLineChart = new Chart(ctx3).Line(d3);
+      newLineChart = new Chart(ctx3).Line(d3);
 
     });
 
@@ -567,16 +576,16 @@ $(document).ready(function () {
         umsa = [],
         i,
         myStyle = {
-          "color": blue,
-          "weight": 1,
-          "opacity": 0.65
+          color: blue,
+          weight: 1,
+          opacity: 0.65
         },
         
         umsaStyle = {
     
-          "color": 'rgba(0,0,0)',
-          "weight": 1,
-          "opacity": 0.65
+          color: 'rgba(0,0,0)',
+          weight: 1,
+          opacity: 0.65
     
         };
 
@@ -704,7 +713,7 @@ $(document).ready(function () {
         var dataset = [];
 
         //the 'total' isn't an integer. make it one, or the sort will fail.
-        for(var i = 0; i < data.length;   i+=1) {
+        for(i = 0; i < data.length;   i+=1) {
 
           data[i].total = parseInt(data[i].total, 10);
           //console.log(data[i]);
@@ -918,57 +927,55 @@ $(document).ready(function () {
     'script', '\'script', 'fjs', 'document'],
     i;
 
-  //var temp = [];
-
   function sanitize(array, container, hide) {
 
-     for(i = 0; i < blacklist.length;   i+=1) {
+    for(i = 0; i < blacklist.length; i+=1) {
 
-        var result = array.filter(function(elem){
+      var result = array.filter(function(elem){
 
-          if(elem.length > 1) {
+        if(elem.length > 1) {
 
-            return elem.toLowerCase() != blacklist[i];
-          }
+          return elem.toLowerCase() != blacklist[i];
+        }
 
-        });
+      });
 
-        array = result;
-        //console.log(result);
-      }
+      array = result;
+      //console.log(result);
+    }
 
-      //count the words remaining after sanitation
+    //count the words remaining after sanitation
     var newObject = {},
         temp = []; //storage array
         
-    $.each(array, function (val) {
-        if (newObject[val]) {
-            newObject[val]++;
-        }
-        else {
-            //console.log('that wasnt in the array', val);
-            newObject[val] = 1;
-        }
+    $.each(array, function (ix, val) {
+      
+      if (newObject[val]) {
+        newObject[val]++;
+      }
+      else {
+        //console.log('that wasnt in the array', val);
+        newObject[val] = 1;
+      }
     }),
-
-    
 
     //format for jQCloud
     $.each(newObject, function(key, value) {
 
       var obj = { "text" : key, "weight": value};
       temp.push(obj);
-
+      
     });
 
     array = temp; //reassign
-    //console.log(array);
-
+    
     continueCloud(array, container, hide);
   }
 
   //called by sanitize
   function continueCloud(array, container, hide) {
+    
+    //console.log(array);
 
     $(container).jQCloud(array, {shape: 'rectangular', height:200, autoResize: true});
     $(hide).each(function() { $(this).addClass('hidden');});
