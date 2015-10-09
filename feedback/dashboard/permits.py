@@ -80,6 +80,7 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     return result1 if not math.isnan(result1) else -1
 
 
+@cache.memoize(timeout=86400)
 def get_open_permit_lifespan():
     '''
     NOTE: WE ARE CURRENTLY NOT SHOWING THIS. DELETE IF NECESSARY
@@ -101,6 +102,7 @@ def get_open_permit_lifespan():
     return int(np.mean(lifespan_array)) if not math.isnan(np.mean(lifespan_array)) else -1
 
 
+@cache.memoize(timeout=86400)
 def get_avg_cost(property_type='c'):
     '''
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
@@ -125,6 +127,7 @@ def get_avg_cost(property_type='c'):
         return -1
 
 
+@cache.memoize(timeout=86400)
 def get_permit_types(arg1=0, arg2=30):
     '''
     This should print out the pie chart of all permit types.
@@ -141,6 +144,7 @@ def get_permit_types(arg1=0, arg2=30):
     return json_result
 
 
+@cache.memoize(timeout=86400)
 def get_lifespan(property_type='c'):
     '''
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
@@ -159,6 +163,7 @@ def get_lifespan(property_type='c'):
     }
 
 
+@cache.memoize(timeout=86400)
 def api_count_call(arg1=0, arg2=30, field=''):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
@@ -171,6 +176,7 @@ def api_count_call(arg1=0, arg2=30, field=''):
     return total
 
 
+@cache.memoize(timeout=86400)
 def get_master_permit_counts(arg1):
     '''
     Run the API call of all master permits where date field arg1 is checked between 0-30 days ago and the same period a year previous.
