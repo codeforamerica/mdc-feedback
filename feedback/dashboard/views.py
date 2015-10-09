@@ -18,7 +18,8 @@ from feedback.dashboard.vendorsurveys import (
 from feedback.dashboard.permits import (
     api_health, get_lifespan,
     get_permit_types,
-    get_master_permit_counts
+    get_master_permit_counts,
+    dump_socrata_api
 )
 
 blueprint = Blueprint(
@@ -162,9 +163,19 @@ def home():
     json_obj['survey_complete'] = json.dumps(dashboard_collection[12])
     json_obj['survey_purpose'] = json.dumps(dashboard_collection[13])
     json_obj['app_answers'] = json.dumps(survey_table)
+    json_obj['permits_rawjson'] = json.dumps(dump_socrata_api('p'))
+    json_obj['violations_rawjson'] = json.dumps(dump_socrata_api('v'))
 
     today = datetime.date.today()
-    return render_template("public/home.html", api=api_health(), date=today.strftime('%B %d, %Y'), json_obj=json_obj, dash_obj=dashboard_collection, resp_obj=survey_table, title='Dashboard')
+    return render_template(
+        "public/home.html",
+        api=api_health(),
+        date=today.strftime('%B %d, %Y'),
+        json_obj=json_obj,
+        dash_obj=dashboard_collection,
+        resp_obj=survey_table,
+        title='Dashboard'
+        )
 
 
 @blueprint.route('/dashboard', methods=['GET', 'POST'])
@@ -208,7 +219,11 @@ def all_surveys():
         row['role'] = roles_const_to_string(row['role'])
         row['followup'] = followup_to_str(row['followup'])
         row['purpose'] = purpose_to_str(str(row['purpose']))
-    return render_template("dashboard/all-surveys.html", resp_obj=survey_table, title='Permitting & Inspection Center User Survey Metrics: Detail')
+    return render_template(
+        "dashboard/all-surveys.html",
+        resp_obj=survey_table,
+        title='Permitting & Inspection Center User Survey Metrics: Detail'
+    )
 
 
 @blueprint.route('/dashboard/feedback/<id>', methods=['GET'])
