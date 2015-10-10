@@ -405,37 +405,34 @@ $(document).ready(function () {
       $('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
       myPieChart = new Chart(pctx).Pie(pieData);
 
-  /* Permitting */
+  /* Permitting & violations */
 
   var ctx2 = $("#openPermits").get(0).getContext("2d"),
+      ctx3 = $("#violations").get(0).getContext("2d"),
       permitJSON = JSON.parse($("#permits_rawjson")[0].childNodes[0].data),
+      violationsJSON = JSON.parse($("#violations_rawjson")[0].childNodes[0].data),
       series2 = [],
       datetime2 = [],
+      series3 = [],
+      datetime3 = [],
       openPermitData,
       openPermitDataset,
       openPermitChart;
       
-      
-  
   buildOpenPermitChart();
+  buildViolationsCharts();
   
   function buildOpenPermitChart() {
         
-    //console.log(permitJSON);
-    
     for(i = 0; i < permitJSON.length; i++) {
-      
-      //console.log(permitJSON[i]);
       
       series2.push(permitJSON[i].total);
       datetime2.push(prettyDates((permitJSON[i].month).split('T')[0]));
       
-      console.log(series2[i], datetime2[i]);
-      
     }
-    //socrata pushes the data backwards. fix that.
-    /*datetime2.reverse();
-    series2.reverse();*/
+    
+    series2.reverse();
+    datetime2.reverse();
 
     openPermitDataset = {
         labels:datetime2,
@@ -453,6 +450,39 @@ $(document).ready(function () {
     },
 
     openPermitChart = new Chart(ctx2).Line(openPermitDataset);
+    
+  }
+  
+  function buildViolationsCharts() {
+    
+    for(i = 0; i < violationsJSON.length; i++) {
+      
+      console.log(violationsJSON[i]);
+      
+      series3.push(violationsJSON[i].total);
+      datetime3.push(prettyDates((violationsJSON[i].month).split('T')[0]));
+      
+    }
+    
+    series3.reverse();
+    datetime3.reverse();
+    
+    var d3 = {
+        labels:datetime3,
+        datasets: [
+          {
+            fillColor: t_orange,
+            strokeColor: orange,
+            pointColor: orange,
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: purple,
+            data: series3
+          }
+        ]
+      },
+      
+      newLineChart = new Chart(ctx3).Line(d3);
     
   }
   
@@ -506,54 +536,40 @@ $(document).ready(function () {
     return date;
   }
   
-  /*$.ajax({
-    url: "https://opendata.miamidade.gov/resource/vvjq-pfmc.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
-    context: document.body
-  }).done(function(data) {
+  var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data),
+      pttx = $("#permitTypeChart").get(0).getContext("2d"),
+      cleanPermitData = [],
+      cleanPermitLabels = [];
 
-    for(i = 0; i < data.length; i+=1) {
+  //set the data up for Charts.js
+  for(i = 0; i < permitTypes.data.length; i+=1) {
 
-      datetime2.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
-      series2.push(data[i].total);
+    cleanPermitLabels[i] = permitTypes.data[i].permit_type;
+    cleanPermitData[i] = permitTypes.data[i].count;
+    //console.log(data[i].issue_type, i);
 
-    }
+  }
 
-    buildOpenPermitChart();
-    
-  });*/
+  var vdata2 = {
+    labels: cleanPermitLabels,
+    datasets: [
+        {
+            label: "Permits by Type",
+            fillColor: t_purple_1,
+            strokeColor: purple_1,
+            data: cleanPermitData
+        }
+    ]
+  };
 
-    var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data),
-        pttx = $("#permitTypeChart").get(0).getContext("2d"),
-        cleanPermitData = [],
-        cleanPermitLabels = [];
-
-    //set the data up for Charts.js
-    for(i = 0; i < permitTypes.data.length; i+=1) {
-
-      cleanPermitLabels[i] = permitTypes.data[i].permit_type;
-      cleanPermitData[i] = permitTypes.data[i].count;
-      //console.log(data[i].issue_type, i);
-
-    }
-
-    var vdata2 = {
-      labels: cleanPermitLabels,
-      datasets: [
-          {
-              label: "Permits by Type",
-              fillColor: t_purple_1,
-              strokeColor: purple_1,
-              data: cleanPermitData
-          }
-      ]
-    };
-
-    $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
-    var barChart2 = new Chart(pttx).Bar(vdata2);
+  $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
+  var barChart2 = new Chart(pttx).Bar(vdata2);
 
   /* VIOLATIONS */
-
-    $.ajax({
+  
+ 
+  
+    /*$.ajax({
       url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1",
       context: document.body
     }).done(function(data) {
@@ -577,24 +593,8 @@ $(document).ready(function () {
       //console.log(datetime);
       //console.log(series);
 
-      var d3 = {
-        labels:datetime3,
-        datasets: [
-          {
-            fillColor: t_orange,
-            strokeColor: orange,
-            pointColor: orange,
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: purple,
-            data: series3
-          }
-        ]
-      },
       
-      newLineChart = new Chart(ctx3).Line(d3);
-
-    });
+    });*/
 
   /************************* LEAFLET MAPPING *************************/
 
