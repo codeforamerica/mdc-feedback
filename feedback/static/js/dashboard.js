@@ -565,38 +565,14 @@ $(document).ready(function () {
   $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
   var barChart2 = new Chart(pttx).Bar(vdata2);
 
-  /* VIOLATIONS */
-  
- 
-  
-    /*$.ajax({
-      url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1",
-      context: document.body
-    }).done(function(data) {
-
-      var ctx3 = $("#violations").get(0).getContext("2d"),
-          series3 = [],
-          datetime3 = [],
-          i;
-
-      for(i = 0; i < data.length;   i+=1) {
-
-        datetime3.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
-        series3.push(data[i].total);
-
-      }
-
-      //socrata pushes the data backwards. fix that.
-      datetime3.reverse();
-      series3.reverse();
-
-      //console.log(datetime);
-      //console.log(series);
-
-      
-    });*/
-
   /************************* LEAFLET MAPPING *************************/
+
+  var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
+      vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data);
+      
+      console.log(vioLocationsData);
+      console.log("------");
+      console.log(vioTypeData);
 
   //25.7667° N, 80.2000° W
   //{lat: 25.626668871238568, lng: -80.44867515563963}
