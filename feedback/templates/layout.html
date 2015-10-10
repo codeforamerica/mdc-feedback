@@ -133,7 +133,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script src="https://login.persona.org/include.js"></script>
-<script src="/static/js/modernizr-custom.js"></script>
+ <script src="/static/js/modernizr-custom.js"></script><!-- -->
 
 <!-- JS blocking -->
 
@@ -202,7 +202,12 @@
 <script type="application/json" id="surveypurpose">
 {{ json_obj.survey_purpose|safe }}
 </script>
-
+<script type="application/json" id="permits_rawjson">
+{{ json_obj.permits_rawjson|safe }}
+</script>
+<script type="application/json" id="violations_rawjson">
+{{ json_obj.violations_rawjson|safe }}
+</script>
 {% endif %}
 
 <script type='text/javascript'>
