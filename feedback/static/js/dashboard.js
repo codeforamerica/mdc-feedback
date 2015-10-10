@@ -408,17 +408,34 @@ $(document).ready(function () {
   /* Permitting */
 
   var ctx2 = $("#openPermits").get(0).getContext("2d"),
+      permitJSON = JSON.parse($("#permits_rawjson")[0].childNodes[0].data),
       series2 = [],
       datetime2 = [],
       openPermitData,
       openPermitDataset,
       openPermitChart;
       
+      
+  
+  buildOpenPermitChart();
+  
   function buildOpenPermitChart() {
         
+    //console.log(permitJSON);
+    
+    for(i = 0; i < permitJSON.length; i++) {
+      
+      //console.log(permitJSON[i]);
+      
+      series2.push(permitJSON[i].total);
+      datetime2.push(prettyDates((permitJSON[i].month).split('T')[0]));
+      
+      console.log(series2[i], datetime2[i]);
+      
+    }
     //socrata pushes the data backwards. fix that.
-    datetime2.reverse();
-    series2.reverse();
+    /*datetime2.reverse();
+    series2.reverse();*/
 
     openPermitDataset = {
         labels:datetime2,
@@ -439,7 +456,57 @@ $(document).ready(function () {
     
   }
   
-  $.ajax({
+  function prettyDates(date) {
+    
+    var year = date.split('-')[0];
+    var month = String(date.split('-')[1]);   //strict mode means no octal literals -- no 08 or 09 unless type string. A thing I learned today!
+    
+    switch (month) {
+      
+      case '01':
+        month = 'Jan';
+        break;
+      case '02':
+        month = 'Feb';
+        break;
+      case '03':
+        month = 'Mar';
+        break;
+      case '04':
+        month = 'Apr';
+        break;
+      case '05':
+        month = 'May';
+        break;
+      case '06':
+        month = 'Jun';
+        break;
+      case '07':
+        month = 'Jul';
+        break;
+      case '08':
+        month = 'Aug';
+        break;
+      case '09':
+        month = 'Sep';
+        break;
+      case '10':
+        month = 'Oct';
+        break;
+      case '11':
+        month = 'Nov';
+        break;
+      case '12':
+        month = 'Dec';
+        break;
+        
+    }
+    
+    date = month + ' ' + year;
+    return date;
+  }
+  
+  /*$.ajax({
     url: "https://opendata.miamidade.gov/resource/vvjq-pfmc.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
     context: document.body
   }).done(function(data) {
@@ -453,9 +520,8 @@ $(document).ready(function () {
 
     buildOpenPermitChart();
     
-  });
+  });*/
 
-    //console.log(JSON.parse($("#permitstype")[0].childNodes[0].data));
     var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data),
         pttx = $("#permitTypeChart").get(0).getContext("2d"),
         cleanPermitData = [],
