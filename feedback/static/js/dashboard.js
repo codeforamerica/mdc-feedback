@@ -457,7 +457,7 @@ $(document).ready(function () {
     
     for(i = 0; i < violationsJSON.length; i++) {
       
-      console.log(violationsJSON[i]);
+      //console.log(violationsJSON[i]);
       
       series3.push(violationsJSON[i].total);
       datetime3.push(prettyDates((violationsJSON[i].month).split('T')[0]));
