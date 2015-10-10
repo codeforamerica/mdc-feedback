@@ -33,6 +33,7 @@ def create_app(config_object=ProductionConfig):
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
+    register_logging(app)
     register_jinja_extensions(app)
 
     @app.before_first_request
@@ -41,8 +42,8 @@ def create_app(config_object=ProductionConfig):
         if app.config.get('ENV') == 'stage':
             stdout = logging.StreamHandler(sys.stdout)
             stdout.setFormatter(logging.Formatter(
-                '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'
-            ))
+            '''-------------------------------
+        %(asctime)s | %(name)s | %(levelname)s in %(module)s: %(message)s'''))
             app.logger.addHandler(stdout)
             app.logger.setLevel(logging.DEBUG)
 
@@ -99,4 +100,15 @@ def register_errorhandlers(app):
 
     for errcode in [401, 404, 500]:
         app.errorhandler(errcode)(render_error)
+    return None
+
+
+def register_logging(app):
+    app.logger.removeHandler(app.logger.handlers[0])
+    app.logger.setLevel(logging.DEBUG)
+    stdout = logging.StreamHandler(sys.stdout)
+    stdout.setFormatter(logging.Formatter(
+    '''-------------------------------
+%(asctime)s | %(name)s | %(levelname)s in %(module)s: %(message)s'''))
+    app.logger.addHandler(stdout)
     return None

@@ -116,7 +116,7 @@ def fill_values_other(array, en, es, en_other, es_other):
 def make_typeform_call(timestamp):
     '''
     Takes in the timestamp in unix form
-    Returns the JSON of the actual API. Let's just start simple.
+    Returns the JSON of the actual API.
     '''
     unix_time = timestamp.strftime("%s")
 
@@ -148,69 +148,7 @@ def make_textit_call(timestamp):
     return json_result
 
 
-def task_textit(json_result):
-    '''
-    Take the textit API result and do ETLs to get
-    the responses in an easy to digest format.
-    '''
 
-    textit_surveys = []
-
-    obj_completed = [result for result in json_result['results'] if result['completed']]
-    # obj_completed = [result for result in json_result['results']]
-    for obj in obj_completed:
-
-        iter = {}
-        values_array = obj['values']
-        for value in values_array:
-            iter[value['label']] = {
-                'category': value['category'],
-                'value': value['rule_value'],
-                'text': value['text']
-            }
-
-        s_obj = {
-            'source_id': 'SMS-' + str(obj['run']),
-            'method': 'sms',
-            'route': iter['Section']['text'],
-            'get_done': string_to_bool(iter['Tasks']['text']),
-            'role': filter_role(iter['Role']['text']),
-            'rating': iter['Satisfaction']['text'],
-            'improvement': iter['Improvement']['value'],
-            'best': filter_best(iter['Best']['category']),
-            'worst': filter_worst(iter['Worst']['category']),
-            'follow_up': string_to_bool(iter['Followup Permission']['text']),
-            'more_comments': iter['Comments']['text']
-        }
-
-        temp = obj['modified_on']
-        temp = datetime.datetime.strptime(temp, '%Y-%m-%dT%H:%M:%S.%fZ')
-        date_object = utc_to_local(temp)
-        s_obj['date_submitted'] = obj['modified_on']
-
-        if obj['flow_uuid'] == TEXTIT_UUID_EN:
-            s_obj['lang'] = 'en'
-        else:
-            s_obj['lang'] = 'es'
-
-        try:
-            s_obj['purpose'] = iter['Purpose']['value']
-        except KeyError:
-            s_obj['purpose'] = None
-
-        textit_data = slice_data(pic_schema, s_obj)
-        textit_surveys.append(textit_data)
-
-    textit_surveys, errors = pic_schema.load(
-        textit_surveys,
-        many=True,
-        session=db.session)
-
-    if errors:
-        print errors
-
-    db.session.add_all(textit_surveys)
-    db.session.commit()
 
 
 def parse_textit(survey_table, json_result):
