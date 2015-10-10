@@ -165,6 +165,8 @@ def home():
     json_obj['app_answers'] = json.dumps(survey_table)
     json_obj['permits_rawjson'] = json.dumps(dump_socrata_api('p'))
     json_obj['violations_rawjson'] = json.dumps(dump_socrata_api('v'))
+    json_obj['violations_locations_json'] = json.dumps(dump_socrata_api('vl'))
+    json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
 
     today = datetime.date.today()
     return render_template(
@@ -235,7 +237,9 @@ def survey_detail(id):
 
 @blueprint.route("/dashboard/violations/",  methods=['GET'])
 def violations_detail():
-    return render_template("public/violations-detail.html", title='Violations by Type: Detail')
+    json_obj = {}
+    json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
+    return render_template("public/violations-detail.html", title='Violations by Type: Detail', json_obj=json_obj)
 
 
 @blueprint.route("/edit-public/",  methods=['GET'])
