@@ -567,13 +567,6 @@ $(document).ready(function () {
 
   /************************* LEAFLET MAPPING *************************/
 
-  var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
-      vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data);
-      
-      console.log(vioLocationsData);
-      console.log("------");
-      console.log(vioTypeData);
-
   //25.7667° N, 80.2000° W
   //{lat: 25.626668871238568, lng: -80.44867515563963}
   
@@ -652,152 +645,138 @@ $(document).ready(function () {
     L.geoJson(umsa, {style:myStyle}).addTo(map2);
     L.geoJson(muni, {style:umsaStyle}).addTo(map3);
     L.geoJson(umsa, {style:myStyle}).addTo(map3);
+    
+    buildDataMaps();
+    
+  }
+  
+  function buildDataMaps(){
+    
+    var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
+        vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data);
+      
+    for(i = 0; i < vioLocationsData.length; i+=1) {
 
-    //data map
-  $.ajax({
-      url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$where=ticket_created_date_time%20%3E%20%272015-01-01%27",
-
-      context: document.body
-    }).done(function(data) {
-
-      for(i = 0; i < data.length;   i+=1) {
-
-        var lat = data[i].location.latitude,
-            lon = data[i].location.longitude,
-            openClosed = data[i].ticket_status,
-            fill = t_yellow,
-            color = yellow,
-            title = data[i].issue_type;
-
-        //console.log(openClosed);
-
-        if(openClosed == 'LOCKED') {
-          var marker = L.circleMarker([lat, lon], {
-            radius: 5,
-            fillColor: t_green,
-            color: green,
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-          }).addTo(map2);
-
-          marker.bindPopup(title);
-          marker.on('mouseover', function () {
-            this.openPopup();
-          });
-          marker.on('mouseout', function () {
-            this.closePopup();
-          });
-        }
-
-        if(openClosed == "LIEN") {
-          var marker2 = L.circleMarker([lat, lon], {
-            radius: 5,
-            fillColor: t_purple,
-            color: purple,
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-          }).addTo(map3);
+      var lat = vioLocationsData[i].location.latitude,
+          lon = vioLocationsData[i].location.longitude,
+          openClosed = vioLocationsData[i].ticket_status,
+          fill = t_yellow,
+          color = yellow,
+          title = vioLocationsData[i].issue_type;
           
-          marker2.bindPopup(title);
-          marker2.on('mouseover', function() {
-            this.openPopup();
-          });
-          marker2.on('mouseout', function() {
-            this.closePopup();
-          });
-        }
+      if(openClosed == 'LOCKED') {
+        var marker = L.circleMarker([lat, lon], {
+          radius: 5,
+          fillColor: t_green,
+          color: green,
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).addTo(map2);
 
-        if(openClosed == "CLOSED") {
+        marker.bindPopup(title);
+        marker.on('mouseover', function () {
+          this.openPopup();
+        });
+        marker.on('mouseout', function () {
+          this.closePopup();
+        });
+      }
 
-          var marker3 = L.circleMarker([lat, lon], {
-            radius: 5,
-            fillColor: fill,
-            color: color,
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-          }).addTo(map);
-          
-          marker3.bindPopup(title);
-          marker3.on('mouseover', function() {
-            this.openPopup();
-          });
-          marker3.on('mouseout', function() {
-            this.closePopup();
-          });
-          
-        }
+      if(openClosed == "LIEN") {
+        var marker2 = L.circleMarker([lat, lon], {
+          radius: 5,
+          fillColor: t_purple,
+          color: purple,
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).addTo(map3);
+        
+        marker2.bindPopup(title);
+        marker2.on('mouseover', function() {
+          this.openPopup();
+        });
+        marker2.on('mouseout', function() {
+          this.closePopup();
+        });
+      }
+
+      if(openClosed == "CLOSED") {
+
+        var marker3 = L.circleMarker([lat, lon], {
+          radius: 5,
+          fillColor: fill,
+          color: color,
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).addTo(map);
+        
+        marker3.bindPopup(title);
+        marker3.on('mouseover', function() {
+          this.openPopup();
+        });
+        marker3.on('mouseout', function() {
+          this.closePopup();
+        });
+        
+      }
+
+    }
+  
+    if(vioTypeData === '') {
+
+      $('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
+
+    } else {
+
+      var labels = [];
+      var dataset = [];
+
+      //the 'total' isn't an integer. make it one, or the sort will fail.
+      for(i = 0; i < vioTypeData.length;   i+=1) {
+
+        vioTypeData[i].total = parseInt(vioTypeData[i].total, 10);
+        //console.log(data[i]);
+      }
+
+      //sort on the number of each violation type
+      vioTypeData = vioTypeData.sortOn("total");
+      vioTypeData.reverse();
+
+      //set the data up for Charts.js
+      for(i = 0; i < 19;   i+=1) {
+
+        labels[i] = vioTypeData[i].issue_type;
+        dataset[i] = vioTypeData[i].total;
+        //console.log(data[i].issue_type, i);
 
       }
 
-    });
+      labels.reverse();
+      dataset.reverse();
 
-    $.ajax({
-      url: "https://opendata.miamidade.gov/resource/dj6j-qg5t.json?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-11%27",
+      //create the chart
+      var bctx = $("#viotype").get(0).getContext("2d");
 
-      context: document.body
+      var bdata = {
+          labels: labels,
+          datasets: [
+              {
+                fillColor: t_purple_1,
+                strokeColor: purple_1,
+                data: dataset
+              }
+          ]
+      };
 
-    }).done(function(data) {
+      var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
 
-      //console.log("DATA", data);
-
-      if(data === '') {
-
-        //console.log('empty set');
-
-        $('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
-
-      } else {
-
-        var labels = [];
-        var dataset = [];
-
-        //the 'total' isn't an integer. make it one, or the sort will fail.
-        for(i = 0; i < data.length;   i+=1) {
-
-          data[i].total = parseInt(data[i].total, 10);
-          //console.log(data[i]);
-        }
-
-        //sort on the number of each violation type
-        data = data.sortOn("total");
-        data.reverse();
-
-        //set the data up for Charts.js
-        for(i = 0; i < 19;   i+=1) {
-
-          labels[i] = data[i].issue_type;
-          dataset[i] = data[i].total;
-          //console.log(data[i].issue_type, i);
-
-        }
-
-        labels.reverse();
-        dataset.reverse();
-
-        //create the chart
-        var bctx = $("#viotype").get(0).getContext("2d");
-
-        var bdata = {
-            labels: labels,
-            datasets: [
-                {
-                  fillColor: t_purple_1,
-                  strokeColor: purple_1,
-                  data: dataset
-                }
-            ]
-        };
-
-        var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
-
-        }
-
-    });
-
+    }
+          
   }
+
 
   Array.prototype.sortOn = function(){
     var dup = this.slice();
