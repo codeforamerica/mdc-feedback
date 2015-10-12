@@ -1,17 +1,37 @@
-$(document).ready(function() {
+$(document).ready(function () {
+  
+  "use strict";
+  
+  //all the vars, to satisfy the linter.
 
-  /* API HEALTH CHECK */
+  var apiStatus = parseInt($('#api-health').text(), 10),
+      apiModal = $('[data-remodal-id=modal]').remodal(),
+      green = "rgba(76, 216, 132, 1)",
+      t_green = "rgba(76, 216, 132, 0.2)",
+      yellow = "rgba(245, 201, 61, 1)",
+      t_yellow = "rgba(245, 201, 61, 0.2)",
+      orange = "rgba(243, 155, 121, 1)",
+      t_orange = "rgba(243, 155, 121, 0.2)",
+      purple = "rgba(61, 51, 119, 1)",
+      t_purple = "rgba(61, 51, 119, 0.2)",
+      purple_1 = 'rgba(172, 75, 173, 1)',
+      t_purple_1 = 'rgba(172, 75, 173, 0.2)',
+      purple_2 = 'rgba(122, 0, 134, 1)',
+      t_purple_2 = 'rgba(122, 0, 134, 0.2))',
+      purple_3 = 'rgba(75, 0, 94, 1)',
+      t_purple_3 = 'rgba(75, 0, 94, 0.2)',
+      purple_4 = 'rgba(219, 172, 217, 1)',
+      t_purple_4 = 'rgba(219, 172, 217, 0.2)',
+      blue = 'rgba(93, 205, 252,1)';
+      
+  /************************* API health check *************************/
+  
   window.REMODAL_GLOBALS = {
     NAMESPACE: 'modal',
     DEFAULTS: {
       hashTracking: false
     }
   };
-
-  var apiStatus = parseInt($('#api-health').text());
-  var apiModal = $('[data-remodal-id=modal]').remodal();
-
-  //console.log(apiModal);
 
   if(apiModal !== undefined) {
 
@@ -22,12 +42,10 @@ $(document).ready(function() {
     $('.remodal').find('p').text("It looks like we've had a problem with our data. Check back later for an update.");
     apiModal.open();
 
-
     } else if(apiStatus === 1) {
 
       //mostly so I can test the modals
       $('.remodal').find('#status').text("All is well.");
-      //apiModal.open();
 
     } else {
 
@@ -40,15 +58,14 @@ $(document).ready(function() {
 
   }
 
-  //console.log(apiStatus)
-
   /************************* dashboard css *************************/
 
   $('.headline').each(function() {
 
-    var h = $(this).height();
-    var container = $(this).parent().find('.content-container');
-    var details = $(this).parent().find('.details');
+    var h = $(this).height(),
+        container = $(this).parent().find('.content-container'),
+        details = $(this).parent().find('.details'),
+        offset;
 
     //console.log('headline is ', h, details.height() )
     //a single line of text is 25px high.
@@ -56,11 +73,8 @@ $(document).ready(function() {
     //we do this by adjusting .content-container height
     if(h > 25) {
 
-      var offset = 300 - h - details.height() * 2 - 26;  //300 is fixed height, 20 is padding
-      //console.log(offset);
-
+      offset = 300 - h - details.height() * 2 - 26;  //300 is fixed height, 20 is padding
       $(container).css('height', offset);
-
 
     }
 
@@ -70,64 +84,16 @@ $(document).ready(function() {
 
   /***************************** CHARTS! *****************************/
 
-  var green = "rgba(76, 216, 132, 1)";
-  var t_green = "rgba(76, 216, 132, 0.2)";
-
-  var yellow = "rgba(245, 201, 61, 1)";
-  var t_yellow = "rgba(245, 201, 61, 0.2)";
-
-  var orange = "rgba(243, 155, 121, 1)";
-  var t_orange = "rgba(243, 155, 121, 0.2)";
-
-  var purple = "rgba(61, 51, 119, 1)";
-  var t_purple = "rgba(61, 51, 119, 0.2)";
-
-  var purple_1 = 'rgba(172, 75, 173, 1)';
-  var t_purple_1 = 'rgba(172, 75, 173, 0.2)';
-
-  var purple_2 = 'rgba(122, 0, 134, 1)';
-  var t_purple_2 = 'rgba(122, 0, 134, 0.2))';
-
-  var purple_3 = 'rgba(75, 0, 94, 1)';
-  var t_purple_3 = 'rgba(75, 0, 94, 0.2)';
-
-  var purple_4 = 'rgba(219, 172, 217, 1)';
-  var t_purple_4 = 'rgba(219, 172, 217, 0.2)';
-
-  var blue = 'rgba(93, 205, 252,1)';
-  var t_blue = 'rgba(93, 205, 252, 0.2)';
-
-  var b = 'rgba(170, 233, 254,1)';
-  var t_b = 'rgba(170, 233, 254,.2)';
-
-
-  var colors = [green, yellow, orange, purple, purple_1, purple_2, purple_3, purple_4, blue, b];
-  var t_colors = [t_green, t_yellow, t_orange, t_purple, t_purple_1, t_purple_2, t_purple_3, t_purple_4, t_blue, t_b];
-
-  var pie_colors = ['rgba(64, 0, 76, 1)', 'rgba(118, 42, 131,1)', 'rgba(153, 112, 171, 1)', 'rgba(194, 165, 207, 1)', 'rgba(231, 212, 232, 1)', 'rgba(217 240 211, 1)', 'rgba(166, 219, 160, 1)', 'rgba(90, 174, 97, 1)', 'rgba(27, 120, 55, 1)', 'rgba(0, 68, 27, 1)', b, blue]
-
+  //charts.js defaults
   Chart.defaults.global = {
     // Boolean - Whether to animate the chart
-    animation: true,
-
-    // Number - Number of animation steps
-    animationSteps: 60,
-
-    animationEasing: "easeOutQuart",
+    animation: false,
 
     // Boolean - If we should show the scale at all
     showScale: true,
 
     // Boolean - If we want to override with a hard coded scale
     scaleOverride: false,
-
-    // ** Required if scaleOverride is true **
-    // Number - The number of steps in a hard coded scale
-    scaleSteps: null,
-    // Number - The value jump in the hard coded scale
-    scaleStepWidth: null,
-    // Number - The scale starting value
-    scaleStartValue: null,
 
     // String - Colour of the scale line
     scaleLineColor: "rgba(0,0,0,.1)",
@@ -223,333 +189,286 @@ $(document).ready(function() {
     multiTooltipTemplate: "<%= value %>",
 
     // Function - Will fire on animation progression.
-    onAnimationProgress: function(){},
+    onAnimationProgress: function(){ /* empty */ },
 
     // Function - Will fire on animation completion.
-    onAnimationComplete: function(){}
-}
+    onAnimationComplete: function(){ /* empty */  } 
+  };
 
-  if($("#dashboard")[0] != undefined) {
+  //surveys by role
+  var sctx = $("#s-role-chart").get(0).getContext("2d"),
+      sctxdata = JSON.parse($("#surveyrole")[0].childNodes[0].data),
+      sctxseries = [],
+      sctxlabels = [],
 
-	  //surveys by role
-	  var sctx = $("#s-role-chart").get(0).getContext("2d");
-	  var sctxdata = JSON.parse($("#surveyrole")[0].childNodes[0].data);
+      //this only works because it's a known quantity.
+      homeowners = {label:'Homeowners', count:0},
+      architects = {label:'Architects', count:0},
+      contractors = {label:'Contractors', count:0},
+      consultants = {label:'Permit Consultants', count:0},
+      owners = {label:'Business Owners', count:0},
+      sorter = [architects, owners, consultants, contractors, homeowners], 
+      i,
+      respondentsByRole,
+      respondentsByRoleChart;
 
-	  var sctxseries = [];
-	  var sctxlabels = [];
+  for(i = 0; i < sctxdata.data.length; i+=1) {
 
-	  //this only works because it's a known quantity.
-	  var homeowners = {label:'Homeowners', count:0};
-	  var architects = {label:'Architects', count:0};
-	  var contractors = {label:'Contractors', count:0};
-	  var consultants = {label:'Permit Consultants', count:0};
-	  var owners = {label:'Business Owners', count:0};
-	  var sorter = [architects, owners, consultants, contractors, homeowners];
+    switch(parseInt(sctxdata.data[i][0], 10)) {
 
-	  for(var i = 0; i < sctxdata.data.length;i ++) {
-
-			switch(parseInt(sctxdata.data[i][0])) {
-
-			  case 1:
-					contractors.count = sctxdata.data[i][1];
-					break;
-				case 2:
-					architects.count = sctxdata.data[i][1];
-					break;
-				case 3:
-					consultants.count = sctxdata.data[i][1];
-					break;
-				case 4:
-					homeowners.count = sctxdata.data[i][1];
-					break;
-				case 5:
-					owners.count = sctxdata.data[i][1];
-					break;
-
-			}
+      case 1:
+        contractors.count = sctxdata.data[i][1];
+        break;
+      case 2:
+        architects.count = sctxdata.data[i][1];
+        break;
+      case 3:
+        consultants.count = sctxdata.data[i][1];
+        break;
+      case 4:
+        homeowners.count = sctxdata.data[i][1];
+        break;
+      case 5:
+        owners.count = sctxdata.data[i][1];
+        break;
 
     }
 
-    for(var i = 0; i < sorter.length; i++) {
+  }
 
-	    sctxseries[i] = sorter[i].count;
-	    sctxlabels[i] = sorter[i].label;
+  for(i = 0; i < sorter.length; i+=1) {
+
+    sctxseries[i] = sorter[i].count;
+    sctxlabels[i] = sorter[i].label;
+    
+  }
+
+  respondentsByRole = {
+    labels: sctxlabels,
+    datasets: [
+        {
+            label: "Respondents by Role",
+            fillColor: t_purple_1,
+            strokeColor: purple_1,
+            data: sctxseries
+        }
+    ]
+  };
+
+  respondentsByRoleChart = new Chart(sctx).HorizontalBar(respondentsByRole);
+  
+  // end surveys by role
+
+  // successful task completion
+  var cctx = $("#s-complete-chart").get(0).getContext("2d"),
+      cctxdata = JSON.parse($("#surveycomplete")[0].childNodes[0].data),
+      total = cctxdata.data.total,
+      completeTrue = cctxdata.data.yes,
+      completeFalse = total - completeTrue,
+
+    cctxPie = [
+    {
+      value: completeTrue,
+      color:purple_1,
+      highlight: t_purple_1,
+      label: 'Successfully completed task'
+    },
+    {
+      value: completeFalse,
+      color: purple_4,
+      highlight: t_purple_4,
+      label: 'Failed to complete task'
+    }
+  ],
+
+  cctxPieChart = new Chart(cctx).Pie(cctxPie),
+  // end successful task completion
+
+  // surveys by purpose
+  sptx = $("#s-purpose-chart").get(0).getContext("2d"),
+  sptxdata = JSON.parse($("#surveypurpose")[0].childNodes[0].data),
+
+  //this only works because it's a known quantity.
+  violation = {label:'Find out about a violation/lien', count:0},
+  inspector = {label:'Meet with an inspector', count:0},
+  permit = {label:'Apply for a permit', count:0},
+  reviewer = {label:'Meet with a plan reviewer', count:0},
+  cu = {label:'Obtain a certificate of use/occupancy', count:0},
+  sorter2 = [violation, inspector, permit, reviewer, cu],
+
+  sptxseries = [],
+  sptxlabels = [],
+  surveysByPurpose,
+  surveysByPurposeChart;
+
+  for(i = 0; i < sptxdata.data.length;   i+=1) {
+
+    switch(parseInt(sptxdata.data[i][0], 10)) {
+
+      case 1:
+        contractors.count = sptxdata.data[i][1];
+        break;
+      case 2:
+        inspector.count = sptxdata.data[i][1];
+        break;
+      case 3:
+        reviewer.count = sptxdata.data[i][1];
+        break;
+      case 4:
+        violation.count = sptxdata.data[i][1];
+        break;
+      case 5:
+        cu.count = sptxdata.data[i][1];
+        break;
+
     }
 
-		var vdata = {
-      labels: sctxlabels,
-      datasets: [
-          {
-              label: "Respondents by Role",
-              fillColor: t_purple_1,
-              strokeColor: purple_1,
-              data: sctxseries
-          },
+  }
 
-      ]
-    };
+  for(i = 0; i < sorter2.length; i+=1) {
+    sptxseries[i] = sorter2[i].count;
+    sptxlabels[i] = sorter2[i].label;
+  }
 
-	  var sctxBar = new Chart(sctx).HorizontalBar(vdata);
-		// end surveys by role
-
-		// successful task completion
-		var cctx = $("#s-complete-chart").get(0).getContext("2d");
-	  var cctxdata = JSON.parse($("#surveycomplete")[0].childNodes[0].data);
-
-	  var total = cctxdata.data.total;
-	  var completeTrue = cctxdata.data.yes;
-	  var completeFalse = total - completeTrue;
-
-	  var cctxPie = [
-	    {
-	      value: completeTrue,
-	      color:purple_1,
-	      highlight: t_purple_1,
-	      label: 'Successfully completed task'
-	    },
-	    {
-	      value: completeFalse,
-	      color: purple_4,
-	      highlight: t_purple_4,
-	      label: 'Failed to complete task'
-	    }
-	  ];
-
-	  var cctxPieChart = new Chart(cctx).Pie(cctxPie);/**/
-
-		// end successful task completion
-
-		// surveys by purpose
-		var sptx = $("#s-purpose-chart").get(0).getContext("2d");
-	  var sptxdata = JSON.parse($("#surveypurpose")[0].childNodes[0].data);
-
-	  /*   <p>Sophia, the equivalent JSON for a pie chart is at <code>#surveypurpose</code>. In each array element, the first digit is a constant for user type, the second is occurance. If it's a full sentence then they wrote it out via typeform.</p> */
-
-		//this only works because it's a known quantity.
-	  homeowners = {label:'Find out about a violation/lien', count:0};
-	  architects = {label:'Meet with an inspector', count:0};
-	  contractors = {label:'Apply for a permit', count:0};
-	  consultants = {label:'Meet with a plan reviewer', count:0};
-	  owners = {label:'Obtain a certificate of use/occupancy', count:0};
-	  sorter = [architects, owners, consultants, contractors, homeowners];
-
-	  var sptxseries = [];
-	  var sptxlabels = [];
-
-	  for(var i = 0; i < sptxdata.data.length;i ++) {
-
-			switch(parseInt(sptxdata.data[i][0])) {
-
-				case 1:
-					contractors.count = sptxdata.data[i][1];
-					break;
-				case 2:
-					architects.count = sptxdata.data[i][1];
-					break;
-				case 3:
-					consultants.count = sptxdata.data[i][1];
-					break;
-				case 4:
-					homeowners.count = sptxdata.data[i][1];
-					break;
-				case 5:
-					owners.count = sptxdata.data[i][1];
-					break;
-
-			}
-
-    }
-
-    for(var i = 0; i < sorter.length; i++) {
-	    sptxseries[i] = sorter[i].count;
-	    sptxlabels[i] = sorter[i].label;
-    }
-
-	  var sptxCdata = {
-      labels: sptxlabels,
-      datasets: [
-          {
-              label: "Respondents by Purpose",
-              fillColor: t_purple_1,
-              strokeColor: purple_1,
-              data: sptxseries
-          },
-
-      ]
-    };
-
-	  var sptxBarChart = new Chart(sptx).HorizontalBar(sptxCdata);/**/
-
-		// end surveys by purpose
-
-	  // Get context with jQuery - using jQuery's .get() method.
-	  var ctx = $("#myChart").get(0).getContext("2d");
-	  var jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data);
-	  //console.log(jsondata);
-
-	  var series = jsondata.series[0].data;
-	  var datetime = jsondata.datetime.data;
-	  //console.log(series, datetime);
-
-	  var data = {
-	    labels: datetime,
-	    scaleBeginAtZero: true,
-	    datasets: [
-	        {
-	            label: "My First dataset",
-	            fillColor: t_orange,
-	            strokeColor: orange,
-	            pointColor: orange,
-	            pointStrokeColor: "#fff",
-	            pointHighlightFill: "#fff",
-	            pointHighlightStroke: "rgba(220,220,220,1)",
-	            data: series,
-	            scaleStartValue: 0
-	        }
-	    ]
-	  };
-
-	  var myLineChart = new Chart(ctx).Line(data);
-
-	  var surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data);
-		var  pctx = $("#surveyChart").get(0).getContext("2d");
-
-	  var pieData = [
-	    {
-	      value: surveyData.data.web_en,
-	      color:purple_1,
-	      highlight: t_purple_1,
-	      label: surveyData.labels.web_en
-	    },
-	    {
-	      value: surveyData.data.web_es,
-	      color: purple_2,
-	      highlight: t_purple_2,
-	      label: surveyData.labels.web_es
-	    },
-	    {
-	      value: surveyData.data.sms_en,
-	      color: purple_3,
-	      highlight: t_purple_3,
-	      label: surveyData.labels.sms_en
-	    },
-	    {
-	      value: surveyData.data.sms_es,
-	      color: purple_4,
-	      highlight: t_purple_4,
-	      label: surveyData.labels.sms_es
-
-	    }
-	  ];
-
-	  $('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
-	  var myPieChart = new Chart(pctx).Pie(pieData);/**/
-
-	  /* Permitting */
-
-	    $.ajax({
-	      url: "https://opendata.miamidade.gov/resource/vvjq-pfmc.json?$select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&$offset=1",
-	      context: document.body
-	    }).done(function(data) {
-
-	      var ctx2 = $("#openPermits").get(0).getContext("2d");
-	      //console.log(data);
-
-	      var series = [];
-	      var datetime = [];
-
-	      for(var i = 0; i < data.length; i++) {
-
-	        datetime.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
-	        series.push(data[i].total);
-
-	      }
-
-	      //socrata pushes the data backwards. fix that.
-	      datetime.reverse();
-	      series.reverse();
-
-	      var d = {
-	          labels:datetime,
-	          datasets: [
-	            {
-	                fillColor: t_orange,
-	                strokeColor: orange,
-	                pointColor: orange,
-	                pointStrokeColor: "#fff",
-	                pointHighlightFill: "#fff",
-	                pointHighlightStroke: "rgba(220,220,220,1)",
-	                data: series
-	            }
-	          ]
-	      };
-
-	      var myLineChart = new Chart(ctx2).Line(d);
-
-	    });
-
-	    //console.log(JSON.parse($("#permitstype")[0].childNodes[0].data));
-	    var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data);
-
-	    var pttx = $("#permitTypeChart").get(0).getContext("2d");
-
-	    var cleanPermitData = [];
-	    var cleanPermitLabels = [];
-
-	    //set the data up for Charts.js
-	    for(var i = 0; i < permitTypes.data.length; i++) {
-
-	      cleanPermitLabels[i] = permitTypes.data[i].permit_type;
-	      cleanPermitData[i] = permitTypes.data[i].count;
-	      //console.log(data[i].issue_type, i);
-
-	    }
-
-	    var vdata = {
-	      labels: cleanPermitLabels,
-	      datasets: [
-	          {
-	              label: "Permits by Type",
-	              fillColor: t_purple_1,
-	              strokeColor: purple_1,
-	              data: cleanPermitData
-	          },
-
-	      ]
-	    };
-
-	    $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
-	    var barChart2 = new Chart(pttx).Bar(vdata);
-
-  /* VIOLATIONS */
-
-  	$.ajax({
-      url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1",
-      context: document.body
-    }).done(function(data) {
-
-      var ctx3 = $("#violations").get(0).getContext("2d");
-      //console.log(data);
-
-      var series = [];
-      var datetime = [];
-
-      for(var i = 0; i < data.length; i++) {
-
-        datetime.push(data[i].month.split('-')[1] + '/' + data[i].month.split('-')[0]);
-        series.push(data[i].total);
-
+  surveysByPurpose = {
+    labels: sptxlabels,
+    datasets: [
+      {
+        label: "Respondents by Purpose",
+        fillColor: t_purple_1,
+        strokeColor: purple_1,
+        data: sptxseries
       }
+    ]
+  };
 
-      //socrata pushes the data backwards. fix that.
-      datetime.reverse();
-      series.reverse();
+  surveysByPurposeChart = new Chart(sptx).HorizontalBar(surveysByPurpose);
+  // end surveys by purpose
 
-      //console.log(datetime);
-      //console.log(series);
+  // Get context with jQuery - using jQuery's .get() method.
+  var ctx = $("#myChart").get(0).getContext("2d"),
+      jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data),
+      series = jsondata.series[0].data,
+      datetime = jsondata.datetime.data,
+      
+      data = {
+        labels: datetime,
+        scaleBeginAtZero: true,
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: t_orange,
+                strokeColor: orange,
+                pointColor: orange,
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: series,
+                scaleStartValue: 0
+            }
+        ]
+      },
+      
+      myPieChart,
+      myLineChart = new Chart(ctx).Line(data),
+      surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data),
+      pctx = $("#surveyChart").get(0).getContext("2d"),
+          
+      pieData = [
+        {
+          value: surveyData.data.web_en,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: surveyData.labels.web_en
+        },
+        {
+          value: surveyData.data.web_es,
+          color: purple_2,
+          highlight: t_purple_2,
+          label: surveyData.labels.web_es
+        },
+        {
+          value: surveyData.data.sms_en,
+          color: purple_3,
+          highlight: t_purple_3,
+          label: surveyData.labels.sms_en
+        },
+        {
+          value: surveyData.data.sms_es,
+          color: purple_4,
+          highlight: t_purple_4,
+          label: surveyData.labels.sms_es
+    
+        }
+      ];
+    
+      $('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
+      myPieChart = new Chart(pctx).Pie(pieData);
 
-      var d3 = {
-        labels:datetime,
+  /* Permitting & violations */
+
+  var ctx2 = $("#openPermits").get(0).getContext("2d"),
+      ctx3 = $("#violations").get(0).getContext("2d"),
+      permitJSON = JSON.parse($("#permits_rawjson")[0].childNodes[0].data),
+      violationsJSON = JSON.parse($("#violations_rawjson")[0].childNodes[0].data),
+      series2 = [],
+      datetime2 = [],
+      series3 = [],
+      datetime3 = [],
+      openPermitData,
+      openPermitDataset,
+      openPermitChart;
+      
+  buildOpenPermitChart();
+  buildViolationsCharts();
+  
+  function buildOpenPermitChart() {
+        
+    for(i = 0; i < permitJSON.length; i++) {
+      
+      series2.push(permitJSON[i].total);
+      datetime2.push(prettyDates((permitJSON[i].month).split('T')[0]));
+      
+    }
+    
+    series2.reverse();
+    datetime2.reverse();
+
+    openPermitDataset = {
+        labels:datetime2,
+        datasets: [
+          {
+              fillColor: t_orange,
+              strokeColor: orange,
+              pointColor: orange,
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: series2
+          }
+        ]
+    },
+
+    openPermitChart = new Chart(ctx2).Line(openPermitDataset);
+    
+  }
+  
+  function buildViolationsCharts() {
+    
+    for(i = 0; i < violationsJSON.length; i++) {
+      
+      //console.log(violationsJSON[i]);
+      
+      series3.push(violationsJSON[i].total);
+      datetime3.push(prettyDates((violationsJSON[i].month).split('T')[0]));
+      
+    }
+    
+    series3.reverse();
+    datetime3.reverse();
+    
+    var d3 = {
+        labels:datetime3,
         datasets: [
           {
             fillColor: t_orange,
@@ -558,20 +477,99 @@ $(document).ready(function() {
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: purple,
-            data: series
+            data: series3
           }
         ]
-      };
+      },
+      
+      newLineChart = new Chart(ctx3).Line(d3);
+    
+  }
+  
+  function prettyDates(date) {
+    
+    var year = date.split('-')[0];
+    var month = String(date.split('-')[1]);   //strict mode means no octal literals -- no 08 or 09 unless type string. A thing I learned today!
+    
+    switch (month) {
+      
+      case '01':
+        month = 'Jan';
+        break;
+      case '02':
+        month = 'Feb';
+        break;
+      case '03':
+        month = 'Mar';
+        break;
+      case '04':
+        month = 'Apr';
+        break;
+      case '05':
+        month = 'May';
+        break;
+      case '06':
+        month = 'Jun';
+        break;
+      case '07':
+        month = 'Jul';
+        break;
+      case '08':
+        month = 'Aug';
+        break;
+      case '09':
+        month = 'Sep';
+        break;
+      case '10':
+        month = 'Oct';
+        break;
+      case '11':
+        month = 'Nov';
+        break;
+      case '12':
+        month = 'Dec';
+        break;
+        
+    }
+    
+    date = month + ' ' + year;
+    return date;
+  }
+  
+  var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data),
+      pttx = $("#permitTypeChart").get(0).getContext("2d"),
+      cleanPermitData = [],
+      cleanPermitLabels = [];
 
-      var myLineChart = new Chart(ctx3).Line(d3);
+  //set the data up for Charts.js
+  for(i = 0; i < permitTypes.data.length; i+=1) {
 
-    });
+    cleanPermitLabels[i] = permitTypes.data[i].permit_type;
+    cleanPermitData[i] = permitTypes.data[i].count;
+    //console.log(data[i].issue_type, i);
+
+  }
+
+  var vdata2 = {
+    labels: cleanPermitLabels,
+    datasets: [
+        {
+            label: "Permits by Type",
+            fillColor: t_purple_1,
+            strokeColor: purple_1,
+            data: cleanPermitData
+        }
+    ]
+  };
+
+  $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
+  var barChart2 = new Chart(pttx).Bar(vdata2);
 
   /************************* LEAFLET MAPPING *************************/
 
   //25.7667° N, 80.2000° W
   //{lat: 25.626668871238568, lng: -80.44867515563963}
-
+  
   var map = L.map('leaflet').setView([25.626668871238568, -80.44867515563963], 9);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -580,7 +578,7 @@ $(document).ready(function() {
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
     }).addTo(map);
-
+    
   var map2 = L.map('leaflet-open').setView([25.626668871238568, -80.44867515563963], 9);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -589,7 +587,7 @@ $(document).ready(function() {
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
     }).addTo(map2);
-
+    
   var map3 = L.map('leaflet-lein').setView([25.626668871238568, -80.44867515563963], 9);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -598,57 +596,46 @@ $(document).ready(function() {
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
     }).addTo(map3);
-
-    map3.on('click', function(e) {
-      // console.log(e.latlng);
-    });
-
+  
   //county shapefiles
   $.ajax({
     type: "GET",
     url: "../static/geodata/municipalities_coast.json",
     dataType: "json",
-    success: parseXML,
-    error: logError
+    success: parseXML
   });
-
-
-  function logError(n, textStatus, errorThrown) {
-
-    alert("ajax shapefile error", textStatus, errorThrown);
-  }
-
+  
   function parseXML(data) {
 
-   var muni = [];
-   var umsa = [];
+    var muni = [],
+        umsa = [],
+        i,
+        myStyle = {
+          color: blue,
+          weight: 1,
+          opacity: 0.65
+        },
+        
+        umsaStyle = {
+    
+          color: 'rgba(0,0,0)',
+          weight: 1,
+          opacity: 0.65
+    
+        };
 
     //sort for county to control style
-    for(var i = 0; i < data.features.length; i++) {
+    for(i = 0; i < data.features.length;   i+=1) {
 
-	    if(data.features[i].properties.NAME == 'UNINCORPORATED MIAMI-DADE') {
+      if(data.features[i].properties.NAME == 'UNINCORPORATED MIAMI-DADE') {
 
-		    umsa.push(data.features[i]);
+        umsa.push(data.features[i]);
 
-	    } else {
+      } else {
 
-		    muni.push(data.features[i]);
+        muni.push(data.features[i]);
 
-	    }
-
-    }
-
-    var myStyle = {
-      "color": blue,
-      "weight": 1,
-      "opacity": 0.65
-    };
-
-    var umsaStyle = {
-
-	    "color": 'rgba(0,0,0)',
-      "weight": 1,
-      "opacity": 0.65
+      }
 
     }
 
@@ -658,137 +645,138 @@ $(document).ready(function() {
     L.geoJson(umsa, {style:myStyle}).addTo(map2);
     L.geoJson(muni, {style:umsaStyle}).addTo(map3);
     L.geoJson(umsa, {style:myStyle}).addTo(map3);
+    
+    buildDataMaps();
+    
+  }
+  
+  function buildDataMaps(){
+    
+    var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
+        vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data);
+      
+    for(i = 0; i < vioLocationsData.length; i+=1) {
 
-    //data map
-  $.ajax({
-      url: "https://opendata.miamidade.gov/resource/tzia-umkx.json?$where=ticket_created_date_time%20%3E%20%272015-01-01%27",
-
-      context: document.body
-    }).done(function(data) {
-
-      for(var i = 0; i < data.length; i++) {
-
-        var lat = data[i].location.latitude;
-        var lon = data[i].location.longitude;
-        var openClosed = data[i].ticket_status;
-        var fill = t_yellow;
-        var color = yellow;
-        var title = data[i].issue_type;
-
-        //console.log(openClosed);
-
-        if(openClosed == 'LOCKED') {
-          var marker = L.circleMarker([lat, lon], {
-            radius: 5,
-            fillColor: t_green,
-            color: green,
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-          }).addTo(map2);
-
-        }
-
-        if(openClosed == "LIEN") {
-          var marker = L.circleMarker([lat, lon], {
-            radius: 5,
-            fillColor: t_purple,
-            color: purple,
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-          }).addTo(map3);
-        }
-
-        if(openClosed == "CLOSED") {
-
-          var marker = L.circleMarker([lat, lon], {
-            radius: 5,
-            fillColor: fill,
-            color: color,
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-          }).addTo(map);
-
-        }
+      var lat = vioLocationsData[i].location.latitude,
+          lon = vioLocationsData[i].location.longitude,
+          openClosed = vioLocationsData[i].ticket_status,
+          fill = t_yellow,
+          color = yellow,
+          title = vioLocationsData[i].issue_type;
+          
+      if(openClosed == 'LOCKED') {
+        var marker = L.circleMarker([lat, lon], {
+          radius: 5,
+          fillColor: t_green,
+          color: green,
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).addTo(map2);
 
         marker.bindPopup(title);
-        marker.on('mouseover', function (e) {
-            this.openPopup();
+        marker.on('mouseover', function () {
+          this.openPopup();
         });
-        marker.on('mouseout', function (e) {
-            this.closePopup();
+        marker.on('mouseout', function () {
+          this.closePopup();
         });
       }
 
-    })
+      if(openClosed == "LIEN") {
+        var marker2 = L.circleMarker([lat, lon], {
+          radius: 5,
+          fillColor: t_purple,
+          color: purple,
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).addTo(map3);
+        
+        marker2.bindPopup(title);
+        marker2.on('mouseover', function() {
+          this.openPopup();
+        });
+        marker2.on('mouseout', function() {
+          this.closePopup();
+        });
+      }
 
-    $.ajax({
-      url: "https://opendata.miamidade.gov/resource/dj6j-qg5t.json?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-11%27",
+      if(openClosed == "CLOSED") {
 
-      context: document.body
+        var marker3 = L.circleMarker([lat, lon], {
+          radius: 5,
+          fillColor: fill,
+          color: color,
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).addTo(map);
+        
+        marker3.bindPopup(title);
+        marker3.on('mouseover', function() {
+          this.openPopup();
+        });
+        marker3.on('mouseout', function() {
+          this.closePopup();
+        });
+        
+      }
 
-    }).done(function(data) {
+    }
+  
+    if(vioTypeData === '') {
 
-			//console.log("DATA", data);
+      $('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
 
-			if(data == '') {
+    } else {
 
-				//console.log('empty set');
+      var labels = [];
+      var dataset = [];
 
-				$('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
+      //the 'total' isn't an integer. make it one, or the sort will fail.
+      for(i = 0; i < vioTypeData.length;   i+=1) {
 
-			} else {
+        vioTypeData[i].total = parseInt(vioTypeData[i].total, 10);
+        //console.log(data[i]);
+      }
 
-				var labels = [];
-	      var dataset = [];
+      //sort on the number of each violation type
+      vioTypeData = vioTypeData.sortOn("total");
+      vioTypeData.reverse();
 
-	      //the 'total' isn't an integer. make it one, or the sort will fail.
-	      for(var i = 0; i < data.length; i++) {
+      //set the data up for Charts.js
+      for(i = 0; i < 19;   i+=1) {
 
-	        data[i].total = parseInt(data[i].total);
-					console.log(data[i]);
-	      }
+        labels[i] = vioTypeData[i].issue_type;
+        dataset[i] = vioTypeData[i].total;
+        //console.log(data[i].issue_type, i);
 
-	      //sort on the number of each violation type
-	      data = data.sortOn("total");
-	      data.reverse();
+      }
 
-	      //set the data up for Charts.js
-	      for(var i = 0; i < 19; i++) {
+      labels.reverse();
+      dataset.reverse();
 
-	        labels[i] = data[i].issue_type;
-	        dataset[i] = data[i].total;
-	        //console.log(data[i].issue_type, i);
+      //create the chart
+      var bctx = $("#viotype").get(0).getContext("2d");
 
-	      }
+      var bdata = {
+          labels: labels,
+          datasets: [
+              {
+                fillColor: t_purple_1,
+                strokeColor: purple_1,
+                data: dataset
+              }
+          ]
+      };
 
-	      labels.reverse();
-	      dataset.reverse();
+      var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
 
-	      //create the chart
-	      var bctx = $("#viotype").get(0).getContext("2d");
-
-	      var bdata = {
-	          labels: labels,
-	          datasets: [
-	              {
-	                fillColor: t_purple_1,
-	                strokeColor: purple_1,
-	                data: dataset
-	              },
-
-	          ]
-	      };
-
-	      var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
-
-				}
-
-    });
-
+    }
+          
   }
+
 
   Array.prototype.sortOn = function(){
     var dup = this.slice();
@@ -808,141 +796,137 @@ $(document).ready(function() {
     score: function() {
       //console.log($(this).find('.hidden').text(), 'is value')
       return $(this).find('.invisible').text();
-	    },
-	    path: 'static/images',
-	    half: true,
-	    readOnly:true,
-	    number:7
-	  });
+      },
+      path: 'static/images',
+      half: true,
+      readOnly:true,
+      number:7
+    });
 
-	  $('#s-lang-rate-en').raty({
+    $('#s-lang-rate-en').raty({
     score: function() {
       //console.log($(this).find('.hidden').text(), 'is value')
       return $('#rate-en').text();
-	    },
-	    path: 'static/images',
-	    half: true,
-	    readOnly:true,
-	    number:7
-	  });
+      },
+      path: 'static/images',
+      half: true,
+      readOnly:true,
+      number:7
+    });
 
-	  $('#s-lang-rate-es').raty({
-	    score: function() {
-	      return $('#rate-en').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
+    $('#s-lang-rate-es').raty({
+      score: function() {
+        return $('#rate-en').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
-	  $('#s-purpose-rate-permit').raty({
-	    score: function() {
-	      return $('#rate-permit').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
+    $('#s-purpose-rate-permit').raty({
+      score: function() {
+        return $('#rate-permit').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
-	  $('#s-purpose-rate-inspect').raty({
-	    score: function() {
-	      return $('#rate-inspect').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
+    $('#s-purpose-rate-inspect').raty({
+      score: function() {
+        return $('#rate-inspect').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
-	  $('#s-purpose-rate-review').raty({
-	    score: function() {
-	      return $('#rate-review').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
+    $('#s-purpose-rate-review').raty({
+      score: function() {
+        return $('#rate-review').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
-	  $('#s-purpose-rate-liens').raty({
-	    score: function() {
-	      return $('#rate-liens').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
+    $('#s-purpose-rate-liens').raty({
+      score: function() {
+        return $('#rate-liens').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
-	  $('#s-purpose-rate-cu').raty({
-	    score: function() {
-	      return $('#rate-cu').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
+    $('#s-purpose-rate-cu').raty({
+      score: function() {
+        return $('#rate-cu').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
+    $('#s-role-rate-permit').raty({
+      score: function() {
+        return $('#role-rate-permit').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
-	  //
-	  //
-	  //s-purpose-rate
-	  //s-role-rate
+    $('#s-role-rate-cu').raty({
+      score: function() {
+        return $('#role-rate-cu').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
-	  $('#s-role-rate-permit').raty({
-	    score: function() {
-	      return $('#role-rate-permit').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
+    $('#s-role-rate-inspect').raty({
+      score: function() {
+        return $('role-rate-inspect').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
-	  $('#s-role-rate-cu').raty({
-	    score: function() {
-	      return $('#role-rate-cu').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
+    $('#s-role-rate-review').raty({
+      score: function() {
+        return $('#role-rate-review').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
-	  $('#s-role-rate-inspect').raty({
-	    score: function() {
-	      return $('role-rate-inspect').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
+    $('#s-role-rate-lien').raty({
+      score: function() {
+        return $('#role-rate-lien').text();
+        },
+        path: 'static/images',
+        half: true,
+        readOnly:true,
+        number:7
+    });
 
-	  $('#s-role-rate-review').raty({
-	    score: function() {
-	      return $('#role-rate-review').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
-
-	  $('#s-role-rate-lien').raty({
-	    score: function() {
-	      return $('#role-rate-lien').text();
-		    },
-		    path: 'static/images',
-		    half: true,
-		    readOnly:true,
-		    number:7
-	  });
-
-  }
+  
+  
+  //}
 
   /***************************** tag clouds *****************************/
 
@@ -961,123 +945,124 @@ $(document).ready(function() {
     'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor',
     'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can',
     'will', 'just', 'don', 'should', 'now', 'id', 'var', 'function', 'js', 'd',
-    'script', '\'script', 'fjs', 'document'];
-
-  var temp = [];
+    'script', '\'script', 'fjs', 'document'],
+    i;
 
   function sanitize(array, container, hide) {
 
-     for(var i = 0; i < blacklist.length; i++) {
+    for(i = 0; i < blacklist.length; i+=1) {
 
-        var result = array.filter(function(elem){
+      var result = array.filter(function(elem){
 
-          if(elem.length > 1) {
+        if(elem.length > 1) {
 
-            return elem.toLowerCase() != blacklist[i];
-          }
+          return elem.toLowerCase() != blacklist[i];
+        }
 
-        })
+      });
 
-        array = result;
-        //console.log(result);
-      }
+      array = result;
+      //console.log(result);
+    }
 
-      //count the words remaining after sanitation
-    var newObject = {};
+    //count the words remaining after sanitation
+    var newObject = {},
+        temp = []; //storage array
+        
     $.each(array, function (ix, val) {
-        if (newObject[val]) {
-            newObject[val]++;
-        }
-        else {
-            //console.log('that wasnt in the array', val);
-            newObject[val] = 1;
-        }
-    });
-
-    var temp = []; //storage array
+      
+      if (newObject[val]) {
+        newObject[val]++;
+      }
+      else {
+        //console.log('that wasnt in the array', val);
+        newObject[val] = 1;
+      }
+    }),
 
     //format for jQCloud
     $.each(newObject, function(key, value) {
 
       var obj = { "text" : key, "weight": value};
       temp.push(obj);
-
-    })
+      
+    });
 
     array = temp; //reassign
-    //console.log(array);
-
+    
     continueCloud(array, container, hide);
   }
 
   //called by sanitize
   function continueCloud(array, container, hide) {
+    
+    //console.log(array);
 
     $(container).jQCloud(array, {shape: 'rectangular', height:200, autoResize: true});
-    $(hide).each(function() { $(this).addClass('hidden');})
+    $(hide).each(function() { $(this).addClass('hidden');});
   }
 
   //best & worst
-  var words = $('#bestworst-data').text();
-  var wordArray = words.split(' ');
+  var words = $('#bestworst-data').text(),
+      wordArray = words.split(' ');
   sanitize(wordArray, '#bestworst-data', '#bestworst-data p');
 
   //suggested improvements
-  var suggests = $('#improvements-data').text();
-  var suggestArray = suggests.split(' ');
+  var suggests = $('#improvements-data').text(),
+      suggestArray = suggests.split(' ');
   sanitize(suggestArray, '#improvements-data', '#improvements-data p');
 
   //more comments
-  var comments = $('#morecomments-data').text();
-  var commentsArray = comments.split(' ');
+  var comments = $('#morecomments-data').text(),
+      commentsArray = comments.split(' ');
   sanitize(commentsArray, '#morecomments-data', '#morecomments-data p');
 
-	/***************************** tool tips *****************************/
+  /***************************** tool tips *****************************/
 
-	/******** Documentation from Google sheets, using Tabletop.js **********/
+  /******** Documentation from Google sheets, using Tabletop.js **********/
 
-	var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/170neJyhcBkg3sgABsqKk1B6WJa51r6oo6PEMAlwOBB8/pubhtml';
+  var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/170neJyhcBkg3sgABsqKk1B6WJa51r6oo6PEMAlwOBB8/pubhtml';
 
   function initTabletop(){
     Tabletop.init( { key: public_spreadsheet_url,
                      callback: buildTipsy,
                      simpleSheet: true,
-                     prettyColumnNames: false } )
+                     prettyColumnNames: false } );
   }
 
-	var tableData = [];
+  var tableData = [];
 
-  function buildTipsy(data, tabletop) {
+  function buildTipsy(data) {
     //alert("Successfully processed!")
     //console.log(data);
 
-    for(var i = 0; i < data.length; i++) {
+    for(var i = 0; i < data.length;   i+=1) {
 
-	    var obj = {}
+      var obj = {};
 
-		    obj.hID = data[i].hoverid;
-		    obj.text = data[i].descriptionforhover;
+        obj.hID = data[i].hoverid;
+        obj.text = data[i].descriptionforhover;
 
-	    tableData.push(obj);
+      tableData.push(obj);
 
     }
 
     $('.tipsy-hook').each(function() {
 
-	    var id = $(this).attr('id');
-	    //console.log(id);
+      var id = $(this).attr('id');
+      //console.log(id);
 
-	    for(var i = 0; i < data.length; i++) {
+      for(var i = 0; i < data.length;   i+=1) {
 
-		    if(id == data[i].hoverid) {
+        if(id == data[i].hoverid) {
 
-			    $(this).attr('title', data[i].descriptionforhover);
-			    var mid = '#' + data[i].hoverid;
-			    $(mid).tipsy();
-			    //console.log(mid);
-		    }
-	    }
-    })
+          $(this).attr('title', data[i].descriptionforhover);
+          var mid = '#' + data[i].hoverid;
+          $(mid).tipsy();
+          //console.log(mid);
+        }
+      }
+    });
   }
 
   initTabletop();

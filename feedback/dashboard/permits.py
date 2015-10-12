@@ -13,6 +13,13 @@ PERMITS_API_URL = API_URL + '?%24select=date_trunc_ym(permit_issued_date)%20AS%2
 VIOLATIONS_API_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1'
 
 
+'''
+sophia attempting to python
+'''
+
+VIOLATIONS_LOCATIONS_API_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json?$where=ticket_created_date_time%20%3E%20%272015-01-01%27'
+VIOLATIONS_BY_TYPE_API_URL = 'https://opendata.miamidade.gov/resource/dj6j-qg5t.json?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-11%27' 
+
 @cache.memoize(timeout=86400)
 def dump_socrata_api(datatype='p'):
     ''' For performance issues, have Sophia's AJAX calls
@@ -20,7 +27,9 @@ def dump_socrata_api(datatype='p'):
     '''
     data_table = {
         'p': PERMITS_API_URL,
-        'v': VIOLATIONS_API_URL
+        'v': VIOLATIONS_API_URL,
+        'vl': VIOLATIONS_LOCATIONS_API_URL,
+        'vt': VIOLATIONS_BY_TYPE_API_URL
     }
     response = requests.get(data_table.get(datatype))
     return response.json()
@@ -57,7 +66,7 @@ def json_to_dateobj(jsondate):
     return datetime.datetime.strptime(jsondate, '%Y-%m-%dT%H:%M:%S.000')
 
 
-@cache.memoize(timeout=86400)
+#@cache.memoize(timeout=86400)
 def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     '''
     Run the API call between arg1 days ago and arg2 days ago.
