@@ -159,7 +159,7 @@ def parse_textit(survey_table, json_result):
             'route': iter['Section']['text'],
             'getdone': iter['Tasks']['text'],
             'role': filter_role(iter['Role']['text']),
-            'rating': iter['Experience Rating']['text'],
+            'rating': iter['Satisfaction']['text'],
             'improvement': iter['Improvement']['text'],
             'best': filter_best(iter['Best']['text']),
             'worst': filter_worst(iter['Worst']['text']),
