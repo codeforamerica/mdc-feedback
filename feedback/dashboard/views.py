@@ -1,5 +1,6 @@
  # -*- coding: utf-8 -*-
 
+import arrow
 import datetime
 import json
 
@@ -15,6 +16,9 @@ from feedback.dashboard.vendorsurveys import (
     roles_const_to_string
 )
 
+from feedback.surveys.constants import SURVEY_DAYS
+from feedback.surveys.serializers import PICSurveySchema
+
 from feedback.dashboard.permits import (
     api_health, get_lifespan,
     get_permit_types,
@@ -28,7 +32,12 @@ blueprint = Blueprint(
     static_folder="../static"
 )
 
-SURVEY_DAYS = 30
+
+def to_bucket(str_date):
+    ''' Converts the DB string time to a MM-DD string format.
+    '''
+    result = arrow.get(str_date)
+    return result.strftime("%m-%d")
 
 
 @blueprint.route("/", methods=["GET", "POST"])
@@ -48,14 +57,15 @@ def home():
 
     survey_table = get_all_survey_responses(SURVEY_DAYS)
 
-    sms_rows = [x['lang'] for x in survey_table if x['method'] == 'sms']
-    web_rows = [x['lang'] for x in survey_table if x['method'] == 'web']
+    sms_rows = [x.lang for x in survey_table if x.method == 'sms']
+    web_rows = [x.lang for x in survey_table if x.method == 'web']
 
     # ANALYTICS CODE
     for i in range(SURVEY_DAYS, -1, -1):
         time_i = (datetime.date.today() - datetime.timedelta(i))
         date_index = time_i.strftime("%m-%d")
-        surveys_value_array.append(len([x for x in survey_table if x['date'] == date_index]))
+        surveys_value_array.append(
+            len([x for x in survey_table if to_bucket(x.date_submitted) == date_index]))
 
     dashboard_collection = [
         {
@@ -156,17 +166,19 @@ def home():
         }
     ]
 
-    json_obj['test'] = json.dumps(dashboard_collection[0]['data']['graph'])
+    json_obj['daily_graph'] = json.dumps(dashboard_collection[0]['data']['graph'])
     json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
     json_obj['permits_type'] = json.dumps(dashboard_collection[9])
     json_obj['survey_role'] = json.dumps(dashboard_collection[10])
     json_obj['survey_complete'] = json.dumps(dashboard_collection[12])
     json_obj['survey_purpose'] = json.dumps(dashboard_collection[13])
-    json_obj['app_answers'] = json.dumps(survey_table)
     json_obj['permits_rawjson'] = json.dumps(dump_socrata_api('p'))
     json_obj['violations_rawjson'] = json.dumps(dump_socrata_api('v'))
     json_obj['violations_locations_json'] = json.dumps(dump_socrata_api('vl'))
     json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
+
+    pic_schema = PICSurveySchema(many=True)
+    json_obj['app_answers'] = pic_schema.dump(survey_table).data
 
     today = datetime.date.today()
     return render_template(
@@ -232,26 +244,38 @@ def all_surveys():
 def survey_detail(id):
     survey_table = get_all_survey_responses(SURVEY_DAYS)
     survey_table = [x for x in survey_table if x['id'] == id]
-    return render_template("dashboard/survey-detail.html", resp_obj=survey_table, title='Permitting & Inspection Center User Survey Metrics: Detail')
+    return render_template(
+        "dashboard/survey-detail.html",
+        resp_obj=survey_table,
+        title='Permitting & Inspection Center User Survey Metrics: Detail')
 
 
 @blueprint.route("/dashboard/violations/",  methods=['GET'])
 def violations_detail():
     json_obj = {}
     json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
-    return render_template("public/violations-detail.html", title='Violations by Type: Detail', json_obj=json_obj)
+    return render_template(
+        "public/violations-detail.html",
+        title='Violations by Type: Detail',
+        json_obj=json_obj)
 
 
 @blueprint.route("/edit-public/",  methods=['GET'])
 def edit_public():
-    return render_template("public/edit-public.html", title='Dashboard Editor - Public')
+    return render_template(
+        "public/edit-public.html",
+        title='Dashboard Editor - Public')
 
 
 @blueprint.route("/edit-internal/",  methods=['GET'])
 def edit_internal():
-    return render_template("public/edit-internal.html", title='Dashboard Editor - Internal')
+    return render_template(
+        "public/edit-internal.html",
+        title='Dashboard Editor - Internal')
 
 
 @blueprint.route("/choose-survey/", methods=['GET'])
 def choose_survey():
-    return render_template("public/choose-survey.html", title="Choose a survey")
+    return render_template(
+        "public/choose-survey.html",
+        title="Choose a survey")

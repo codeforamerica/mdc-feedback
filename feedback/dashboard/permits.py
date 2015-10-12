@@ -201,10 +201,13 @@ def api_count_call(arg1=0, arg2=30, field=''):
 @cache.memoize(timeout=86400)
 def get_master_permit_counts(arg1):
     '''
-    Run the API call of all master permits where date field arg1 is checked between 0-30 days ago and the same period a year previous.
+    Run the API call of all master permits where
+    date field arg1 is checked between 0-30 days
+    ago and the same period a year previous.
     Returns an object:
         val = the current count
-        yoy = the percentage increase or decrease (100 to -100)
+        yoy = the percentage increase or decrease
+                  (100 to -100)
     '''
     now = api_count_call(0, 30, arg1)
     then = api_count_call(365, 395, arg1)
