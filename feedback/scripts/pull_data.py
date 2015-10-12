@@ -1,11 +1,8 @@
 """
 This script should run daily to:
 """
-import datetime
+import arrow
 import requests
-import pytz
-
-from flask import current_app
 
 from feedback.app import create_app
 from feedback.surveys.serializers import (
@@ -18,16 +15,13 @@ from feedback.dashboard.vendorsurveys import (
     string_to_bool
 )
 
-EASTERN = pytz.timezone('US/Eastern')
-UTC = pytz.UTC
-
-TEXTIT_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
+TI_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
 TEXTIT_UUID_EN = '0aa9f77b-d775-4bc9-952a-1a6636258841'
 TEXTIT_UUID_ES = 'bdb57073-ab32-4c1b-a3a5-25f866b9626b'
 TEXTIT_AUTH_KEY = '41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9'
 
-TYPEFORM_API = 'https://api.typeform.com/v0/form/NNCQGT?key='
-TYPEFORM_API_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
+TF_API = 'https://api.typeform.com/v0/form/NNCQGT?key='
+TF_KEY = '433dcf9fb24804b47666bf62f83d25dbef2f629d'
 
 TF_LANG_EN = 'list_11278243_choice'
 TF_ROLE_EN = 'list_11029984_choice'
@@ -70,7 +64,28 @@ TF_CONTACT_EN = 'textfield_11277574'
 TF_CONTACT_ES = 'textfield_11278128'
 
 
-def get_and_massage_web_data(timestamp):
+def date_to_db(str1):
+    ''' Takes the string date format of various APIs
+    to convert them into a format the postgres is
+    okay with. Returns as a string.
+    '''
+    DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
+    return arrow.get(str1).strftime(DATE_FORMAT)
+
+
+def call_web(ts):
+    ''' Call the WEB API, which in this case is
+    Typeform. Accepts an timestamp (Arrow object)
+    as an argument, then pulls Return the
+    result in json.
+    '''
+    API = TF_API + TF_KEY + '&completed=true&since=' + str(ts.timestamp)
+    response = requests.get(API)
+
+    return response.json()
+
+
+def get_and_massage_web_data(ts):
     ''' Take the Typeform API and ETL it to a common
     standard we can do dashboard stats for.
 
@@ -78,11 +93,7 @@ def get_and_massage_web_data(timestamp):
     a survey.
     '''
     data = []
-    unix_time = timestamp.strftime("%s")
-    API = TYPEFORM_API + TYPEFORM_API_KEY + '&completed=true&since=' + unix_time
-
-    response = requests.get(API)
-    json = response.json()
+    json = call_web(ts)
 
     for resp in json['responses']:
         answers_arr = resp['answers']
@@ -96,12 +107,7 @@ def get_and_massage_web_data(timestamp):
         obj['source_id'] = 'WEB-' + resp['id']
 
         temp = resp['metadata']['date_submit']
-        naive = datetime.datetime.strptime(temp, '%Y-%m-%d %H:%M:%S')
-        utc_tz = EASTERN.localize(naive).astimezone(UTC)
-
-        # obj['date_submitted'] = resp['metadata']['date_submit']
-        obj['date_submitted'] = utc_tz.strftime("%Y-%m-%dT%H:%M:%S.000Z")
-        print obj['date_submitted']
+        obj['date_submitted'] = date_to_db(temp)
 
         obj['get_done'] = fill_values(answers_arr, TF_GETDONE_EN, TF_GETDONE_ES)
         obj['rating'] = int(fill_values(answers_arr, TF_OPINION_EN, TF_OPINION_ES))
@@ -127,26 +133,35 @@ def get_and_massage_web_data(timestamp):
     return data
 
 
-def get_and_massage_sms_data(timestamp):
+def call_sms(ts):
+    ''' Call the SMS API, which in this case is
+    TextIt. Accepts an timestamp (Arrow object)
+    as an argument, then pulls Return the
+    result in json.
+    '''
+    ts = ts.strftime("%Y-%m-%dT%H:%M:%S.000")
+    SMS_API = TI_API + TEXTIT_UUID_ES + ',' + TEXTIT_UUID_EN + '&after=' + ts
+    # print 'TEXTIT API', SMS_API
+
+    resp = requests.get(
+        SMS_API,
+        headers={'Authorization': 'Token ' + TEXTIT_AUTH_KEY}
+        )
+
+    return resp.json()
+
+
+def get_and_massage_sms_data(ts):
     ''' Take the Textit API and ETL it to a common
-    standard we can do dashboard stats for.
+    standard we can do dashboard stats for. Accepts
+    a time stamp (Arrow object)
 
     Returns a list of objects, each object being
     a survey.
     '''
     data = []
 
-    sms_query_date = timestamp.strftime("%Y-%m-%dT00:00:00.000")
-
-    SMS_API = TEXTIT_API + TEXTIT_UUID_ES + ',' + TEXTIT_UUID_EN + '&after=' + sms_query_date
-    # print 'TEXTIT API', SMS_API
-
-    response2 = requests.get(
-        SMS_API,
-        headers={'Authorization': 'Token ' + TEXTIT_AUTH_KEY}
-        )
-
-    json_result = response2.json()
+    json_result = call_sms(ts)
     # print 'json_result', json_result
     obj_completed = [result for result in json_result['results'] if result['completed']]
     # obj_completed = [result for result in json_result['results']]
@@ -175,8 +190,7 @@ def get_and_massage_sms_data(timestamp):
             'more_comments': iter['Comments']['text']
         }
 
-        s_obj['date_submitted'] = obj['modified_on']
-        print s_obj['date_submitted']
+        s_obj['date_submitted'] = date_to_db(obj['modified_on'])
 
         if obj['flow_uuid'] == TEXTIT_UUID_EN:
             s_obj['lang'] = 'en'
@@ -189,18 +203,16 @@ def get_and_massage_sms_data(timestamp):
             s_obj['purpose'] = None
 
         data.append(s_obj)
-    # print data
     return data
 
 
 def load_data():
-    timestamp = datetime.date.today() - datetime.timedelta(30)
+    timestamp = arrow.utcnow()
+    timestamp = timestamp.replace(days=-30)
 
-    # tf = get_and_massage_web_data(timestamp)
+    tf = get_and_massage_web_data(timestamp)
     ti = get_and_massage_sms_data(timestamp)
-    # data = tf + ti
-    #print data
-    data = ti
+    data = tf + ti
 
     loader = DataLoader(pic_schema)
 

@@ -90,7 +90,9 @@ class DataLoader:
 
 
 class PICSurveySchema(ma.ModelSchema):
-
+    """ Our Scheme for the surveys at the PIC.
+    Based on the Survey model
+    """
     def get_instance(self, data):
         """Overrides ModelSchema.get_instance with custom lookup fields"""
         lookup_cols = ['source_id']
