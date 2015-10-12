@@ -9,16 +9,14 @@ import numpy as np
 from feedback.extensions import cache
 
 API_URL = 'https://opendata.miamidade.gov/resource/vvjq-pfmc.json'
+VIOLATIONS_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json'
+DATA311_URL = 'https://opendata.miamidade.gov/resource/dj6j-qg5t.json'
+
 PERMITS_API_URL = API_URL + '?%24select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&%24group=month&%24order=month%20desc&%24limit=12&%24where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&%24offset=1'
-VIOLATIONS_API_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1'
+VIOLATIONS_API_URL = VIOLATIONS_URL + '?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1'
+VIOLATIONS_LOCATIONS_API_URL = VIOLATIONS_URL + '?$where=ticket_created_date_time%20%3E%20%272015-01-01%27'
+VIOLATIONS_BY_TYPE_API_URL = DATA311_URL + '?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-11%27'
 
-
-'''
-sophia attempting to python
-'''
-
-VIOLATIONS_LOCATIONS_API_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json?$where=ticket_created_date_time%20%3E%20%272015-01-01%27'
-VIOLATIONS_BY_TYPE_API_URL = 'https://opendata.miamidade.gov/resource/dj6j-qg5t.json?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-11%27' 
 
 @cache.memoize(timeout=86400)
 def dump_socrata_api(datatype='p'):
