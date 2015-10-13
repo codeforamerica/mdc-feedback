@@ -6,7 +6,7 @@ import logging
 
 from flask import Flask, render_template
 
-from feedback.settings import ProductionConfig
+from feedback.settings import ProductionConfig, StagingConfig
 from feedback.assets import assets, test_assets
 from feedback.extensions import (
     db, ma, login_manager,
@@ -17,7 +17,7 @@ from feedback.utils import thispage
 
 from feedback import (
     public, user,
-    dashboard
+    dashboard, surveys
 )
 
 login_manager.login_view = "public.login"
@@ -42,8 +42,8 @@ def create_app(config_object=ProductionConfig):
         if app.config.get('ENV') == 'stage':
             stdout = logging.StreamHandler(sys.stdout)
             stdout.setFormatter(logging.Formatter(
-            '''-------------------------------
-        %(asctime)s | %(name)s | %(levelname)s in %(module)s: %(message)s'''))
+                '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'
+            ))
             app.logger.addHandler(stdout)
             app.logger.setLevel(logging.DEBUG)
 
@@ -59,8 +59,7 @@ def create_app(config_object=ProductionConfig):
 
             stdout = logging.StreamHandler(sys.stdout)
             stdout.setFormatter(logging.Formatter(
-                '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'
-            ))
+                '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'))
             app.logger.addHandler(stdout)
             app.logger.setLevel(logging.DEBUG)
     return app
@@ -82,7 +81,7 @@ def register_blueprints(app):
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(dashboard.views.blueprint)
-    # app.register_blueprint(surveys.views.blueprint)
+    app.register_blueprint(surveys.views.blueprint)
     return None
 
 
@@ -108,7 +107,6 @@ def register_logging(app):
     app.logger.setLevel(logging.DEBUG)
     stdout = logging.StreamHandler(sys.stdout)
     stdout.setFormatter(logging.Formatter(
-    '''-------------------------------
-%(asctime)s | %(name)s | %(levelname)s in %(module)s: %(message)s'''))
+        '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'))
     app.logger.addHandler(stdout)
     return None
