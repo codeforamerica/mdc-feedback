@@ -82,7 +82,7 @@ def register_blueprints(app):
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(dashboard.views.blueprint)
-    app.register_blueprint(surveys.views.blueprint)
+    # app.register_blueprint(surveys.views.blueprint)
     return None
 
 
