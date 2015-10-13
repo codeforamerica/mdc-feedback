@@ -11,7 +11,7 @@ from feedback.assets import assets, test_assets
 from feedback.extensions import (
     db, ma, login_manager,
     migrate, debug_toolbar,
-    cache
+    cache, mail
 )
 from feedback.utils import thispage
 
@@ -75,6 +75,7 @@ def register_extensions(app):
     assets.init_app(app)
     cache.init_app(app)
     debug_toolbar.init_app(app)
+    mail.init_app(app)
     return None
 
 
