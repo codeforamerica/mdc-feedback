@@ -17,7 +17,7 @@ from feedback.utils import thispage
 
 from feedback import (
     public, user,
-    dashboard, surveys
+    dashboard
 )
 
 login_manager.login_view = "public.login"
