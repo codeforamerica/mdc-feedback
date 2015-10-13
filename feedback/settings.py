@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import pytz
 
 os_env = os.environ
 
@@ -14,6 +15,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://localhost:9000')
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
+    DISPLAY_TIMEZONE = pytz.timezone(os_env.get('DISPLAY_TIMEZONE', 'US/Eastern'))
 
 
 class ProductionConfig(Config):
@@ -42,3 +44,4 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os_env.get('TEST_DATABASE_URL', 'postgresql://localhost/feedback_test')
+    DISPLAY_TIMEZONE = pytz.timezone('UTC')
