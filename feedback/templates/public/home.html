@@ -155,64 +155,6 @@
 
   </div>
 
-  <!--
-	  1) Apply for a permit
-2) Meet with an inspector
-3) Meet with a plan reviewer
-4) Find out about a violation/lien
-5) Obtain a certificate of use/occupancy
-
-
-  <div class='four columns panel first-panel'>
-    <div class='headline'>Best &amp; Worst Experiences<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-best'><img class='' src='static/images/question_bk.png'></a></div>
-    <div class='content-container'>
-      <div id='bestworst-data'>
-        {% for item in resp_obj %}
-          {% if item.lang == 'en' %}
-            <p>{{ item.bestworst }}</p>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-
-    <p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
-
-  </div>-->
-
-  <div class='four columns panel first-panel'>
-    <div class='headline'>Suggested Improvements<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-improve'><img class='' src='static/images/question_bk.png'></a></div>
-    <div class='content-container'>
-      <div id='improvements-data'>
-        {% for item in resp_obj %}
-          {% if item.lang == 'en' %}
-            <p>{{ item.improvement }}</p>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-
-    <p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
-
-  </div>
-
-  <div class='four columns panel last-panel'>
-
-    <div class='headline'>More Comments<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-comments'><img class='' src='static/images/question_bk.png'></a></div>
-    <div class='content-container'>
-      <div id='morecomments-data'>
-        {% for item in resp_obj %}
-          {% if item.lang == 'en' %}
-            <p>{{ item.morecomments }}</p>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-
-    <p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
-
-  </div>
-
-
 </section> <!-- close row -->
 
 <section class='row' id='permitting'>
