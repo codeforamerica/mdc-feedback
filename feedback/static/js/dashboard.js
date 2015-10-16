@@ -1,7 +1,7 @@
 $(document).ready(function () {
-  
+
   "use strict";
-  
+
   //all the vars, to satisfy the linter.
 
   var apiStatus = parseInt($('#api-health').text(), 10),
@@ -23,9 +23,9 @@ $(document).ready(function () {
       purple_4 = 'rgba(219, 172, 217, 1)',
       t_purple_4 = 'rgba(219, 172, 217, 0.2)',
       blue = 'rgba(93, 205, 252,1)';
-      
+
   /************************* API health check *************************/
-  
+
   window.REMODAL_GLOBALS = {
     NAMESPACE: 'modal',
     DEFAULTS: {
@@ -192,7 +192,7 @@ $(document).ready(function () {
     onAnimationProgress: function(){ /* empty */ },
 
     // Function - Will fire on animation completion.
-    onAnimationComplete: function(){ /* empty */  } 
+    onAnimationComplete: function(){ /* empty */  }
   };
 
   //surveys by role
@@ -207,7 +207,7 @@ $(document).ready(function () {
       contractors = {label:'Contractors', count:0},
       consultants = {label:'Permit Consultants', count:0},
       owners = {label:'Business Owners', count:0},
-      sorter = [architects, owners, consultants, contractors, homeowners], 
+      sorter = [architects, owners, consultants, contractors, homeowners],
       i,
       respondentsByRole,
       respondentsByRoleChart;
@@ -240,7 +240,7 @@ $(document).ready(function () {
 
     sctxseries[i] = sorter[i].count;
     sctxlabels[i] = sorter[i].label;
-    
+
   }
 
   respondentsByRole = {
@@ -256,7 +256,7 @@ $(document).ready(function () {
   };
 
   respondentsByRoleChart = new Chart(sctx).HorizontalBar(respondentsByRole);
-  
+
   // end surveys by role
 
   // successful task completion
@@ -350,7 +350,7 @@ $(document).ready(function () {
       jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data),
       series = jsondata.series[0].data,
       datetime = jsondata.datetime.data,
-      
+
       data = {
         labels: datetime,
         scaleBeginAtZero: true,
@@ -368,12 +368,12 @@ $(document).ready(function () {
             }
         ]
       },
-      
+
       myPieChart,
       myLineChart = new Chart(ctx).Line(data),
       surveyData = JSON.parse($("#surveydata")[0].childNodes[0].data),
       pctx = $("#surveyChart").get(0).getContext("2d"),
-          
+
       pieData = [
         {
           value: surveyData.data.web_en,
@@ -398,10 +398,10 @@ $(document).ready(function () {
           color: purple_4,
           highlight: t_purple_4,
           label: surveyData.labels.sms_es
-    
+
         }
       ];
-    
+
       $('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
       myPieChart = new Chart(pctx).Pie(pieData);
 
@@ -418,19 +418,19 @@ $(document).ready(function () {
       openPermitData,
       openPermitDataset,
       openPermitChart;
-      
+
   buildOpenPermitChart();
   buildViolationsCharts();
-  
+
   function buildOpenPermitChart() {
-        
+
     for(i = 0; i < permitJSON.length; i++) {
-      
+
       series2.push(permitJSON[i].total);
       datetime2.push(prettyDates((permitJSON[i].month).split('T')[0]));
-      
+
     }
-    
+
     series2.reverse();
     datetime2.reverse();
 
@@ -450,23 +450,23 @@ $(document).ready(function () {
     },
 
     openPermitChart = new Chart(ctx2).Line(openPermitDataset);
-    
+
   }
-  
+
   function buildViolationsCharts() {
-    
+
     for(i = 0; i < violationsJSON.length; i++) {
-      
+
       //console.log(violationsJSON[i]);
-      
+
       series3.push(violationsJSON[i].total);
       datetime3.push(prettyDates((violationsJSON[i].month).split('T')[0]));
-      
+
     }
-    
+
     series3.reverse();
     datetime3.reverse();
-    
+
     var d3 = {
         labels:datetime3,
         datasets: [
@@ -481,18 +481,18 @@ $(document).ready(function () {
           }
         ]
       },
-      
+
       newLineChart = new Chart(ctx3).Line(d3);
-    
+
   }
-  
+
   function prettyDates(date) {
-    
+
     var year = date.split('-')[0];
     var month = String(date.split('-')[1]);   //strict mode means no octal literals -- no 08 or 09 unless type string. A thing I learned today!
-    
+
     switch (month) {
-      
+
       case '01':
         month = 'Jan';
         break;
@@ -529,13 +529,13 @@ $(document).ready(function () {
       case '12':
         month = 'Dec';
         break;
-        
+
     }
-    
+
     date = month + ' ' + year;
     return date;
   }
-  
+
   var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data),
       pttx = $("#permitTypeChart").get(0).getContext("2d"),
       cleanPermitData = [],
@@ -569,7 +569,7 @@ $(document).ready(function () {
 
   //25.7667° N, 80.2000° W
   //{lat: 25.626668871238568, lng: -80.44867515563963}
-  
+
   var map = L.map('leaflet').setView([25.626668871238568, -80.44867515563963], 9);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -578,7 +578,7 @@ $(document).ready(function () {
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
     }).addTo(map);
-    
+
   var map2 = L.map('leaflet-open').setView([25.626668871238568, -80.44867515563963], 9);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -587,7 +587,7 @@ $(document).ready(function () {
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
     }).addTo(map2);
-    
+
   var map3 = L.map('leaflet-lein').setView([25.626668871238568, -80.44867515563963], 9);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -596,7 +596,7 @@ $(document).ready(function () {
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
     }).addTo(map3);
-  
+
   //county shapefiles
   $.ajax({
     type: "GET",
@@ -604,7 +604,7 @@ $(document).ready(function () {
     dataType: "json",
     success: parseXML
   });
-  
+
   function parseXML(data) {
 
     var muni = [],
@@ -615,13 +615,13 @@ $(document).ready(function () {
           weight: 1,
           opacity: 0.65
         },
-        
+
         umsaStyle = {
-    
+
           color: 'rgba(0,0,0)',
           weight: 1,
           opacity: 0.65
-    
+
         };
 
     //sort for county to control style
@@ -645,16 +645,16 @@ $(document).ready(function () {
     L.geoJson(umsa, {style:myStyle}).addTo(map2);
     L.geoJson(muni, {style:umsaStyle}).addTo(map3);
     L.geoJson(umsa, {style:myStyle}).addTo(map3);
-    
+
     buildDataMaps();
-    
+
   }
-  
+
   function buildDataMaps(){
-    
+
     var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
         vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data);
-      
+
     for(i = 0; i < vioLocationsData.length; i+=1) {
 
       var lat = vioLocationsData[i].location.latitude,
@@ -663,7 +663,7 @@ $(document).ready(function () {
           fill = t_yellow,
           color = yellow,
           title = vioLocationsData[i].issue_type;
-          
+
       if(openClosed == 'LOCKED') {
         var marker = L.circleMarker([lat, lon], {
           radius: 5,
@@ -692,7 +692,7 @@ $(document).ready(function () {
           opacity: 1,
           fillOpacity: 0.8
         }).addTo(map3);
-        
+
         marker2.bindPopup(title);
         marker2.on('mouseover', function() {
           this.openPopup();
@@ -712,7 +712,7 @@ $(document).ready(function () {
           opacity: 1,
           fillOpacity: 0.8
         }).addTo(map);
-        
+
         marker3.bindPopup(title);
         marker3.on('mouseover', function() {
           this.openPopup();
@@ -720,11 +720,11 @@ $(document).ready(function () {
         marker3.on('mouseout', function() {
           this.closePopup();
         });
-        
+
       }
 
     }
-  
+
     if(vioTypeData === '') {
 
       $('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
@@ -774,7 +774,7 @@ $(document).ready(function () {
       var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
 
     }
-          
+
   }
 
 
@@ -924,98 +924,9 @@ $(document).ready(function () {
         number:7
     });
 
-  
-  
+
+
   //}
-
-  /***************************** tag clouds *****************************/
-
-  //sanitize array
-  var blacklist = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you',  'your',
-    'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she',
-    'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their',
-    'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that',
-    'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
-    'have', 'has', 'had',  'having', 'do', 'does', 'did', 'doing', 'a', 'an',
-    'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of',
-    'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through',
-    'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down',
-    'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then',
-    'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any',
-    'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor',
-    'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can',
-    'will', 'just', 'don', 'should', 'now', 'id', 'var', 'function', 'js', 'd',
-    'script', '\'script', 'fjs', 'document'],
-    i;
-
-  function sanitize(array, container, hide) {
-
-    for(i = 0; i < blacklist.length; i+=1) {
-
-      var result = array.filter(function(elem){
-
-        if(elem.length > 1) {
-
-          return elem.toLowerCase() != blacklist[i];
-        }
-
-      });
-
-      array = result;
-      //console.log(result);
-    }
-
-    //count the words remaining after sanitation
-    var newObject = {},
-        temp = []; //storage array
-        
-    $.each(array, function (ix, val) {
-      
-      if (newObject[val]) {
-        newObject[val]++;
-      }
-      else {
-        //console.log('that wasnt in the array', val);
-        newObject[val] = 1;
-      }
-    }),
-
-    //format for jQCloud
-    $.each(newObject, function(key, value) {
-
-      var obj = { "text" : key, "weight": value};
-      temp.push(obj);
-      
-    });
-
-    array = temp; //reassign
-    
-    continueCloud(array, container, hide);
-  }
-
-  //called by sanitize
-  function continueCloud(array, container, hide) {
-    
-    //console.log(array);
-
-    $(container).jQCloud(array, {shape: 'rectangular', height:200, autoResize: true});
-    $(hide).each(function() { $(this).addClass('hidden');});
-  }
-
-  //best & worst
-  var words = $('#bestworst-data').text(),
-      wordArray = words.split(' ');
-  sanitize(wordArray, '#bestworst-data', '#bestworst-data p');
-
-  //suggested improvements
-  var suggests = $('#improvements-data').text(),
-      suggestArray = suggests.split(' ');
-  sanitize(suggestArray, '#improvements-data', '#improvements-data p');
-
-  //more comments
-  var comments = $('#morecomments-data').text(),
-      commentsArray = comments.split(' ');
-  sanitize(commentsArray, '#morecomments-data', '#morecomments-data p');
 
   /***************************** tool tips *****************************/
 
