@@ -9,16 +9,14 @@ import numpy as np
 from feedback.extensions import cache
 
 API_URL = 'https://opendata.miamidade.gov/resource/vvjq-pfmc.json'
+VIOLATIONS_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json'
+DATA311_URL = 'https://opendata.miamidade.gov/resource/dj6j-qg5t.json'
+
 PERMITS_API_URL = API_URL + '?%24select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&%24group=month&%24order=month%20desc&%24limit=12&%24where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&%24offset=1'
-VIOLATIONS_API_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1'
+VIOLATIONS_API_URL = VIOLATIONS_URL + '?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1'
+VIOLATIONS_LOCATIONS_API_URL = VIOLATIONS_URL + '?$where=ticket_created_date_time%20%3E%20%272015-01-01%27'
+VIOLATIONS_BY_TYPE_API_URL = DATA311_URL + '?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-11%27'
 
-
-'''
-sophia attempting to python
-'''
-
-VIOLATIONS_LOCATIONS_API_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json?$where=ticket_created_date_time%20%3E%20%272015-01-01%27'
-VIOLATIONS_BY_TYPE_API_URL = 'https://opendata.miamidade.gov/resource/dj6j-qg5t.json?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-11%27' 
 
 @cache.memoize(timeout=86400)
 def dump_socrata_api(datatype='p'):
@@ -104,6 +102,7 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
     return result1 if not math.isnan(result1) else -1
 
 
+@cache.memoize(timeout=86400)
 def get_open_permit_lifespan():
     '''
     NOTE: WE ARE CURRENTLY NOT SHOWING THIS. DELETE IF NECESSARY
@@ -125,6 +124,7 @@ def get_open_permit_lifespan():
     return int(np.mean(lifespan_array)) if not math.isnan(np.mean(lifespan_array)) else -1
 
 
+@cache.memoize(timeout=86400)
 def get_avg_cost(property_type='c'):
     '''
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
@@ -149,6 +149,7 @@ def get_avg_cost(property_type='c'):
         return -1
 
 
+@cache.memoize(timeout=86400)
 def get_permit_types(arg1=0, arg2=30):
     '''
     This should print out the pie chart of all permit types.
@@ -165,6 +166,7 @@ def get_permit_types(arg1=0, arg2=30):
     return json_result
 
 
+@cache.memoize(timeout=86400)
 def get_lifespan(property_type='c'):
     '''
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
@@ -183,6 +185,7 @@ def get_lifespan(property_type='c'):
     }
 
 
+@cache.memoize(timeout=86400)
 def api_count_call(arg1=0, arg2=30, field=''):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
@@ -195,12 +198,16 @@ def api_count_call(arg1=0, arg2=30, field=''):
     return total
 
 
+@cache.memoize(timeout=86400)
 def get_master_permit_counts(arg1):
     '''
-    Run the API call of all master permits where date field arg1 is checked between 0-30 days ago and the same period a year previous.
+    Run the API call of all master permits where
+    date field arg1 is checked between 0-30 days
+    ago and the same period a year previous.
     Returns an object:
         val = the current count
-        yoy = the percentage increase or decrease (100 to -100)
+        yoy = the percentage increase or decrease
+                  (100 to -100)
     '''
     now = api_count_call(0, 30, arg1)
     then = api_count_call(365, 395, arg1)

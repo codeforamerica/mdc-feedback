@@ -6,10 +6,10 @@ import logging
 
 from flask import Flask, render_template
 
-from feedback.settings import ProductionConfig, DevelopmentConfig, StagingConfig
+from feedback.settings import ProductionConfig, StagingConfig
 from feedback.assets import assets, test_assets
 from feedback.extensions import (
-    db, login_manager,
+    db, ma, login_manager,
     migrate, debug_toolbar,
     cache
 )
@@ -33,6 +33,7 @@ def create_app(config_object=ProductionConfig):
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
+    register_logging(app)
     register_jinja_extensions(app)
 
     @app.before_first_request
@@ -58,8 +59,7 @@ def create_app(config_object=ProductionConfig):
 
             stdout = logging.StreamHandler(sys.stdout)
             stdout.setFormatter(logging.Formatter(
-                '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'
-            ))
+                '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'))
             app.logger.addHandler(stdout)
             app.logger.setLevel(logging.DEBUG)
     return app
@@ -68,6 +68,7 @@ def create_app(config_object=ProductionConfig):
 def register_extensions(app):
     test_assets.init_app(app) if app.config.get('TESTING') else assets.init_app(app)
     db.init_app(app)
+    ma.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)
     assets.init_app(app)
@@ -80,7 +81,6 @@ def register_blueprints(app):
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(dashboard.views.blueprint)
-    app.register_blueprint(surveys.views.blueprint)
     return None
 
 
@@ -98,4 +98,14 @@ def register_errorhandlers(app):
 
     for errcode in [401, 404, 500]:
         app.errorhandler(errcode)(render_error)
+    return None
+
+
+def register_logging(app):
+    app.logger.removeHandler(app.logger.handlers[0])
+    app.logger.setLevel(logging.DEBUG)
+    stdout = logging.StreamHandler(sys.stdout)
+    stdout.setFormatter(logging.Formatter(
+        '%(asctime)s | %(name)s | %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]: %(message)s'))
+    app.logger.addHandler(stdout)
     return None
