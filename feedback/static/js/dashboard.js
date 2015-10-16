@@ -301,29 +301,35 @@ $(document).ready(function () {
   surveysByPurpose,
   surveysByPurposeChart;
 
+  var test = 0; 
+  
   for(i = 0; i < sptxdata.data.length;   i+=1) {
 
+    console.log(i + ', case: ' + sptxdata.data[i][0] + ', ' + sptxdata.data[i][1]); 
+    
     switch(parseInt(sptxdata.data[i][0], 10)) {
 
       case 1:
-        contractors.count = sptxdata.data[i][1];
+        permit.count += sptxdata.data[i][1];
         break;
       case 2:
-        inspector.count = sptxdata.data[i][1];
+        inspector.count += sptxdata.data[i][1];
         break;
       case 3:
-        reviewer.count = sptxdata.data[i][1];
+        reviewer.count += sptxdata.data[i][1];
         break;
       case 4:
-        violation.count = sptxdata.data[i][1];
+        violation.count += sptxdata.data[i][1];
         break;
       case 5:
-        cu.count = sptxdata.data[i][1];
+        cu.count += sptxdata.data[i][1];
         break;
 
     }
 
   }
+  
+  console.log(contractors.count + inspector.count + reviewer.count + violation.count);
 
   for(i = 0; i < sorter2.length; i+=1) {
     sptxseries[i] = sorter2[i].count;
