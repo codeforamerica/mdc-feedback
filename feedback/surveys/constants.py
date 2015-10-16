@@ -25,6 +25,7 @@ BEST['ex. Courteous staff'] = 3
 BEST[1] = 'ex. Getting questions answered and explained'
 BEST[2] = 'ex. Finishing tasks quickly'
 BEST[3] = 'ex. Courteous staff'
+BEST[4] = 'Other'
 
 WORST = {}
 WORST['ex. Long wait time'] = 1
@@ -33,14 +34,25 @@ WORST['ex. Not being familiar with how the process works'] = 3
 WORST[1] = 'ex. Long wait time'
 WORST[2] = 'ex. Repeated visits for the same issue'
 WORST[3] = 'ex. Not being familiar with how the process works'
+WORST[4] = 'Other'
 
 ROLES = {}
 # FIXME: VERIFY CONSTANTS AGAINST V4 TEXTIT
 ROLES[1] = 'Contractor'
-ROLES[2] = 'Architect'
+ROLES[2] = 'Architect / Engineer'
 ROLES[3] = 'Permit Consultant'
 ROLES[4] = 'Homeowner'
 ROLES[5] = 'Business Owner'
+ROLES['Contractor'] = 1
+ROLES['Contratista'] = 1
+ROLES['Architect / Engineer'] = 2
+ROLES['Arquitecto / Ingeniero'] = 2
+ROLES['Permit Consultant'] = 3
+ROLES['Consultor de Permiso'] = 3
+ROLES['Homeowner'] = 4
+ROLES[u'Dueño/a de Casa'] = 4
+ROLES['Business Owner'] = 5
+ROLES[u'Dueño/a de Negocio'] = 5
 
 PURPOSE = {}
 PURPOSE['Apply for a permit'] = 1
@@ -58,6 +70,7 @@ PURPOSE[2] = 'Apply for a permit'
 PURPOSE[3] = 'Meet with a Plan Reviewer'
 PURPOSE[4] = 'Meet with an Inspector'
 PURPOSE[5] = 'Find out about a violation or lien on your property'
+PURPOSE[6] = 'Other'
 
 ROUTES = {}
 ROUTES['Building / Roofing / Structural'] = 1

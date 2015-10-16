@@ -19,7 +19,6 @@ from feedback.surveys.constants import (
 )
 from feedback.dashboard.vendorsurveys import (
     fill_values,
-    filter_purpose, filter_role,
     string_to_bool
 )
 from feedback.utils import send_email
@@ -105,8 +104,21 @@ def etl_web_data(ts):
         obj['follow_up'] = fill_values(answers_arr, TF['FOLLOWUP_EN'], TF['FOLLOWUP_ES'])
         obj['contact'] = fill_values(answers_arr, TF['CONTACT_EN'], TF['CONTACT_ES'])
         obj['more_comments'] = fill_values(answers_arr, TF['COMMENTS_EN'], TF['COMMENTS_ES'])
-        obj['role'] = filter_role(fill_values(answers_arr, TF['ROLE_EN'], TF['ROLE_ES']))
-        obj['purpose'] = filter_purpose(fill_values(answers_arr, TF['PURP_EN'], TF['PURP_ES']))
+        obj['role'] = ROLES[
+            fill_values(
+                answers_arr,
+                TF['ROLE_EN'],
+                TF['ROLE_ES'])]
+        try:
+            obj['purpose'] = PURPOSE[
+                fill_values(
+                    answers_arr,
+                    TF['PURP_EN'],
+                    TF['PURP_ES'])]
+        except KeyError:
+            # None. Set to 6 which is "OTHER"
+            obj['purpose'] = 6
+
         obj['purpose_other'] = fill_values(
             answers_arr,
             TF['PURP_OTHER_EN'],
@@ -174,7 +186,6 @@ def etl_sms_data(ts):
             'method': 'sms',
             'route': iter['Section']['text'],
             'get_done': string_to_bool(iter['Tasks']['text']),
-            'role': filter_role(iter['Role']['text']),
             'rating': iter['Satisfaction']['text'],
             'improvement': iter['Improvement']['text'],
             'follow_up': string_to_bool(iter['Followup Permission']['text']),
@@ -203,6 +214,11 @@ def etl_sms_data(ts):
         except KeyError:
             s_obj['purpose'] = None
 
+        try:
+            s_obj['role'] = iter['Role']['text']
+        except KeyError:
+            s_obj['role'] = None
+
         data.append(s_obj)
     return data
 
@@ -217,7 +233,7 @@ def follow_up(models):
     '''
     print '-- entering follow_up ---'
     for survey in models:
-        pprint(survey)
+        # pprint(survey)
         if survey.follow_up and survey.route is not None:
             full_word = {
                 'role': ROLES[survey.role],
