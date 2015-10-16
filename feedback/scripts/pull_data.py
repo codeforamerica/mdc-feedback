@@ -4,18 +4,26 @@ This script should run daily to:
 import arrow
 import requests
 
+from flask import render_template
+
+from pprint import pprint
+
 from feedback.app import create_app
+from feedback.settings import DevelopmentConfig
 from feedback.surveys.serializers import (
     pic_schema, DataLoader
 )
 from feedback.surveys.constants import (
-    TF, ROUTES, SURVEY_DAYS, BEST, WORST
+    TF, ROUTES, SURVEY_DAYS, BEST,
+    WORST, ROLES, PURPOSE, EMAIL
 )
 from feedback.dashboard.vendorsurveys import (
     fill_values,
     filter_purpose, filter_role,
     string_to_bool
 )
+from feedback.utils import send_email
+
 
 TI_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
 TEXTIT_UUID_EN = '0aa9f77b-d775-4bc9-952a-1a6636258841'
@@ -199,6 +207,41 @@ def etl_sms_data(ts):
     return data
 
 
+def follow_up(models):
+    ''' Inputs a bunch of survey models, go through
+    each of them, figuring out if they require
+    follow-ups and then e-mail the appropriate
+    directors.
+
+    Returns ..?
+    '''
+    print '-- entering follow_up ---'
+    for survey in models:
+        pprint(survey)
+        if survey.follow_up and survey.route is not None:
+            full_word = {
+                'role': ROLES[survey.role],
+                'route': ROUTES.get(survey.route, survey.route),
+                'best': BEST.get(survey.best, None),
+                'worst': WORST.get(survey.worst, None),
+                'purpose': PURPOSE.get(survey.purpose, None)
+            }
+            send_email(
+                'Miami-Dade County Permit Inspection Center Survey',
+                'mdcfeedbackdev@gmail.com',
+                EMAIL[survey.route],
+                render_template(
+                    'email/followup_notification.txt',
+                    survey=survey,
+                    full_word=full_word
+                ),
+                render_template(
+                    'email/followup_notification.html',
+                    survey=survey,
+                    full_word=full_word
+                ))
+
+
 def load_data():
     timestamp = arrow.utcnow()
     timestamp = timestamp.replace(days=-SURVEY_DAYS)
@@ -212,11 +255,12 @@ def load_data():
     for row in data:
         loader.slice_and_add(row)
 
-    loader.save_models_or_report_errors()
+    db_models = loader.save_models_or_report_errors()
+    follow_up(db_models)
 
 
 def run():
-    app = create_app()
+    app = create_app(config_object=DevelopmentConfig)
     with app.app_context():
         load_data()
 

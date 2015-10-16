@@ -66,10 +66,13 @@ class DataLoader:
         """Tries to load data using the schema.
         If there are errors, it will log them.
         If there are no errors, it will save the models and return them
+
+        Returns the models that were NOT already in the DB.
         """
         new = 0
         existing = 0
         total = 0
+        new_models = []
         models, errors = self.schema.load(
             self.raw_data,
             many=True,
@@ -83,10 +86,11 @@ class DataLoader:
                     existing += 1
                 else:
                     new += 1
+                    new_models.append(m)
                 db.session.add(m)
             db.session.commit()
             self.log_success(len(models), new, existing)
-            return models
+            return new_models
 
 
 class PICSurveySchema(ma.ModelSchema):
