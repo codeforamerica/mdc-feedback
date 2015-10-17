@@ -212,6 +212,8 @@ $(document).ready(function () {
       respondentsByRole,
       respondentsByRoleChart;
 
+      
+      
   for(i = 0; i < sctxdata.data.length; i+=1) {
 
     switch(parseInt(sctxdata.data[i][0], 10)) {
@@ -294,7 +296,8 @@ $(document).ready(function () {
   permit = {label:'Apply for a permit', count:0},
   reviewer = {label:'Meet with a plan reviewer', count:0},
   cu = {label:'Obtain a certificate of use/occupancy', count:0},
-  sorter2 = [violation, inspector, permit, reviewer, cu],
+  other = {label:'Other', count:0},
+  sorter2 = [violation, inspector, permit, reviewer, cu, other],
 
   sptxseries = [],
   sptxlabels = [],
@@ -303,10 +306,8 @@ $(document).ready(function () {
 
   var test = 0; 
   
-  for(i = 0; i < sptxdata.data.length;   i+=1) {
+  for(i = 0; i < sptxdata.data.length; i+=1) {
 
-    console.log(i + ', case: ' + sptxdata.data[i][0] + ', ' + sptxdata.data[i][1]); 
-    
     switch(parseInt(sptxdata.data[i][0], 10)) {
 
       case 1:
@@ -324,13 +325,15 @@ $(document).ready(function () {
       case 5:
         cu.count += sptxdata.data[i][1];
         break;
+      case 6:
+        other.count += sptxdata.data[i][1];
+      default:
+        other.count += 1;
 
     }
 
   }
   
-  console.log(contractors.count + inspector.count + reviewer.count + violation.count);
-
   for(i = 0; i < sorter2.length; i+=1) {
     sptxseries[i] = sorter2[i].count;
     sptxlabels[i] = sorter2[i].label;

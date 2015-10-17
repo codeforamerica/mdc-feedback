@@ -5,9 +5,11 @@ import arrow
 import requests
 
 from feedback.app import create_app
+from feedback.settings import DevelopmentConfig
 from feedback.surveys.serializers import (
     pic_schema, DataLoader
 )
+
 from feedback.surveys.constants import (
     TF, ROUTES, SURVEY_DAYS, BEST, WORST
 )
@@ -216,7 +218,7 @@ def load_data():
 
 
 def run():
-    app = create_app()
+    app = create_app(config_object=DevelopmentConfig)
     with app.app_context():
         load_data()
 
