@@ -6,7 +6,20 @@ import pytz
 from flask import flash, request, url_for
 from tzlocal import get_localzone
 
+from feedback.extensions import mail
+from flask_mail import Message
+
 local_tz = get_localzone()
+
+
+def send_email(subject, sender, recipients, text_body, html_body):
+    msg = Message(
+        subject,
+        sender=sender,
+        recipients=recipients)
+    msg.body = text_body
+    msg.html = html_body
+    mail.send(msg)
 
 
 def flash_errors(form, category="warning"):
