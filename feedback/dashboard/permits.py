@@ -7,6 +7,7 @@ import numpy as np
 
 # from flask import current_app
 from feedback.extensions import cache
+from dateutil.relativedelta import *
 
 API_URL = 'https://opendata.miamidade.gov/resource/vvjq-pfmc.json'
 VIOLATIONS_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json'
@@ -23,7 +24,8 @@ sophia trying to python
 '''
     
 p_days_30 = (datetime.date.today() - datetime.timedelta(30)).strftime("%Y-%m-%d")
-p_month = (datetime.date.today() - datetime.timedelta(30)).strftime("%m")
+p_month = datetime.datetime.now() - relativedelta(months=1)
+p_month = p_month.strftime("%Y-%m-01") 
 
 print p_month
 

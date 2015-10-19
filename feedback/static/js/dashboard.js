@@ -562,12 +562,12 @@ $(document).ready(function () {
   var vdata2 = {
     labels: cleanPermitLabels,
     datasets: [
-        {
-            label: "Permits by Type",
-            fillColor: t_purple_1,
-            strokeColor: purple_1,
-            data: cleanPermitData
-        }
+      {
+        label: "Permits by Type",
+        fillColor: t_purple_1,
+        strokeColor: purple_1,
+        data: cleanPermitData
+      }
     ]
   };
 
@@ -579,7 +579,7 @@ $(document).ready(function () {
   //25.7667° N, 80.2000° W
   //{lat: 25.626668871238568, lng: -80.44867515563963}
 
-  var map = L.map('leaflet').setView([25.626668871238568, -80.44867515563963], 9);
+  var map = L.map('leaflet').setView([25.626668871238568, -80.44867515563963], 10);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
@@ -588,7 +588,7 @@ $(document).ready(function () {
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
     }).addTo(map);
 
-  var map3 = L.map('leaflet-lein').setView([25.626668871238568, -80.44867515563963], 9);
+  var map3 = L.map('leaflet-lein').setView([25.626668871238568, -80.44867515563963], 10);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
@@ -651,33 +651,65 @@ $(document).ready(function () {
   function buildDataMaps(){
 
     var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
-        vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data);
-        //vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data)
+
+        vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data),
+        vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data);
         
         //violations_per_month_json
-        console.log(vioLocationsData);
+        
 
     for(i = 0; i < vioLocationsData.length; i+=1) {
 
-      var lat = vioLocationsData[i].location.latitude,
-          lon = vioLocationsData[i].location.longitude,
-          openClosed = vioLocationsData[i].ticket_status,
-          fill = t_yellow,
-          color = yellow,
-          title = vioLocationsData[i].issue_type;
-
-     
-
-      if(openClosed == "LIEN") {
+      if(vioLocationsData[i].location.latitude != undefined) {
+        
+        var lat = vioLocationsData[i].location.latitude,
+            lon = vioLocationsData[i].location.longitude,
+            openClosed = vioLocationsData[i].ticket_status,
+            fill = t_yellow,
+            color = yellow,
+            title = vioLocationsData[i].issue_type;
+  
         var marker2 = L.circleMarker([lat, lon], {
+            radius: 5,
+            fillColor: fill,
+            color: color,
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+          }).addTo(map);
+  
+          marker2.bindPopup(title);
+          marker2.on('mouseover', function() {
+            this.openPopup();
+          });
+          marker2.on('mouseout', function() {
+            this.closePopup();
+          });
+      }
+    }
+    
+    for(i = 0; i < vioMonthlyData.length; i += 1) {
+      
+      //console.log(vioMonthlyData[i].location.latitude);
+      
+      if(vioMonthlyData[i].location.latitude != undefined) {
+        
+        lat = vioMonthlyData[i].location.latitude,
+        lon = vioMonthlyData[i].location.longitude,
+        openClosed = vioMonthlyData[i].ticket_status,
+        fill = t_yellow,
+        color = yellow,
+        title = vioMonthlyData[i].issue_type;
+        
+        marker2 = L.circleMarker([lat, lon], {
           radius: 5,
-          fillColor: t_purple,
-          color: purple,
+          fillColor: fill,
+          color: color,
           weight: 1,
           opacity: 1,
           fillOpacity: 0.8
         }).addTo(map3);
-
+  
         marker2.bindPopup(title);
         marker2.on('mouseover', function() {
           this.openPopup();
@@ -685,31 +717,12 @@ $(document).ready(function () {
         marker2.on('mouseout', function() {
           this.closePopup();
         });
+        
       }
-
-      if(openClosed == "CLOSED") {
-
-        var marker3 = L.circleMarker([lat, lon], {
-          radius: 5,
-          fillColor: fill,
-          color: color,
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8
-        }).addTo(map);
-
-        marker3.bindPopup(title);
-        marker3.on('mouseover', function() {
-          this.openPopup();
-        });
-        marker3.on('mouseout', function() {
-          this.closePopup();
-        });
-
-      }
-
+      
+      
     }
-
+    
     if(vioTypeData === '') {
 
       $('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
