@@ -23,13 +23,14 @@ sophia trying to python
 '''
     
 p_days_30 = (datetime.date.today() - datetime.timedelta(30)).strftime("%Y-%m-%d")
+p_month = (datetime.date.today() - datetime.timedelta(30)).strftime("%m")
+
+print p_month
 
 VIOLATIONS_LAST_30 = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + p_days_30 + '%27&$limit=50000'
+
+VIOLATIONS_PREV_MONTH = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + p_month + '%27&$limit=50000'
     
-print VIOLATIONS_LAST_30
-
-####
-
 def api_health():
     '''
     Run the API to see if its even working.
@@ -71,6 +72,7 @@ def dump_socrata_api(datatype='p'):
         'p': PERMITS_API_URL,
         'v': VIOLATIONS_API_URL,
         'vl': VIOLATIONS_LAST_30,
+        'vm': VIOLATIONS_PREV_MONTH,
         'vt': VIOLATIONS_BY_TYPE_API_URL
     }
     response = requests.get(data_table.get(datatype))

@@ -176,6 +176,7 @@ def home():
     json_obj['violations_rawjson'] = json.dumps(dump_socrata_api('v'))
     json_obj['violations_locations_json'] = json.dumps(dump_socrata_api('vl'))
     json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
+    json_obj['violations_per_month_json'] = json.dumps(dump_socrata_api('vm'))
 
     pic_schema = PICSurveySchema(many=True)
     json_obj['app_answers'] = pic_schema.dump(survey_table).data
