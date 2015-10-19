@@ -21,5 +21,8 @@ migrate = Migrate()
 from flask_cache import Cache
 cache = Cache()
 
+from flask_mail import Mail
+mail = Mail()
+
 from flask_debugtoolbar import DebugToolbarExtension
 debug_toolbar = DebugToolbarExtension()

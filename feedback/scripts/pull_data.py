@@ -4,6 +4,10 @@ This script should run daily to:
 import arrow
 import requests
 
+from flask import render_template
+
+from pprint import pprint
+
 from feedback.app import create_app
 from feedback.settings import DevelopmentConfig
 from feedback.surveys.serializers import (
@@ -11,13 +15,15 @@ from feedback.surveys.serializers import (
 )
 
 from feedback.surveys.constants import (
-    TF, ROUTES, SURVEY_DAYS, BEST, WORST
+    TF, ROUTES, SURVEY_DAYS, BEST,
+    WORST, ROLES, PURPOSE, EMAIL
 )
 from feedback.dashboard.vendorsurveys import (
     fill_values,
-    filter_purpose, filter_role,
     string_to_bool
 )
+from feedback.utils import send_email
+
 
 TI_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
 TEXTIT_UUID_EN = '0aa9f77b-d775-4bc9-952a-1a6636258841'
@@ -99,8 +105,21 @@ def etl_web_data(ts):
         obj['follow_up'] = fill_values(answers_arr, TF['FOLLOWUP_EN'], TF['FOLLOWUP_ES'])
         obj['contact'] = fill_values(answers_arr, TF['CONTACT_EN'], TF['CONTACT_ES'])
         obj['more_comments'] = fill_values(answers_arr, TF['COMMENTS_EN'], TF['COMMENTS_ES'])
-        obj['role'] = filter_role(fill_values(answers_arr, TF['ROLE_EN'], TF['ROLE_ES']))
-        obj['purpose'] = filter_purpose(fill_values(answers_arr, TF['PURP_EN'], TF['PURP_ES']))
+        obj['role'] = ROLES[
+            fill_values(
+                answers_arr,
+                TF['ROLE_EN'],
+                TF['ROLE_ES'])]
+        try:
+            obj['purpose'] = PURPOSE[
+                fill_values(
+                    answers_arr,
+                    TF['PURP_EN'],
+                    TF['PURP_ES'])]
+        except KeyError:
+            # None. Set to 6 which is "OTHER"
+            obj['purpose'] = 6
+
         obj['purpose_other'] = fill_values(
             answers_arr,
             TF['PURP_OTHER_EN'],
@@ -168,7 +187,6 @@ def etl_sms_data(ts):
             'method': 'sms',
             'route': iter['Section']['text'],
             'get_done': string_to_bool(iter['Tasks']['text']),
-            'role': filter_role(iter['Role']['text']),
             'rating': iter['Satisfaction']['text'],
             'improvement': iter['Improvement']['text'],
             'follow_up': string_to_bool(iter['Followup Permission']['text']),
@@ -197,8 +215,48 @@ def etl_sms_data(ts):
         except KeyError:
             s_obj['purpose'] = None
 
+        try:
+            s_obj['role'] = iter['Role']['text']
+        except KeyError:
+            s_obj['role'] = None
+
         data.append(s_obj)
     return data
+
+
+def follow_up(models):
+    ''' Inputs a bunch of survey models, go through
+    each of them, figuring out if they require
+    follow-ups and then e-mail the appropriate
+    directors.
+
+    Returns ..?
+    '''
+    print '-- entering follow_up ---'
+    for survey in models:
+        # pprint(survey)
+        if survey.follow_up and survey.route is not None:
+            full_word = {
+                'role': ROLES[survey.role],
+                'route': ROUTES.get(survey.route, survey.route),
+                'best': BEST.get(survey.best, None),
+                'worst': WORST.get(survey.worst, None),
+                'purpose': PURPOSE.get(survey.purpose, None)
+            }
+            send_email(
+                'Miami-Dade County Permit Inspection Center Survey',
+                'mdcfeedbackdev@gmail.com',
+                EMAIL[survey.route],
+                render_template(
+                    'email/followup_notification.txt',
+                    survey=survey,
+                    full_word=full_word
+                ),
+                render_template(
+                    'email/followup_notification.html',
+                    survey=survey,
+                    full_word=full_word
+                ))
 
 
 def load_data():
@@ -214,7 +272,8 @@ def load_data():
     for row in data:
         loader.slice_and_add(row)
 
-    loader.save_models_or_report_errors()
+    db_models = loader.save_models_or_report_errors()
+    follow_up(db_models)
 
 
 def run():

@@ -2,6 +2,10 @@
 from feedback.database import (
     Column, db, Model
 )
+from feedback.surveys.constants import (
+    ROLES, PURPOSE, ROUTES,
+    BEST, WORST
+)
 
 
 class Survey(Model):
@@ -33,6 +37,38 @@ class Survey(Model):
     follow_up = Column(db.Boolean(), default=False)
     contact = Column(db.String(50), nullable=True)
     more_comments = Column(db.String(2000), nullable=True)
+
+    @property
+    def role_en(self):
+        return ROLES[self.role]
+
+    @property
+    def route_en(self):
+        try:
+            return ROUTES[self.route]
+        except KeyError:
+            return self.route
+
+    @property
+    def best_en(self):
+        if self.best_other is None:
+            return BEST[self.best]
+        else:
+            return self.best_other
+
+    @property
+    def worst_en(self):
+        if self.worst_other is None:
+            return WORST[self.worst]
+        else:
+            return self.worst_other
+
+    @property
+    def purpose_en(self):
+        if self.purpose_other is None:
+            return PURPOSE[self.purpose]
+        else:
+            return self.purpose_other
 
     def __repr__(self):
         return '<Survey(id:{0} tracking:{1})>'.format(self.id, self.source_id)

@@ -13,36 +13,36 @@
         <div class='row twelve columns response'>
 
           <p>
-            <span class='bold'>Date: </span>{{ item.date }}
+            <span class='bold'>Date: </span>{{ item.date_submitted }}
           </p>
 
           <p>
-             <span class='bold'>Rating: </span><span class='inline'>{{ item.rating }}</span><span class='bold'>Source: </span><span class='inline'>{{ item.method }}</span><span class='bold'>Language: </span><span class='inline'>{{ item.lang }}</span><span class='bold'>Section: </span><span class='inline'>{{ item.route }}</span>
+             <span class='bold'>Rating: </span><span class='inline'>{{ item.rating }}</span><span class='bold'>Source: </span><span class='inline'>{{ item.method }}</span><span class='bold'>Language: </span><span class='inline'>{{ item.lang }}</span><span class='bold'>Section: </span><span class='inline'>{{ item.route_en }}</span>
           </p>
 
-          <p><span class='bold'>This respondent identifies as a: </span>{{ item.role }}</p>
+          <p><span class='bold'>This respondent identifies as a: </span>{{ item.role_en }}</p>
 
           <!-- make this a yes or no based on logic -->
-          <p class='alert-message'><span class='bold'>This respondent would like you to follow up with them: </span>{{ item.followup }}</p>
+          <p class='alert-message'><span class='bold'>This respondent would like you to follow up with them: </span>{{ 'Yes' if item.follow_up else 'No' }}</p>
 
-          <p class='alert-message'><span class='bold'>Contact information (if applicable): </span>{{ item.contact }}</p>
+          <p class='alert-message'><span class='bold'>Contact information: </span>{{ item.contact }}</p>
 
-          <p><span class='bold'>Purpose in visiting the PIC:</span> {{ item.purpose }}</p>
-          <p><span class='bold'>Respondent succeeded?</span> {{ item.getdone }}</p>
+          <p><span class='bold'>Purpose in visiting the PIC:</span> {{ item.purpose_en }}</p>
+          <p><span class='bold'>Respondent succeeded?</span> {{ 'Yes' if item.get_done else 'No' }}</p>
 
           <p class='alert-message'>The following responses are open-ended commentary.</p>
 
           <p class='bold'>When asked for best experience, this person responded with:</p>
-          <p>{{ item.best }}</p>
+          <p>{{ item.best_en }}</p>
 
           <p class='bold'>When asked for best experience, this person responded with:</p>
-          <p>{{ item.worst }}</p>
+          <p>{{ item.worst_en }}</p>
 
           <p class='bold'>When asked for suggestions for improvement, this person responded with:</p>
           <p>{{ item.improvement }}</p>
 
           <p class='bold'>When asked for general comments, this person responded with:</p>
-          <p>{{ item.morecomments }}</p>
+          <p>{{ item.more_comments }}</p>
 
         </div>
 

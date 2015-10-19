@@ -2,15 +2,75 @@
 
 SURVEY_DAYS = 30
 
+EMAIL = {}
+EMAIL[1] = ['mdcfeedbackdev+1a@gmail.com', 'mdcfeedbackdev+1b@gmail.com']
+EMAIL[2] = ['mdcfeedbackdev+2a@gmail.com', 'mdcfeedbackdev+2b@gmail.com']
+EMAIL[3] = ['mdcfeedbackdev+3a@gmail.com', 'mdcfeedbackdev+3b@gmail.com']
+EMAIL[4] = ['mdcfeedbackdev+4a@gmail.com', 'mdcfeedbackdev+4b@gmail.com']
+EMAIL[5] = ['mdcfeedbackdev+5a@gmail.com', 'mdcfeedbackdev+5b@gmail.com']
+EMAIL[6] = ['mdcfeedbackdev+6a@gmail.com', 'mdcfeedbackdev+6b@gmail.com']
+EMAIL[7] = ['mdcfeedbackdev+7a@gmail.com', 'mdcfeedbackdev+7b@gmail.com']
+EMAIL[8] = ['mdcfeedbackdev+8a@gmail.com', 'mdcfeedbackdev+8b@gmail.com']
+EMAIL[9] = ['mdcfeedbackdev+9a@gmail.com', 'mdcfeedbackdev+9b@gmail.com']
+EMAIL[10] = ['mdcfeedbackdev+10a@gmail.com', 'mdcfeedbackdev+10b@gmail.com']
+EMAIL[11] = ['mdcfeedbackdev+11a@gmail.com', 'mdcfeedbackdev+11b@gmail.com']
+EMAIL[12] = ['mdcfeedbackdev+12a@gmail.com', 'mdcfeedbackdev+12b@gmail.com']
+EMAIL[13] = ['mdcfeedbackdev+13a@gmail.com', 'mdcfeedbackdev+13b@gmail.com']
+EMAIL[14] = ['mdcfeedbackdev+14a@gmail.com', 'mdcfeedbackdev+14b@gmail.com']
+
 BEST = {}
 BEST['ex. Getting questions answered and explained'] = 1
 BEST['ex. Finishing tasks quickly'] = 2
 BEST['ex. Courteous staff'] = 3
+BEST[1] = 'ex. Getting questions answered and explained'
+BEST[2] = 'ex. Finishing tasks quickly'
+BEST[3] = 'ex. Courteous staff'
+BEST[4] = 'Other'
 
 WORST = {}
 WORST['ex. Long wait time'] = 1
 WORST['ex. Repeated visits for the same issue'] = 2
 WORST['ex. Not being familiar with how the process works'] = 3
+WORST[1] = 'ex. Long wait time'
+WORST[2] = 'ex. Repeated visits for the same issue'
+WORST[3] = 'ex. Not being familiar with how the process works'
+WORST[4] = 'Other'
+
+ROLES = {}
+# FIXME: VERIFY CONSTANTS AGAINST V4 TEXTIT
+ROLES[1] = 'Contractor'
+ROLES[2] = 'Architect / Engineer'
+ROLES[3] = 'Permit Consultant'
+ROLES[4] = 'Homeowner'
+ROLES[5] = 'Business Owner'
+ROLES['Contractor'] = 1
+ROLES['Contratista'] = 1
+ROLES['Architect / Engineer'] = 2
+ROLES['Arquitecto / Ingeniero'] = 2
+ROLES['Permit Consultant'] = 3
+ROLES['Consultor de Permiso'] = 3
+ROLES['Homeowner'] = 4
+ROLES[u'Dueño/a de Casa'] = 4
+ROLES['Business Owner'] = 5
+ROLES[u'Dueño/a de Negocio'] = 5
+
+PURPOSE = {}
+PURPOSE['Apply for a permit'] = 1
+PURPOSE['Meet with an Inspector'] = 2
+PURPOSE['Meet with a Plan Reviewer'] = 3
+PURPOSE['Find out about a violation or lien on your property'] = 4
+PURPOSE['Obtain a certificate of use and/or occupancy'] = 5
+PURPOSE['Solicitar un permiso'] = 1
+PURPOSE['Reunirse con un Inspector'] = 2
+PURPOSE[u'Reúnirse con un Revisador de Planes'] = 3
+PURPOSE['Nos enteramos de una violación o de un gravamen sobre nuestra propiedad'] = 4
+PURPOSE[u'Obtener un certifcado de uso y / o ocupación'] = 5
+PURPOSE[1] = 'Obtain a certificate of use and/or occupancy'
+PURPOSE[2] = 'Apply for a permit'
+PURPOSE[3] = 'Meet with a Plan Reviewer'
+PURPOSE[4] = 'Meet with an Inspector'
+PURPOSE[5] = 'Find out about a violation or lien on your property'
+PURPOSE[6] = 'Other'
 
 ROUTES = {}
 ROUTES['Building / Roofing / Structural'] = 1
@@ -39,14 +99,20 @@ ROUTES['Water and Sewer Department (WASD)'] = 13
 ROUTES['Departamento de Agua y Alcantarillado (WASD)'] = 13
 ROUTES['Zoning / Impact Fees / Public Works'] = 14
 ROUTES[u'Zonificación / Cargos de Impacto / Obras Públicas'] = 14
-
-ROLES = {}
-# FIXME: VERIFY CONSTANTS AGAINST V4 TEXTIT
-ROLES['1'] = 'Contractor'
-ROLES['2'] = 'Architect'
-ROLES['3'] = 'Permit Consultant'
-ROLES['4'] = 'Homeowner'
-ROLES['5'] = 'Business Owner'
+ROUTES[1] = 'Building / Roofing / Structural'
+ROUTES[2] = 'Cashier'
+ROUTES[3] = 'Code Violations'
+ROUTES[4] = 'Contractor Licensing'
+ROUTES[5] = 'Electrical'
+ROUTES[6] = 'Environmental Resources Management (DERM)'
+ROUTES[7] = 'Fire Department'
+ROUTES[8] = 'Health Department (HRS)'
+ROUTES[9] = 'Microfilm'
+ROUTES[10] = 'Mechanical'
+ROUTES[11] = 'Permit Application Intake and Information'
+ROUTES[12] = 'Plumbing'
+ROUTES[13] = 'Water and Sewer Department (WASD)'
+ROUTES[14] = 'Zoning / Impact Fees / Public Works'
 
 TF = {}
 TF['API'] = 'https://api.typeform.com/v0/form/NNCQGT?key='
