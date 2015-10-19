@@ -117,7 +117,7 @@
 
 <!-- JS blocking -->
 
-	{% if active_page == 'Dashboard' or active_page == 'Dashboard Editor - Public' or active_page == 'Dashboard Editor - Internal' %}
+	{% if active_page == 'Dashboard' %}
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
@@ -135,19 +135,11 @@
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
 		<script type="text/javascript" src="/static/js/violations-data.js"></script>
 
-	{% elif active_page == 'Survey Builder' %}
-
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
-		<script type="text/javascript" src="/static/js/survey-builder.js"></script>
-
+	
 	{% elif active_page == 'Manage Users' %}
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/manage-users.js"></script>
-
-	{% elif active_page == 'Admin' %}
-
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 
 	{% endif %}
 
