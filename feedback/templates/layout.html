@@ -40,27 +40,7 @@
 	{% if active_page == 'Dashboard' %}
 
 			{% set navigation_bar = [
-				('/admin/', 'Admin Panel'),
-				('/create-survey/', 'Survey Builder'),
 				('/users/manage', 'Manage Users')
-			] -%}
-
-		{% elif active_page == 'Survey Builder' or active_page == 'Manage Users' %}
-
-			{% set navigation_bar = [
-
-				('/', 'Dashboard'),
-				('/admin/', 'Admin Panel')
-
-			] -%}
-
-		{% elif active_page == 'Admin' %}
-
-			{% set navigation_bar = [
-
-				('/', 'Dashboard'),
-				('/create-survey/', 'Survey Builder')
-
 			] -%}
 
 		{% else %}
