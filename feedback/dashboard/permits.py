@@ -13,26 +13,24 @@ VIOLATIONS_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json'
 DATA311_URL = 'https://opendata.miamidade.gov/resource/dj6j-qg5t.json'
 
 PERMITS_API_URL = API_URL + '?%24select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&%24group=month&%24order=month%20desc&%24limit=12&%24where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&%24offset=1'
+
 VIOLATIONS_API_URL = VIOLATIONS_URL + '?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1'
 VIOLATIONS_LOCATIONS_API_URL = VIOLATIONS_URL + '?$where=ticket_created_date_time%20%3E%20%272015-01-01%27'
 VIOLATIONS_BY_TYPE_API_URL = DATA311_URL + '?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-11%27'
 
+'''
+sophia trying to python
+'''
+    
+p_days_30 = (datetime.date.today() - datetime.timedelta(30)).strftime("%Y-%m-%d")
+p_month = (datetime.date.today() - datetime.timedelta(30)).strftime("%m")
 
-@cache.memoize(timeout=86400)
-def dump_socrata_api(datatype='p'):
-    ''' For performance issues, have Sophia's AJAX calls
-    get called on the server side instead.
-    '''
-    data_table = {
-        'p': PERMITS_API_URL,
-        'v': VIOLATIONS_API_URL,
-        'vl': VIOLATIONS_LOCATIONS_API_URL,
-        'vt': VIOLATIONS_BY_TYPE_API_URL
-    }
-    response = requests.get(data_table.get(datatype))
-    return response.json()
+print p_month
 
+VIOLATIONS_LAST_30 = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + p_days_30 + '%27&$limit=50000'
 
+VIOLATIONS_PREV_MONTH = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + p_month + '%27&$limit=50000'
+    
 def api_health():
     '''
     Run the API to see if its even working.
@@ -63,6 +61,23 @@ def json_to_dateobj(jsondate):
     '''
     return datetime.datetime.strptime(jsondate, '%Y-%m-%dT%H:%M:%S.000')
 
+@cache.memoize(timeout=86400)
+def dump_socrata_api(datatype='p'):
+  
+    ''' For performance issues, have Sophia's AJAX calls
+    get called on the server side instead.
+    '''
+        
+    data_table = {
+        'p': PERMITS_API_URL,
+        'v': VIOLATIONS_API_URL,
+        'vl': VIOLATIONS_LAST_30,
+        'vm': VIOLATIONS_PREV_MONTH,
+        'vt': VIOLATIONS_BY_TYPE_API_URL
+    }
+    response = requests.get(data_table.get(datatype))
+    return response.json()
+    
 
 #@cache.memoize(timeout=86400)
 def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
