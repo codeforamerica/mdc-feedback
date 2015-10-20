@@ -12,9 +12,10 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
     SQLALCHEMY_DATABASE_URI = os_env.get('DATABASE_URL')
-    BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://localhost:9000')
+    BROWSERID_URL = os_env.get('BROWSERID_URL')
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     ADMIN_EMAIL = os_env.get('ADMIN_EMAIL', 'ehsiung@codeforamerica.org')
+    CITY_DOMAINS = ['miamidade.gov', 'codeforamerica.org']
     MAIL_USERNAME = os_env.get('MAIL_USERNAME')
     MAIL_PASSWORD = os_env.get('MAIL_PASSWORD')
     MAIL_SERVER = os_env.get('MAIL_SERVER')
@@ -36,6 +37,10 @@ class StagingConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
     BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://mdc-feedback-stage.heroku.com')
+    MAIL_USERNAME = os_env.get('SENDGRID_USERNAME')
+    MAIL_PASSWORD = os_env.get('SENDGRID_PASSWORD')
+    MAIL_SERVER = 'smtp.sendgrid.net'
+    MAIL_MAX_EMAILS = 100
 
 
 class DevelopmentConfig(Config):
