@@ -553,10 +553,14 @@ $(document).ready(function () {
   //set the data up for Charts.js
   for(i = 0; i < permitTypes.data.length; i+=1) {
 
-    cleanPermitLabels[i] = permitTypes.data[i].permit_type;
-    cleanPermitData[i] = permitTypes.data[i].count;
-    //console.log(data[i].issue_type, i);
+    if(permitTypes.data[i].permit_type != 'CCUT') {
+      
+      cleanPermitLabels.push(humanNames(permitTypes.data[i].permit_type));
+      cleanPermitData.push(permitTypes.data[i].count);
+      //console.log(data[i].issue_type, i);
 
+    }
+    
   }
 
   var vdata2 = {
@@ -570,9 +574,79 @@ $(document).ready(function () {
       }
     ]
   };
+  
+  function humanNames(type) {
+    
+    //console.log(type);
+    
+    switch(type) {
+      
+      case 'FIRE':
+      
+        return 'Fire';
+        break;
+        
+      case 'MMEC':
+      
+        return 'Municipal: Mechanical';
+        break;
+        
+      case 'ZIPS':
+        
+        return 'Zoning Improvement Permit';
+        break;
+        
+      case 'MELE':
+      
+        return 'Muncipal: Electrical';
+        break;
+        
+      case 'CCUT':
+      
+        return 'CCUT';
+        break;
+        
+      case 'ELEC':
+      
+        return 'Electrical';
+        break;
+        
+      case 'PLUM':
+      
+        return 'Plumbing';
+        break;
+        
+      case 'MPLU':
+      
+        return 'Municipal: Plumbing';
+        break;
+        
+      case 'MBLD':
+      
+        return 'Municipal: Building';
+        break;
+        
+      case 'LPGX':
+      
+        return 'Liquid Petroleum Gas';
+        break;
+        
+      case 'BLDG': 
+      
+        return 'Building';
+        break;
+        
+      case 'MECH':
+      
+        return 'Mechanical';
+        break;
+    
+    }
+    
+  }
 
   $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
-  var barChart2 = new Chart(pttx).Bar(vdata2);
+  var barChart2 = new Chart(pttx).HorizontalBar(vdata2);
 
   /************************* LEAFLET MAPPING *************************/
 

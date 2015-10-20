@@ -31,6 +31,7 @@
     {% endassets %}
   {% endblock %}
 </head>
+
 <body class="{% block body_class %}{% endblock %}">
 {% block body %}
 {% with form=form  %}
@@ -141,6 +142,10 @@
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/manage-users.js"></script>
+		
+  {% elif active_page == 'Details' %}
+  
+  
 
 	{% endif %}
 
