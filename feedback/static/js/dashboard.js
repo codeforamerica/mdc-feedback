@@ -573,7 +573,7 @@ $(document).ready(function () {
   
   function humanNames(type) {
     
-    console.log(type);
+    //console.log(type);
     
     switch(type) {
       
