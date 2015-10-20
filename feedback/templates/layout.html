@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class='no-js' lang='en'>
+<html class='no-js lt-ie9' lang='en'>
 	<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 	<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 	<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -12,6 +12,9 @@
   <title>{% block page_title %}Feedback | {{request.endpoint }} {% endblock %}</title>
   <meta name="description" content="{% block meta_description %}{% endblock %}">
   <meta name="author" content="{% block meta_author %}{% endblock %}">
+
+  <!-- Needed to not break persona. https://developer.mozilla.org/en-US/Persona/Quick_Setup -->
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
   <meta name="viewport" content="width=device-width">
@@ -40,27 +43,7 @@
 	{% if active_page == 'Dashboard' %}
 
 			{% set navigation_bar = [
-				('/admin/', 'Admin Panel'),
-				('/create-survey/', 'Survey Builder'),
 				('/users/manage', 'Manage Users')
-			] -%}
-
-		{% elif active_page == 'Survey Builder' or active_page == 'Manage Users' %}
-
-			{% set navigation_bar = [
-
-				('/', 'Dashboard'),
-				('/admin/', 'Admin Panel')
-
-			] -%}
-
-		{% elif active_page == 'Admin' %}
-
-			{% set navigation_bar = [
-
-				('/', 'Dashboard'),
-				('/create-survey/', 'Survey Builder')
-
 			] -%}
 
 		{% else %}
@@ -132,17 +115,19 @@
 <!-- FIXME: move jquery into a bower and use grunt -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script src="https://login.persona.org/include.js"></script>
+ <script src="/static/js/modernizr-custom.js"></script><!-- -->
 
 <!-- JS blocking -->
 
-	{% if active_page == 'Dashboard' or active_page == 'Dashboard Editor - Public' or active_page == 'Dashboard Editor - Internal' %}
+	{% if active_page == 'Dashboard' %}
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
 		<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
+		<script type="text/javascript" src="/static/js/jqcloud.min.js"></script>
+		<script type="text/javascript" src="/static/js/jquery.tipsy.js"></script>
+		<script type="text/javascript" src="/static/js/tabletop.js"></script>
 		<script type="text/javascript" src="/static/js/dashboard.js"></script>
 
 	{% elif active_page == 'Violations' %}
@@ -151,19 +136,11 @@
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
 		<script type="text/javascript" src="/static/js/violations-data.js"></script>
 
-	{% elif active_page == 'Survey Builder' %}
-
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
-		<script type="text/javascript" src="/static/js/survey-builder.js"></script>
-
+	
 	{% elif active_page == 'Manage Users' %}
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/manage-users.js"></script>
-
-	{% elif active_page == 'Admin' %}
-
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 
 	{% endif %}
 
@@ -178,7 +155,7 @@
 
 {% if json_obj %}
 <script type="application/json" id="jsondata">
-{{ json_obj.test|safe }}
+{{ json_obj.daily_graph|safe }}
 </script>
 <script type="application/json" id="surveydata">
 {{ json_obj.surveys_type|safe }}
@@ -189,10 +166,33 @@
 <script type="application/json" id="appanswers">
 {{ json_obj.app_answers|safe }}
 </script>
+<script type="application/json" id="surveyrole">
+{{ json_obj.survey_role|safe }}
+</script>
+<script type="application/json" id="surveycomplete">
+{{ json_obj.survey_complete|safe }}
+</script>
+<script type="application/json" id="surveypurpose">
+{{ json_obj.survey_purpose|safe }}
+</script>
+<script type="application/json" id="permits_rawjson">
+{{ json_obj.permits_rawjson|safe }}
+</script>
+<script type="application/json" id="violations_rawjson">
+{{ json_obj.violations_rawjson|safe }}
+</script>
+<script type="application/json" id="violations_locations_json">
+{{ json_obj.violations_locations_json|safe }}
+</script>
+<script type="application/json" id="violations_type_json">
+{{ json_obj.violations_type_json|safe }}
+</script>
+<script type="application/json" id="violations_per_month_json">
+{{ json_obj.violations_per_month_json|safe }}
+</script>
 {% endif %}
-
+<script src="https://login.persona.org/include.js"></script>
 <script type='text/javascript'>
-
 {% if current_user.is_anonymous() or not current_user %}
 var currentUser = null;
 {% else %}
@@ -210,15 +210,11 @@ navigator.id.watch({
       url: '{{ url_for("public.auth", next=thispage()) }}', // This is a URL on your website.
       data: {assertion: assertion},
       success: function(res, status, xhr) {
-        if (res.split('thispage')[0]) {
-          window.location.href = res.split('thispage')[0];
-        } else {
-          window.location.reload();
-        }
-
+        window.location.href = res.split('thispage')[0];
       },
       error: function(xhr, status, err) {
         alert("Login failure: " + err);
+        navigator.id.logout();
       }
     });
   },

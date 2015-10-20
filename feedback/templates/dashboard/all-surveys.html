@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% set active_page = 'Details' %}
+{% block content %}
+
+<section class='row' id='details-view'>
+
+  <div class='twelve columns' id='survey-details'>
+
+    <h3>All Responses</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Method</th>
+          <th>Lang</th>
+          <th>Rating</th>
+          <th>Role</th>
+          <th>Route</th>
+          <th>Add'l Comments</th>
+          <th>Followup?</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in resp_obj %}
+        <tr>
+          <td><a href="{{ url_for('dashboard.survey_detail', id=item.id) }}">{{ item.id }}</a></td>
+          <td>{{ item.date_submitted }}</td>
+          <td>{{ item.method }}</td>
+          <td>{{ item.lang }}</td>
+          <td>{{ item.rating }}</td>
+          <td>{{ item.role_en }}</td>
+          <td>{{ item.route_en }}</td>
+          <td>{{ item.more_comments }}</td>
+          <td>{{ 'Yes' if item.follow_up else 'No' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    </div>
+
+</section> <!-- close row -->
+
+{% endblock %}
+

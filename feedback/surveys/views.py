@@ -64,4 +64,3 @@ def survey_edit(survey_id):
 
     form = F(obj=survey)
     return render_template('surveys/survey-form.html', form=form)
-

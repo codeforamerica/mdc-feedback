@@ -14,12 +14,10 @@
 
 </div>
 
-
 <section class='row' id='dashboard'>
 
 	<div class='row twelve columns'>
 		<h3>Permitting &amp; Inspection Center User Survey Metrics</h3>
-    <a href="{{ url_for('dashboard.survey_detail') }}">View Survey Answers</a>
 	</div>
 
 	<div class='six columns panel first-panel'>
@@ -28,19 +26,19 @@
 		<p class='invisible'>{{ dash_obj[0].data.new_reviews }}</p>
 
 		<!-- the content -->
-		<div class='headline'>{{ dash_obj[0].title }}</div>
+		<div class='headline'>{{ dash_obj[0].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-submitted'><img class='' src='static/images/question_bk.png'></a></div>
 
 		<div class='content-container'>
 			<canvas id='myChart'></canvas>
 		</div>
 
-		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		<p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
 
 	</div>
 
 	<div class='three columns panel'>
 
-			<div class='headline'>{{ dash_obj[1].title }}</div>
+			<div class='headline'>{{ dash_obj[1].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-rating'><img class='' src='static/images/question_bk.png'></a></div>
 
 			<div class='content-container'>
 				<div id='star-rating'>
@@ -50,21 +48,112 @@
 				<p class='label'>Visitors to the PIC are rating their experience as {{ dash_obj[1].data }} out of seven stars.</p>
 			</div>
 
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+			<p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
 
 		</div>
 
-		<div class='three columns panel last-panel'>
+	<div class='three columns panel last-panel'>
 
-			<!-- the content -->
-			<div class='headline'></div>
-			<div class='content-container'>
-				<canvas id='surveyChart'></canvas>
+		<!-- the content -->
+		<div class='headline'><a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-type'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='content-container'>
+			<canvas id='surveyChart'></canvas>
+		</div>
+
+		<p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
+	</div>
+
+<!-- merge conflict began here -->
+  <div class='four columns panel first-panel'>
+    <div class='headline'>Respondents by Role<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='content-container'>
+			<canvas id='s-role-chart'></canvas>
+		</div>
+  </div>
+
+  <div class='four columns panel'>
+    <div class='headline'>Visitors' ability to complete a task<a class='what-is-this u-pull-right tipsy-hook' href='#' id='s-complete'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='content-container'>
+			<canvas id='s-complete-chart'></canvas>
+		</div>
+  </div>
+
+  <div class='four columns panel last-panel'>
+    <div class='headline'>{{ dash_obj[13].title }}<a class='what-is-this u-pull-right' href='#' id='s-purpose'><img class='' src='static/images/question_bk.png'></a></div>
+
+    <div class='content-container'>
+			<canvas id='s-purpose-chart'></canvas>
+		</div>
+
+  </div>
+
+  <div class='four columns panel first-panel'>
+    <div class='headline'>Satisfaction by Language<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-ratings-lang'><img class='' src='static/images/question_bk.png'></a></div>
+
+    <li id='rate-en' class='invisible'>{{ dash_obj[14].data.en }}</li><br />
+    <li id='rate-es' class='invisible'>{{ dash_obj[14].data.es }}</li><br />
+
+    <div class='content-container'>
+			<div id='s-lang-rate-en'>English:<br> </div><br>
+			<div id='s-lang-rate-es'>Spanish:<br> </div>
+		</div>
+
+  </div>
+
+  <div class='four columns panel'>
+  	 <div class='headline'>Satisfaction by Purpose<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-ratings-purpose'><img class='' src='static/images/question_bk.png'></a></div>
+
+		  <li id='rate-permit' class='invisible'>{{ dash_obj[14].data.p1 }}</li>
+      <li id='rate-inspect' class='invisible'>{{ dash_obj[14].data.p2 }}</li>
+      <li id='rate-review' class='invisible'>{{ dash_obj[14].data.p3 }}</li>
+      <li id='rate-liens' class='invisible'>{{ dash_obj[14].data.p4 }}</li>
+      <li id='rate-cu' class='invisible'>{{ dash_obj[14].data.p5 }}</li>
+
+      <div class='content-container'>
+
+	      <div class='six columns'>
+					<div id='s-purpose-rate-permit'>Apply for a Permit: <br></div><br>
+					<div id='s-purpose-rate-inspect'>Meet w/ Inspector: <br></div><br>
+					<div id='s-purpose-rate-review'>Meet w/ Plan Reviewer: <br></div>
+	      </div>
+	      <div class='six columns'>
+					<div id='s-purpose-rate-liens'>Violations/Liens: <br></div><br>
+					<div id='s-purpose-rate-cu'>CU/CO: <br></div>
+	      </div>
+
 			</div>
 
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
-		</div>
+  </div>
 
+  <div class='four columns panel last-panel'>
+	  	 <div class='headline'>Satisfaction by Role<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-ratings-role'><img class='' src='static/images/question_bk.png'></a></div>
+
+			<div class='content-container'>
+
+				<div class='six columns'>
+
+					<div id='s-role-rate-permit'>Contractor: </br></div><br />
+					<div id='s-role-rate-inspect'>Architect: <br></div><br />
+					<div id='s-role-rate-review'>Permit Consultant: <br></div>
+
+				</div>
+
+				<div class='six columns'>
+
+					<div id='s-role-rate-lien'>Homeowner: <br></div><br />
+					<div id='s-role-rate-cu'>Business Owner: <br></div>
+
+				</div>
+
+			</div>
+
+			<li id='role-rate-permit' class='invisible'>{{ dash_obj[14].data.r1 }}</li>
+      <li id='role-rate-inspect' class='invisible'>{{ dash_obj[14].data.r2 }}</li>
+      <li id='role-rate-review' class='invisible'>{{ dash_obj[14].data.r3 }}</li>
+      <li id='role-rate-lien' class='invisible'>{{ dash_obj[14].data.r4 }}</li>
+      <li id='role-rate-cu' class='invisible'>{{ dash_obj[14].data.r5 }}</li>
+
+  </div>
 
 </section> <!-- close row -->
 
@@ -74,7 +163,7 @@
 
 	<div class='twelve columns panel first-panel'>
 
-			<div class='headline'>Permits opened per month</div>
+			<div class='headline'>Master building permits opened per month<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-monthly'><img class='' src='static/images/question_bk.png'></a></div>
 
 			<div class='content-container'>
 				<canvas id='openPermits'></canvas>
@@ -95,7 +184,7 @@
 	</div>
 
 	<div class='twelve columns'>
-
+<!--
     <div class='four columns panel first-panel'>
       <div class='headline'>{{ dash_obj[6].title }}</div>
       <div class='content-container'>
@@ -125,17 +214,18 @@
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
+-->
 
-    <div class='four columns panel first-panel'>
-      <div class='headline'>{{ dash_obj[9].title }}</div>
+    <div class='eight columns panel first-panel'>
+      <div class='headline'>{{ dash_obj[9].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-type'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container'>
          <canvas id='permitTypeChart'>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 
-    <div class='four columns panel'>
-      <div class='headline'>{{ dash_obj[11].title }}</div>
+    <div class='four columns panel last-panel'>
+      <div class='headline'>{{ dash_obj[11].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a></div>
       <div class='content-container'>
         <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
         <p>Versus the same period a year ago:
@@ -159,7 +249,7 @@
 
 	<div class='row twelve columns panel'>
 
-		<div class='headline'>Violations per month</div>
+		<div class='headline'>Complaints &amp; violations cases opened, per month<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-monthly'><img class='' src='static/images/question_bk.png'></a></div>
 		<div class='content-container'>
 			<canvas id='violations'></canvas>
 		</div>
@@ -169,28 +259,18 @@
 
 	<div class='row twelve columns'>
 
-		<div class='four columns panel first-panel double-height'>
+		<div class='six columns panel first-panel double-height'>
 
-			<div class='headline'>Violation Locations: Closed Violations</div>
+			<div class='headline'>Violations by location, last 30 days<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-closed'><img class='' src='static/images/question_bk.png'></a></div>
 			<div class='content-container'>
 				<div id='leaflet'></div>
 			</div>
 			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 		</div>
 
-		<div class='four columns panel double-height'>
+		<div class='six columns panel last-panel double-height'>
 
-			<div class='headline'>Violation Locations: Locked Violations</div>
-
-			<div class='content-container'>
-				<div id='leaflet-open'></div>
-			</div>
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
-		</div>
-
-		<div class='four columns panel last-panel double-height'>
-
-			<div class='headline'>Violation Locations: Locations with Liens</div>
+			<div class='headline'>Violations by location, previous month<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-liens'><img class='' src='static/images/question_bk.png'></a></div>
 			<div class='content-container'>
 				<div id='leaflet-lein'></div>
 			</div>
@@ -201,7 +281,7 @@
 
 	<div class='row twelve columns panel double-height'>
 
-			<div class='headline'>Top 20 Violations by Type</div>
+			<div class='headline'>Top 20 Violations by Type, to date in 2015<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-type'><img class='' src='static/images/question_bk.png'></a></div>
 			<div class='content-container'>
 				<canvas id='viotype'></canvas>
 			</div>
@@ -216,9 +296,9 @@
 
     <div class='four columns panel{% if lastpanel==True %} last-panel{% endif %}'>
 
-      <div class='headline'>{{ title }}</div>
-      <div class='content-container vertical-center-35'>
+      <div class='headline'>{{ title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
 
+      <div class='content-container vertical-center-35'>
         <p class='huge bold'>{{ val }} days</p>
         <p>Versus previous 30 days:
           {% if yoy > 0 %}
@@ -229,6 +309,7 @@
           {{ '%0.2f'| format(yoy|float) }}%
           </span>
         </p>
+
       </div>
       <p class='hidden details invisible-button'><a href=#>View Details</a></p>
     </div>

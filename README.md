@@ -20,7 +20,7 @@ If you're not used to it see [VIM Adventures](http://vim-adventures.com/), becau
 #### Environmental variables
 
 * `DATABASE_URL=[db connection string]` — My local example is `postgresql://localhost/feedback_dev`
-* `APP_SETTINGS=[class name provided by config variable]` — I use `config.StagingConfig` for staging; for developer environments, see below
+* `CONFIG=[class name provided by config variable]` — I use `feedback.settings.DevelopmentConfig` for staging; for developer environments, see below
 
 #### Project setup
 
@@ -30,6 +30,8 @@ If you're not used to it see [VIM Adventures](http://vim-adventures.com/), becau
 (kudos go to [Team Pittsburgh](https://github.com/codeforamerica/pittsburgh-purchasing-suite))
 
 * After installing Compass, run `compass watch` inside your Compass directory, so that Compass will automatically compile your .scss files into .css.
+
+* This repo uses Google Sheets as an information source for the 'what is this' UI on the dashboard. Tabletop.js is included in the repo, but you still need to publish your Sheet to web and replace the URL found in `dashboard.js` to enable this functionality.
 
 ```
 # clone the repo
@@ -72,7 +74,8 @@ vi $VIRTUAL_ENV/bin/postactivate
 * Insert the following into your postactivate file:
 
 ```
-export APP_SETTINGS="config.DevelopmentConfig"
+export ADMIN_EMAIL='youremail@someplace.net'
+export CONFIG="feedback.settings.DevelopmentConfig"
 export DATABASE_URL="postgresql://localhost/feedback_dev"
 ```
 
@@ -96,6 +99,12 @@ Deployment is typically on Heroku. Follow [this tutorial](https://devcenter.hero
 #### Environmental variables
 
 #### Project setup
+
+**email**:
+
+The app uses [Flask-Mail](https://pythonhosted.org/Flask-Mail/) to handle sending emails. This includes emails about subscriptions to various contracts, notifications about contracts being followed, and others. In production, the app relies on [Sendgrid](https://sendgrid.com/), but in development, it uses the [Gmail SMTP server](https://support.google.com/a/answer/176600?hl=en). If you don't need to send emails, you can disable emails by setting `MAIL_SUPPRESS_SEND = True` in the `DevConfig` configuration object.
+
+If you would like to send email over the Gmail SMTP server, you will need to add two environmental variables: `MAIL_USERNAME` and `MAIL_PASSWORD`.
 
 **login and user accounts**
 
