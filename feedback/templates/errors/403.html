@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block page_title %}Forbidden{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="text-center">
+        <h1>403</h1>
+        <p>Sorry, you don't have access to that page.</p>
+        <p>Want to <a href="{{ url_for('dashboard.home') }}">go home</a> instead?</p>
+    </div>
+</div>
+{% endblock %}
