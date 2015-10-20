@@ -11,7 +11,7 @@ except ImportError:
 
 from flask import (
     Blueprint, request, render_template, flash,
-    current_app, redirect, abort
+    current_app, abort
 )
 
 from flask.ext.login import current_user, login_user, logout_user
@@ -38,7 +38,7 @@ def logout():
         return 'OK'
     else:
         flash('You are logged out.', 'info')
-        return redirect('user/logout.html')
+        return render_template('user/logout.html')
 
 
 @blueprint.route('/auth', methods=['POST'])
@@ -71,18 +71,21 @@ def auth():
         login_user(user)
         flash('Logged in successfully!', 'alert-success')
 
-        current_app.logger.debug('LOGIN: User {} logged in successfully'.format(user.email))
+        current_app.logger.debug(
+            'LOGIN: User {} logged in successfully'.format(user.email))
         return next_url if next_url else '/'
 
     elif domain in current_app.config.get('CITY_DOMAINS'):
         user = User.create(email=email)
         login_user(user)
 
-        current_app.logger.debug('NEWUSER: New User {} successfully created'.format(user.email))
+        current_app.logger.debug(
+            'NEWUSER: New User {} successfully created'.format(user.email))
         return '/'
 
     else:
-        current_app.logger.debug('NOTINDB: User {} not in DB -- aborting!'.format(email))
+        current_app.logger.debug(
+            'NOTINDB: User {} not in DB -- aborting!'.format(email))
         abort(403)
 
 
