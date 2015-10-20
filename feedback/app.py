@@ -26,7 +26,6 @@ from feedback import (
 
 login_manager.login_view = "public.login"
 
-
 def create_app(ConfigObject):
     """An application factory, as explained here:
         http://flask.pocoo.org/docs/patterns/appfactories/
