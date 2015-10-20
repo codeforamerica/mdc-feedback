@@ -13,6 +13,9 @@
   <meta name="description" content="{% block meta_description %}{% endblock %}">
   <meta name="author" content="{% block meta_author %}{% endblock %}">
 
+  <!-- Needed to not break persona. https://developer.mozilla.org/en-US/Persona/Quick_Setup -->
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
   <meta name="viewport" content="width=device-width">
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
@@ -112,7 +115,6 @@
 <!-- FIXME: move jquery into a bower and use grunt -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script src="https://login.persona.org/include.js"></script>
  <script src="/static/js/modernizr-custom.js"></script><!-- -->
 
 <!-- JS blocking -->
@@ -189,9 +191,8 @@
 {{ json_obj.violations_per_month_json|safe }}
 </script>
 {% endif %}
-
+<script src="https://login.persona.org/include.js"></script>
 <script type='text/javascript'>
-
 {% if current_user.is_anonymous() or not current_user %}
 var currentUser = null;
 {% else %}
@@ -209,15 +210,11 @@ navigator.id.watch({
       url: '{{ url_for("public.auth", next=thispage()) }}', // This is a URL on your website.
       data: {assertion: assertion},
       success: function(res, status, xhr) {
-        if (res.split('thispage')[0]) {
-          window.location.href = res.split('thispage')[0];
-        } else {
-          window.location.reload();
-        }
-
+        window.location.href = res.split('thispage')[0];
       },
       error: function(xhr, status, err) {
         alert("Login failure: " + err);
+        navigator.id.logout();
       }
     });
   },
