@@ -1,12 +1,11 @@
 from flask import render_template
 
 from feedback.app import create_app
-from feedback.settings import DevelopmentConfig
 from feedback.utils import send_email
 
 
 def run():
-    app = create_app(config_object=DevelopmentConfig)
+    app = create_app()
     with app.app_context():
         send_email(
             'Test E-mail',

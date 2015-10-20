@@ -26,13 +26,21 @@ from feedback import (
 
 login_manager.login_view = "public.login"
 
-def create_app(ConfigObject):
+
+def create_app():
     """An application factory, as explained here:
         http://flask.pocoo.org/docs/patterns/appfactories/
     :param config: The configuration object to use.
     """
+    #print os.environ
+    config_string = os.environ['CONFIG']
+    if isinstance(config_string, basestring):
+        config = import_string(config_string)
+    else:
+        config = config_string
+
     app = Flask(__name__)
-    app.config.from_object(ConfigObject)
+    app.config.from_object(config)
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
@@ -42,6 +50,8 @@ def create_app(ConfigObject):
     def before_first_request():
         config_string = os.environ['CONFIG']
         register_logging(app, config_string)
+
+    # import pdb; pdb.set_trace()
 
     return app
 

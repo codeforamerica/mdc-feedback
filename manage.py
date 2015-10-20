@@ -10,11 +10,7 @@ from feedback.app import create_app
 from feedback.database import db
 from feedback.settings import DevelopmentConfig, ProductionConfig, StagingConfig, TestingConfig
 
-if os.environ.get("CPCO_ENV") == 'prod':
-    app = create_app(ProductionConfig)
-else:
-    app = create_app(DevelopmentConfig)
-
+app = create_app()
 HERE = os.path.abspath(os.path.dirname(__file__))
 TEST_PATH = os.path.join(HERE, 'tests')
 

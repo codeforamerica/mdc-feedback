@@ -20,7 +20,7 @@ If you're not used to it see [VIM Adventures](http://vim-adventures.com/), becau
 #### Environmental variables
 
 * `DATABASE_URL=[db connection string]` — My local example is `postgresql://localhost/feedback_dev`
-* `CONFIG=[class name provided by config variable]` — I use `config.StagingConfig` for staging; for developer environments, see below
+* `CONFIG=[class name provided by config variable]` — I use `feedback.settings.DevelopmentConfig` for staging; for developer environments, see below
 
 #### Project setup
 
@@ -75,7 +75,7 @@ vi $VIRTUAL_ENV/bin/postactivate
 
 ```
 export ADMIN_EMAIL='youremail@someplace.net'
-export CONFIG="config.DevelopmentConfig"
+export CONFIG="feedback.settings.DevelopmentConfig"
 export DATABASE_URL="postgresql://localhost/feedback_dev"
 ```
 
