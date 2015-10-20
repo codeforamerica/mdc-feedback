@@ -11,15 +11,12 @@ except ImportError:
 
 from flask import (
     Blueprint, request, render_template, flash,
-    current_app, abort, redirect
+    current_app, abort
 )
 
-from flask.ext.login import current_user, login_user, login_required, logout_user
+from flask.ext.login import current_user, login_user, logout_user
 from feedback.extensions import login_manager
 from feedback.user.models import User
-# from feedback.public.forms import LoginForm
-# from feedback.user.forms import RegisterForm
-from feedback.utils import flash_errors
 
 blueprint = Blueprint('public', __name__, static_folder="../static")
 
@@ -35,14 +32,13 @@ def login():
 
 
 @blueprint.route('/logout', methods=['GET', 'POST'])
-#@login_required
 def logout():
     logout_user()
     if request.args.get('persona', None):
         return 'OK'
     else:
         flash('You are logged out.', 'info')
-        return render_template('public/home.html')
+        return render_template('user/logout.html')
 
 
 @blueprint.route('/auth', methods=['POST'])
@@ -58,12 +54,12 @@ def auth():
     req = urllib2.Request('https://verifier.login.persona.org/verify', data)
 
     response = json.loads(urllib2.urlopen(req).read())
-    current_app.logger.debug('LOGIN: status from persona: {}'.format(response))
+    current_app.logger.debug(
+        'LOGIN: status from persona: {}'.format(response))
     if response.get('status') != 'okay':
-        current_app.logger.debug('REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
-        # abort(403)
-        # FIXME - we think abort is FUBARing staging
-        return '/login-error'
+        current_app.logger.debug(
+            'REJECTEDUSER: User login rejected from persona. Messages: {}'.format(response))
+        abort(403)
 
     next_url = request.args.get('next', None)
     email = response.get('email')
@@ -75,20 +71,22 @@ def auth():
         login_user(user)
         flash('Logged in successfully!', 'alert-success')
 
-        current_app.logger.debug('LOGIN: User {} logged in successfully'.format(user.email))
+        current_app.logger.debug(
+            'LOGIN: User {} logged in successfully'.format(user.email))
         return next_url if next_url else '/'
 
-    # FIXME - originally domain == current_app.config.get('CITY_DOMAIN'):
-    elif domain is not None:
+    elif domain in current_app.config.get('CITY_DOMAINS'):
         user = User.create(email=email)
         login_user(user)
 
-        current_app.logger.debug('NEWUSER: New User {} successfully created'.format(user.email))
-        return '/users/profile'
+        current_app.logger.debug(
+            'NEWUSER: New User {} successfully created'.format(user.email))
+        return '/'
 
     else:
-        current_app.logger.debug('NOTINDB: User {} not in DB -- aborting!'.format(email))
-        return '/users/profile'
+        current_app.logger.debug(
+            'NOTINDB: User {} not in DB -- aborting!'.format(email))
+        abort(403)
 
 
 @blueprint.route("/admin/",  methods=['GET'])
@@ -109,3 +107,13 @@ def save_survey():
 @blueprint.route("/manage-users/",  methods=['GET'])
 def manage_users():
     return render_template("public/manage-users.html", title='Manage Users')
+
+
+@blueprint.route("/edit-public/",  methods=['GET'])
+def edit_public():
+    return render_template("public/edit-public.html", title='Dashboard Editor - Public')
+
+
+@blueprint.route("/edit-internal/",  methods=['GET'])
+def edit_internal():
+    return render_template("public/edit-internal.html", title='Dashboard Editor - Internal')

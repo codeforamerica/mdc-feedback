@@ -36,7 +36,7 @@ class StagingConfig(Config):
     ENV = 'stage'
     DEVELOPMENT = True
     DEBUG = True
-    BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://mdc-feedback-stage.heroku.com')
+    BROWSERID_URL = os_env.get('BROWSERID_URL', 'https://mdc-feedback-stage.herokuapp.com/')
     MAIL_USERNAME = os_env.get('SENDGRID_USERNAME')
     MAIL_PASSWORD = os_env.get('SENDGRID_PASSWORD')
     MAIL_SERVER = 'smtp.sendgrid.net'
