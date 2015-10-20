@@ -553,10 +553,14 @@ $(document).ready(function () {
   //set the data up for Charts.js
   for(i = 0; i < permitTypes.data.length; i+=1) {
 
-    cleanPermitLabels[i] = humanNames(permitTypes.data[i].permit_type);
-    cleanPermitData[i] = permitTypes.data[i].count;
-    //console.log(data[i].issue_type, i);
+    if(permitTypes.data[i].permit_type != 'CCUT') {
+      
+      cleanPermitLabels.push(humanNames(permitTypes.data[i].permit_type));
+      cleanPermitData.push(permitTypes.data[i].count);
+      //console.log(data[i].issue_type, i);
 
+    }
+    
   }
 
   var vdata2 = {
