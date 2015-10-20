@@ -40,27 +40,7 @@
 	{% if active_page == 'Dashboard' %}
 
 			{% set navigation_bar = [
-				('/admin/', 'Admin Panel'),
-				('/create-survey/', 'Survey Builder'),
 				('/users/manage', 'Manage Users')
-			] -%}
-
-		{% elif active_page == 'Survey Builder' or active_page == 'Manage Users' %}
-
-			{% set navigation_bar = [
-
-				('/', 'Dashboard'),
-				('/admin/', 'Admin Panel')
-
-			] -%}
-
-		{% elif active_page == 'Admin' %}
-
-			{% set navigation_bar = [
-
-				('/', 'Dashboard'),
-				('/create-survey/', 'Survey Builder')
-
 			] -%}
 
 		{% else %}
@@ -137,12 +117,11 @@
 
 <!-- JS blocking -->
 
-	{% if active_page == 'Dashboard' or active_page == 'Dashboard Editor - Public' or active_page == 'Dashboard Editor - Internal' %}
+	{% if active_page == 'Dashboard' %}
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
 		<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
 		<script type="text/javascript" src="/static/js/jqcloud.min.js"></script>
 		<script type="text/javascript" src="/static/js/jquery.tipsy.js"></script>
@@ -155,19 +134,11 @@
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
 		<script type="text/javascript" src="/static/js/violations-data.js"></script>
 
-	{% elif active_page == 'Survey Builder' %}
-
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
-		<script type="text/javascript" src="/static/js/survey-builder.js"></script>
-
+	
 	{% elif active_page == 'Manage Users' %}
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/manage-users.js"></script>
-
-	{% elif active_page == 'Admin' %}
-
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 
 	{% endif %}
 
@@ -213,6 +184,9 @@
 </script>
 <script type="application/json" id="violations_type_json">
 {{ json_obj.violations_type_json|safe }}
+</script>
+<script type="application/json" id="violations_per_month_json">
+{{ json_obj.violations_per_month_json|safe }}
 </script>
 {% endif %}
 

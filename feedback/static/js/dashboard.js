@@ -212,6 +212,8 @@ $(document).ready(function () {
       respondentsByRole,
       respondentsByRoleChart;
 
+      
+      
   for(i = 0; i < sctxdata.data.length; i+=1) {
 
     switch(parseInt(sctxdata.data[i][0], 10)) {
@@ -294,37 +296,44 @@ $(document).ready(function () {
   permit = {label:'Apply for a permit', count:0},
   reviewer = {label:'Meet with a plan reviewer', count:0},
   cu = {label:'Obtain a certificate of use/occupancy', count:0},
-  sorter2 = [violation, inspector, permit, reviewer, cu],
+  other = {label:'Other', count:0},
+  sorter2 = [violation, inspector, permit, reviewer, cu, other],
 
   sptxseries = [],
   sptxlabels = [],
   surveysByPurpose,
   surveysByPurposeChart;
 
-  for(i = 0; i < sptxdata.data.length;   i+=1) {
+  var test = 0; 
+  
+  for(i = 0; i < sptxdata.data.length; i+=1) {
 
     switch(parseInt(sptxdata.data[i][0], 10)) {
 
       case 1:
-        contractors.count = sptxdata.data[i][1];
+        permit.count += sptxdata.data[i][1];
         break;
       case 2:
-        inspector.count = sptxdata.data[i][1];
+        inspector.count += sptxdata.data[i][1];
         break;
       case 3:
-        reviewer.count = sptxdata.data[i][1];
+        reviewer.count += sptxdata.data[i][1];
         break;
       case 4:
-        violation.count = sptxdata.data[i][1];
+        violation.count += sptxdata.data[i][1];
         break;
       case 5:
-        cu.count = sptxdata.data[i][1];
+        cu.count += sptxdata.data[i][1];
         break;
+      case 6:
+        other.count += sptxdata.data[i][1];
+      default:
+        other.count += 1;
 
     }
 
   }
-
+  
   for(i = 0; i < sorter2.length; i+=1) {
     sptxseries[i] = sorter2[i].count;
     sptxlabels[i] = sorter2[i].label;
@@ -553,12 +562,12 @@ $(document).ready(function () {
   var vdata2 = {
     labels: cleanPermitLabels,
     datasets: [
-        {
-            label: "Permits by Type",
-            fillColor: t_purple_1,
-            strokeColor: purple_1,
-            data: cleanPermitData
-        }
+      {
+        label: "Permits by Type",
+        fillColor: t_purple_1,
+        strokeColor: purple_1,
+        data: cleanPermitData
+      }
     ]
   };
 
@@ -570,7 +579,7 @@ $(document).ready(function () {
   //25.7667° N, 80.2000° W
   //{lat: 25.626668871238568, lng: -80.44867515563963}
 
-  var map = L.map('leaflet').setView([25.626668871238568, -80.44867515563963], 9);
+  var map = L.map('leaflet').setView([25.626668871238568, -80.44867515563963], 10);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
@@ -579,16 +588,7 @@ $(document).ready(function () {
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
     }).addTo(map);
 
-  var map2 = L.map('leaflet-open').setView([25.626668871238568, -80.44867515563963], 9);
-    L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    minZoom: 9,
-    id: 'phiden.e64a2341',
-    accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
-    }).addTo(map2);
-
-  var map3 = L.map('leaflet-lein').setView([25.626668871238568, -80.44867515563963], 9);
+  var map3 = L.map('leaflet-lein').setView([25.626668871238568, -80.44867515563963], 10);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
@@ -611,7 +611,7 @@ $(document).ready(function () {
         umsa = [],
         i,
         myStyle = {
-          color: blue,
+          color: green,
           weight: 1,
           opacity: 0.65
         },
@@ -641,8 +641,6 @@ $(document).ready(function () {
 
     L.geoJson(muni, {style:umsaStyle}).addTo(map);
     L.geoJson(umsa, {style:myStyle}).addTo(map);
-    L.geoJson(muni, {style:umsaStyle}).addTo(map2);
-    L.geoJson(umsa, {style:myStyle}).addTo(map2);
     L.geoJson(muni, {style:umsaStyle}).addTo(map3);
     L.geoJson(umsa, {style:myStyle}).addTo(map3);
 
@@ -653,46 +651,65 @@ $(document).ready(function () {
   function buildDataMaps(){
 
     var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
-        vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data);
+
+        vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data),
+        vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data);
+        
+        //violations_per_month_json
+        
 
     for(i = 0; i < vioLocationsData.length; i+=1) {
 
-      var lat = vioLocationsData[i].location.latitude,
-          lon = vioLocationsData[i].location.longitude,
-          openClosed = vioLocationsData[i].ticket_status,
-          fill = t_yellow,
-          color = yellow,
-          title = vioLocationsData[i].issue_type;
-
-      if(openClosed == 'LOCKED') {
-        var marker = L.circleMarker([lat, lon], {
-          radius: 5,
-          fillColor: t_green,
-          color: green,
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8
-        }).addTo(map2);
-
-        marker.bindPopup(title);
-        marker.on('mouseover', function () {
-          this.openPopup();
-        });
-        marker.on('mouseout', function () {
-          this.closePopup();
-        });
-      }
-
-      if(openClosed == "LIEN") {
+      if(vioLocationsData[i].location.latitude != undefined) {
+        
+        var lat = vioLocationsData[i].location.latitude,
+            lon = vioLocationsData[i].location.longitude,
+            openClosed = vioLocationsData[i].ticket_status,
+            fill = t_yellow,
+            color = yellow,
+            title = vioLocationsData[i].issue_type;
+  
         var marker2 = L.circleMarker([lat, lon], {
+            radius: 5,
+            fillColor: fill,
+            color: color,
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+          }).addTo(map);
+  
+          marker2.bindPopup(title);
+          marker2.on('mouseover', function() {
+            this.openPopup();
+          });
+          marker2.on('mouseout', function() {
+            this.closePopup();
+          });
+      }
+    }
+    
+    for(i = 0; i < vioMonthlyData.length; i += 1) {
+      
+      //console.log(vioMonthlyData[i].location.latitude);
+      
+      if(vioMonthlyData[i].location.latitude != undefined) {
+        
+        lat = vioMonthlyData[i].location.latitude,
+        lon = vioMonthlyData[i].location.longitude,
+        openClosed = vioMonthlyData[i].ticket_status,
+        fill = t_yellow,
+        color = yellow,
+        title = vioMonthlyData[i].issue_type;
+        
+        marker2 = L.circleMarker([lat, lon], {
           radius: 5,
-          fillColor: t_purple,
-          color: purple,
+          fillColor: fill,
+          color: color,
           weight: 1,
           opacity: 1,
           fillOpacity: 0.8
         }).addTo(map3);
-
+  
         marker2.bindPopup(title);
         marker2.on('mouseover', function() {
           this.openPopup();
@@ -700,31 +717,12 @@ $(document).ready(function () {
         marker2.on('mouseout', function() {
           this.closePopup();
         });
+        
       }
-
-      if(openClosed == "CLOSED") {
-
-        var marker3 = L.circleMarker([lat, lon], {
-          radius: 5,
-          fillColor: fill,
-          color: color,
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8
-        }).addTo(map);
-
-        marker3.bindPopup(title);
-        marker3.on('mouseover', function() {
-          this.openPopup();
-        });
-        marker3.on('mouseout', function() {
-          this.closePopup();
-        });
-
-      }
-
+      
+      
     }
-
+    
     if(vioTypeData === '') {
 
       $('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
@@ -776,7 +774,6 @@ $(document).ready(function () {
     }
 
   }
-
 
   Array.prototype.sortOn = function(){
     var dup = this.slice();
