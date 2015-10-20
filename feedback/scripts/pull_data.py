@@ -277,7 +277,7 @@ def load_data():
 
 
 def run():
-    app = create_app(config_object=DevelopmentConfig)
+    app = create_app()
     with app.app_context():
         load_data()
 
