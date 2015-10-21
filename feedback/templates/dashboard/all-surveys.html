@@ -26,7 +26,7 @@
         {% for item in resp_obj %}
         <tr>
           <td><a href="{{ url_for('dashboard.survey_detail', id=item.id) }}">{{ item.id }}</a></td>
-          <td>{{ item.date_submitted }}</td>
+          <td>{{ item.date_submitted.strftime('%-d %b %Y %-I:%M%p') }}</td>
           <td>{{ item.method }}</td>
           <td>{{ item.lang }}</td>
           <td>{{ item.rating }}</td>
