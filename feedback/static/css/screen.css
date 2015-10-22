@@ -573,7 +573,7 @@ canvas {
 
 /* line 633, ../sass/screen.scss */
 td {
-  max-width: 250px;
+  max-width: 200px;
   border-bottom: none;
   vertical-align: top;
 }

@@ -5,22 +5,24 @@
 <section class='row' id='details-view'>
 
   <h3>All Survey Responses</h3>
+  <p><i>Pro-tip: Click the table headers to sort each column.</i></p>
   
   <div class='twelve columns' id='survey-details'>
      
-    <table class='sticky-table'>
+    <table class='sticky-table sortable'>
       
       <thead class='sticky-thead'>
         
         <tr>
-          <th colspan="4">Date</th>
-          <th colspan="2">Method</th>
-          <th colspan="2">Language</th>
-          <th colspan="3">Rating</th>
-          <th colspan="2">Role</th>
-          <th colspan="1">Route</th>
-          <th colspan="2">Add'l Comments</th>
-          <th colspan="2">Followup?</th>
+          <th>Date</th>
+          <th>Method</th>
+          <th>Language</th>
+          <th>Rating</th>
+          <th>Role</th>
+          <th>Route</th>
+          <th>Add'l Comments</th>
+          <th>Followup?</th>
+          <th>Survey ID</th>
         </tr>
         
       </thead>
@@ -28,22 +30,19 @@
       <tbody>
         {% for item in resp_obj %}
         <tr class='table-top-row'>
-          <td colspan="4" class='pretty-date hidden'>{{ item.date_submitted }}</td>
-          <td colspan="2"  class='method hidden'>{{ item.method }}</td>
-          <td colspan="2"  class='language hidden'>{{ item.lang }}</td>
-          <td colspan="3" >{{ item.rating }} (out of 7)</td>
-          <td colspan="2" >{{ item.role_en }}</td>
-          <td colspan="1" >{{ item.route_en }}</td>
-          <td colspan="2" >{{ item.more_comments }}</td>
-          <td colspan="2" class='follow-up'>{{ 'Yes' if item.follow_up else 'No' }}</td>
+          <td class='pretty-date hidden'>{{ item.date_submitted }}</td>
+          <td class='method hidden'>{{ item.method }}</td>
+          <td class='language hidden'>{{ item.lang }}</td>
+          <td>{{ item.rating }}</td>
+          <td>{{ item.role_en }}</td>
+          <td>{{ item.route_en }}</td>
+          <td>{{ item.more_comments }}</td>
+          <td class='follow-up'>{{ 'Yes' if item.follow_up else 'No' }}</td>
+          <td class='table-button'>
+            <a href="{{ url_for('dashboard.survey_detail', id=item.id) }}">#{{ item.id }} &raquo;</a>
+          </td>
         </tr>
         
-        <tr class='table-button'>
-          <td colspan="17">
-            <a href="{{ url_for('dashboard.survey_detail', id=item.id) }}">See the full response for Survey ID {{ item.id }} &raquo;</a>
-          </td>
-          <td></td>
-        </tr>
         {% endfor %}
       </tbody>
     </table>

@@ -227,4 +227,6 @@ $(document).ready(function () {
     
     $('table').stickyTableHeaders();
     
+    
+     
 }); //close ready
