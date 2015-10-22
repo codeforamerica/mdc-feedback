@@ -7,9 +7,43 @@
 
     <section id='user-list' class='row twelve columns'>
 
-      <h1>Manage your users.</h1>
+      <h3>The following people are able to access the internal dashboard:</h3>
+      
+      <ul class='user-list'>
+        
+        <li>Donna Romito | Department, title | <a href='mailto:'>e-mail@email.com</a> <a href=# class='user-delete button'>Remove User</a></li>
+        <li>Christa Erml-Martinez | Department, title | <a href='mailto:'>e-mail@email.com</a> <a href=# class='user-delete button'>Remove User</a></li>
+        <li>Michael Sarasti | Department, title | <a href='mailto:'>e-mail@email.com</a> <a href=# class='user-delete button'>Remove User</a></li>
+        
+      </ul>
 
+      <a href=# id='add-user' class='button'>Add a new user</a>
+      <p class='alert-alert-warning'>Warning: Users given access can also add and delete other users.</p>
     </section>
+    
+    <section id='add-user-form' class='row twelve columns hidden'>
+			
+			<h3>Add a new user.</h3>
+			
+			<div class='row'>
+				<h4>What's your user's name?</h4>
+				<input class='six columns' type='text' placeholder="First and last name">
+			</div>
+			
+			<div class='row'>
+				<h4>What's your user's e-mail address?</h4>
+				<input class='six columns' type="email" placeholder='name@miamidade.gov'>
+			</div>
+			
+			<div class='row'>
+				<h4>What's your user's department and title?</h4>
+				<input class='six columns' type="email" placeholder='RER, Director'>
+			</div>
+			
+						
+			<span class='button' id='submit-new-user'>Create new user</span>
+			
+		</section>
 
   </div><!--!/#container -->
 
