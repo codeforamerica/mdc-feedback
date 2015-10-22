@@ -21,7 +21,7 @@ from feedback.surveys.models import Survey
 
 from feedback.dashboard.permits import (
     api_health, get_lifespan,
-    get_permit_types,
+    get_permit_types, trade,
     get_master_permit_counts,
     dump_socrata_api
 )
@@ -116,8 +116,14 @@ def home():
             "data": get_lifespan('h')
         },
         {
-            "title": "(UNUSED) Avg Cost of an Open Commercial Permit",
-            "data": 0
+            "title": "Same Day Trade Permits",
+            "data": {
+                "PLUM": trade(30, 'PLUM'),
+                "BLDG": trade(30, 'BLDG'),
+                "ELEC": trade(30, 'ELEC'),
+                "FIRE": trade(30, 'FIRE'),
+                "ZIPS": trade(30, 'ZIPS')
+            }
         },
         {
             "title": "(UNUSED) Avg Cost of an Open Residential Permit",
@@ -182,6 +188,7 @@ def home():
     json_obj['app_answers'] = pic_schema.dump(survey_table).data
 
     today = datetime.date.today()
+
     return render_template(
         "public/home.html",
         api=api_health(),

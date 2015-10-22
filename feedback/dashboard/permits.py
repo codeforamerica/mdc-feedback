@@ -3,17 +3,21 @@
 import math
 import datetime
 import requests
+import requests_cache
 import numpy as np
 
-# from flask import current_app
 from feedback.extensions import cache
 from dateutil.relativedelta import *
+
+
+requests_cache.install_cache()
 
 API_URL = 'https://opendata.miamidade.gov/resource/vvjq-pfmc.json'
 VIOLATIONS_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json'
 DATA311_URL = 'https://opendata.miamidade.gov/resource/dj6j-qg5t.json'
 
-PERMITS_API_URL = API_URL + '?%24select=date_trunc_ym(permit_issued_date)%20AS%20month,count(*)%20AS%20total&%24group=month&%24order=month%20desc&%24limit=12&%24where=starts_with(process_number,%27C%27)&master_permit_number=0&permit_type=%27BLDG%27&%24offset=1'
+
+PERMITS_API_URL = API_URL + '?%24select=date_trunc_ym(permit_issued_date)%20as%20month,count(*)%20as%20total&%24group=month&%24order=month%20desc&%24limit=12&$where=starts_with(process_number,%27C%27)%20AND%20master_permit_number=0%20AND%20category1%20not%20in(%270092%27,%20%270095%27,%20%270096%27,%20%270103%27,%20%270107%27)%20AND%20permit_type=%27BLDG%27&%24offset=1'
 
 VIOLATIONS_API_URL = VIOLATIONS_URL + '?$select=date_trunc_ym(ticket_created_date_time)%20AS%20month,%20count(*)%20AS%20total&$group=month&$order=month%20desc&$limit=12&$offset=1'
 VIOLATIONS_LOCATIONS_API_URL = VIOLATIONS_URL + '?$where=ticket_created_date_time%20%3E%20%272015-01-01%27'
@@ -111,8 +115,13 @@ def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
         # permit_to_close_array.append((end_date-permit_date).days)
 
     result1 = np.mean(lifespan_array)
+    max_val = np.amax(lifespan_array)
+    min_val = np.amin(lifespan_array)
 
-    return result1 if not math.isnan(result1) else -1
+    if not math.isnan(result1):
+        return result1, max_val, min_val
+    else:
+        return -1, 0, 0
 
 
 @cache.memoize(timeout=86400)
@@ -138,16 +147,37 @@ def get_lifespan(property_type='c'):
     property_type should either be 'r', 'h' or 'c'. Defaults to 'c'.
     Returns an object:
         val = the current lifespace
-        yoy = the year over year increase or decrease (100 to -100)
+        min = the mini
     '''
-    lifespan_now = lifespan_api_call(0, 30, property_type)
-
-    lifespan_then = lifespan_api_call(30, 60, property_type)
-    yoy = ((lifespan_now-lifespan_then)/lifespan_then)*100
+    lifespan_now, max_val, min_val = lifespan_api_call(0, 30, property_type)
 
     return {
         'val': int(lifespan_now),
-        'yoy': yoy
+        'max': max_val,
+        'min': min_val
+    }
+
+
+@cache.memoize(timeout=86400)
+def trade(arg1=30, arg2='PLUM'):
+    days = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
+
+    API = API_URL + '?$select=count(*)%20as%20total&$where=application_date%3C%27' + days + '%27%20AND%20permit_type=%27' + arg2 + '%27'
+    resp = requests.get(API)
+    resp = resp.json()
+    print API, resp
+    total = float(resp[0]['total'])
+
+    API = API_URL + '?$select=count(*)%20as%20total&&$where=application_date%3C%27' + days + '%27%20AND%20application_date=permit_issued_date&permit_type=%27' + arg2 + '%27'
+    resp = requests.get(API)
+    resp = resp.json()
+    print API, resp
+    sameday = float(resp[0]['total'])
+
+    return {
+        'total': total,
+        'sameday': sameday,
+        'percent': (sameday/total)*100
     }
 
 
@@ -176,13 +206,8 @@ def get_master_permit_counts(arg1):
                   (100 to -100)
     '''
     now = api_count_call(0, 30, arg1)
-    then = api_count_call(365, 395, arg1)
-    try:
-        yoy = ((now-then)/then)*100
-    except ZeroDivisionError:
-        yoy = 0
 
     return {
         'val': int(now),
-        'yoy': yoy
+        'yoy': None
     }
