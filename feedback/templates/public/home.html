@@ -174,7 +174,7 @@
 		</div>
 
   <div class='twelve columns'>
-    <div class='four columns panel last-panel'>
+    <div class='four columns panel first-panel'>
       <div class='headline'>
         {{ dash_obj[6].title }}
         <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a>
@@ -190,17 +190,34 @@
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
+    <div class='four columns panel'>
+      <div class='headline'>
+        {{ dash_obj[3].title }}
+        <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a>
+      </div>
+      <div class='content-container'>
+        <p>New commercial construction and additions: {{ dash_obj[3].data.nc.val }} days, {{ dash_obj[3].data.nc.min }} min, {{ dash_obj[3].data.nc.max }} max</p>
+        <p>Renovations, alterations or repairs: {{ dash_obj[3].data.rc.val }} days, {{ dash_obj[3].data.rc.min }} min, {{ dash_obj[3].data.rc.max }} max</p>
+        <p>Signs (Non-Electric): {{ dash_obj[3].data.s.val }} days, {{ dash_obj[3].data.s.min }} min, {{ dash_obj[3].data.s.max }} max</p>
+
+      </div>
+      <p class='details invisible-button'><a href=#>View Details</a></p>
+    </div>
+    <div class='four columns panel last-panel'>
+      <div class='headline'>
+        {{ dash_obj[4].title }}
+        <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a>
+      </div>
+      <div class='content-container'>
+        <p>New residential construction: {{ dash_obj[4].data.nr.val }} days, {{ dash_obj[4].data.nr.min }} min, {{ dash_obj[4].data.nr.max }} max</p>
+        <p>Renovations, alterations or repairs: {{ dash_obj[4].data.rr.val }} days, {{ dash_obj[4].data.rr.min }} min, {{ dash_obj[4].data.rr.max }} max</p>
+        <p>Swimming pools: {{ dash_obj[4].data.p.val }} days, {{ dash_obj[4].data.p.min }} min, {{ dash_obj[4].data.p.max }} max</p>
+        <p>Fences and walls: {{ dash_obj[4].data.f.val }} days, {{ dash_obj[4].data.f.min }} min, {{ dash_obj[4].data.f.max }} max</p>
+        <p>Screen enclosures: {{ dash_obj[4].data.e.val }} days, {{ dash_obj[4].data.e.min }} min, {{ dash_obj[4].data.e.max }} max</p>
+      </div>
+      <p class='details invisible-button'><a href=#>View Details</a></p>
+    </div>
   </div>
-
-	<div class='twelve columns'>
-
-    {{ lifespan_panel(dash_obj[3].title, dash_obj[3].data, false) }}
-
-    {{ lifespan_panel(dash_obj[4].title, dash_obj[4].data, false) }}
-
-    {{ lifespan_panel(dash_obj[5].title, dash_obj[5].data) }}
-
-	</div>
 
 	<div class='twelve columns'>
 

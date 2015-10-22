@@ -104,16 +104,26 @@ def home():
             }
         },
         {
-            "title": "Average time from application date to permit issuance, Commercial Permits, Last 30 Days",
-            "data": get_lifespan('c')
+            "title": "Commercial",
+            "data": {
+                "nc": get_lifespan('nc'),
+                "rc": get_lifespan('rc'),
+                "s":  get_lifespan('s')
+            }
         },
         {
-            "title": "Average time from application date to permit issuance, Residential Permits, Last 30 Days",
-            "data": get_lifespan('r')
+            "title": "Residential",
+            "data": {
+                "nr": get_lifespan('nr'),
+                "rr": get_lifespan('rr'),
+                "p":  get_lifespan('p'),
+                "f":  get_lifespan('f'),
+                "e":  get_lifespan('e')
+            }
         },
         {
             "title": "Average time from application date to permit issuance, Owner/Builder Permits, Last 30 Days",
-            "data": get_lifespan('h')
+            "data": 0
         },
         {
             "title": "Same Day Trade Permits",
