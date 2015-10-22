@@ -22,10 +22,10 @@ VIOLATIONS_BY_TYPE_API_URL = DATA311_URL + '?&case_owner=Regulatory_and_Economic
 '''
 sophia trying to python
 '''
-    
+
 #p_days_30 = (datetime.date.today() - datetime.timedelta(30)).strftime("%Y-%m-%d")
 p_month = datetime.datetime.now() - relativedelta(months=1)
-p_month = p_month.strftime("%Y-%m-01") 
+p_month = p_month.strftime("%Y-%m-01")
 c_month = (datetime.date.today().strftime("%Y-%m-01"))
 
 #print c_month
@@ -33,7 +33,7 @@ c_month = (datetime.date.today().strftime("%Y-%m-01"))
 VIOLATIONS_LAST_30 = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + c_month + '%27&$limit=50000'
 
 VIOLATIONS_PREV_MONTH = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + p_month + '%27&$limit=50000'
-    
+
 def api_health():
     '''
     Run the API to see if its even working.
@@ -66,11 +66,11 @@ def json_to_dateobj(jsondate):
 
 @cache.memoize(timeout=86400)
 def dump_socrata_api(datatype='p'):
-  
+
     ''' For performance issues, have Sophia's AJAX calls
     get called on the server side instead.
     '''
-        
+
     data_table = {
         'p': PERMITS_API_URL,
         'v': VIOLATIONS_API_URL,
@@ -80,7 +80,7 @@ def dump_socrata_api(datatype='p'):
     }
     response = requests.get(data_table.get(datatype))
     return response.json()
-    
+
 
 #@cache.memoize(timeout=86400)
 def lifespan_api_call(arg1=0, arg2=30, property_type='c'):
@@ -178,7 +178,7 @@ def get_permit_types(arg1=0, arg2=30):
     days_0 = (datetime.date.today() - datetime.timedelta(arg1)).strftime("%Y-%m-%d")
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
-    API = API_URL + '?$select=permit_type,%20count(*)&$group=permit_type&$where=permit_issued_date%20%3E=%20%27' + days_30 + '%27%20AND%20permit_issued_date%20<%20%27' + days_0 + '%27'
+    API = API_URL + '?$select=permit_type,%20count(*)&$group=permit_type&$where=permit_issued_date%20%3E=%20%27' + days_30 + '%27%20AND%20permit_issued_date%20%3C%20%27' + days_0 + '%27%20AND%20permit_type%20in%20(%27BLDG%27,%27MECH%27,%27LPGX%27,%27PLUM%27,%27ELEC%27)%20AND%20category1%20not%20in%20(%270029%27,%270082%27,%270083%27,%270084%27,%270092%27,%270095%27,%270096%27,%270101%27,%270106%27,%270107%27)'
     response = requests.get(API)
     json_result = response.json()
     return json_result
