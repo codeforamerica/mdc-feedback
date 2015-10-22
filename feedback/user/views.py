@@ -47,7 +47,7 @@ def user_delete(id):
 
 
 @blueprint.route('/manage', methods=['GET', 'POST'])
-@requires_roles('superadmin', 'admin')
+@login_required
 def user_manage():
     form = UserForm()
     users = User.query.order_by(User.role_id).all()

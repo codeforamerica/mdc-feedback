@@ -8,6 +8,20 @@ from feedback.surveys.constants import (
 )
 
 
+class Stakeholder(Model):
+    ''' Stakeholder model - each field contains a
+    string of e-mails separated by commas.
+    '''
+    __tablename__ = 'stakeholders'
+
+    id = Column(db.Integer, primary_key=True, index=True)
+    email_list = Column(db.String(200), nullable=True)
+    label = Column(db.String(50), unique=True, nullable=True)
+
+    def __repr__(self):
+        return '<Stakeholder(id:{0})>'.format(self.id)
+
+
 class Survey(Model):
     ''' Survey model is the now the base for the PIC
     feedback survey. This is the result of ETLs from

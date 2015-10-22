@@ -4,63 +4,52 @@ import pprint
 
 from flask import (
     Blueprint, render_template, redirect,
-    url_for, flash
+    url_for, flash, request
 )
+from feedback.database import db
 
 from flask.ext.login import login_required
 
+from feedback.surveys.constants import ROUTES
+from feedback.surveys.models import Stakeholder
 
-from wtforms import fields
 
-from feedback.extensions import login_manager
-from feedback.utils import flash_errors
+blueprint = Blueprint(
+    'surveys',
+    __name__,
+    url_prefix='/surveys',
+    static_folder="../static")
 
-from feedback.surveys.models import Survey
-from feedback.surveys.forms import SurveyForm
 
-blueprint = Blueprint('surveys', __name__, url_prefix='/surveys', static_folder="../static")
+def process_stakeholders_form(form):
+    print form
+    for i in range(1, 15):
+        label = ROUTES[i]
+        key = 'field-route-' + str(i)
+        value = request.form[key]
+        # FIXME: I'd validate these values later. Value contains a list of e-mails.
 
-@blueprint.route('/')
+        stakeholder = db.session.query(Stakeholder).filter_by(label=label).first()
+        if not stakeholder:
+            stakeholder = Stakeholder(
+                label=label
+            )
+
+        stakeholder.email_list = value
+        # And from here I want to either GET or CREATE.
+        db.session.add(stakeholder)
+    db.session.commit()
+
+
+@blueprint.route('/', methods=['GET', 'POST'])
 @login_required
 def survey_index():
-    surveys = Survey.query.all()
-    return render_template("surveys/survey-home.html", surveys=surveys)
+    # from here figure out if you posted the form
+    if request.method == 'POST':
+        process_stakeholders_form(request.form)
 
-@blueprint.route('/create', methods=['GET', 'POST'])
-@login_required
-def create():
-    # For dynamic forms, class attributes must be set before any instantiation occurs.
-    # you don't have to pass request.form to Flask-WTF; it will load automatically
-
-    class F(SurveyForm):
-        pass
-
-    F.question_en = fields.TextField()
-    F.question_es = fields.TextField()
-    F.question_type = fields.SelectField(choices=[('short_text', 'Short Text')])
-    form = F()
-
-    if form.validate_on_submit():
-        new_survey = Survey.create(
-                        title_en = form.title_en.data,
-                        title_es = form.title_es.data,
-                        description_en = form.description_en.data,
-                        description_es = form.description_es.data)
-        flash("New survey created", 'success')
-        return redirect(url_for('surveys.survey_index'))
-    else:
-        flash_errors(form)
-
-    return render_template("surveys/survey-form.html", form=form)
-
-@blueprint.route('/<int:survey_id>/edit', methods=['GET', 'POST'])
-@login_required
-def survey_edit(survey_id):
-    survey = Survey.query.get_or_404(survey_id)
-    errors = []
-
-    class F(SurveyForm):
-        pass
-
-    form = F(obj=survey)
-    return render_template('surveys/survey-form.html', form=form)
+    stakeholders = Stakeholder.query.all()
+    return render_template(
+        "surveys/edit-stakeholders.html",
+        routes=ROUTES,
+        stakeholders=stakeholders)
