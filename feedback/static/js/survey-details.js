@@ -24,13 +24,13 @@ $(document).ready(function () {
       blue = 'rgba(93, 205, 252,1)';
 
 
-  $('.pretty-date').each(function() {
+  /*$('.pretty-date').each(function() {
     
     //console.log($(this).text());
     $(this).text(prettyDates($(this).text()))  
     $(this).removeClass('hidden');  //keep text from flashing as it gets formatted
     
-  })
+  })*/
   
   $('.language').each(function() {
     
