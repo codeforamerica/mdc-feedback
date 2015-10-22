@@ -666,3 +666,8 @@ tr.table-button td {
 .alert-alert-warning .close {
   color: #C40232;
 }
+
+/* line 740, ../sass/screen.scss */
+.user-list li {
+  display: list-item;
+}
