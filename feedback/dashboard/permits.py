@@ -23,11 +23,14 @@ VIOLATIONS_BY_TYPE_API_URL = DATA311_URL + '?&case_owner=Regulatory_and_Economic
 sophia trying to python
 '''
     
-p_days_30 = (datetime.date.today() - datetime.timedelta(30)).strftime("%Y-%m-%d")
+#p_days_30 = (datetime.date.today() - datetime.timedelta(30)).strftime("%Y-%m-%d")
 p_month = datetime.datetime.now() - relativedelta(months=1)
 p_month = p_month.strftime("%Y-%m-01") 
+c_month = (datetime.date.today().strftime("%Y-%m-01"))
 
-VIOLATIONS_LAST_30 = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + p_days_30 + '%27&$limit=50000'
+#print c_month
+
+VIOLATIONS_LAST_30 = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + c_month + '%27&$limit=50000'
 
 VIOLATIONS_PREV_MONTH = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + p_month + '%27&$limit=50000'
     
