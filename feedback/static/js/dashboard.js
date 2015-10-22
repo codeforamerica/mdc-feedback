@@ -764,7 +764,7 @@ $(document).ready(function () {
     
     for(i = 0; i < vioMonthlyData.length; i += 1) {
       
-      console.log(vioMonthlyData[i]);
+      //console.log(vioMonthlyData[i]);
       
       if(vioMonthlyData[i].location.latitude != undefined) {
         
