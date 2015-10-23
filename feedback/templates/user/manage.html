@@ -7,93 +7,41 @@
 
     <section id='user-list' class='row twelve columns'>
 
-      <h1>Manage your users.</h1>
+      <h3>The following people are able to access the internal dashboard:</h3>
+      
+      <ul class='user-list'>
+        
+        <li>Donna Romito | Department, title | <a href='mailto:'>e-mail@email.com</a> <a href=# class='user-delete button'>Remove User</a></li>
+        <li>Christa Erml-Martinez | Department, title | <a href='mailto:'>e-mail@email.com</a> <a href=# class='user-delete button'>Remove User</a></li>
+        <li>Michael Sarasti | Department, title | <a href='mailto:'>e-mail@email.com</a> <a href=# class='user-delete button'>Remove User</a></li>
+        
+      </ul>
 
-      {% for user in users %}
-      <li class='user twelve columns' id='0'>
-        <span class='user-name'>{{ user.print_pretty_name() }}</span>
-        <span class='user-mail'>{{ user.email }}</span>
-        <span class='user-permissions'>
-          <span class='bold'>Permissions: </span>
-          {{ user.role.name }}
-        </span>
-        {% if current_user.is_superadmin() %}
-          <button class="button password three columns" type="submit">Edit user</button>
-        {% endif %}
-        {% if current_user.is_superadmin() %}
-        <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
-          <button class="button delete three columns" type="submit">Delete user</button>
-        </form>
-        {% endif %}
-      </li>
-      {% endfor %}
-
-      {% if current_user.is_superadmin() %}
-      <li class='add-user button'>Add a new user</li>
-      {% endif %}
-
-    </section>
-
-    <section id='add-user-form' class='row twelve columns hidden'>
-
-      <h3>Add a new user.</h3>
-
-      <form action="{{ url_for('user.user_create') }}" method="POST">
-        {{ form.csrf_token }}
-        <div class='row'>
-          <h4>What's your user's name?</h4>
-          {{ macros.with_errors(form.full_name, class_="six columns", placeholder="Full Name") }}
-        </div>
-
-        <div class='row'>
-          <h4>What's your user's e-mail address?</h4>
-          {{ macros.with_errors(form.email, class_="six columns", placeholder="name@miamidade.gov") }}
-        </div>
-
-        <div class='row'>
-          <h4>What permissions should your user have?</h4>
-          {% for subfield in form.role_id %}
-          <p>{{ subfield(class=radio) }}<label>{{ subfield.label}}</label></p>
-          {% endfor %}
-        </div>
-
-        <button class='button' type="submit" id='submit-new-user'>Create new user</button>
-
-      </form>
-
+      <a href=# id='add-user' class='button'>Add a new user</a>
+      <p class='alert-alert-warning'>Warning: Users given access can also add and delete other users.</p>
     </section>
     
-    <section id='edit-user-form' class='row twelve columns hidden'>
+    <section id='add-user-form' class='row twelve columns hidden'>
 			
-			<h3>Edit this user.</h3>
-			
-			<form action="{{ url_for('user.user_edit') }}" method="POST">
-        {{ form.csrf_token }}
+			<h3>Add a new user.</h3>
 			
 			<div class='row'>
-				<h4>Name</h4>
-				<!--<input id='name' class='six columns' type='text' placeholder="First and last name">-->
-				{{ macros.with_errors(form.full_name, id_="name", class_="six columns", placeholder="Full Name") }}
+				<h4>What's your user's name?</h4>
+				<input class='six columns' type='text' placeholder="First and last name">
 			</div>
 			
 			<div class='row'>
-				<h4>E-mail</h4>
-				<input id='email' class='six columns' type="email" placeholder='name@miamidade.gov'>
-				{{ macros.with_errors(form.email, id_="email", class_="six columns", placeholder="name@miamidade.gov") }}
+				<h4>What's your user's e-mail address?</h4>
+				<input class='six columns' type="email" placeholder='name@miamidade.gov'>
 			</div>
+			
+			<div class='row'>
+				<h4>What's your user's department and title?</h4>
+				<input class='six columns' type="email" placeholder='RER, Director'>
+			</div>
+			
 						
-			<div class='row'>
-				<h4>Permissions</h4>
-				<!--<p><input id='superuser' class='radio' type="radio" value='superuser'><label>Superuser <span class='small'>Can edit everything.</span></label></p>
-				<p><input id='user' class='radio' type="radio" value='user'><label>User <span class='small'>Can do everything but manage users.</span></label></p>-->
-				
-				{% for subfield in form.role_id %}
-        <p>{{ subfield(class=radio) }}<label>{{ subfield.label}}</label></p>
-        {% endfor %}
-          
-			</div>
-						
-			<span class='button' id='save-user-changes'>Save changes</span>
+			<span class='button' id='submit-new-user'>Create new user</span>
 			
 		</section>
 

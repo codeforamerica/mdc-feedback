@@ -4,42 +4,52 @@
 
 <section class='row' id='details-view'>
 
+  <h3>All Survey Responses</h3>
+  <p><i>Pro-tip: Click the table headers to sort each column.</i></p>
+  
   <div class='twelve columns' id='survey-details'>
-
-    <h3>All Survey Responses</h3>
-
-    <table>
-      <thead>
+     
+    <table class='sticky-table sortable'>
+      
+      <thead class='sticky-thead'>
+        
         <tr>
-          <th>ID</th>
           <th>Date</th>
           <th>Method</th>
-          <th>Lang</th>
+          <th>Language</th>
           <th>Rating</th>
           <th>Role</th>
           <th>Route</th>
           <th>Add'l Comments</th>
           <th>Followup?</th>
+          <th>Survey ID</th>
         </tr>
+        
       </thead>
+      
       <tbody>
         {% for item in resp_obj %}
-        <tr>
-          <td><a href="{{ url_for('dashboard.survey_detail', id=item.id) }}">{{ item.id }}</a></td>
-          <td>{{ item.date_submitted }}</td>
-          <td>{{ item.method }}</td>
-          <td>{{ item.lang }}</td>
+
+        <tr class='table-top-row'>
+          <td class='pretty-date hidden'>{{ item.date_submitted.strftime('%-d %b %Y %-I:%M%p') }}</td>
+          <td class='method hidden'>{{ item.method }}</td>
+          <td class='language hidden'>{{ item.lang }}</td>
+
           <td>{{ item.rating }}</td>
           <td>{{ item.role_en }}</td>
           <td>{{ item.route_en }}</td>
           <td>{{ item.more_comments }}</td>
-          <td>{{ 'Yes' if item.follow_up else 'No' }}</td>
+          <td class='follow-up'>{{ 'Yes' if item.follow_up else 'No' }}</td>
+          <td class='table-button'>
+            <a href="{{ url_for('dashboard.survey_detail', id=item.id) }}">#{{ item.id }} &raquo;</a>
+          </td>
         </tr>
+        
         {% endfor %}
       </tbody>
     </table>
-
-    </div>
+     
+  </div>
 
 </section> <!-- close row -->
 

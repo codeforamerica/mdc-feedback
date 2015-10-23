@@ -13,7 +13,7 @@
         <div class='row twelve columns response'>
 
           <p>
-            <span class='bold'>Date: </span>{{ item.date_submitted }}
+            <span class='bold'>Date: </span>{{ item.date_submitted.strftime('%-d %b %Y %-I:%M%p') }}
           </p>
 
           <p>
