@@ -6,7 +6,7 @@ from flask import (
     Blueprint, render_template,
     flash, request, redirect, url_for
 )
-from feedback.database import db, get_or_create
+from feedback.database import db
 
 from flask.ext.login import login_required
 
@@ -42,23 +42,23 @@ def process_stakeholders_form(form):
         value = request.form[key]
 
         if is_valid_email_list(value):
-            '''
             stakeholder = db.session.query(Stakeholder).filter_by(label=label).first()
             if not stakeholder:
                 stakeholder = Stakeholder(
-                    label=label
+                    label=label,
+                    email_list=value
                 )
-
-            stakeholder.email_list = value
-            '''
-            stakeholder, is_new = get_or_create(
-                db.session, Stakeholder,
-                label=label, email_list=value
-            )
-
+            else:
+                stakeholder.update(
+                    email_list=value
+                )
+            db.session.add(stakeholder)
         else:
             errors = True
+            db.session.rollback()
+
     if not errors:
+        db.session.commit()
         flash("Your settings have been saved.", "alert-success")
         return redirect(url_for('dashboard.home'))
     else:
