@@ -89,31 +89,6 @@ def auth():
         abort(403)
 
 
-@blueprint.route("/admin/",  methods=['GET'])
-def admin():
-    return render_template("public/admin.html", title='Admin')
-
-
-@blueprint.route("/create-survey/",  methods=['GET'])
-def create_survey():
-    return render_template("public/create-survey.html", title='Survey Builder')
-
-
-@blueprint.route("/saved-survey/",  methods=['GET'])
-def save_survey():
-    return render_template("public/saved-survey.html", title='Survey Builder')
-
-
 @blueprint.route("/manage-users/",  methods=['GET'])
 def manage_users():
     return render_template("public/manage-users.html", title='Manage Users')
-
-
-@blueprint.route("/edit-public/",  methods=['GET'])
-def edit_public():
-    return render_template("public/edit-public.html", title='Dashboard Editor - Public')
-
-
-@blueprint.route("/edit-internal/",  methods=['GET'])
-def edit_internal():
-    return render_template("public/edit-internal.html", title='Dashboard Editor - Internal')
