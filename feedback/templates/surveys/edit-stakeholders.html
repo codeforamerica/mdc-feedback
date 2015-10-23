@@ -10,12 +10,12 @@
       <ul>
         {% for n in range(1,15) %}
         <li>{{ routes[n] }}</li>
-        <li><input name="field-route-{{n}}" type="text"></li>
+        <li><input name="field-route-{{n}}" type="text" value="{{ stakeholders[n-1].email_list }}"></li>
         {% endfor %}
       </ul>
       <input type="submit" value="Submit">
     </form>
-
+    <p><small>You may separate multiple e-mail addresses with a comma.</small></p>
 
     </section>
   </div><!--!/#container -->

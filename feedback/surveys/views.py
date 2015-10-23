@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import pprint
+import re
 
 from flask import (
-    Blueprint, render_template, redirect,
-    url_for, flash, request
+    Blueprint, render_template,
+    flash, request, redirect, url_for
 )
-from feedback.database import db
+from feedback.database import db, get_or_create
 
 from flask.ext.login import login_required
 
@@ -21,24 +21,48 @@ blueprint = Blueprint(
     static_folder="../static")
 
 
+def is_valid_email_list(value):
+
+    value = [item.strip() for item in value.split(',') if item.strip()]
+    email_list = list(set(value))
+
+    for item in email_list:
+        if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", item):
+            flash("{0} is not a valid e-mail address.".format(item), "alert-danger")
+            return False
+    return True
+
+
 def process_stakeholders_form(form):
-    print form
+    errors = False
+
     for i in range(1, 15):
         label = ROUTES[i]
         key = 'field-route-' + str(i)
         value = request.form[key]
-        # FIXME: I'd validate these values later. Value contains a list of e-mails.
 
-        stakeholder = db.session.query(Stakeholder).filter_by(label=label).first()
-        if not stakeholder:
-            stakeholder = Stakeholder(
-                label=label
+        if is_valid_email_list(value):
+            '''
+            stakeholder = db.session.query(Stakeholder).filter_by(label=label).first()
+            if not stakeholder:
+                stakeholder = Stakeholder(
+                    label=label
+                )
+
+            stakeholder.email_list = value
+            '''
+            stakeholder, is_new = get_or_create(
+                db.session, Stakeholder,
+                label=label, email_list=value
             )
 
-        stakeholder.email_list = value
-        # And from here I want to either GET or CREATE.
-        db.session.add(stakeholder)
-    db.session.commit()
+        else:
+            errors = True
+    if not errors:
+        flash("Your settings have been saved.", "alert-success")
+        return redirect(url_for('dashboard.home'))
+    else:
+        return redirect(url_for('surveys.survey_index'))
 
 
 @blueprint.route('/', methods=['GET', 'POST'])
@@ -46,9 +70,9 @@ def process_stakeholders_form(form):
 def survey_index():
     # from here figure out if you posted the form
     if request.method == 'POST':
-        process_stakeholders_form(request.form)
+        return process_stakeholders_form(request.form)
 
-    stakeholders = Stakeholder.query.all()
+    stakeholders = Stakeholder.query.order_by(Stakeholder.id).all()
     return render_template(
         "surveys/edit-stakeholders.html",
         routes=ROUTES,
