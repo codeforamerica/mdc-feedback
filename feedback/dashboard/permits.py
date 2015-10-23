@@ -136,7 +136,7 @@ def add_permit_category_to_query(permit_type):
         'f': '0018',
         'e': '0048'
     }
-    return 'category1=%27' + lookup[permit_type] + '%27%'
+    return 'category1=%27' + lookup[permit_type] + '%27'
 
 
 def add_application_type_to_query(permit_type):
@@ -156,7 +156,7 @@ def add_application_type_to_query(permit_type):
         'rr': '%2701%27,%20%2702%27,%20%2703%27,%20%2704%27,%20%2706%27,%20%2708%27,%20%2709%27'
     }
     try:
-        return '20AND%20application_type_code%20in(' + lookup[permit_type] + ')'
+        return '%20AND%20application_type_code%20in(' + lookup[permit_type] + ')'
     except KeyError:
         return ''
 
