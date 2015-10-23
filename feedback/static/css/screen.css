@@ -566,8 +566,57 @@ canvas {
   padding: 20px;
 }
 
+/* line 628, ../sass/screen.scss */
+.sticky-thead {
+  background-color: white;
+}
+
+/* line 633, ../sass/screen.scss */
+td {
+  max-width: 200px;
+  border-bottom: none;
+  vertical-align: top;
+}
+
+/* line 641, ../sass/screen.scss */
+table {
+  border: 1px solid white;
+}
+
+/* line 647, ../sass/screen.scss */
+thead {
+  text-transform: uppercase;
+  font-size: 0.85em;
+}
+
+/* line 653, ../sass/screen.scss */
+tr.table-top-row {
+  border-top: 15px solid #f7fafa;
+}
+
+/* line 660, ../sass/screen.scss */
+tr.table-button td {
+  border-bottom: 15px solid #f7fafa;
+  margin: 0;
+}
+
+/* line 668, ../sass/screen.scss */
+.table-alert {
+  background-color: rgba(245, 201, 61, 0.5);
+}
+
+/* line 673, ../sass/screen.scss */
+.method-sms {
+  text-transform: uppercase;
+}
+
+/* line 678, ../sass/screen.scss */
+.method-web {
+  text-transform: capitalize;
+}
+
 /********** ALERTS ************/
-/* line 630, ../sass/screen.scss */
+/* line 684, ../sass/screen.scss */
 .alert {
   width: 80%;
   margin: 0 auto;
@@ -576,44 +625,49 @@ canvas {
   margin-bottom: 20px;
 }
 
-/* line 640, ../sass/screen.scss */
+/* line 694, ../sass/screen.scss */
 .alert .close {
   width: 40px;
   height: 40px;
   font-size: 1.5em;
 }
 
-/* line 648, ../sass/screen.scss */
+/* line 702, ../sass/screen.scss */
 .alert-alert-success {
   border: 1px solid #4CD884;
   background-color: rgba(76, 216, 132, 0.1);
   color: #4CD884;
 }
-/* line 654, ../sass/screen.scss */
+/* line 708, ../sass/screen.scss */
 .alert-alert-success .close {
   color: #4CD884;
 }
 
-/* line 660, ../sass/screen.scss */
+/* line 714, ../sass/screen.scss */
 .alert-message {
   border: 1px solid #F5C93D;
   background-color: rgba(245, 201, 61, 0.1);
   color: #F5C93D;
 }
-/* line 666, ../sass/screen.scss */
+/* line 720, ../sass/screen.scss */
 .alert-message .close {
   color: #F5C93D;
 }
 
-/* line 673, ../sass/screen.scss */
+/* line 727, ../sass/screen.scss */
 .alert-alert-danger,
 .alert-alert-warning {
   border: 1px solid #C40232;
   background-color: rgba(196, 2, 50, 0.1);
   color: #C40232;
 }
-/* line 680, ../sass/screen.scss */
+/* line 734, ../sass/screen.scss */
 .alert-alert-danger .close,
 .alert-alert-warning .close {
   color: #C40232;
+}
+
+/* line 740, ../sass/screen.scss */
+.user-list li {
+  display: list-item;
 }

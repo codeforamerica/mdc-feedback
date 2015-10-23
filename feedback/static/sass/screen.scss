@@ -625,6 +625,60 @@ canvas {
   padding:20px;
 }
 
+.sticky-thead {
+  
+  background-color:white;
+}
+
+td {
+  
+  max-width:200px;
+  border-bottom:none;
+  vertical-align: top;
+  
+}
+
+table {
+  
+  border:1px solid white;
+  
+}
+
+thead {
+  
+  text-transform: uppercase;
+  font-size:0.85em;
+}
+
+tr.table-top-row {
+  
+  border-top:15px solid $grey;
+}
+
+tr.table-button {
+  
+  td{
+    border-bottom:15px solid $grey;
+    margin:0;
+   }
+  
+  
+}
+
+.table-alert {
+  
+  background-color: rgba($yellow, .5);
+}
+
+.method-sms {
+  
+  text-transform: uppercase;
+}
+
+.method-web {
+  
+  text-transform: capitalize;
+}
 /********** ALERTS ************/
 
 .alert {
@@ -681,4 +735,9 @@ canvas {
 			
 			color:$red;
 		}
+}
+
+.user-list li {
+  
+  display:list-item;
 }
