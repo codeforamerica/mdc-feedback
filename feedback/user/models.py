@@ -35,8 +35,8 @@ class User(UserMixin, SurrogatePK, Model):
     def get_id(self):
         return self.email
 
-    def is_superadmin(self):
-        return self.role.name == 'superadmin'
+    def is_admin(self):
+        return self.role and self.role.name == 'admin'
 
     def print_pretty_name(self):
         if self.full_name:

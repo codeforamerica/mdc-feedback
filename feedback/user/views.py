@@ -19,23 +19,24 @@ blueprint = Blueprint(
 
 
 @blueprint.route('/create', methods=['POST'])
-@requires_roles('superadmin')
+@requires_roles('admin')
 def user_create():
     form = UserForm()
     if form.validate_on_submit():
         current_app.logger.info(
             'USER CREATED with email {}'.format(form.email.data)
         )
-        User.create(email=form.email.data,
-                    full_name=form.full_name.data,
-                    role_id=form.role_id.data)
+        User.create(
+            email=form.email.data,
+            full_name=form.full_name.data,
+            role_id=form.role_id.data)
 
     flash('Created a new profile.', 'alert-success')
     return redirect(url_for('user.user_manage'))
 
 
 @blueprint.route('/delete/<id>', methods=['POST'])
-@requires_roles('superadmin')
+@requires_roles('admin')
 def user_delete(id):
     current_app.logger.info(
         'USER DELETED with email {}'.format(id)
@@ -47,14 +48,21 @@ def user_delete(id):
 
 
 @blueprint.route('/manage', methods=['GET', 'POST'])
-@login_required
+@requires_roles('admin')
 def user_manage():
     form = UserForm()
     users = User.query.order_by(User.role_id).all()
-    return render_template("user/manage.html", current_user=current_user, users=users, form=form, title='Manage Users')
+    return render_template(
+        "user/manage.html",
+        current_user=current_user,
+        users=users,
+        form=form,
+        title='Manage Users')
 
 
 @blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('users/profile.html', current_user=current_user)
+    return render_template(
+        'users/profile.html',
+        current_user=current_user)
