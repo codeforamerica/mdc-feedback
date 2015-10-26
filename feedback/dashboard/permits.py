@@ -302,8 +302,13 @@ def get_master_permit_counts(arg1):
                   (100 to -100)
     '''
     now = api_count_call(0, 30, arg1)
+    then = api_count_call(365, 395, arg1)
+    try:
+        yoy = ((now-then)/then)*100
+    except ZeroDivisionError:
+        yoy = 0
 
     return {
         'val': int(now),
-        'yoy': None
+        'yoy': yoy
     }
