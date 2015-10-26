@@ -1,66 +1,78 @@
 # -*- coding: utf-8 -*-
 
-import pprint
+import re
 
 from flask import (
-    Blueprint, render_template, redirect,
-    url_for, flash
+    Blueprint, render_template,
+    flash, request, redirect, url_for
 )
+from feedback.database import db
+from feedback.decorators import requires_roles
 
-from flask.ext.login import login_required
+from feedback.surveys.constants import ROUTES
+from feedback.surveys.models import Stakeholder
 
 
-from wtforms import fields
+blueprint = Blueprint(
+    'surveys',
+    __name__,
+    url_prefix='/surveys',
+    static_folder="../static")
 
-from feedback.extensions import login_manager
-from feedback.utils import flash_errors
 
-from feedback.surveys.models import Survey
-from feedback.surveys.forms import SurveyForm
+def is_valid_email_list(value):
 
-blueprint = Blueprint('surveys', __name__, url_prefix='/surveys', static_folder="../static")
+    value = [item.strip() for item in value.split(',') if item.strip()]
+    email_list = list(set(value))
 
-@blueprint.route('/')
-@login_required
-def survey_index():
-    surveys = Survey.query.all()
-    return render_template("surveys/survey-home.html", surveys=surveys)
+    for item in email_list:
+        if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", item):
+            flash("{0} is not a valid e-mail address.".format(item), "alert-danger")
+            return False
+    return True
 
-@blueprint.route('/create', methods=['GET', 'POST'])
-@login_required
-def create():
-    # For dynamic forms, class attributes must be set before any instantiation occurs.
-    # you don't have to pass request.form to Flask-WTF; it will load automatically
 
-    class F(SurveyForm):
-        pass
+def process_stakeholders_form(form):
+    errors = False
 
-    F.question_en = fields.TextField()
-    F.question_es = fields.TextField()
-    F.question_type = fields.SelectField(choices=[('short_text', 'Short Text')])
-    form = F()
+    for i in range(1, 15):
+        label = ROUTES[i]
+        key = 'field-route-' + str(i)
+        value = request.form[key]
 
-    if form.validate_on_submit():
-        new_survey = Survey.create(
-                        title_en = form.title_en.data,
-                        title_es = form.title_es.data,
-                        description_en = form.description_en.data,
-                        description_es = form.description_es.data)
-        flash("New survey created", 'success')
-        return redirect(url_for('surveys.survey_index'))
+        if is_valid_email_list(value):
+            stakeholder = db.session.query(Stakeholder).filter_by(label=label).first()
+            if not stakeholder:
+                stakeholder = Stakeholder(
+                    label=label,
+                    email_list=value
+                )
+            else:
+                stakeholder.update(
+                    email_list=value
+                )
+            db.session.add(stakeholder)
+        else:
+            errors = True
+            db.session.rollback()
+
+    if not errors:
+        db.session.commit()
+        flash("Your settings have been saved.", "alert-success")
+        return redirect(url_for('dashboard.home'))
     else:
-        flash_errors(form)
+        return redirect(url_for('surveys.survey_index'))
 
-    return render_template("surveys/survey-form.html", form=form)
 
-@blueprint.route('/<int:survey_id>/edit', methods=['GET', 'POST'])
-@login_required
-def survey_edit(survey_id):
-    survey = Survey.query.get_or_404(survey_id)
-    errors = []
+@blueprint.route('/', methods=['GET', 'POST'])
+@requires_roles('admin')
+def survey_index():
+    # from here figure out if you posted the form
+    if request.method == 'POST':
+        return process_stakeholders_form(request.form)
 
-    class F(SurveyForm):
-        pass
-
-    form = F(obj=survey)
-    return render_template('surveys/survey-form.html', form=form)
+    stakeholders = Stakeholder.query.order_by(Stakeholder.id).all()
+    return render_template(
+        "surveys/edit-stakeholders.html",
+        routes=ROUTES,
+        stakeholders=stakeholders)
