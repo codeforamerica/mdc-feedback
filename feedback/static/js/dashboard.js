@@ -212,8 +212,8 @@ $(document).ready(function () {
       respondentsByRole,
       respondentsByRoleChart;
 
-      
-      
+
+
   for(i = 0; i < sctxdata.data.length; i+=1) {
 
     switch(parseInt(sctxdata.data[i][0], 10)) {
@@ -304,8 +304,8 @@ $(document).ready(function () {
   surveysByPurpose,
   surveysByPurposeChart;
 
-  var test = 0; 
-  
+  var test = 0;
+
   for(i = 0; i < sptxdata.data.length; i+=1) {
 
     switch(parseInt(sptxdata.data[i][0], 10)) {
@@ -333,7 +333,7 @@ $(document).ready(function () {
     }
 
   }
-  
+
   for(i = 0; i < sorter2.length; i+=1) {
     sptxseries[i] = sorter2[i].count;
     sptxlabels[i] = sorter2[i].label;
@@ -554,13 +554,13 @@ $(document).ready(function () {
   for(i = 0; i < permitTypes.data.length; i+=1) {
 
     if(permitTypes.data[i].permit_type != 'CCUT') {
-      
+
       cleanPermitLabels.push(humanNames(permitTypes.data[i].permit_type));
       cleanPermitData.push(permitTypes.data[i].count);
       //console.log(data[i].issue_type, i);
 
     }
-    
+
   }
 
   var vdata2 = {
@@ -574,75 +574,75 @@ $(document).ready(function () {
       }
     ]
   };
-  
+
   function humanNames(type) {
-    
+
     //console.log(type);
-    
+
     switch(type) {
-      
+
       case 'FIRE':
-      
+
         return 'Fire';
         break;
-        
+
       case 'MMEC':
-      
+
         return 'Municipal: Mechanical';
         break;
-        
+
       case 'ZIPS':
-        
+
         return 'Zoning Improvement Permit';
         break;
-        
+
       case 'MELE':
-      
+
         return 'Muncipal: Electrical';
         break;
-        
+
       case 'CCUT':
-      
+
         return 'CCUT';
         break;
-        
+
       case 'ELEC':
-      
+
         return 'Electrical';
         break;
-        
+
       case 'PLUM':
-      
+
         return 'Plumbing';
         break;
-        
+
       case 'MPLU':
-      
+
         return 'Municipal: Plumbing';
         break;
-        
+
       case 'MBLD':
-      
+
         return 'Municipal: Building';
         break;
-        
+
       case 'LPGX':
-      
+
         return 'Liquid Petroleum Gas';
         break;
-        
-      case 'BLDG': 
-      
+
+      case 'BLDG':
+
         return 'Building';
         break;
-        
+
       case 'MECH':
-      
+
         return 'Mechanical';
         break;
-    
+
     }
-    
+
   }
 
   $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
@@ -728,21 +728,21 @@ $(document).ready(function () {
 
         vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data),
         vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data);
-        
+
         //violations_per_month_json
-        
+
 
     for(i = 0; i < vioLocationsData.length; i+=1) {
 
       if(vioLocationsData[i].location.latitude != undefined) {
-        
+
         var lat = vioLocationsData[i].location.latitude,
             lon = vioLocationsData[i].location.longitude,
             openClosed = vioLocationsData[i].ticket_status,
             fill = t_yellow,
             color = yellow,
             title = vioLocationsData[i].issue_type;
-  
+
         var marker2 = L.circleMarker([lat, lon], {
             radius: 5,
             fillColor: fill,
@@ -751,7 +751,7 @@ $(document).ready(function () {
             opacity: 1,
             fillOpacity: 0.8
           }).addTo(map);
-  
+
           marker2.bindPopup(title);
           marker2.on('mouseover', function() {
             this.openPopup();
@@ -761,20 +761,20 @@ $(document).ready(function () {
           });
       }
     }
-    
+
     for(i = 0; i < vioMonthlyData.length; i += 1) {
-      
+
       //console.log(vioMonthlyData[i]);
-      
+
       if(vioMonthlyData[i].location.latitude != undefined) {
-        
+
         lat = vioMonthlyData[i].location.latitude,
         lon = vioMonthlyData[i].location.longitude,
         openClosed = vioMonthlyData[i].ticket_status,
         fill = t_yellow,
         color = yellow,
         title = vioMonthlyData[i].issue_type;
-        
+
         marker2 = L.circleMarker([lat, lon], {
           radius: 5,
           fillColor: fill,
@@ -783,7 +783,7 @@ $(document).ready(function () {
           opacity: 1,
           fillOpacity: 0.8
         }).addTo(map3);
-  
+
         marker2.bindPopup(title);
         marker2.on('mouseover', function() {
           this.openPopup();
@@ -791,12 +791,12 @@ $(document).ready(function () {
         marker2.on('mouseout', function() {
           this.closePopup();
         });
-        
+
       }
-      
-      
+
+
     }
-    
+
     if(vioTypeData === '') {
 
       $('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
@@ -967,7 +967,7 @@ $(document).ready(function () {
 
     $('#s-role-rate-inspect').raty({
       score: function() {
-        return $('role-rate-inspect').text();
+        return $('#role-rate-inspect').text();
         },
         path: 'static/images',
         half: true,
