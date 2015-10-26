@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 3fc35758651d
+Revision ID: 2683452ffe3f
 Revises: None
-Create Date: 2015-10-20 10:42:54.887329
+Create Date: 2015-10-26 16:42:00.228013
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '3fc35758651d'
+revision = '2683452ffe3f'
 down_revision = None
 
 from alembic import op
@@ -43,17 +43,17 @@ def upgrade():
     sa.Column('date_submitted', sa.DateTime(), nullable=False),
     sa.Column('role', sa.Integer(), nullable=False),
     sa.Column('purpose', sa.Integer(), nullable=False),
-    sa.Column('purpose_other', sa.String(length=200), nullable=True),
+    sa.Column('purpose_other', sa.String(length=500), nullable=True),
     sa.Column('route', sa.Integer(), nullable=True),
     sa.Column('rating', sa.Integer(), nullable=False),
     sa.Column('get_done', sa.Boolean(), nullable=True),
     sa.Column('best', sa.Integer(), nullable=True),
-    sa.Column('best_other', sa.String(length=200), nullable=True),
+    sa.Column('best_other', sa.String(length=500), nullable=True),
     sa.Column('worst', sa.Integer(), nullable=True),
-    sa.Column('worst_other', sa.String(length=200), nullable=True),
-    sa.Column('improvement', sa.String(length=200), nullable=True),
+    sa.Column('worst_other', sa.String(length=500), nullable=True),
+    sa.Column('improvement', sa.String(length=500), nullable=True),
     sa.Column('follow_up', sa.Boolean(), nullable=True),
-    sa.Column('contact', sa.String(length=50), nullable=True),
+    sa.Column('contact', sa.String(length=500), nullable=True),
     sa.Column('more_comments', sa.String(length=2000), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
@@ -80,5 +80,7 @@ def downgrade():
     op.drop_index(op.f('ix_survey_id'), table_name='survey')
     op.drop_index(op.f('ix_survey_date_submitted'), table_name='survey')
     op.drop_table('survey')
+    op.drop_index(op.f('ix_stakeholders_id'), table_name='stakeholders')
+    op.drop_table('stakeholders')
     op.drop_table('roles')
     ### end Alembic commands ###

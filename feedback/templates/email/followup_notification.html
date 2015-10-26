@@ -2,7 +2,7 @@
 {% block content %}
 <p>Hello!</p>
 
-<p>A user has submitted a survey response that requires attention from the {{ full_word.route }} division of the Permit Inspection Center.</p>
+<p>A user has submitted a survey response that requires attention from the {{ survey.route_en }} division of the Permit Inspection Center.</p>
 
 <p>Below are the details of the survey response. Please follow up with the user within 30 days if contact information is provided.<p>
 
@@ -14,12 +14,12 @@
   <li>Contact Information: {{ survey.contact }}</li>
   <li>Comments: {{ survey.more_comments }}</li>
 
-  <li>Role: {{ full_word.role }}</li>
-  <li>Purpose: {{ full_word.purpose or survey.purpose_other }}</li>
+  <li>Role: {{ survey.role_en }}</li>
+  <li>Purpose: {{ survey.purpose_en }}</li>
   <li>Experience Rating: {{ survey.rating }} / 7</li>
   <li>Were you able to complete your tasks? {{ 'Yes' if survey.get_done else 'No' }}</li>
-  <li>Best Experience: {{ full_word.best or survey.best_other }}</li>
-  <li>Worst Experience: {{ full_word.worst or survey.worst_other }}</li>
+  <li>Best Experience: {{ survey.best_en }}</li>
+  <li>Worst Experience: {{ survey.worst_en }}</li>
   <li>Improvement Suggestion: {{ survey.improvement }}</li>
 </ul>
 {% endblock %}

@@ -51,7 +51,9 @@ class DataLoader:
                 bad_input = problematic_datum[key]
                 current_app.logger.error(
                     "DESERIALIZATIONERROR: '{field}': '{value}', {message}".format(
-                        field=key, value=bad_input, message=message))
+                        field=key,
+                        value=bad_input,
+                        message=message))
 
     def log_success(self, total, new, existing):
         current_app.logger.debug(
