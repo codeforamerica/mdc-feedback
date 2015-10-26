@@ -219,6 +219,11 @@ def etl_sms_data(ts):
         except KeyError:
             s_obj['role'] = None
 
+        try:
+            s_obj['contact'] = iter['Contact Information']['text']
+        except KeyError:
+            s_obj['contact'] = None
+
         data.append(s_obj)
     return data
 

@@ -49,7 +49,7 @@ class Survey(Model):
     worst_other = Column(db.String(500), nullable=True)
     improvement = Column(db.String(500), nullable=True)
     follow_up = Column(db.Boolean(), default=False)
-    contact = Column(db.String(50), nullable=True)
+    contact = Column(db.String(500), nullable=True)
     more_comments = Column(db.String(2000), nullable=True)
 
     @property
