@@ -7,7 +7,7 @@
 
     <section id='add-user-form' class='row twelve columns'>
 
-      <h3>Add a new user.</h3>
+      <h3>{{ action }}</h3>
 
       <form action="{{ url_for('user.user_create') }}" method="POST">
         {{ form.csrf_token }}
@@ -29,7 +29,7 @@
           {% endfor %}
         </div>
 
-        <button class='button' type="submit" id='submit-new-user'>Create new user</button>
+        <button class='button' type="submit" id='submit-new-user'>{{ action }}</button>
 
       </form>
 

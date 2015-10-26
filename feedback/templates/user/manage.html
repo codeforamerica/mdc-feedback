@@ -8,24 +8,35 @@
 
       <h3>Manage your users.</h3>
 
-      {% for user in users %}
-      <li class='user twelve columns' id='0'>
-        <span class='user-name'>{{ user.print_pretty_name() }}</span>
-        <span class='user-mail'>{{ user.email }}</span>
-        <span class='user-permissions'>
-          <span class='bold'>Permissions: </span>
-          {{ user.role.name }}
-        </span>
-        {% if current_user.is_admin() %}
-          <button class="button password three columns" type="submit">Edit user</button>
-        {% endif %}
-        {% if current_user.is_admin() %}
-        <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
-          <button class="button delete three columns" type="submit">Delete user</button>
-        </form>
-        {% endif %}
-      </li>
-      {% endfor %}
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Permissions</th>
+            {% if current_user.is_admin() %}
+            <th>Actions</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user.full_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role.name }}</td>
+            {% if current_user.is_admin() %}
+            <td>
+              <a class="" href="{{ url_for('user.user_edit', id=user.id) }}">Edit user</a>
+              <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
+                <button class="" type="submit">Delete user</button>
+              </form>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tobdy>
+      </table>
 
       {% if current_user.is_admin() %}
       <li class='add-user button'>Add a new user</li>

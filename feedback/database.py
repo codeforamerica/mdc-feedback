@@ -3,7 +3,8 @@
 utilities.
 """
 
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import exc, relationship
+from werkzeug.exceptions import abort
 
 from .extensions import db
 from .compat import basestring
@@ -11,6 +12,13 @@ from .compat import basestring
 # Alias common SQLAlchemy names
 Column = db.Column
 relationship = relationship
+
+
+def get_object_or_404(model, *criterion):
+    try:
+        return model.query.filter(*criterion).one()
+    except exc.NoResultFound, exc.MultipleResultsFound:
+        abort(404)
 
 
 class CRUDMixin(object):
