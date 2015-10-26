@@ -7,8 +7,7 @@ from flask import (
     flash, request, redirect, url_for
 )
 from feedback.database import db
-
-from flask.ext.login import login_required
+from feedback.decorators import requires_roles
 
 from feedback.surveys.constants import ROUTES
 from feedback.surveys.models import Stakeholder
@@ -66,7 +65,7 @@ def process_stakeholders_form(form):
 
 
 @blueprint.route('/', methods=['GET', 'POST'])
-@login_required
+@requires_roles('admin')
 def survey_index():
     # from here figure out if you posted the form
     if request.method == 'POST':
