@@ -15,6 +15,8 @@ from feedback.dashboard.vendorsurveys import (
     get_rating_by_purpose, get_rating_by_role
 )
 
+from flask.ext.login import login_required
+
 from feedback.surveys.constants import SURVEY_DAYS
 from feedback.surveys.serializers import PICSurveySchema
 from feedback.surveys.models import Survey
@@ -228,6 +230,7 @@ def all_surveys():
 
 
 @blueprint.route('/dashboard/feedback/<id>', methods=['GET'])
+@login_required
 def survey_detail(id):
     survey = Survey.query.filter_by(id=id)
     return render_template(
