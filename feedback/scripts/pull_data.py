@@ -4,19 +4,18 @@ This script should run daily to:
 import arrow
 import requests
 
-from flask import render_template
-
-from pprint import pprint
+from flask import render_template, current_app
 
 from feedback.app import create_app
 from feedback.settings import DevelopmentConfig
+from feedback.surveys.models import Stakeholder
 from feedback.surveys.serializers import (
     pic_schema, DataLoader
 )
 
 from feedback.surveys.constants import (
     TF, ROUTES, SURVEY_DAYS, BEST,
-    WORST, ROLES, PURPOSE, EMAIL
+    WORST, ROLES, PURPOSE
 )
 from feedback.dashboard.vendorsurveys import (
     fill_values,
@@ -220,6 +219,11 @@ def etl_sms_data(ts):
         except KeyError:
             s_obj['role'] = None
 
+        try:
+            s_obj['contact'] = iter['Contact Information']['text']
+        except KeyError:
+            s_obj['contact'] = None
+
         data.append(s_obj)
     return data
 
@@ -232,31 +236,33 @@ def follow_up(models):
 
     Returns ..?
     '''
-    print '-- entering follow_up ---'
+    subj = 'Miami-Dade County Permit Inspection Center Survey'
+    from_email = 'mdcfeedbackdev@gmail.com'
     for survey in models:
-        # pprint(survey)
+
         if survey.follow_up and survey.route is not None:
-            full_word = {
-                'role': ROLES[survey.role],
-                'route': ROUTES.get(survey.route, survey.route),
-                'best': BEST.get(survey.best, None),
-                'worst': WORST.get(survey.worst, None),
-                'purpose': PURPOSE.get(survey.purpose, None)
-            }
-            send_email(
-                'Miami-Dade County Permit Inspection Center Survey',
-                'mdcfeedbackdev@gmail.com',
-                EMAIL[survey.route],
-                render_template(
-                    'email/followup_notification.txt',
-                    survey=survey,
-                    full_word=full_word
-                ),
-                render_template(
-                    'email/followup_notification.html',
-                    survey=survey,
-                    full_word=full_word
-                ))
+            stakeholder = Stakeholder.query.get(survey.route)
+            if stakeholder is None or stakeholder.email_list is None:
+                current_app.logger.info(
+                    'NOSTAKEHOLDER | Route: {}\nSurvey Submitted Date: {}\nSubject: {}'.format(
+                        survey.route_en,
+                        survey.date_submitted,
+                        subj
+                    )
+                )
+            else:
+                send_email(
+                    subj,
+                    from_email,
+                    stakeholder.email_list,
+                    render_template(
+                        'email/followup_notification.txt',
+                        survey=survey
+                    ),
+                    render_template(
+                        'email/followup_notification.html',
+                        survey=survey
+                    ))
 
 
 def load_data():

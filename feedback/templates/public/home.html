@@ -147,11 +147,11 @@
 
 			</div>
 
-			<li id='role-rate-permit' class='invisible'>{{ dash_obj[14].data.r1 }}</li>
-      <li id='role-rate-inspect' class='invisible'>{{ dash_obj[14].data.r2 }}</li>
-      <li id='role-rate-review' class='invisible'>{{ dash_obj[14].data.r3 }}</li>
-      <li id='role-rate-lien' class='invisible'>{{ dash_obj[14].data.r4 }}</li>
-      <li id='role-rate-cu' class='invisible'>{{ dash_obj[14].data.r5 }}</li>
+			<li id='role-rate-permit' class='invisible'>{{ dash_obj[14].data.contractor }}</li>
+      <li id='role-rate-inspect' class='invisible'>{{ dash_obj[14].data.architect }}</li>
+      <li id='role-rate-review' class='invisible'>{{ dash_obj[14].data.permitconsultant }}</li>
+      <li id='role-rate-lien' class='invisible'>{{ dash_obj[14].data.homeowner }}</li>
+      <li id='role-rate-cu' class='invisible'>{{ dash_obj[14].data.bizowner }}</li>
 
   </div>
 
@@ -236,6 +236,15 @@
       </div>
       <div class='content-container'>
         <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
+        <p>Versus the same period a year ago:
+          {% if dash_obj[11].data.yoy > 0 %}
+          <span class='bold green'>Up
+          {% else %}
+          <span class='bold red'>Down
+          {% endif %}
+          {{ '%0.2f'| format(dash_obj[11].data.yoy|float) }}%
+          </span>
+        </p>
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>

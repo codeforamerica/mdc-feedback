@@ -3,7 +3,9 @@
 
 import pytz
 
-from flask import flash, request, url_for
+from flask import (
+    flash, request, url_for, current_app
+)
 from tzlocal import get_localzone
 
 from feedback.extensions import mail
@@ -13,13 +15,33 @@ local_tz = get_localzone()
 
 
 def send_email(subject, sender, recipients, text_body, html_body):
-    msg = Message(
-        subject,
-        sender=sender,
-        recipients=recipients)
-    msg.body = text_body
-    msg.html = html_body
-    mail.send(msg)
+    ''' E-mail utility function.
+    '''
+    try:
+        current_app.logger.info(
+            'EMAILTRY | Sending message:\nTo: {}\n:From: {}\nSubject: {}'.format(
+                recipients,
+                sender,
+                subject
+            )
+        )
+        msg = Message(
+            subject,
+            sender=sender,
+            recipients=recipients)
+        msg.body = text_body
+        msg.html = html_body
+        mail.send(msg)
+    except Exception, e:
+        current_app.logger.error(
+            'EMAILFAIL | Error: {}\nTo: {}\n:From: {}\nSubject: {}'.format(
+                e,
+                recipients,
+                sender,
+                subject
+            )
+        )
+        return False
 
 
 def flash_errors(form, category="warning"):

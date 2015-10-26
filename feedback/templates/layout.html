@@ -41,19 +41,18 @@
 <!-- nav active states -->
 <!-- begin stuff that requires authentication check -->
 
-	{% if active_page == 'Dashboard' %}
+  {% if active_page == 'Dashboard' %}
 
-			{% set navigation_bar = [
-				('/users/manage', 'Manage Users')
-			] -%}
+      {% set navigation_bar = [
+        ('/users/manage', 'Manage Users'),
+        ('/surveys', 'Set Survey Lead E-mails')
+      ] -%}
 
-		{% else %}
+    {% else %}
 
-				{% set navigation_bar = [
-
-				('/', 'Dashboard')
-
-			] -%}
+      {% set navigation_bar = [
+        ('/', 'Dashboard')
+      ] -%}
 
 		{% endif %}
 
@@ -137,18 +136,18 @@
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
 		<script type="text/javascript" src="/static/js/violations-data.js"></script>
 
-	
+
 	{% elif active_page == 'Manage Users' %}
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/manage-users.js"></script>
-		
+
   {% elif active_page == 'Details' %}
-  
+
     <script type="text/javascript" src="/static/js/survey-details.js"></script>
     <script type="text/javascript" src="/static/js/jquery.stickytableheaders.min.js"></script>
     <script type="text/javascript" src="/static/js/sorttable.js"></script>
-    
+
 
 	{% endif %}
 
@@ -170,9 +169,6 @@
 </script>
 <script type="application/json" id="permitstype">
 {{ json_obj.permits_type|safe }}
-</script>
-<script type="application/json" id="appanswers">
-{{ json_obj.app_answers|safe }}
 </script>
 <script type="application/json" id="surveyrole">
 {{ json_obj.survey_role|safe }}

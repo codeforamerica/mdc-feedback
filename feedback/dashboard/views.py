@@ -15,6 +15,8 @@ from feedback.dashboard.vendorsurveys import (
     get_rating_by_purpose, get_rating_by_role
 )
 
+from flask.ext.login import login_required
+
 from feedback.surveys.constants import SURVEY_DAYS
 from feedback.surveys.serializers import PICSurveySchema
 from feedback.surveys.models import Survey
@@ -173,11 +175,11 @@ def home():
                 "p3": get_rating_by_purpose(survey_table, 3),
                 "p4": get_rating_by_purpose(survey_table, 4),
                 "p5": get_rating_by_purpose(survey_table, 5),
-                "r1": get_rating_by_role(survey_table, 1),
-                "r2": get_rating_by_role(survey_table, 2),
-                "r3": get_rating_by_role(survey_table, 3),
-                "r4": get_rating_by_role(survey_table, 4),
-                "r5": get_rating_by_role(survey_table, 5)
+                "contractor": get_rating_by_role(survey_table, 1),
+                "architect": get_rating_by_role(survey_table, 2),
+                "permitconsultant": get_rating_by_role(survey_table, 3),
+                "homeowner": get_rating_by_role(survey_table, 4),
+                "bizowner": get_rating_by_role(survey_table, 5)
             }
         }
     ]
@@ -193,9 +195,6 @@ def home():
     json_obj['violations_locations_json'] = json.dumps(dump_socrata_api('vl'))
     json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
     json_obj['violations_per_month_json'] = json.dumps(dump_socrata_api('vm'))
-
-    pic_schema = PICSurveySchema(many=True)
-    json_obj['app_answers'] = pic_schema.dump(survey_table).data
 
     today = datetime.date.today()
 
@@ -228,6 +227,7 @@ def all_surveys():
 
 
 @blueprint.route('/dashboard/feedback/<id>', methods=['GET'])
+@login_required
 def survey_detail(id):
     survey = Survey.query.filter_by(id=id)
     return render_template(

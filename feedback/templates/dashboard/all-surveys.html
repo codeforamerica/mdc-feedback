@@ -5,28 +5,34 @@
 <section class='row' id='details-view'>
 
   <h3>All Survey Responses</h3>
+
+  <p>Members of the public have access to the experience rating of all surveys. Miami-Dade County employees have access to open-ended answers, which may contain personal information.</p>
   <p><i>Pro-tip: Click the table headers to sort each column.</i></p>
-  
+
   <div class='twelve columns' id='survey-details'>
-     
+
     <table class='sticky-table sortable'>
-      
+
       <thead class='sticky-thead'>
-        
+
         <tr>
           <th>Date</th>
-          <th>Method</th>
-          <th>Language</th>
+          <th class="hidden">Method</th>
+          <th class="hidden">Language</th>
           <th>Rating</th>
           <th>Role</th>
           <th>Route</th>
+          {% if current_user and current_user.is_authenticated() %}
           <th>Add'l Comments</th>
+          {% endif %}
           <th>Followup?</th>
+          {% if current_user and current_user.is_authenticated() %}
           <th>Survey ID</th>
+          {% endif %}
         </tr>
-        
+
       </thead>
-      
+
       <tbody>
         {% for item in resp_obj %}
 
@@ -38,17 +44,22 @@
           <td>{{ item.rating }}</td>
           <td>{{ item.role_en }}</td>
           <td>{{ item.route_en }}</td>
+
+          {% if current_user and current_user.is_authenticated() %}
           <td>{{ item.more_comments }}</td>
+          {% endif %}
           <td class='follow-up'>{{ 'Yes' if item.follow_up else 'No' }}</td>
+          {% if current_user and current_user.is_authenticated() %}
           <td class='table-button'>
             <a href="{{ url_for('dashboard.survey_detail', id=item.id) }}">#{{ item.id }} &raquo;</a>
           </td>
+          {% endif %}
         </tr>
-        
+
         {% endfor %}
       </tbody>
     </table>
-     
+
   </div>
 
 </section> <!-- close row -->

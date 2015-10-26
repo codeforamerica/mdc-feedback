@@ -27,7 +27,6 @@ VIOLATIONS_API_URL = VIOLATIONS_URL + '?$select=date_trunc_ym(ticket_created_dat
 VIOLATIONS_LOCATIONS_API_URL = VIOLATIONS_URL + '?$where=ticket_created_date_time%20%3E%20%272015-01-01%27'
 VIOLATIONS_BY_TYPE_API_URL = DATA311_URL + '?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-01%27'
 
-
 '''
 sophia trying to python
 '''
@@ -36,8 +35,6 @@ sophia trying to python
 p_month = datetime.datetime.now() - relativedelta(months=1)
 p_month = p_month.strftime("%Y-%m-01")
 c_month = (datetime.date.today().strftime("%Y-%m-01"))
-
-#print c_month
 
 VIOLATIONS_LAST_30 = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + c_month + '%27&$limit=50000'
 
@@ -106,9 +103,12 @@ def lifespan_of_json(json_result):
 
         lifespan_array.append((permit_date-start_date).days)
 
-    result1 = np.mean(lifespan_array)
-    max_val = np.amax(lifespan_array)
-    min_val = np.amin(lifespan_array)
+    try:
+        result1 = np.mean(lifespan_array)
+        max_val = np.amax(lifespan_array)
+        min_val = np.amin(lifespan_array)
+    except ValueError:
+        return -1, 0, 0
 
     if not math.isnan(result1):
         return result1, max_val, min_val
@@ -140,7 +140,7 @@ def add_permit_category_to_query(permit_type):
         'f': '0018',
         'e': '0048'
     }
-    return 'category1=%27' + lookup[permit_type] + '%27%'
+    return 'category1=%27' + lookup[permit_type] + '%27'
 
 
 def add_application_type_to_query(permit_type):
@@ -160,7 +160,27 @@ def add_application_type_to_query(permit_type):
         'rr': '%2701%27,%20%2702%27,%20%2703%27,%20%2704%27,%20%2706%27,%20%2708%27,%20%2709%27'
     }
     try:
-        return '20AND%20application_type_code%20in(' + lookup[permit_type] + ')'
+        return '%20AND%20application_type_code%20in(' + lookup[permit_type] + ')'
+    except KeyError:
+        return ''
+
+
+def add_residential_commercial_to_query(permit_type):
+    '''
+    permit_type is as follows:
+    'p': Pools
+    'f': Fences/Walls
+    'e': Screen Enclosures
+
+    If the return value is -1 the API is down.
+    '''
+    lookup = {
+        'p': 'R',
+        'f': 'R',
+        'e': 'R'
+    }
+    try:
+        return '%20AND%20residential_commercial=%27' + lookup[permit_type] + '%27'
     except KeyError:
         return ''
 
@@ -186,10 +206,10 @@ def lifespan_api_call(arg1=0, arg2=30, permit_type='nc'):
     API = API_URL + '?$where=' + C_PROCESS + '%20AND%20master_permit_number=0%20AND%20permit_type=%27BLDG%27%20AND%20permit_issued_date%20%3E=%20%27' + days_30 + '%27%20AND%20permit_issued_date%20<%20%27' + days_0 + '%27%20AND%20'
 
     API = API + add_permit_category_to_query(permit_type)
+    API = API + add_residential_commercial_to_query(permit_type)
     API = API + add_application_type_to_query(permit_type)
 
     API = API + '&$order=permit_issued_date%20desc'
-    # print API
     response = requests.get(API)
     json_result = response.json()
     return lifespan_of_json(json_result)
@@ -242,13 +262,11 @@ def trade(arg1=30, arg2='PLUM'):
     API = API_URL + '?$select=count(*)%20as%20total&$where=' + NOT_ROOFING + '%20AND%20application_date%3C%27' + days + '%27%20AND%20permit_type=%27' + arg2 + '%27'
     resp = requests.get(API)
     resp = resp.json()
-    print API, resp
     total = float(resp[0]['total'])
 
     API = API_URL + '?$select=count(*)%20as%20total&&$where=' + NOT_ROOFING + '%20AND%20application_date%3C%27' + days + '%27%20AND%20application_date=permit_issued_date&permit_type=%27' + arg2 + '%27'
     resp = requests.get(API)
     resp = resp.json()
-    print API, resp
     sameday = float(resp[0]['total'])
 
     return {
@@ -264,7 +282,6 @@ def api_count_call(arg1=0, arg2=30, field=''):
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
     API = API_URL + '?$select=count(*)%20as%20total&$where=' + NOT_ROOFING + '%20AND%20' + C_PROCESS + '%20AND%20permit_type=%27BLDG%27%20AND%20master_permit_number=0%20AND%20' + field + '%20%3E%20%27' + days_30 + '%27%20AND%20' + field + '%20<%20%27' + days_0 + '%27'
-    # print API
     response = requests.get(API)
     json_result = response.json()
     total = float(json_result[0]['total'])
@@ -283,8 +300,13 @@ def get_master_permit_counts(arg1):
                   (100 to -100)
     '''
     now = api_count_call(0, 30, arg1)
+    then = api_count_call(365, 395, arg1)
+    try:
+        yoy = ((now-then)/then)*100
+    except ZeroDivisionError:
+        yoy = 0
 
     return {
         'val': int(now),
-        'yoy': None
+        'yoy': yoy
     }
