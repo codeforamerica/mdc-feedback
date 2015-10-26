@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 42f454afa7aa
+Revision ID: 158611c2b5f8
 Revises: None
-Create Date: 2015-10-21 18:48:32.305347
+Create Date: 2015-10-26 12:55:29.025476
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '42f454afa7aa'
+revision = '158611c2b5f8'
 down_revision = None
 
 from alembic import op
@@ -38,15 +38,15 @@ def upgrade():
     sa.Column('date_submitted', sa.DateTime(), nullable=False),
     sa.Column('role', sa.Integer(), nullable=False),
     sa.Column('purpose', sa.Integer(), nullable=False),
-    sa.Column('purpose_other', sa.String(length=200), nullable=True),
+    sa.Column('purpose_other', sa.String(length=500), nullable=True),
     sa.Column('route', sa.Integer(), nullable=True),
     sa.Column('rating', sa.Integer(), nullable=False),
     sa.Column('get_done', sa.Boolean(), nullable=True),
     sa.Column('best', sa.Integer(), nullable=True),
-    sa.Column('best_other', sa.String(length=200), nullable=True),
+    sa.Column('best_other', sa.String(length=500), nullable=True),
     sa.Column('worst', sa.Integer(), nullable=True),
-    sa.Column('worst_other', sa.String(length=200), nullable=True),
-    sa.Column('improvement', sa.String(length=200), nullable=True),
+    sa.Column('worst_other', sa.String(length=500), nullable=True),
+    sa.Column('improvement', sa.String(length=500), nullable=True),
     sa.Column('follow_up', sa.Boolean(), nullable=True),
     sa.Column('contact', sa.String(length=50), nullable=True),
     sa.Column('more_comments', sa.String(length=2000), nullable=True),
