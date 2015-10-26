@@ -2,22 +2,6 @@
 
 SURVEY_DAYS = 30
 
-EMAIL = {}
-EMAIL[1] = ['mdcfeedbackdev+1a@gmail.com', 'mdcfeedbackdev+1b@gmail.com']
-EMAIL[2] = ['mdcfeedbackdev+2a@gmail.com', 'mdcfeedbackdev+2b@gmail.com']
-EMAIL[3] = ['mdcfeedbackdev+3a@gmail.com', 'mdcfeedbackdev+3b@gmail.com']
-EMAIL[4] = ['mdcfeedbackdev+4a@gmail.com', 'mdcfeedbackdev+4b@gmail.com']
-EMAIL[5] = ['mdcfeedbackdev+5a@gmail.com', 'mdcfeedbackdev+5b@gmail.com']
-EMAIL[6] = ['mdcfeedbackdev+6a@gmail.com', 'mdcfeedbackdev+6b@gmail.com']
-EMAIL[7] = ['mdcfeedbackdev+7a@gmail.com', 'mdcfeedbackdev+7b@gmail.com']
-EMAIL[8] = ['mdcfeedbackdev+8a@gmail.com', 'mdcfeedbackdev+8b@gmail.com']
-EMAIL[9] = ['mdcfeedbackdev+9a@gmail.com', 'mdcfeedbackdev+9b@gmail.com']
-EMAIL[10] = ['mdcfeedbackdev+10a@gmail.com', 'mdcfeedbackdev+10b@gmail.com']
-EMAIL[11] = ['mdcfeedbackdev+11a@gmail.com', 'mdcfeedbackdev+11b@gmail.com']
-EMAIL[12] = ['mdcfeedbackdev+12a@gmail.com', 'mdcfeedbackdev+12b@gmail.com']
-EMAIL[13] = ['mdcfeedbackdev+13a@gmail.com', 'mdcfeedbackdev+13b@gmail.com']
-EMAIL[14] = ['mdcfeedbackdev+14a@gmail.com', 'mdcfeedbackdev+14b@gmail.com']
-
 BEST = {}
 BEST['ex. Getting questions answered and explained'] = 1
 BEST['ex. Finishing tasks quickly'] = 2

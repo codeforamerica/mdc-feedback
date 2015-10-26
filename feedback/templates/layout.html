@@ -41,19 +41,18 @@
 <!-- nav active states -->
 <!-- begin stuff that requires authentication check -->
 
-	{% if active_page == 'Dashboard' %}
+  {% if active_page == 'Dashboard' %}
 
-			{% set navigation_bar = [
-				('/users/manage', 'Manage Users')
-			] -%}
+      {% set navigation_bar = [
+        ('/users/manage', 'Manage Users'),
+        ('/surveys', 'Set Survey Lead E-mails')
+      ] -%}
 
-		{% else %}
+    {% else %}
 
-				{% set navigation_bar = [
-
-				('/', 'Dashboard')
-
-			] -%}
+      {% set navigation_bar = [
+        ('/', 'Dashboard')
+      ] -%}
 
 		{% endif %}
 

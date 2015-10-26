@@ -208,7 +208,6 @@ def lifespan_api_call(arg1=0, arg2=30, permit_type='nc'):
     API = API + add_application_type_to_query(permit_type)
 
     API = API + '&$order=permit_issued_date%20desc'
-    # print API
     response = requests.get(API)
     json_result = response.json()
     return lifespan_of_json(json_result)
@@ -261,13 +260,11 @@ def trade(arg1=30, arg2='PLUM'):
     API = API_URL + '?$select=count(*)%20as%20total&$where=' + NOT_ROOFING + '%20AND%20application_date%3C%27' + days + '%27%20AND%20permit_type=%27' + arg2 + '%27'
     resp = requests.get(API)
     resp = resp.json()
-    print API, resp
     total = float(resp[0]['total'])
 
     API = API_URL + '?$select=count(*)%20as%20total&&$where=' + NOT_ROOFING + '%20AND%20application_date%3C%27' + days + '%27%20AND%20application_date=permit_issued_date&permit_type=%27' + arg2 + '%27'
     resp = requests.get(API)
     resp = resp.json()
-    print API, resp
     sameday = float(resp[0]['total'])
 
     return {
@@ -283,7 +280,6 @@ def api_count_call(arg1=0, arg2=30, field=''):
     days_30 = (datetime.date.today() - datetime.timedelta(arg2)).strftime("%Y-%m-%d")
 
     API = API_URL + '?$select=count(*)%20as%20total&$where=' + NOT_ROOFING + '%20AND%20' + C_PROCESS + '%20AND%20permit_type=%27BLDG%27%20AND%20master_permit_number=0%20AND%20' + field + '%20%3E%20%27' + days_30 + '%27%20AND%20' + field + '%20<%20%27' + days_0 + '%27'
-    # print API
     response = requests.get(API)
     json_result = response.json()
     total = float(json_result[0]['total'])

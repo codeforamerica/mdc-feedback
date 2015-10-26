@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% set active_page = 'Manage Users' %}
+{% block content %}
+
+  <div id="container">
+
+    <section id='edit-stakeholders' class='row twelve columns'>
+
+    <form id="stakeholderForm" class="form form-stakeholders" method="POST" action="{{ url_for('surveys.survey_index') }}" role="form">
+      <ul>
+        {% for n in range(1,15) %}
+        <li>{{ routes[n] }}</li>
+        <li><input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}{{ stakeholders[n-1].email_list }}{% endif %}"></li>
+        {% endfor %}
+      </ul>
+      <input type="submit" value="Submit">
+    </form>
+    <p><small>You may separate multiple e-mail addresses with a comma.</small></p>
+
+    </section>
+  </div><!--!/#container -->
+
+{% endblock %}
