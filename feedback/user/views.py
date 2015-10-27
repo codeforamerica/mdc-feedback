@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+today = datetime.date.today()
+
 from flask import (
     Blueprint, render_template, redirect,
     url_for, flash, current_app
@@ -39,6 +42,7 @@ def user_create():
         return render_template(
             'user/add-edit.html',
             form=form,
+            date=today.strftime('%B %d, %Y'),
             form_action=url_for('user.user_create'),
             action='Add User')
 
@@ -60,6 +64,7 @@ def user_edit(id):
         return render_template(
             'user/add-edit.html',
             form=form,
+            date=today.strftime('%B %d, %Y'),
             form_action=url_for('user.user_edit', id=id),
             action='Edit User')
 
@@ -85,6 +90,7 @@ def user_manage():
         "user/manage.html",
         current_user=current_user,
         users=users,
+        date=today.strftime('%B %d, %Y'),
         form=form,
         title='Manage Users')
 

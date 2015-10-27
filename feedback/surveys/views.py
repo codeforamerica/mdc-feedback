@@ -2,6 +2,9 @@
 
 import re
 
+import datetime
+today = datetime.date.today()
+
 from flask import (
     Blueprint, render_template,
     flash, request, redirect, url_for
@@ -75,4 +78,5 @@ def survey_index():
     return render_template(
         "surveys/edit-stakeholders.html",
         routes=ROUTES,
+        date=today.strftime('%B %d, %Y'),
         stakeholders=stakeholders)

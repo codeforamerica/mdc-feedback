@@ -4,6 +4,9 @@
 import json
 import urllib
 
+import datetime
+today = datetime.date.today()
+
 try:
     import urllib.request as urllib2
 except ImportError:
@@ -28,7 +31,7 @@ def load_user(id):
 
 @blueprint.route('/login', methods=['GET'])
 def login():
-    return render_template("user/login.html", current_user=current_user)
+    return render_template("user/login.html", current_user=current_user, date=today.strftime('%B %d, %Y'),)
 
 
 @blueprint.route('/logout', methods=['GET', 'POST'])
@@ -38,7 +41,7 @@ def logout():
         return 'OK'
     else:
         flash('You are logged out.', 'info')
-        return render_template('user/logout.html')
+        return render_template('user/logout.html', date=today.strftime('%B %d, %Y'),)
 
 
 @blueprint.route('/auth', methods=['POST'])
