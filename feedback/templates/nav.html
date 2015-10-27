@@ -1,31 +1,30 @@
 <header class='row'>
-  	<div class='three columns'>
+  
+  <ul id='header-nav'>
+    
+    <li class='u-pull-left u-width-30'><a id='logo' class='u-pull-left' href="{{ url_for('dashboard.home') }}"><img src="{{ url_for('static', filename='miami-logo-white.png') }}"></a></li>
+    
+    <li><h3 id='header-date'>{{ date }}</h3></li>
+    
+    <li class='u-pull-right u-width-30'>
+    
+      {% if current_user and current_user.is_authenticated() %}
 
-			<a id='logo' href="{{ url_for('dashboard.home') }}"><img src="{{ url_for('static', filename='miami-logo-white.png') }}"></a>
-	</div>
-
-	<div class='six columns'>
-
-			<h3 id='header-date'>{{ date }}</h3>
-	</div>
-
-	<div class='three columns'>
-
-		{% if current_user and current_user.is_authenticated() %}
-
-		<ul class='main-nav'>
-			<li id='sign-out'><a href="#" class="navbar-link js-signout">Sign Out</a></li>
-			<li id='admin'>Logged in as {{ current_user.email }}</li>
-		</ul>
-
-		{% else %}
-
-		<ul class='main-nav unauthed'>
-			<li><a href="#" class="navbar-link js-signin">County Employee Sign In</a></li>
-		</ul>
-
-		{% endif %}
-
-	</div>
-
+  		<ul class='main-nav'>
+  			<li id='sign-out'><a href="#" class="navbar-link js-signout">Sign Out</a></li>
+  			<li id='admin'>{{ current_user.email }}</li>
+  		</ul>
+  
+  		{% else %}
+  
+  		<ul class='main-nav unauthed'>
+  			<li><a href="#" class="navbar-link js-signin">County Employee Sign In</a></li>
+  		</ul>
+  
+  		{% endif %}
+		
+    </li>
+  
+  </ul>
+ 
 </header>

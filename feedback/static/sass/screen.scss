@@ -228,6 +228,10 @@ a.what-is-this {
 	height:auto;
 }
 
+.u-width-30 {
+  
+  width:30%;
+}
 /* GLOBAL CONTAINER, NAV */
 
 #container {
@@ -241,7 +245,21 @@ a.what-is-this {
 	
 }
 
-.main-nav-unauthed ,
+#header-nav {
+  
+  width:90%;
+  margin:0 auto;
+  text-align: center;
+  
+  li {
+    
+    display:inline-block;
+    vertical-align: middle;
+  
+  }
+}
+
+.main-nav-unauthed,
 .main-nav {
 	
 	text-align: right;
