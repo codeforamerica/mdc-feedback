@@ -232,22 +232,35 @@
     
   <div class='twelve columns'>
       
-    <div class='four columns panel'>
+    <div class='six columns panel double-height first-panel'>
       <div class='headline'>
-        {{ dash_obj[3].title }}
-        <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a>
+        Time to permit issuance for commercial permits
+        <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-commercial-issuance'><img class='' src='static/images/question_bk.png'></a>
       </div>
       <div class='content-container'>
-        <p>New commercial construction and additions: {{ dash_obj[3].data.nc.val }} days, {{ dash_obj[3].data.nc.min }} min, {{ dash_obj[3].data.nc.max }} max</p>
-        <p>Renovations, alterations or repairs: {{ dash_obj[3].data.rc.val }} days, {{ dash_obj[3].data.rc.min }} min, {{ dash_obj[3].data.rc.max }} max</p>
-        <p>Signs (Non-Electric): {{ dash_obj[3].data.s.val }} days, {{ dash_obj[3].data.s.min }} min, {{ dash_obj[3].data.s.max }} max</p>
+        <h5 class='bold panel-header'>New commercial construction and additions:</h5>
+        <li>{{ dash_obj[3].data.nc.val }} days on average</li>
+        <li>{{ dash_obj[3].data.nc.min }} days min.</li>
+        <li class='last-list'>{{ dash_obj[3].data.nc.max }} days max.</li>
+        
+        
+        <h5 class='bold panel-header'>Renovations, alterations or repairs:</h5>
+        <li>{{ dash_obj[3].data.rc.val }} days on average</li>
+        <li>{{ dash_obj[3].data.rc.min }} days min.</li>
+        <li class='last-list'>{{ dash_obj[3].data.rc.max }} days max.</li>
+        
+        
+        <h5 class='bold panel-header'>Signs (Non-Electric):</h5>
+        <li>{{ dash_obj[3].data.s.val }} days on average</li>
+        <li>{{ dash_obj[3].data.s.min }} days min.</li>
+        <li class='last-list'>{{ dash_obj[3].data.s.max }} days max.</li>
 
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
-    <div class='four columns panel last-panel'>
+    <div class='six columns panel double-height last-panel'>
       <div class='headline'>
-        {{ dash_obj[4].title }}
+        <!-- {{ dash_obj[4].title }} --> Time to permit issuance for residential permits
         <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a>
       </div>
       <div class='content-container'>
