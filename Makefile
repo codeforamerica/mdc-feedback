@@ -16,13 +16,15 @@ db.empty:
 	python manage.py db upgrade
 	python manage.py seed_roles
 	make load_from_socrata
+
+deploy:
+	git push heroku master
+
+load_users:
 	python manage.py seed_user -e ehsiung@codeforamerica.org -r 1
 	python manage.py seed_user -e sdengo@codeforamerica.org -r 1
 	python manage.py seed_user -e mathias@codeforamerica.org -r 1
 	python manage.py seed_user -e sarasti@miamidade.gov -r 1
-
-deploy:
-	git push heroku master
 
 load_from_socrata:
 	python ./feedback/scripts/pull_data.py
