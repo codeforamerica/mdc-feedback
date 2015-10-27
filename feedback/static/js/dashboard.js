@@ -353,7 +353,7 @@ $(document).ready(function () {
 
   surveysByPurposeChart = new Chart(sptx).HorizontalBar(surveysByPurpose);
   // end surveys by purpose
-
+  
   // Get context with jQuery - using jQuery's .get() method.
   var ctx = $("#myChart").get(0).getContext("2d"),
       jsondata = JSON.parse($("#jsondata")[0].childNodes[0].data),
@@ -646,8 +646,101 @@ $(document).ready(function () {
   }
 
   $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
-  var barChart2 = new Chart(pttx).HorizontalBar(vdata2);
-
+  var barChart2 = new Chart(pttx).HorizontalBar(vdata2),
+  
+      plumbingChart = $("#p-plumbing").get(0).getContext("2d"),
+      buildingChart = $("#p-building").get(0).getContext("2d"),
+      fireChart = $("#p-fire").get(0).getContext("2d"),
+      elexChart = $("#p-electrical").get(0).getContext("2d"),
+      zoningChart = $("#p-zoning").get(0).getContext("2d"),
+      pData = parseInt($('#plumbing-data').text()),
+      bData = parseInt($('#building-data').text()),
+      fData = parseInt($('#fire-data').text()),
+      eData = parseInt($('#electrical-data').text()),
+      zData = parseInt($('#zoning-data').text()),
+      
+      plumbingData = [
+        {
+          value: pData,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: 'Plumbing: same-day'
+        },
+        {
+          value: (100 - pData),
+          color: purple_2,
+          highlight: t_purple_2,
+          label: 'Plumbing'
+        }
+      ],
+      
+      buildingData = [
+        {
+          value: bData,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: 'Building: same-day'
+        },
+        {
+          value: (100 - bData),
+          color: purple_2,
+          highlight: t_purple_2,
+          label: 'Building'
+        }
+      ],
+      
+      fireData = [
+        {
+          value: fData,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: 'Fire: same-day'
+        },
+        {
+          value: (100 - fData),
+          color: purple_2,
+          highlight: t_purple_2,
+          label: 'Fire'
+        }
+      ],
+      
+      elexData = [
+        {
+          value: eData,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: 'Electrical: same-day'
+        },
+        {
+          value: (100 - eData),
+          color: purple_2,
+          highlight: t_purple_2,
+          label: 'Electrical'
+        }
+      ],
+      
+      zoningData = [
+        {
+          value: zData,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: 'Zoning: same-day'
+        },
+        {
+          value: (100 - zData),
+          color: purple_2,
+          highlight: t_purple_2,
+          label: 'Zoning'
+        }
+      ],
+      
+      pChart = new Chart(plumbingChart).Pie(plumbingData),
+      bChart = new Chart(buildingChart).Pie(buildingData),
+      fChart = new Chart(fireChart).Pie(fireData),
+      eChart = new Chart(elexChart).Pie(elexData),
+      zChart = new Chart(zoningChart).Pie(zoningData);
+      
+        
   /************************* LEAFLET MAPPING *************************/
 
   //25.7667° N, 80.2000° W

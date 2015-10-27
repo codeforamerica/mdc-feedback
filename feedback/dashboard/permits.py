@@ -27,6 +27,10 @@ VIOLATIONS_API_URL = VIOLATIONS_URL + '?$select=date_trunc_ym(ticket_created_dat
 VIOLATIONS_LOCATIONS_API_URL = VIOLATIONS_URL + '?$where=ticket_created_date_time%20%3E%20%272015-01-01%27'
 VIOLATIONS_BY_TYPE_API_URL = DATA311_URL + '?&case_owner=Regulatory_and_Economic_Resources&$select=issue_type,%20count(*)%20AS%20total&$group=issue_type&$where=ticket_created_date_time%20%3E=%20%272015-01-01%27'
 
+'''
+sophia trying to python
+'''
+
 #p_days_30 = (datetime.date.today() - datetime.timedelta(30)).strftime("%Y-%m-%d")
 p_month = datetime.datetime.now() - relativedelta(months=1)
 p_month = p_month.strftime("%Y-%m-01")
@@ -35,7 +39,6 @@ c_month = (datetime.date.today().strftime("%Y-%m-01"))
 VIOLATIONS_LAST_30 = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + c_month + '%27&$limit=50000'
 
 VIOLATIONS_PREV_MONTH = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + p_month + '%27&$limit=50000'
-
 
 def api_health():
     '''
@@ -83,7 +86,6 @@ def dump_socrata_api(datatype='p'):
     }
     response = requests.get(data_table.get(datatype))
     return response.json()
-
 
 def lifespan_of_json(json_result):
     ''' Given a Socrata JSON object, it gets the "lifespan" of the
