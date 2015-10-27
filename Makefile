@@ -16,6 +16,7 @@ db.empty:
 	python manage.py db upgrade
 	python manage.py seed_roles
 	make load_from_socrata
+	make load_users
 
 deploy:
 	git push heroku master

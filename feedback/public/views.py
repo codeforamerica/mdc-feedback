@@ -87,8 +87,3 @@ def auth():
         current_app.logger.debug(
             'NOTINDB: User {} not in DB -- aborting!'.format(email))
         abort(403)
-
-
-@blueprint.route("/manage-users/",  methods=['GET'])
-def manage_users():
-    return render_template("public/manage-users.html", title='Manage Users')
