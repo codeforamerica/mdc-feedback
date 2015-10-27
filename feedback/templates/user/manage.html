@@ -4,46 +4,45 @@
 
 {% block content %}
   <div id="container">
-
     <section id='user-list' class='row twelve columns'>
 
-      <h3>The following people are able to access the internal dashboard:</h3>
-      
-      <ul class='user-list'>
-        
-        <li>Donna Romito | Department, title | <a href='mailto:'>e-mail@email.com</a> <a href=# class='user-delete button'>Remove User</a></li>
-        <li>Christa Erml-Martinez | Department, title | <a href='mailto:'>e-mail@email.com</a> <a href=# class='user-delete button'>Remove User</a></li>
-        <li>Michael Sarasti | Department, title | <a href='mailto:'>e-mail@email.com</a> <a href=# class='user-delete button'>Remove User</a></li>
-        
-      </ul>
+      <h3>Manage your users.</h3>
 
-      <a href=# id='add-user' class='button'>Add a new user</a>
-      <p class='alert-alert-warning'>Warning: Users given access can also add and delete other users.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Permissions</th>
+            {% if current_user.is_admin() %}
+            <th>Actions</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user.full_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role.name }}</td>
+            {% if current_user.is_admin() %}
+            <td>
+              <a class="" href="{{ url_for('user.user_edit', id=user.id) }}">Edit user</a>
+              <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
+                <button class="" type="submit">Delete user</button>
+              </form>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tobdy>
+      </table>
+
+      {% if current_user.is_admin() %}
+      <a class='add-user button' href="{{ url_for('user.user_create') }}">Add a new user</a>
+      {% endif %}
+
     </section>
-    
-    <section id='add-user-form' class='row twelve columns hidden'>
-			
-			<h3>Add a new user.</h3>
-			
-			<div class='row'>
-				<h4>What's your user's name?</h4>
-				<input class='six columns' type='text' placeholder="First and last name">
-			</div>
-			
-			<div class='row'>
-				<h4>What's your user's e-mail address?</h4>
-				<input class='six columns' type="email" placeholder='name@miamidade.gov'>
-			</div>
-			
-			<div class='row'>
-				<h4>What's your user's department and title?</h4>
-				<input class='six columns' type="email" placeholder='RER, Director'>
-			</div>
-			
-						
-			<span class='button' id='submit-new-user'>Create new user</span>
-			
-		</section>
 
   </div><!--!/#container -->
 
