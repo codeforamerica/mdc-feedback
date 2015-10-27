@@ -101,9 +101,12 @@ def lifespan_of_json(json_result):
 
         lifespan_array.append((permit_date-start_date).days)
 
-    result1 = np.mean(lifespan_array)
-    max_val = np.amax(lifespan_array)
-    min_val = np.amin(lifespan_array)
+    try:
+        result1 = np.mean(lifespan_array)
+        max_val = np.amax(lifespan_array)
+        min_val = np.amin(lifespan_array)
+    except ValueError:
+        return -1, 0, 0
 
     if not math.isnan(result1):
         return result1, max_val, min_val
@@ -160,6 +163,26 @@ def add_application_type_to_query(permit_type):
         return ''
 
 
+def add_residential_commercial_to_query(permit_type):
+    '''
+    permit_type is as follows:
+    'p': Pools
+    'f': Fences/Walls
+    'e': Screen Enclosures
+
+    If the return value is -1 the API is down.
+    '''
+    lookup = {
+        'p': 'R',
+        'f': 'R',
+        'e': 'R'
+    }
+    try:
+        return '%20AND%20residential_commercial=%27' + lookup[permit_type] + '%27'
+    except KeyError:
+        return ''
+
+
 @cache.memoize(timeout=86400)
 def lifespan_api_call(arg1=0, arg2=30, permit_type='nc'):
     '''
@@ -181,6 +204,7 @@ def lifespan_api_call(arg1=0, arg2=30, permit_type='nc'):
     API = API_URL + '?$where=' + C_PROCESS + '%20AND%20master_permit_number=0%20AND%20permit_type=%27BLDG%27%20AND%20permit_issued_date%20%3E=%20%27' + days_30 + '%27%20AND%20permit_issued_date%20<%20%27' + days_0 + '%27%20AND%20'
 
     API = API + add_permit_category_to_query(permit_type)
+    API = API + add_residential_commercial_to_query(permit_type)
     API = API + add_application_type_to_query(permit_type)
 
     API = API + '&$order=permit_issued_date%20desc'
@@ -274,8 +298,13 @@ def get_master_permit_counts(arg1):
                   (100 to -100)
     '''
     now = api_count_call(0, 30, arg1)
+    then = api_count_call(365, 395, arg1)
+    try:
+        yoy = ((now-then)/then)*100
+    except ZeroDivisionError:
+        yoy = 0
 
     return {
         'val': int(now),
-        'yoy': None
+        'yoy': yoy
     }

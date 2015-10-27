@@ -3,12 +3,16 @@
 import datetime
 import os
 
+from flask import current_app
 from flask_script import Manager, Shell, Server
 from flask_migrate import MigrateCommand
 
 from feedback.app import create_app
 from feedback.database import db
-from feedback.settings import DevelopmentConfig, ProductionConfig, StagingConfig, TestingConfig
+from feedback.settings import (
+    DevelopmentConfig, ProductionConfig,
+    StagingConfig, TestingConfig
+)
 
 app = create_app()
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -36,7 +40,8 @@ def seed_user(email, role):
     seed_email = email if email else app.config.get('SEED_EMAIL')
     user_exists = User.query.filter(User.email == seed_email).first()
     if user_exists:
-        print 'User {email} already exists'.format(email=seed_email)
+        current_app.logger.info(
+            'User {email} already exists'.format(email=seed_email))
     else:
         try:
             new_user = User.create(
@@ -46,10 +51,30 @@ def seed_user(email, role):
             )
             db.session.add(new_user)
             db.session.commit()
-            print 'User {email} successfully created!'.format(email=seed_email)
+            current_app.logger.info(
+                'User {email} successfully created!'.format(
+                    email=seed_email))
         except Exception, e:
-            print 'Something went wrong: {exception}'.format(exception=e.message)
+            current_app.logger.error(
+                'Something went wrong: {exception}'.format(exception=e.message))
     return
+
+
+@manager.command
+def seed_roles():
+    from feedback.user.models import Role
+
+    try:
+        db.session.add(Role.create(name='admin'))
+        db.session.add(Role.create(name='user'))
+        db.session.commit()
+    except Exception, e:
+        current_app.logger.error(
+            'SEEDERROR | Error: {}'.format(
+                e
+            )
+        )
+        return False
 
 
 @manager.command
