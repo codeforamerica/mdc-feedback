@@ -33,8 +33,14 @@ def user_create():
             full_name=form.full_name.data,
             role_id=form.role_id.data)
 
-    flash('Created a new profile.', 'alert-success')
-    return redirect(url_for('user.user_manage'))
+        flash('Created a new profile.', 'alert-success')
+        return redirect(url_for('user.user_manage'))
+    else:
+        return render_template(
+            'user/add-edit.html',
+            form=form,
+            form_action=url_for('user.user_create'),
+            action='Add User')
 
 
 @blueprint.route('/edit/<id>', methods=['GET', 'POST'])
@@ -44,9 +50,9 @@ def user_edit(id):
     form = UserForm(obj=user)
     if form.validate_on_submit():
         user.update(
-            full_name=form.full_name,
-            email=form.email,
-            role_id=form.role_id
+            full_name=form.full_name.data,
+            email=form.email.data,
+            role_id=form.role_id.data
         )
         flash('Profile edited.', 'alert-success')
         return redirect(url_for('user.user_manage'))
@@ -54,6 +60,7 @@ def user_edit(id):
         return render_template(
             'user/add-edit.html',
             form=form,
+            form_action=url_for('user.user_edit', id=id),
             action='Edit User')
 
 
