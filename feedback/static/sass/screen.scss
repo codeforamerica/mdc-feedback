@@ -399,6 +399,7 @@ a.what-is-this {
 	
 	display:inline-block;
 }
+
 /* SURVEY BUILDER */
 
 #survey-questions {
@@ -678,6 +679,18 @@ tr.table-button {
 .method-web {
   
   text-transform: capitalize;
+}
+
+#centered-list {
+  
+  text-align: center;
+  
+  li {
+    
+    display:inline-block;
+    width: 19%;
+    
+  }
 }
 /********** ALERTS ************/
 

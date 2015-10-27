@@ -173,23 +173,65 @@
 
 		</div>
 
-  <div class='twelve columns'>
-    <div class='four columns panel first-panel'>
+  
+  <div class='twelve columns panel first-panel last-panel'>
+      
       <div class='headline'>
-        {{ dash_obj[6].title }} <!-- same day trade permits -->
-        <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-same-day'><img class='' src='static/images/question_bk.png'></a>
+        Trade permits, issued same-day v. total issued <!-- same day trade permits -->
+        <a rel='tipsy' title='' class='what-is-this u-pull-right tipsy-hook' href='#' id='p-same-day'><img class='' src='static/images/question_bk.png'></a>
       </div>
-      <div class='content-container'>
-        <ul>
-          <li>Plumbing: {{ '%0.2f'| format(dash_obj[6].data.PLUM.percent) }}%</li>
-          <li>Building: {{ '%0.2f'| format(dash_obj[6].data.BLDG.percent) }}%</li>
-          <li>Fire: {{ '%0.2f'| format(dash_obj[6].data.FIRE.percent) }}%</li>
-          <li>Electrical: {{ '%0.2f'| format(dash_obj[6].data.ELEC.percent) }}%</li>
-          <li>Zoning: {{ '%0.2f'| format(dash_obj[6].data.ZIPS.percent) }}%</li>
+      
+      <div class='content-container twelve-columns'>
+        
+        <ul class='hidden'>
+          <li id='plumbing-data'>{{ '%0.2f'| format(dash_obj[6].data.PLUM.percent) }}</li>
+          <li id='building-data'>{{ '%0.2f'| format(dash_obj[6].data.BLDG.percent) }}</li>
+          <li id='fire-data'>{{ '%0.2f'| format(dash_obj[6].data.FIRE.percent) }}</li>
+          <li id='electrical-data'>{{ '%0.2f'| format(dash_obj[6].data.ELEC.percent) }}</li>
+          <li id='zoning-data'>{{ '%0.2f'| format(dash_obj[6].data.ZIPS.percent) }}</li>
+        </ul>
+        
+        <ul id='centered-list'>
+          
+          <li>
+            
+            <canvas id='p-plumbing'></canvas>
+            <p>Plumbing</p>
+            
+          </li>
+          
+          <li>
+            
+            <canvas id='p-building'></canvas>
+            <p>Building</p>
+            
+          </li>
+          
+          <li>
+            <canvas id='p-fire'></canvas>
+            <p>Fire</p>
+            
+          </li>
+          
+          <li>
+            <canvas id='p-electrical'></canvas>
+            <p>Electrical</p>
+          </li>
+          
+          <li>
+            <canvas id='p-zoning'></canvas>
+            <p>Zoning</p>
+          </li>
+        
         </ul>
       </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
+      
+      <p class='details invisible-button hidden'><a href=#>View Details</a></p>
+      
     </div>
+    
+  <div class='twelve columns'>
+      
     <div class='four columns panel'>
       <div class='headline'>
         {{ dash_obj[3].title }}
@@ -217,6 +259,7 @@
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
+    
   </div>
 
 	<div class='twelve columns'>
