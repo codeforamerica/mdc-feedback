@@ -32,6 +32,8 @@
 			<canvas id='myChart'></canvas>
 		</div>
 
+		<p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
+
 	</div>
 
 	<div class='three columns panel'>
@@ -46,6 +48,8 @@
 				<p class='label'>Visitors to the PIC are rating their experience as {{ dash_obj[1].data }} out of seven stars.</p>
 			</div>
 
+			<p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
+
 		</div>
 
 	<div class='three columns panel last-panel'>
@@ -56,6 +60,7 @@
 			<canvas id='surveyChart'></canvas>
 		</div>
 
+		<p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
 	</div>
 
 <!-- merge conflict began here -->
@@ -164,6 +169,8 @@
 				<canvas id='openPermits'></canvas>
 			</div>
 
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+
 		</div>
 
   
@@ -219,6 +226,8 @@
         </ul>
       </div>
       
+      <p class='details invisible-button hidden'><a href=#>View Details</a></p>
+      
     </div>
     
   <div class='twelve columns'>
@@ -247,7 +256,7 @@
         <li class='last-list'>{{ dash_obj[3].data.s.max }} days max.</li>
 
       </div>
-      
+      <p class='details invisible-button hidden'><a href=#>View Details</a></p>
     </div>
     
     <div class='eight columns panel double-height last-panel'>
@@ -291,7 +300,7 @@
         </div>
         
       </div>
-      
+      <p class='details invisible-button hidden'><a href=#>View Details</a></p>
     </div>
     
   </div>
@@ -303,7 +312,7 @@
       <div class='content-container'>
          <canvas id='permitTypeChart'>
       </div>
-      
+      <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 
     <div class='four columns panel last-panel'>
@@ -323,7 +332,7 @@
           </span>
         </p>
       </div>
-      
+      <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
 
 </section> <!-- close row -->
@@ -341,7 +350,8 @@
 		<div class='content-container'>
 			<canvas id='violations'></canvas>
 		</div>
-		
+		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+
 	</div>
 
 	<div class='row twelve columns'>
@@ -352,7 +362,7 @@
 			<div class='content-container'>
 				<div id='leaflet'></div>
 			</div>
-			
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 		</div>
 
 		<div class='six columns panel last-panel double-height'>
@@ -361,7 +371,7 @@
 			<div class='content-container'>
 				<div id='leaflet-lein'></div>
 			</div>
-			
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
 		</div>
 
 	</div>
@@ -391,6 +401,6 @@
         <p>Min: {{ val.min }}</p>
 
       </div>
-      
+      <p class='hidden details invisible-button'><a href=#>View Details</a></p>
     </div>
 {%- endmacro %}
