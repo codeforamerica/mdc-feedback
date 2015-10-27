@@ -209,12 +209,6 @@ def home():
         )
 
 
-@blueprint.route('/dashboard', methods=['GET', 'POST'])
-def survey_index():
-    form = {}
-    return render_template('dashboard/home.html', form=form)
-
-
 @blueprint.route('/dashboard/feedback/', methods=['GET'])
 def all_surveys():
     survey_table = get_all_survey_responses(SURVEY_DAYS)
@@ -244,24 +238,3 @@ def violations_detail():
         "public/violations-detail.html",
         title='Violations by Type: Detail',
         json_obj=json_obj)
-
-
-@blueprint.route("/edit-public/",  methods=['GET'])
-def edit_public():
-    return render_template(
-        "public/edit-public.html",
-        title='Dashboard Editor - Public')
-
-
-@blueprint.route("/edit-internal/",  methods=['GET'])
-def edit_internal():
-    return render_template(
-        "public/edit-internal.html",
-        title='Dashboard Editor - Internal')
-
-
-@blueprint.route("/choose-survey/", methods=['GET'])
-def choose_survey():
-    return render_template(
-        "public/choose-survey.html",
-        title="Choose a survey")
