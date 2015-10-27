@@ -5,19 +5,22 @@
   <div id="container">
 
     <section id='edit-stakeholders' class='row twelve columns'>
+      
+    <h3>Set who receives e-mail.</h3>
+    <p>Here you can determine who receives daily e-mail updates from the dashboard system. You may separate multiple e-mail addresses with a comma.</p>
 
     <form id="stakeholderForm" class="form form-stakeholders" method="POST" action="{{ url_for('surveys.survey_index') }}" role="form">
       <ul>
         {% for n in range(1,15) %}
-        <li>{{ routes[n] }}</li>
-        <li><input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}{{ stakeholders[n-1].email_list }}{% endif %}"></li>
+        <li>{{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}{{ stakeholders[n-1].email_list }}{% endif %}"></li>
+        
         {% endfor %}
       </ul>
-      <input type="submit" value="Submit">
+      <input type="submit" value="save changes">
     </form>
-    <p><small>You may separate multiple e-mail addresses with a comma.</small></p>
 
     </section>
+    
   </div><!--!/#container -->
 
 {% endblock %}
