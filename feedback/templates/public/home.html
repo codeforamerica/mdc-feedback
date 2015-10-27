@@ -232,45 +232,75 @@
     
   <div class='twelve columns'>
       
-    <div class='six columns panel double-height first-panel'>
+    <div class='four columns panel double-height first-panel'>
       <div class='headline'>
-        Time to permit issuance for commercial permits
+        Time to issuance for commercial permits
         <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-commercial-issuance'><img class='' src='static/images/question_bk.png'></a>
       </div>
       <div class='content-container'>
-        <h5 class='bold panel-header'>New commercial construction and additions:</h5>
+        <p class='bold panel-header vertical-center-35'>New commercial construction and additions:</p>
         <li>{{ dash_obj[3].data.nc.val }} days on average</li>
         <li>{{ dash_obj[3].data.nc.min }} days min.</li>
         <li class='last-list'>{{ dash_obj[3].data.nc.max }} days max.</li>
         
         
-        <h5 class='bold panel-header'>Renovations, alterations or repairs:</h5>
+        <p class='bold panel-header'>Renovations, alterations or repairs:</p>
         <li>{{ dash_obj[3].data.rc.val }} days on average</li>
         <li>{{ dash_obj[3].data.rc.min }} days min.</li>
         <li class='last-list'>{{ dash_obj[3].data.rc.max }} days max.</li>
         
         
-        <h5 class='bold panel-header'>Signs (Non-Electric):</h5>
+        <p class='bold panel-header'>Signs (Non-Electric):</p>
         <li>{{ dash_obj[3].data.s.val }} days on average</li>
         <li>{{ dash_obj[3].data.s.min }} days min.</li>
         <li class='last-list'>{{ dash_obj[3].data.s.max }} days max.</li>
 
       </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
+      <p class='details invisible-button hidden'><a href=#>View Details</a></p>
     </div>
-    <div class='six columns panel double-height last-panel'>
+    
+    <div class='eight columns panel double-height last-panel'>
       <div class='headline'>
-        <!-- {{ dash_obj[4].title }} --> Time to permit issuance for residential permits
-        <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a>
+        <!-- {{ dash_obj[4].title }} --> Time to issuance for residential permits
+        <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-residential-issuance'><img class='' src='static/images/question_bk.png'></a>
       </div>
       <div class='content-container'>
-        <p>New residential construction: {{ dash_obj[4].data.nr.val }} days, {{ dash_obj[4].data.nr.min }} min, {{ dash_obj[4].data.nr.max }} max</p>
-        <p>Renovations, alterations or repairs: {{ dash_obj[4].data.rr.val }} days, {{ dash_obj[4].data.rr.min }} min, {{ dash_obj[4].data.rr.max }} max</p>
-        <p>Swimming pools: {{ dash_obj[4].data.p.val }} days, {{ dash_obj[4].data.p.min }} min, {{ dash_obj[4].data.p.max }} max</p>
-        <p>Fences and walls: {{ dash_obj[4].data.f.val }} days, {{ dash_obj[4].data.f.min }} min, {{ dash_obj[4].data.f.max }} max</p>
-        <p>Screen enclosures: {{ dash_obj[4].data.e.val }} days, {{ dash_obj[4].data.e.min }} min, {{ dash_obj[4].data.e.max }} max</p>
+        
+        <div class='six columns vertical-center-35'>
+        
+          <p class='bold panel-header'>New residential construction:</p>
+          <li>{{ dash_obj[4].data.nr.val }} days on average</li>
+          <li>{{ dash_obj[4].data.nr.min }} days min.</li>
+          <li class='last-list'>{{ dash_obj[4].data.nr.max }} days max.</li>
+          
+          
+          <p class='bold panel-header'>Renovations, alterations or repairs:</p>
+          <li>{{ dash_obj[4].data.rr.val }} days on average</li>
+          <li>{{ dash_obj[4].data.rr.min }} days min.</li>
+          <li class='last-list'>{{ dash_obj[4].data.rr.max }} days max.</li>
+          
+          <p class='bold panel-header'>Swimming pools:</p>
+          <li>{{ dash_obj[4].data.p.val }} days on average</li>
+          <li>{{ dash_obj[4].data.p.min }} days min.</li>
+          <li class='last-list'>{{ dash_obj[4].data.p.max }} days max.</li>
+        
+        </div>
+        
+        <div class='six columns vertical-center-35'>
+        
+          <p class='bold panel-header'>Fences and walls:</p>
+          <li>{{ dash_obj[4].data.f.val }} days on average</li>
+          <li>{{ dash_obj[4].data.f.min }} days min.</li>
+          <li class='last-list'>{{ dash_obj[4].data.f.max }} days max.</li>
+          
+          <p class='bold panel-header'>Screen enclosures:</p>
+          <li>{{ dash_obj[4].data.e.val }} days on average</li>
+          <li>{{ dash_obj[4].data.e.min }} days min.</li>
+          <li class='last-list'>{{ dash_obj[4].data.e.max }} days max.</li>
+        </div>
+        
       </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
+      <p class='details invisible-button hidden'><a href=#>View Details</a></p>
     </div>
     
   </div>
