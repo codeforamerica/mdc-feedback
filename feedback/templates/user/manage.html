@@ -39,7 +39,7 @@
       </table>
 
       {% if current_user.is_admin() %}
-      <li class='add-user button'>Add a new user</li>
+      <a class='add-user button' href="{{ url_for('user.user_create') }}">Add a new user</a>
       {% endif %}
 
     </section>

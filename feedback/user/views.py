@@ -20,7 +20,7 @@ blueprint = Blueprint(
 )
 
 
-@blueprint.route('/create', methods=['POST'])
+@blueprint.route('/create', methods=['GET', 'POST'])
 @requires_roles('admin')
 def user_create():
     form = UserForm()
