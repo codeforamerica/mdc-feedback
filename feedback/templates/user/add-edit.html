@@ -9,7 +9,7 @@
 
       <h3>{{ action }}</h3>
 
-      <form action="{{ url_for('user.user_create') }}" method="POST">
+      <form action="{{ form_action }}" method="POST">
         {{ form.csrf_token }}
         <div class='row'>
           <h4>User's name</h4>
