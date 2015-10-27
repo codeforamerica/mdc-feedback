@@ -99,10 +99,10 @@ def home():
                 "sms_es": sms_rows.count('es')
             },
             "labels": {
-                "web_en": "Web (EN)",
-                "web_es": "Web (ES)",
-                "sms_en": "SMS (EN)",
-                "sms_es": "SMS (ES)"
+                "web_en": "Web (English)",
+                "web_es": "Web (Spanish)",
+                "sms_en": "Text (English)",
+                "sms_es": "Text (Spanish)"
             }
         },
         {
