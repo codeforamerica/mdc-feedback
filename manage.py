@@ -13,6 +13,8 @@ from feedback.settings import (
     DevelopmentConfig, ProductionConfig,
     StagingConfig, TestingConfig
 )
+from feedback.surveys.constants import ROUTES
+
 
 app = create_app()
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -28,6 +30,38 @@ def _make_context():
     return {
         'app': app
     }
+
+
+@manager.option('-e', '--email', dest='email', default=None)
+@manager.option('-s', '--section', dest='section', default=None)
+def seed_stakeholder(email, section):
+    ''' Creates a new stakeholder.
+    '''
+    from feedback.surveys.models import Stakeholder
+    seed_email = email if email else app.config.get('SEED_EMAIL')
+    try:
+        section_title = ROUTES[int(section)]
+        stakeholder_exists = Stakeholder.query.filter(Stakeholder.id == int(section)).first()
+        if stakeholder_exists:
+            current_app.logger.info(
+                'Stakeholder for Section {0} ({1}) already exists'.format(
+                    section,
+                    section_title))
+        else:
+            new_stakeholder = Stakeholder.create(
+                email_list=seed_email,
+                id=int(section),
+                label=ROUTES[int(section)]
+            )
+            db.session.add(new_stakeholder)
+            db.session.commit()
+            current_app.logger.info(
+                'Stakeholder for Section {0} successfully created!'.format(
+                    section_title))
+    except Exception, e:
+        current_app.logger.error(
+            'Something went wrong: {exception}'.format(exception=e.message))
+    return
 
 
 @manager.option('-e', '--email', dest='email', default=None)
