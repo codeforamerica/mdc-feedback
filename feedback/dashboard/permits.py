@@ -87,6 +87,7 @@ def dump_socrata_api(datatype='p'):
     response = requests.get(data_table.get(datatype))
     return response.json()
 
+
 def lifespan_of_json(json_result):
     ''' Given a Socrata JSON object, it gets the "lifespan" of the
     entire object. It does this be calculating the dates between
@@ -105,15 +106,16 @@ def lifespan_of_json(json_result):
 
     try:
         result1 = np.mean(lifespan_array)
+        result2 = np.median(lifespan_array)
         max_val = np.amax(lifespan_array)
         min_val = np.amin(lifespan_array)
     except ValueError:
         return -1, 0, 0
 
-    if not math.isnan(result1):
-        return result1, max_val, min_val
+    if not math.isnan(result1) and not math.isnan(result2):
+        return result1, result2, max_val, min_val
     else:
-        return -1, 0, 0
+        return -1, -1, 0, 0
 
 
 def add_permit_category_to_query(permit_type):
@@ -246,10 +248,11 @@ def get_lifespan(property_type='nc'):
 
     If the return value is -1 the API is down.
     '''
-    lifespan_now, max_val, min_val = lifespan_api_call(0, 30, property_type)
+    lifespan_now, lifespan_median, max_val, min_val = lifespan_api_call(0, 30, property_type)
 
     return {
         'val': int(lifespan_now),
+        'med': int(lifespan_median),
         'max': max_val,
         'min': min_val
     }
