@@ -54,7 +54,10 @@ class Survey(Model):
 
     @property
     def role_en(self):
-        return ROLES[self.role]
+        try:
+            return ROLES[self.role]
+        except KeyError:
+            return self.route
 
     @property
     def route_en(self):
@@ -65,24 +68,34 @@ class Survey(Model):
 
     @property
     def best_en(self):
-        if self.best_other is None:
-            return BEST[self.best]
-        else:
-            return self.best_other
+        return get_en(
+            self.best,
+            self.best_other,
+            BEST)
 
     @property
     def worst_en(self):
-        if self.worst_other is None:
-            return WORST[self.worst]
-        else:
-            return self.worst_other
+        return get_en(
+            self.worst,
+            self.worst_other,
+            WORST)
 
     @property
     def purpose_en(self):
-        if self.purpose_other is None:
-            return PURPOSE[self.purpose]
-        else:
-            return self.purpose_other
+        return get_en(
+            self.purpose,
+            self.purpose_other,
+            PURPOSE)
 
     def __repr__(self):
         return '<Survey(id:{0} tracking:{1})>'.format(self.id, self.source_id)
+
+
+def get_en(x, x_other, X_DICT):
+    if x_other is None:
+        try:
+            return X_DICT[x]
+        except KeyError:
+            return x
+    else:
+        return x_other

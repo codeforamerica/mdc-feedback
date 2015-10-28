@@ -17,8 +17,9 @@
           </p>
 
           <p>
-             <span class='bold'>Rating: </span><span class='inline'>{{ item.rating }}</span><span class='bold'>Source: </span><span class='inline'>{{ item.method }}</span><span class='bold'>Language: </span><span class='inline'>{{ item.lang }}</span><span class='bold'>Section: </span><span class='inline'>{{ item.route_en }}</span>
+             <span class='bold'>Rating: </span><span class='inline'>{{ item.rating }}</span><span class='bold'>Source: </span><span class='inline'>{{ 'Text' if item.method=='sms' else 'Web' }}</span><span class='bold'>Language: </span><span class='inline'>{{ 'English' if item.method=='en' else 'Spanish' }}</span><span class='bold'>Section: </span><span class='inline'>{{ item.route_en }}</span>
           </p>
+
 
           <p><span class='bold'>This respondent identifies as a: </span>{{ item.role_en }}</p>
 
