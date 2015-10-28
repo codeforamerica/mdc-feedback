@@ -76,7 +76,7 @@ def auth():
 
         current_app.logger.debug(
             'LOGIN: User {} logged in successfully'.format(user.email))
-        return next_url if next_url else '/home-logged-in'
+        return next_url if next_url else '/'
 
     elif domain in current_app.config.get('CITY_DOMAINS'):
         user = User.create(email=email)
