@@ -44,52 +44,7 @@ def is_valid_email_list(value):
     return True
 
 
-def process_stakeholders_form(form):
-    errors = False
-
-    for i in range(1, 15):
-        label = ROUTES[i]
-        key = 'field-route-' + str(i)
-        value = request.form[key]
-
-        if is_valid_email_list(value):
-            stakeholder = db.session.query(Stakeholder).filter_by(label=label).first()
-            if not stakeholder:
-                stakeholder = Stakeholder(
-                    label=label,
-                    email_list=value
-                )
-            else:
-                stakeholder.update(
-                    email_list=value
-                )
-            db.session.add(stakeholder)
-        else:
-            errors = True
-            db.session.rollback()
-
-    if not errors:
-        db.session.commit()
-        flash("Your settings have been saved.", "alert-success")
-        return redirect(url_for('dashboard.home'))
-    else:
-        return redirect(url_for('surveys.survey_index'))
-
-
-@blueprint.route('/', methods=['GET', 'POST'])
-@requires_roles('admin')
-def survey_index():
-    # from here figure out if you posted the form
-    if request.method == 'POST':
-        return process_stakeholders_form(request.form)
-
-    stakeholders = Stakeholder.query.order_by(Stakeholder.id).all()
-    return render_template(
-        "surveys/edit-stakeholders.html",
-        routes=ROUTES,
-        date=today.strftime('%B %d, %Y'),
-        stakeholders=stakeholders)
-        
+       
 '''
 end sophia
 '''
@@ -129,7 +84,7 @@ def user_edit(id):
             email=form.email.data,
             role_id=form.role_id.data
         )
-        flash('Profile edited.', 'alert-success')
+        flash('Profile changes saved.', 'alert-success')
         return redirect(url_for('user.user_manage'))
     else:
         return render_template(
@@ -148,7 +103,7 @@ def user_delete(id):
     )
     user = get_object_or_404(User, User.id == id)
     user.delete()
-    flash('Deleted a profile.', 'alert-success')
+    flash('Profile successfully deleted.', 'alert-success')
     return redirect(url_for('user.user_manage'))
 
 
