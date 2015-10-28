@@ -38,7 +38,7 @@
 
         <tr class='table-top-row'>
           <td class='pretty-date'>{{ item.date_submitted.strftime('%-d %b %Y %-I:%M%p') }}</td>
-          <td class='method hidden'>{{ item.method }}</td>
+          <td class='method hidden'>{{ 'Text' if item.method=='sms' else 'Web' }}</td>
           <td class='language hidden'>{{ item.lang }}</td>
 
           <td>{{ item.rating }}</td>
