@@ -755,15 +755,6 @@ $(document).ready(function () {
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
     }).addTo(map);
 
-  var map3 = L.map('leaflet-lein').setView([25.626668871238568, -80.44867515563963], 10);
-    L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    minZoom: 9,
-    id: 'phiden.e64a2341',
-    accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
-    }).addTo(map3);
-
   //county shapefiles
   $.ajax({
     type: "GET",
@@ -808,10 +799,8 @@ $(document).ready(function () {
 
     L.geoJson(muni, {style:umsaStyle}).addTo(map);
     L.geoJson(umsa, {style:myStyle}).addTo(map);
-    L.geoJson(muni, {style:umsaStyle}).addTo(map3);
-    L.geoJson(umsa, {style:myStyle}).addTo(map3);
 
-    buildDataMaps();
+    //buildDataMaps();
 
   }
 
@@ -821,9 +810,6 @@ $(document).ready(function () {
 
         vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data),
         vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data);
-
-        //violations_per_month_json
-
 
     for(i = 0; i < vioLocationsData.length; i+=1) {
 
