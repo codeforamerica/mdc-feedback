@@ -480,6 +480,13 @@ a.what-is-this {
 	margin-left:5px;
 }
 
+.delete-small {
+  
+  background-color:none;
+  border:none;
+  color:$red;
+}
+
 .sortable-placeholder {
 
 	border:1px solid #e0e0e0;
@@ -679,6 +686,15 @@ td {
   
 }
 
+.user-management-td {
+  
+  max-width:500px;
+  
+  li {
+    
+    display:inline;
+  }
+}
 table {
   
   border:1px solid white;
