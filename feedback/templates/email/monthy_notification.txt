@@ -1,2 +1,2 @@
-Manage your subscription: {{ url_for('opportunities.manage', _external=True) }}
+Unsubscribe: {{ url_for('opportunities.manage', _external=True) }}
 Questions? Email us at miami-dade@codeforamerica.org
