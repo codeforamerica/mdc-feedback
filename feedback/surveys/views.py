@@ -13,12 +13,12 @@ from flask import (
     make_response
 )
 
+from sqlalchemy import desc
 from feedback.database import db
 from feedback.decorators import requires_roles
 
 from feedback.surveys.constants import ROUTES
 from feedback.surveys.models import Stakeholder, Survey
-
 
 
 blueprint = Blueprint(
@@ -97,10 +97,16 @@ def to_csv():
         'route',
         'rating',
         'role',
+        'get_done',
         'purpose',
+        'best',
+        'worst',
+        'improvement',
+        'follow_up',
+        'contact',
         'more_comments'])
 
-    survey_models = Survey.query.order_by(Survey.date_submitted).all()
+    survey_models = Survey.query.order_by(desc(Survey.date_submitted)).all()
     for survey_model in survey_models:
         csvList.append([
             survey_model.date_submitted,
@@ -109,7 +115,13 @@ def to_csv():
             survey_model.route_en,
             survey_model.rating,
             survey_model.role_en,
+            survey_model.get_done,
             survey_model.purpose_en,
+            survey_model.best_en,
+            survey_model.worst_en,
+            survey_model.improvement,
+            survey_model.follow_up,
+            survey_model.contact,
             survey_model.more_comments])
 
     strIO = StringIO.StringIO()
