@@ -800,22 +800,36 @@ $(document).ready(function () {
     L.geoJson(muni, {style:umsaStyle}).addTo(map);
     L.geoJson(umsa, {style:myStyle}).addTo(map);
 
-    //buildDataMaps();
+    buildDataMaps();
 
   }
+  
+  function getRandomArbitrary(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
 
+  
   function buildDataMaps(){
-
+    
     var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
-
         vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data),
-        vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data);
+        vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data),
+        vioArray = [];
 
     for(i = 0; i < vioLocationsData.length; i+=1) {
 
       if(vioLocationsData[i].location.latitude != undefined) {
+        
+        var obj = vioLocationsData[i].location.human_address;
+        //console.log(obj);
+        //console.log(typeof obj);
+        //console.log(obj.split(":")[obj.split(":").length - 1])
+        
+       // var latlng = L.latLng(vioLocationsData[i].location.latitude, vioLocationsData[i].location.longitude, 1);
+        
+        vioArray[i] = [parseFloat(vioLocationsData[i].location.latitude), parseFloat(vioLocationsData[i].location.longitude)];
 
-        var lat = vioLocationsData[i].location.latitude,
+        /*var lat = vioLocationsData[i].location.latitude,
             lon = vioLocationsData[i].location.longitude,
             openClosed = vioLocationsData[i].ticket_status,
             fill = t_yellow,
@@ -837,15 +851,21 @@ $(document).ready(function () {
           });
           marker2.on('mouseout', function() {
             this.closePopup();
-          });
+          });*/
       }
     }
-
+    
+    console.log(vioArray.length);
+    var heat = L.heatLayer(vioArray).addTo(map);
+        console.log(map.hasLayer(heat), heat);
+        
+        map.addLayer(heat);
+    
     for(i = 0; i < vioMonthlyData.length; i += 1) {
 
       //console.log(vioMonthlyData[i]);
 
-      if(vioMonthlyData[i].location.latitude != undefined) {
+      /*if(vioMonthlyData[i].location.latitude != undefined) {
 
         lat = vioMonthlyData[i].location.latitude,
         lon = vioMonthlyData[i].location.longitude,
@@ -871,7 +891,7 @@ $(document).ready(function () {
           this.closePopup();
         });
 
-      }
+      }*/
 
 
     }
