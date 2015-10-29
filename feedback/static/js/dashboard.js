@@ -811,6 +811,8 @@ $(document).ready(function () {
   
   function buildDataMaps(){
     
+    console.log(map);
+
     var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
         vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data),
         vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data),
@@ -856,10 +858,11 @@ $(document).ready(function () {
     }
     
     console.log(vioArray.length);
+    
     var heat = L.heatLayer(vioArray).addTo(map);
+    
         console.log(map.hasLayer(heat), heat);
         
-        map.addLayer(heat);
     
     for(i = 0; i < vioMonthlyData.length; i += 1) {
 
