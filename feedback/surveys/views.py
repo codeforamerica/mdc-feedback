@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# DO NOT DELETE 
+# DO NOT DELETE
 import re
 import StringIO
 import csv
@@ -17,7 +17,7 @@ from feedback.database import db
 from feedback.decorators import requires_roles
 
 from feedback.surveys.constants import ROUTES
-from feedback.surveys.models import Stakeholder
+from feedback.surveys.models import Stakeholder, Survey
 
 
 
@@ -89,7 +89,29 @@ def survey_index():
 
 @blueprint.route('/download')
 def to_csv():
-    '''
+    csvList = []
+    csvList.append([
+        'date_submitted',
+        'method',
+        'language',
+        'route',
+        'rating',
+        'role',
+        'purpose',
+        'more_comments'])
+
+    survey_models = Survey.query.order_by(Survey.date_submitted).all()
+    for survey_model in survey_models:
+        csvList.append([
+            survey_model.date_submitted,
+            survey_model.method,
+            survey_model.lang,
+            survey_model.route_en,
+            survey_model.rating,
+            survey_model.role_en,
+            survey_model.purpose_en,
+            survey_model.more_comments])
+
     strIO = StringIO.StringIO()
     writer = csv.writer(strIO)
     writer.writerows(csvList)
@@ -98,4 +120,3 @@ def to_csv():
     output.headers["Content-Disposition"] = "attachment; filename=export.csv"
     output.headers["Content-type"] = "text/csv"
     return output
-    '''
