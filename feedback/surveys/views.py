@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
 
 import re
+import StringIO
+import csv
 
 from flask import (
     Blueprint, render_template,
-    flash, request, redirect, url_for
+    flash, request, redirect, url_for,
+    make_response
 )
+
 from feedback.database import db
 from feedback.decorators import requires_roles
 
 from feedback.surveys.constants import ROUTES
 from feedback.surveys.models import Stakeholder
+
 
 
 blueprint = Blueprint(
@@ -41,7 +46,7 @@ def process_stakeholders_form(form):
         value = request.form[key]
 
         if is_valid_email_list(value):
-            stakeholder = db.session.query(Stakeholder).filter_by(label=label).first()
+            stakeholder = Stakeholder.query.filter_by(label=label).first()
             if not stakeholder:
                 stakeholder = Stakeholder(
                     label=label,
@@ -76,3 +81,17 @@ def survey_index():
         "surveys/edit-stakeholders.html",
         routes=ROUTES,
         stakeholders=stakeholders)
+
+
+@blueprint.route('/download')
+def to_csv():
+    '''
+    strIO = StringIO.StringIO()
+    writer = csv.writer(strIO)
+    writer.writerows(csvList)
+
+    output = make_response(strIO.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
+    '''
