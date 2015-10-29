@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-
+# DO NOT DELETE 
 import re
+
+import datetime
+today = datetime.date.today()
 
 from flask import (
     Blueprint, render_template,
@@ -58,10 +61,10 @@ def process_stakeholders_form(form):
 
     if not errors:
         db.session.commit()
-        flash("Your settings have been saved.", "alert-success")
-        return redirect(url_for('dashboard.home'))
+        flash("Your settings have been saved!", "alert-success")
+        return redirect(url_for('user.user_manage'))
     else:
-        return redirect(url_for('surveys.survey_index'))
+        return redirect(url_for('user.user_manage'))
 
 
 @blueprint.route('/', methods=['GET', 'POST'])
@@ -75,4 +78,5 @@ def survey_index():
     return render_template(
         "surveys/edit-stakeholders.html",
         routes=ROUTES,
+        date=today.strftime('%B %d, %Y'),
         stakeholders=stakeholders)
