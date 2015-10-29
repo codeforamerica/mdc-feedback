@@ -41,7 +41,12 @@
 <!-- nav active states -->
 <!-- begin stuff that requires authentication check -->
 
-  {% if active_page == 'Dashboard' %}
+  {% set navigation_bar = [
+    ('/users/manage', 'Manage Users'),
+    ('/surveys', 'Set Survey Lead E-mails')
+  ] -%}
+      
+ <!-- {% if active_page == 'Dashboard' %}
 
       {% set navigation_bar = [
         ('/users/manage', 'Manage Users'),
@@ -54,7 +59,7 @@
         ('/', 'Dashboard')
       ] -%}
 
-		{% endif %}
+		{% endif %} -->
 
 		{% if current_user and current_user.is_authenticated() and current_user.role.name == 'admin' %}
 
@@ -115,7 +120,8 @@
 <!-- FIXME: move jquery into a bower and use grunt -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
- <script src="/static/js/modernizr-custom.js"></script><!-- -->
+<script src="/static/js/modernizr-custom.js"></script>
+<script src="/static/js/app.js"></script>
 
 <!-- JS blocking -->
 
