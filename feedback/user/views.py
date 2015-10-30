@@ -13,8 +13,8 @@ from flask.ext.login import (
     current_user, login_required
 )
 
-from feedback.database import get_object_or_404
-from feedback.database import db
+from feedback.database import db, get_object_or_404
+
 from feedback.user.models import User
 from feedback.user.forms import UserForm
 from feedback.decorators import requires_roles
@@ -28,9 +28,6 @@ blueprint = Blueprint(
     static_folder="../static"
 )
 
-'''
-sophia 
-'''
 
 def is_valid_email_list(value):
 
@@ -44,10 +41,37 @@ def is_valid_email_list(value):
     return True
 
 
-       
-'''
-end sophia
-'''
+def process_stakeholders_form(form):
+    errors = False
+
+    for i in range(1, 15):
+        label = ROUTES[i]
+        key = 'field-route-' + str(i)
+        value = request.form[key]
+
+        if is_valid_email_list(value):
+            stakeholder = Stakeholder.query.filter_by(label=label).first()
+            if not stakeholder:
+                stakeholder = Stakeholder(
+                    label=label,
+                    email_list=value
+                )
+            else:
+                stakeholder.update(
+                    email_list=value
+                )
+            db.session.add(stakeholder)
+        else:
+            errors = True
+            db.session.rollback()
+
+    if not errors:
+        db.session.commit()
+        flash("Your settings have been saved!", "alert-success")
+        return redirect(url_for('user.user_manage'))
+    else:
+        return redirect(url_for('user.user_manage'))
+
 
 @blueprint.route('/create', methods=['GET', 'POST'])
 @requires_roles('admin')
@@ -70,6 +94,7 @@ def user_create():
             form=form,
             date=today.strftime('%B %d, %Y'),
             form_action=url_for('user.user_create'),
+            title='Add User',
             action='Add User')
 
 
@@ -92,7 +117,8 @@ def user_edit(id):
             form=form,
             date=today.strftime('%B %d, %Y'),
             form_action=url_for('user.user_edit', id=id),
-            action='Edit User')
+            title='Edit User',
+            action='Save Changes')
 
 
 @blueprint.route('/delete/<id>', methods=['POST'])
@@ -110,10 +136,10 @@ def user_delete(id):
 @blueprint.route('/manage', methods=['GET', 'POST'])
 @requires_roles('admin')
 def user_manage():
-  
+
     if request.method == 'POST':
         return process_stakeholders_form(request.form)
-        
+
     form = UserForm()
     users = User.query.order_by(User.role_id).all()
     stakeholders = Stakeholder.query.order_by(Stakeholder.id).all()
@@ -126,7 +152,7 @@ def user_manage():
         form=form,
         stakeholders=stakeholders,
         title='Manage Users')
-        
+
 
 @blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
