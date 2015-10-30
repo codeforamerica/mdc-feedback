@@ -1,11 +1,15 @@
 {% extends "layout.html" %}
 {% set active_page = 'Manage Users' %}
-{% block content %}
 
+{% block page_title %}
+   {{ super() }} - Edit stakeholders
+{% endblock %}
+
+{% block content %}
   <div id="container">
 
     <section id='edit-stakeholders' class='row twelve columns'>
-      
+
     <h3>Set who receives e-mail.</h3>
     <p>Here you can determine who receives daily e-mail updates from the dashboard system. You may separate multiple e-mail addresses with a comma.</p>
 
@@ -13,14 +17,13 @@
       <ul>
         {% for n in range(1,15) %}
         <li>{{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}{{ stakeholders[n-1].email_list }}{% endif %}"></li>
-        
+
         {% endfor %}
       </ul>
       <input type="submit" value="save changes">
     </form>
 
     </section>
-    
-  </div><!--!/#container -->
 
+  </div><!--!/#container -->
 {% endblock %}

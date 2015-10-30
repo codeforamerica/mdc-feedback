@@ -2,6 +2,10 @@
 {% import "user/macro_field_with_errors.html" as macros %}
 {% set active_page = 'Profile Form' %}
 
+{% block page_title %}
+   {{ super() }} - {{ title }}
+{% endblock %}
+
 {% block content %}
   <div id="container">
 

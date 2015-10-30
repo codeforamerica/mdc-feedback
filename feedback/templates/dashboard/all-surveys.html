@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 {% set active_page = 'Details' %}
-{% block content %}
 
+{% block page_title %}
+   {{ super() }} - {{ title }}
+{% endblock %}
+
+{% block content %}
 <section class='row' id='details-view'>
 
   <h3>All Survey Responses</h3>
@@ -67,6 +71,5 @@
   </div>
 
 </section> <!-- close row -->
-
 {% endblock %}
 
