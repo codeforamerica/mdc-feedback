@@ -41,10 +41,7 @@
 <!-- nav active states -->
 <!-- begin stuff that requires authentication check -->
 
-  {% set navigation_bar = [
-    ('/users/manage', 'Manage Users'),
-    ('/surveys', 'Set Survey Lead E-mails')
-  ] -%}
+ 
       
  <!-- {% if active_page == 'Dashboard' %}
 
@@ -62,6 +59,10 @@
 		{% endif %} -->
 
 		{% if current_user and current_user.is_authenticated() and current_user.role.name == 'admin' %}
+		
+		 {% set navigation_bar = [
+      ('/users/manage', 'Manage Users')
+    ] -%}
 
 		<div class='row u-pull-left' id='breadcrumb'>
 
