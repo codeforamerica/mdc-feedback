@@ -1,19 +1,24 @@
 # -*- coding: utf-8 -*-
-# DO NOT DELETE 
+# DO NOT DELETE
 import re
+import StringIO
+import csv
 
 import datetime
 today = datetime.date.today()
 
 from flask import (
     Blueprint, render_template,
-    flash, request, redirect, url_for
+    flash, request, redirect, url_for,
+    make_response
 )
+
+from sqlalchemy import desc
 from feedback.database import db
 from feedback.decorators import requires_roles
 
 from feedback.surveys.constants import ROUTES
-from feedback.surveys.models import Stakeholder
+from feedback.surveys.models import Stakeholder, Survey
 
 
 blueprint = Blueprint(
@@ -44,7 +49,7 @@ def process_stakeholders_form(form):
         value = request.form[key]
 
         if is_valid_email_list(value):
-            stakeholder = db.session.query(Stakeholder).filter_by(label=label).first()
+            stakeholder = Stakeholder.query.filter_by(label=label).first()
             if not stakeholder:
                 stakeholder = Stakeholder(
                     label=label,
@@ -80,3 +85,50 @@ def survey_index():
         routes=ROUTES,
         date=today.strftime('%B %d, %Y'),
         stakeholders=stakeholders)
+
+
+@blueprint.route('/download')
+def to_csv():
+    csvList = []
+    csvList.append([
+        'date_submitted',
+        'method',
+        'language',
+        'route',
+        'rating',
+        'role',
+        'get_done',
+        'purpose',
+        'best',
+        'worst',
+        'improvement',
+        'follow_up',
+        'contact',
+        'more_comments'])
+
+    survey_models = Survey.query.order_by(desc(Survey.date_submitted)).all()
+    for survey_model in survey_models:
+        csvList.append([
+            survey_model.date_submitted,
+            survey_model.method,
+            survey_model.lang,
+            survey_model.route_en,
+            survey_model.rating,
+            survey_model.role_en,
+            survey_model.get_done,
+            survey_model.purpose_en,
+            survey_model.best_en,
+            survey_model.worst_en,
+            survey_model.improvement,
+            survey_model.follow_up,
+            survey_model.contact,
+            survey_model.more_comments])
+
+    strIO = StringIO.StringIO()
+    writer = csv.writer(strIO)
+    writer.writerows(csvList)
+
+    output = make_response(strIO.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
