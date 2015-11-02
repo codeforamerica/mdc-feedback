@@ -13,6 +13,13 @@
 
       <h3>Manage your users.</h3>
 
+      <ul id='jump-nav'>
+
+        <li><a class='button' href='#stakeholder-list'>Jump to Reporting E-mail Management</a></li>
+
+      </ul>
+
+
       <table>
         <thead>
           <tr>
@@ -31,10 +38,11 @@
             <td>{{ user.email }}</td>
             <td>{{ user.role.name }}</td>
             {% if current_user.is_admin() %}
-            <td>
-              <a class="" href="{{ url_for('user.user_edit', id=user.id) }}">Edit user</a>
+
+            <td class='user-management-td'>
+              <li class='user-management-btn'><a class='button'href="{{ url_for('user.user_edit', id=user.id) }}">Edit user</a></li>
               <form action="{{ url_for('user.user_delete', id=user.id) }}" method="POST">
-                <button class="" type="submit">Delete user</button>
+                <li class='user-management-btn'><button class="delete-small" type="submit">Delete user</button></li>
               </form>
             </td>
             {% endif %}
@@ -75,6 +83,7 @@
         {% endif %}">
         <input type="submit" value="save changes">
       </form>
+
     </section>
 
   </div><!--!/#container -->
