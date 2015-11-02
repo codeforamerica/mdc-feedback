@@ -361,6 +361,33 @@ a.what-is-this {
 	background-color:grey;
 }
 
+#jumpnav {
+  
+  text-align: left;
+  width:100%;
+  
+  li:first-child {
+    
+    margin-right:5px;
+  }
+  
+  li:last-child:after {
+    
+    content: "";
+    
+  }
+  
+  li:after {
+    
+    content: " | ";
+  }
+  
+  li:first-child:after {
+    
+    content: "";
+  }
+}
+
 /* USER MANAGEMENT */
 
 #user-list h1 {
