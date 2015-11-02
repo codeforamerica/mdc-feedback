@@ -20,7 +20,7 @@ from feedback.user.forms import UserForm
 from feedback.decorators import requires_roles
 
 from feedback.surveys.constants import ROUTES
-from feedback.surveys.models import Stakeholder
+from feedback.surveys.models import Stakeholder, Monthly
 
 blueprint = Blueprint(
     "user", __name__, url_prefix='/users',
@@ -143,6 +143,8 @@ def user_manage():
     form = UserForm()
     users = User.query.order_by(User.role_id).all()
     stakeholders = Stakeholder.query.order_by(Stakeholder.id).all()
+    monthly_admins = Monthly.query.first()
+
     return render_template(
         "user/manage.html",
         current_user=current_user,
@@ -151,7 +153,16 @@ def user_manage():
         routes=ROUTES,
         form=form,
         stakeholders=stakeholders,
+        monthly=monthly_admins,
         title='Manage Users')
+
+
+@blueprint.route('/monthly/manage', methods=['POST'])
+@requires_roles('admin')
+def monthly_manage():
+    if request.method == 'POST':
+        pass
+    pass
 
 
 @blueprint.route('/profile', methods=['GET', 'POST'])

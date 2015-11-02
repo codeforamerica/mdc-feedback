@@ -1,0 +1,15 @@
+Hello!
+
+You are receiving this e-mail because _______.
+
+Below is a link to the summary statistics for the Permit Inspection Center Survey for [MONTH] [YEAR]:
+
+[view monthly report]
+
+To see the public dashboard of feedback data, visit http://c4a.me/mdcdashboard. To see a live version of the feedback survey, visit http://c4a.me/picsurvey. If you have any questions about this process, please reach out to miami-dade@codeforamerica.org.
+
+Thank you,
+Miami-Dade County RER & Communications Departments
+
+Manage your subscription: {{ url_for('opportunities.manage', _external=True) }}
+Questions? Email us at miami-dade@codeforamerica.org
