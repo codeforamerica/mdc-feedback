@@ -4,17 +4,17 @@
 
 {% block content %}
   <div id="container">
-    
+
     <section id='user-list' class='row twelve columns'>
 
       <h3>Manage your users.</h3>
-      
+
       <ul id='jump-nav'>
-      
+
         <li><a class='button' href='#stakeholder-list'>Jump to Reporting E-mail Management</a></li>
-        
+
       </ul>
-      
+
 
       <table>
         <thead>
@@ -34,10 +34,10 @@
             <td>{{ user.email }}</td>
             <td>{{ user.role.name }}</td>
             {% if current_user.is_admin() %}
-            
+
             <td class='user-management-td'>
               <li class='user-management-btn'><a class='button'href="{{ url_for('user.user_edit', id=user.id) }}">Edit user</a></li>
-              <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
+              <form action="{{ url_for('user.user_delete', id=user.id) }}" method="POST">
                 <li class='user-management-btn'><button class="delete-small" type="submit">Delete user</button></li>
               </form>
             </td>
@@ -52,9 +52,9 @@
       {% endif %}
 
     </section>
-    
+
     <section id='stakeholder-list' class='row twelve columns'>
-      
+
       <h3>Set who receives e-mail.</h3>
       <p>Here you can determine who receives daily e-mail updates from the dashboard system. You may separate multiple e-mail addresses with a comma.</p>
 
@@ -62,13 +62,13 @@
         <ul>
           {% for n in range(1,15) %}
           <li>{{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}{{ stakeholders[n-1].email_list }}{% endif %}"></li>
-          
+
           {% endfor %}
         </ul>
         <input type="submit" value="save changes">
       </form>
-      
-      
+
+
     </section>
 
   </div><!--!/#container -->
