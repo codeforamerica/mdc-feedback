@@ -414,7 +414,54 @@ $(document).ready(function () {
       $('#surveyChart').parent().parent().find('.headline').html(surveyData.title);
       myPieChart = new Chart(pctx).Pie(pieData);
 
-  
+  /* Permitting & violations */
+
+  var ctx2 = $("#openPermits").get(0).getContext("2d"),
+      ctx3 = $("#violations").get(0).getContext("2d"),
+      permitJSON = JSON.parse($("#permits_rawjson")[0].childNodes[0].data),
+      violationsJSON = JSON.parse($("#violations_rawjson")[0].childNodes[0].data),
+      series2 = [],
+      datetime2 = [],
+      series3 = [],
+      datetime3 = [],
+      openPermitData,
+      openPermitDataset,
+      openPermitChart;
+
+  buildOpenPermitChart();
+  buildViolationsCharts();
+
+  function buildOpenPermitChart() {
+
+    for(i = 0; i < permitJSON.length; i++) {
+
+      series2.push(permitJSON[i].total);
+      datetime2.push(prettyDates((permitJSON[i].month).split('T')[0]));
+
+    }
+
+    series2.reverse();
+    datetime2.reverse();
+
+    openPermitDataset = {
+        labels:datetime2,
+        datasets: [
+          {
+              fillColor: t_orange,
+              strokeColor: orange,
+              pointColor: orange,
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: series2
+          }
+        ]
+    },
+
+    openPermitChart = new Chart(ctx2).Line(openPermitDataset);
+
+  }
+
   function buildViolationsCharts() {
 
     for(i = 0; i < violationsJSON.length; i++) {
@@ -498,7 +545,412 @@ $(document).ready(function () {
     return date;
   }
 
+  var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data),
+      pttx = $("#permitTypeChart").get(0).getContext("2d"),
+      cleanPermitData = [],
+      cleanPermitLabels = [];
+
+  //set the data up for Charts.js
+  for(i = 0; i < permitTypes.data.length; i+=1) {
+
+    if(permitTypes.data[i].permit_type != 'CCUT') {
+
+      cleanPermitLabels.push(humanNames(permitTypes.data[i].permit_type));
+      cleanPermitData.push(permitTypes.data[i].count);
+      //console.log(data[i].issue_type, i);
+
+    }
+
+  }
+
+  var vdata2 = {
+    labels: cleanPermitLabels,
+    datasets: [
+      {
+        label: "Permits by Type",
+        fillColor: t_purple_1,
+        strokeColor: purple_1,
+        data: cleanPermitData
+      }
+    ]
+  };
+
+  function humanNames(type) {
+
+    //console.log(type);
+
+    switch(type) {
+
+      case 'FIRE':
+
+        return 'Fire';
+        break;
+
+      case 'MMEC':
+
+        return 'Municipal: Mechanical';
+        break;
+
+      case 'ZIPS':
+
+        return 'Zoning Improvement Permit';
+        break;
+
+      case 'MELE':
+
+        return 'Muncipal: Electrical';
+        break;
+
+      case 'CCUT':
+
+        return 'CCUT';
+        break;
+
+      case 'ELEC':
+
+        return 'Electrical';
+        break;
+
+      case 'PLUM':
+
+        return 'Plumbing';
+        break;
+
+      case 'MPLU':
+
+        return 'Municipal: Plumbing';
+        break;
+
+      case 'MBLD':
+
+        return 'Municipal: Building';
+        break;
+
+      case 'LPGX':
+
+        return 'Liquid Petroleum Gas';
+        break;
+
+      case 'BLDG':
+
+        return 'Building';
+        break;
+
+      case 'MECH':
+
+        return 'Mechanical';
+        break;
+
+    }
+
+  }
+
+  $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);
+  var barChart2 = new Chart(pttx).HorizontalBar(vdata2),
   
+      plumbingChart = $("#p-plumbing").get(0).getContext("2d"),
+      buildingChart = $("#p-building").get(0).getContext("2d"),
+      fireChart = $("#p-fire").get(0).getContext("2d"),
+      elexChart = $("#p-electrical").get(0).getContext("2d"),
+      zoningChart = $("#p-zoning").get(0).getContext("2d"),
+      pData = parseInt($('#plumbing-data').text()),
+      bData = parseInt($('#building-data').text()),
+      fData = parseInt($('#fire-data').text()),
+      eData = parseInt($('#electrical-data').text()),
+      zData = parseInt($('#zoning-data').text()),
+      
+      plumbingData = [
+        {
+          value: pData,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: 'Plumbing: same-day'
+        },
+        {
+          value: (100 - pData),
+          color: purple_2,
+          highlight: t_purple_2,
+          label: 'Plumbing'
+        }
+      ],
+      
+      buildingData = [
+        {
+          value: bData,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: 'Building: same-day'
+        },
+        {
+          value: (100 - bData),
+          color: purple_2,
+          highlight: t_purple_2,
+          label: 'Building'
+        }
+      ],
+      
+      fireData = [
+        {
+          value: fData,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: 'Fire: same-day'
+        },
+        {
+          value: (100 - fData),
+          color: purple_2,
+          highlight: t_purple_2,
+          label: 'Fire'
+        }
+      ],
+      
+      elexData = [
+        {
+          value: eData,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: 'Electrical: same-day'
+        },
+        {
+          value: (100 - eData),
+          color: purple_2,
+          highlight: t_purple_2,
+          label: 'Electrical'
+        }
+      ],
+      
+      zoningData = [
+        {
+          value: zData,
+          color:purple_1,
+          highlight: t_purple_1,
+          label: 'Zoning: same-day'
+        },
+        {
+          value: (100 - zData),
+          color: purple_2,
+          highlight: t_purple_2,
+          label: 'Zoning'
+        }
+      ],
+      
+      pChart = new Chart(plumbingChart).Pie(plumbingData),
+      bChart = new Chart(buildingChart).Pie(buildingData),
+      fChart = new Chart(fireChart).Pie(fireData),
+      eChart = new Chart(elexChart).Pie(elexData),
+      zChart = new Chart(zoningChart).Pie(zoningData);
+      
+        
+  /************************* LEAFLET MAPPING *************************/
+
+  //25.7667° N, 80.2000° W
+  //{lat: 25.626668871238568, lng: -80.44867515563963}
+
+  var map = L.map('leaflet').setView([25.626668871238568, -80.44867515563963], 10);
+    L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    minZoom: 9,
+    id: 'phiden.e64a2341',
+    accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
+    }).addTo(map);
+
+  //county shapefiles
+  $.ajax({
+    type: "GET",
+    url: "../static/geodata/municipalities_coast.json",
+    dataType: "json",
+    success: parseXML
+  });
+
+  function parseXML(data) {
+
+    var muni = [],
+        umsa = [],
+        i,
+        myStyle = {
+          color: green,
+          weight: 1,
+          opacity: 0.65
+        },
+
+        umsaStyle = {
+
+          color: 'rgba(0,0,0)',
+          weight: 1,
+          opacity: 0.65
+
+        };
+
+    //sort for county to control style
+    for(i = 0; i < data.features.length;   i+=1) {
+
+      if(data.features[i].properties.NAME == 'UNINCORPORATED MIAMI-DADE') {
+
+        umsa.push(data.features[i]);
+
+      } else {
+
+        muni.push(data.features[i]);
+
+      }
+
+    }
+
+    L.geoJson(muni, {style:umsaStyle}).addTo(map);
+    L.geoJson(umsa, {style:myStyle}).addTo(map);
+
+    buildDataMaps();
+
+  }
+  
+  function getRandomArbitrary(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
+
+  
+  function buildDataMaps(){
+    
+    console.log(map);
+
+    var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
+        vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data),
+        vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data),
+        vioArray = [];
+
+    for(i = 0; i < vioLocationsData.length; i+=1) {
+
+      if(vioLocationsData[i].location.latitude != undefined) {
+        
+        var obj = vioLocationsData[i].location.human_address;
+        //console.log(obj);
+        //console.log(typeof obj);
+        //console.log(obj.split(":")[obj.split(":").length - 1])
+        
+       // var latlng = L.latLng(vioLocationsData[i].location.latitude, vioLocationsData[i].location.longitude, 1);
+        
+        vioArray[i] = [parseFloat(vioLocationsData[i].location.latitude), parseFloat(vioLocationsData[i].location.longitude)];
+
+        /*var lat = vioLocationsData[i].location.latitude,
+            lon = vioLocationsData[i].location.longitude,
+            openClosed = vioLocationsData[i].ticket_status,
+            fill = t_yellow,
+            color = yellow,
+            title = vioLocationsData[i].issue_type;
+
+        var marker2 = L.circleMarker([lat, lon], {
+            radius: 5,
+            fillColor: fill,
+            color: color,
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+          }).addTo(map);
+
+          marker2.bindPopup(title);
+          marker2.on('mouseover', function() {
+            this.openPopup();
+          });
+          marker2.on('mouseout', function() {
+            this.closePopup();
+          });*/
+      }
+    }
+    
+    console.log(vioArray.length);
+    
+    var heat = L.heatLayer(vioArray).addTo(map);
+    
+        console.log(map.hasLayer(heat), heat);
+        
+    
+    for(i = 0; i < vioMonthlyData.length; i += 1) {
+
+      //console.log(vioMonthlyData[i]);
+
+      /*if(vioMonthlyData[i].location.latitude != undefined) {
+
+        lat = vioMonthlyData[i].location.latitude,
+        lon = vioMonthlyData[i].location.longitude,
+        openClosed = vioMonthlyData[i].ticket_status,
+        fill = t_yellow,
+        color = yellow,
+        title = vioMonthlyData[i].issue_type;
+
+        marker2 = L.circleMarker([lat, lon], {
+          radius: 5,
+          fillColor: fill,
+          color: color,
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).addTo(map3);
+
+        marker2.bindPopup(title);
+        marker2.on('mouseover', function() {
+          this.openPopup();
+        });
+        marker2.on('mouseout', function() {
+          this.closePopup();
+        });
+
+      }*/
+
+
+    }
+
+    if(vioTypeData === '') {
+
+      $('#regulation h3').append("<div class='alert-alert-warning'><p class='alert center small'>Sorry, something's gone wrong with our data for neighborhood compliance! <br>We're working to get it back online.</p></div>");
+
+    } else {
+
+      var labels = [];
+      var dataset = [];
+
+      //the 'total' isn't an integer. make it one, or the sort will fail.
+      for(i = 0; i < vioTypeData.length;   i+=1) {
+
+        vioTypeData[i].total = parseInt(vioTypeData[i].total, 10);
+        //console.log(data[i]);
+      }
+
+      //sort on the number of each violation type
+      vioTypeData = vioTypeData.sortOn("total");
+      vioTypeData.reverse();
+
+      //set the data up for Charts.js
+      for(i = 0; i < 19;   i+=1) {
+
+        labels[i] = vioTypeData[i].issue_type;
+        dataset[i] = vioTypeData[i].total;
+        //console.log(data[i].issue_type, i);
+
+      }
+
+      labels.reverse();
+      dataset.reverse();
+
+      //create the chart
+      var bctx = $("#viotype").get(0).getContext("2d");
+
+      var bdata = {
+          labels: labels,
+          datasets: [
+              {
+                fillColor: t_purple_1,
+                strokeColor: purple_1,
+                data: dataset
+              }
+          ]
+      };
+
+      var horizontalBarChart = new Chart(bctx).HorizontalBar(bdata);
+
+    }
+
+  }
+
   Array.prototype.sortOn = function(){
     var dup = this.slice();
     if(!arguments.length) return dup.sort();
