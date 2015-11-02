@@ -17,9 +17,7 @@ from feedback.dashboard.vendorsurveys import (
     get_rating_by_purpose, get_rating_by_role
 )
 
-
 from feedback.surveys.constants import SURVEY_DAYS
-from feedback.surveys.serializers import PICSurveySchema
 from feedback.surveys.models import Survey
 
 
@@ -74,7 +72,7 @@ def home():
     dashboard_collection = [
         {
             "id": "graph",
-            "title": "Surveys Submitted - Last {0} Days".format(SURVEY_DAYS),
+            "title": "Surveys Submitted".format(SURVEY_DAYS),
             "data": {
                 "graph": {
                     "datetime": {
@@ -89,11 +87,11 @@ def home():
             }
         },
         {
-            "title": "Satisfaction Rating - Last {0} Days".format(SURVEY_DAYS),
+            "title": "Satisfaction Rating".format(SURVEY_DAYS),
             "data": "{0:.2f}".format(get_rating_scale(survey_table))
         },
         {
-            "title": "Survey Type - Last {0} Days".format(SURVEY_DAYS),
+            "title": "Survey Type".format(SURVEY_DAYS),
             "data": {
                 "web_en": web_rows.count('en'),
                 "web_es": web_rows.count('es'),
@@ -210,7 +208,7 @@ def home():
         title='Dashboard'
         )
 
-        
+
 @blueprint.route('/dashboard/feedback/', methods=['GET'])
 def all_surveys():
     survey_table = get_all_survey_responses(SURVEY_DAYS)
@@ -218,7 +216,7 @@ def all_surveys():
     return render_template(
         "dashboard/all-surveys.html",
         resp_obj=survey_table,
-        title='Permitting & Inspection Center User Survey Metrics: Detail'
+        title='All Survey Responses'
     )
 
 

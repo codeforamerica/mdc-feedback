@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 {% set active_page = 'Details' %}
-{% block content %}
 
+{% block page_title %}
+   {{ super() }} - {{ title }}
+{% endblock %}
+
+{% block content %}
 <section class='row' id='details-view'>
 
   <div class='twelve columns panel' id='survey-details'>
@@ -52,6 +56,5 @@
     </div>
 
 </section> <!-- close row -->
-
 {% endblock %}
 

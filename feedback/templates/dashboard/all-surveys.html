@@ -1,13 +1,30 @@
 {% extends "layout.html" %}
 {% set active_page = 'Details' %}
-{% block content %}
 
+{% block page_title %}
+   {{ super() }} - {{ title }}
+{% endblock %}
+
+{% block content %}
 <section class='row' id='details-view'>
 
   <h3>All Survey Responses</h3>
 
-  <p>Members of the public have access to the experience rating of all surveys. Miami-Dade County employees have access to open-ended answers, which may contain personal information.</p>
-  <p><i>Pro-tip: Click the table headers to sort each column.</i></p>
+  {% if current_user and current_user.is_authenticated() %}
+  <p><a href="{{ url_for('surveys.to_csv') }}">Download everything in CSV format.</a></p>
+  {% endif %}
+
+  {% if not current_user.is_authenticated() %}
+  <p>Not seeing your comment? If you're not logged in as a Miami-Dade County employee, some data has been obscured in order to protect your privacy and personal information.</p>
+  {% endif %}
+  
+  <p><i>Pro tip: Click the table headers to sort each column.</i></p>
+
+  {% if current_user and current_user.is_authenticated() %}
+  <p><a href="{{ url_for('surveys.to_csv') }}">Download everything in CSV format.</a></p>
+  {% endif %}
+
+
 
   <div class='twelve columns' id='survey-details'>
 
@@ -63,6 +80,5 @@
   </div>
 
 </section> <!-- close row -->
-
 {% endblock %}
 
