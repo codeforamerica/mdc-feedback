@@ -17,7 +17,10 @@ def requires_roles(*roles):
         @wraps(view_function)
         def decorated_function(*args, **kwargs):
 
-            if not current_user.role or current_user.role.name not in roles:
+            if current_user.is_anonymous():
+                flash('This feature is for county staff only. If you are staff, log in with your miamidade.gov email using the link to the upper right.', 'alert-warning')
+                return redirect(request.args.get('next') or '/')
+            elif not current_user.role or current_user.role.name not in roles:
                 flash('You do not have sufficent permissions to do that!', 'alert-danger')
                 return redirect(request.args.get('next') or '/')
             return view_function(*args, **kwargs)

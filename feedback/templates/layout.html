@@ -9,7 +9,9 @@
 <head>
   <meta charset="utf-8">
 
-  <title>{% block page_title %}Feedback | {{request.endpoint }} {% endblock %}</title>
+  <title>{% block page_title %}
+    Feedback
+    {% endblock %}</title>
   <meta name="description" content="{% block meta_description %}{% endblock %}">
   <meta name="author" content="{% block meta_author %}{% endblock %}">
 
@@ -41,7 +43,9 @@
 <!-- nav active states -->
 <!-- begin stuff that requires authentication check -->
 
- 
+  {% set navigation_bar = [
+    ('/users/manage', 'Manage Users and Survey Lead E-mails')
+  ] -%}
       
  <!-- {% if active_page == 'Dashboard' %}
 
@@ -67,7 +71,6 @@
 		<div class='row u-pull-left' id='breadcrumb'>
 
 			<ul class='list-nav'>
-
 				<li class='breadcrumb-text'>You're looking at:</li>
 				<li id='breadcrumb-location' class='bold'>{{ title }}</li>
 			</ul>
@@ -137,7 +140,7 @@
 		<script type="text/javascript" src="/static/js/tabletop.js"></script>
 		<script type="text/javascript" src="/static/js/dashboard.js"></script>
 		<script type="text/javascript" src="/static/js/leaflet-heat.js"></script>
-		
+
 	{% elif active_page == 'Violations' %}
 
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
