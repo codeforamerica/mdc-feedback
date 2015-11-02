@@ -1,16 +1,15 @@
-[SURVEY_NAME] #ie. Miami-Dade County Permit Inspection Center Survey
+Hello!
 
+A user has submitted a survey response that requires attention from the {{ survey.route_en }} division of the Permit Inspection Center.
 
-[FIRST_NAME] [LAST_NAME],
-
-A user has submitted a survey feedback response that requires attention from the {{ survey.route_en }} division of the Permit Inspection Center. Below are the details of the survey; please follow-up with the user within [SLA] days if contact information is provided.
+Below are the details of the survey response. Please follow up with the user within 30 days if contact information is provided.
 
 Survey Date: {{ survey.date_submitted }}
 Language: {{ 'English' if survey.lang=='en' else 'Spanish' }}
 Input: {{ 'Website' if survey.method=='web' else 'Phone' }}
-
 Would you like to be followed-up with: {{ 'Yes' if survey.follow_up else 'No' }}
 Contact Information: {{ survey.contact }}
+Comments: {{ survey.more_comments }}
 
 Role: {{ survey.role_en }}
 Purpose: {{ survey.purpose_en }}
@@ -19,7 +18,9 @@ Were you able to complete your tasks? {{ 'Yes' if survey.get_done else 'No' }}
 Best Experience: {{ survey.best_en }}
 Worst Experience: {{ survey.worst_en }}
 Improvement Suggestion: {{ survey.improvement }}
-Comments: {{ survey.more_comments }}
+
+Thank you,
+Miami-Dade County RER & Communications Departments
 
 
-If you have any questions about this process you can reach out to miami-dade@codeforamerica.org
+<a href="#">Manage your subscription</a> | <a href="mailto:miami-dade@codeforamerica.org?Subject=Feedback%20from%20Email">Questions? Email us</a>
