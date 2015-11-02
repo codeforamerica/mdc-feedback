@@ -72,7 +72,7 @@ def home():
     dashboard_collection = [
         {
             "id": "graph",
-            "title": "Surveys Submitted - Last {0} Days".format(SURVEY_DAYS),
+            "title": "Surveys Submitted".format(SURVEY_DAYS),
             "data": {
                 "graph": {
                     "datetime": {
@@ -87,11 +87,11 @@ def home():
             }
         },
         {
-            "title": "Satisfaction Rating - Last {0} Days".format(SURVEY_DAYS),
+            "title": "Satisfaction Rating".format(SURVEY_DAYS),
             "data": "{0:.2f}".format(get_rating_scale(survey_table))
         },
         {
-            "title": "Survey Type - Last {0} Days".format(SURVEY_DAYS),
+            "title": "Survey Type".format(SURVEY_DAYS),
             "data": {
                 "web_en": web_rows.count('en'),
                 "web_es": web_rows.count('es'),
