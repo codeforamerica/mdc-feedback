@@ -15,7 +15,7 @@ db.empty:
 	createdb feedback_dev
 	python manage.py db upgrade
 	python manage.py seed_roles
-	make load_from_socrata
+	make load_surveys
 	make load_users
 
 deploy:
@@ -27,5 +27,5 @@ load_users:
 	python manage.py seed_user -e mathias@codeforamerica.org -r 1
 	python manage.py seed_user -e sarasti@miamidade.gov -r 1
 
-load_from_socrata:
+load_surveys:
 	python ./feedback/scripts/pull_data.py
