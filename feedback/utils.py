@@ -17,10 +17,12 @@ local_tz = get_localzone()
 def send_email(subject, sender, recipients, text_body, html_body):
     ''' E-mail utility function.
     '''
+    recipients_list = recipients.split(",")
+
     try:
         current_app.logger.info(
             'EMAILTRY | Sending message:\nTo: {}\n:From: {}\nSubject: {}'.format(
-                recipients,
+                recipients_list,
                 sender,
                 subject
             )
@@ -28,7 +30,7 @@ def send_email(subject, sender, recipients, text_body, html_body):
         msg = Message(
             subject,
             sender=sender,
-            recipients=recipients)
+            recipients=recipients_list)
         msg.body = text_body
         msg.html = html_body
         mail.send(msg)
@@ -36,7 +38,7 @@ def send_email(subject, sender, recipients, text_body, html_body):
         current_app.logger.error(
             'EMAILFAIL | Error: {}\nTo: {}\n:From: {}\nSubject: {}'.format(
                 e,
-                recipients,
+                recipients_list,
                 sender,
                 subject
             )
