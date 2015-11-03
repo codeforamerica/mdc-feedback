@@ -64,10 +64,7 @@
       <form id="stakeholderForm" class="form form-stakeholders" method="POST" action="{{ url_for('user.user_manage') }}" role="form">
         <ul>
           {% for n in range(1,15) %}
-          <li>{{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}
-            {{ stakeholders[n-1].email_list }}
-            {% endif %}"></li>
-
+          <li>{{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}{{ stakeholders[n-1].email_list }}{% endif %}"></li>
           {% endfor %}
         </ul>
         <input type="submit" value="save changes">
