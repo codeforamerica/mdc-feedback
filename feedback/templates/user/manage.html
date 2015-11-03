@@ -20,7 +20,7 @@
       </ul>
 
 
-      <table>
+      <table style="width:100%;">
         <thead>
           <tr>
             <th>Name</th>
@@ -75,9 +75,10 @@
       <h3>Set who receives monthly status reports.</h3>
       <p>Separate multiple e-mail addresses with a comma.</p>
       <form id="monthlyForm" class="form form-monthly" method="POST" action="{{ url_for('user.monthly_manage') }}" role="form">
-        <input name="" type="text" value="{% if monthly is defined %}
-        {{ monthly.email_list }}
-        {% endif %}">
+        <input
+        name="monthly-report-field"
+        type="text"
+        value="{% if monthly is defined %}{{ monthly.email_list }}{% endif %}">
         <input type="submit" value="save changes">
       </form>
 
