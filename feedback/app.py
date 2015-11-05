@@ -21,7 +21,8 @@ from feedback.utils import thispage
 
 from feedback import (
     public, user,
-    dashboard, surveys
+    dashboard, surveys,
+    reports
 )
 
 login_manager.login_view = "public.login"
@@ -62,7 +63,6 @@ def register_extensions(app):
     ma.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)
-    assets.init_app(app)
     cache.init_app(app)
     debug_toolbar.init_app(app)
     mail.init_app(app)
@@ -74,6 +74,7 @@ def register_blueprints(app):
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(dashboard.views.blueprint)
     app.register_blueprint(surveys.views.blueprint)
+    app.register_blueprint(reports.views.blueprint)
     return None
 
 
