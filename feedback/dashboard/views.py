@@ -195,7 +195,7 @@ def home():
     json_obj['violations_locations_json'] = json.dumps(dump_socrata_api('vl'))
     json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
     json_obj['violations_per_month_json'] = json.dumps(dump_socrata_api('vm'))
-
+    
     today = datetime.date.today()
 
     return render_template(
