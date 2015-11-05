@@ -190,7 +190,7 @@ xepOnline.Formatter = {
 	getFormTextData: function(PrintCopy) {
 		var data = xepOnline.Formatter.entity_declaration + xepOnline.Formatter.xsl_stylesheet_declaration + PrintCopy;
 		//DEBUG
-		console.log(data);
+		//console.log(data);
 		var encoded = encodeURIComponent(data);
 		if(window.btoa) return btoa(encoded);
 		return encoded;
@@ -198,7 +198,8 @@ xepOnline.Formatter = {
 	getFormData: function(PrintCopy, Name, MimeType, FileName) {
 		var data = xepOnline.Formatter.entity_declaration + xepOnline.Formatter.xsl_stylesheet_declaration + PrintCopy;
 		//DEBUG
-		console.log(data);
+		//console.log(data);
+		//console.log(FileName);
 		var blob;
 		try
 		{
