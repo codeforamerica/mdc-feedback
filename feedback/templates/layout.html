@@ -40,35 +40,10 @@
 {% include "nav.html" %}
 {% endwith %}
 
-<!-- nav active states -->
-<!-- begin stuff that requires authentication check -->
-
-  {% set navigation_bar = [
-    ('/users/manage', 'Manage Users and Survey Lead E-mails')
-  ] -%}
-      
- <!-- {% if active_page == 'Dashboard' %}
-
-      {% set navigation_bar = [
-        ('/users/manage', 'Manage Users'),
-        ('/surveys', 'Set Survey Lead E-mails')
-      ] -%}
-
-    {% else %}
-
-      {% set navigation_bar = [
-        ('/', 'Dashboard')
-      ] -%}
-
-		{% endif %} -->
-
-		
-
-<!-- end stuff that requires authentication check -->
 
 <div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
   
-  {% if current_user and current_user.is_authenticated() and current_user.role.name == 'admin' %}
+  {% if current_user and current_user.is_authenticated() and current_user.role.name == 'admin' and active_page != 'Monthly Report'  %}
 		
 		 {% set navigation_bar = [
       ('/users/manage', 'Manage Users & E-mail')
