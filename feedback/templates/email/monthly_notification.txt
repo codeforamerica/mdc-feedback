@@ -11,5 +11,4 @@ To see the public dashboard of feedback data, visit http://c4a.me/mdcdashboard. 
 Thank you,
 Miami-Dade County RER & Communications Departments
 
-Manage your subscription: {{ url_for('opportunities.manage', _external=True) }}
 Questions? Email us at miami-dade@codeforamerica.org

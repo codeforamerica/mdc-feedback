@@ -1,0 +1,110 @@
+{% set total = surveys|length %}
+{% macro percent(value=0) -%}
+({{'%0.2f'| format(value / total * 100|float)}}%)
+{%- endmacro %}
+<div class="row twelve columns">
+  <div class="three columns">
+    <dl>
+      <dt>Respondents</dt>
+      <dd>{{ total }}</dd>
+
+      <dt>Satisfaction</dt>
+      <dd>{{ get_rating_scale(surveys) }} / 7 (mean)</dd>
+      <dd>[0] / 7 (median)</dd>
+
+      <dt>Follow-up Requested</dt>
+      <dd>Yes: {% set val = count_field(surveys, 'follow_up', True) %}
+      {{ val }} {{ percent(val) }}</dd>
+      <dd>No: {% set val = count_field(surveys, 'follow_up', False) %}
+      {{ val }} {{ percent(val) }}</dd>
+
+      <dt>Language</dt>
+      <dd>English:
+        {% set val = count_field(surveys, 'lang', 'en') %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Spanish:
+        {% set val = count_field(surveys, 'lang', 'es') %}
+        {{ val }} {{ percent(val) }}</dd></dd>
+
+      <dt>Survey Type</dt>
+      <dd>via web:
+        {% set val = count_field(surveys, 'method', 'web') %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>via phone:
+        {% set val = count_field(surveys, 'method', 'sms') %}
+        {{ val }} {{ percent(val) }}</dd>
+
+      <dt>Task Completion</dt>
+      <dd>Yes: {{ count_field(surveys, 'get_done', True) }}</dd>
+      <dd>No: {{ count_field(surveys, 'get_done', False) }}</dd>
+
+    </dl>
+  </div>
+  <div class="four columns">
+    <dl>
+
+      <dt>Role</dt>
+      <dd>Contractor: {% set val = count_field(surveys, 'role', 1) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Architect/Engineer: {% set val = count_field(surveys, 'role', 2) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Permit Consultant: {% set val = count_field(surveys, 'role', 3) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Homeowner: {% set val = count_field(surveys, 'role', 4) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Business owner: {% set val = count_field(surveys, 'role', 5) %}
+        {{ val }} {{ percent(val) }}</dd>
+
+      <dt>Purpose</dt>
+      <dd>Apply for a permit: {% set val = count_field(surveys, 'purpose', 1) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Meet with an inspector: {% set val = count_field(surveys, 'purpose', 2) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Meet with a plan reviewer: {% set val = count_field(surveys, 'purpose', 3) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Violations or Liens: {% set val = count_field(surveys, 'purpose', 4) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Optain a CU/CO: {% set val = count_field(surveys, 'purpose', 5) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Write-in answers:
+        {% for item in list_all(surveys, 'purpose_other') %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </dd>
+
+    </dl>
+  </div>
+  <div class="five columns">
+    <dl>
+      <dt>Best</dt>
+      <dd>ex. Getting questions answered and explained: {% set val = count_field(surveys, 'best', 1) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>ex. Finishing tasks quickly: {% set val = count_field(surveys, 'best', 2) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>ex. Courteous staff: {% set val = count_field(surveys, 'best', 3) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Other: {% set val = count_field(surveys, 'best', 4) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Write-in answers:
+        {% for item in list_all(surveys, 'best_other') %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </dd>
+
+      <dt>Worst</dt>
+      <dd>ex. Long wait time: {% set val = count_field(surveys, 'worst', 1) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>ex. Repeated visits for the same issue: {% set val = count_field(surveys, 'worst', 2) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>ex. Not being familiar with how the process works: {% set val = count_field(surveys, 'worst', 3) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Other: {% set val = count_field(surveys, 'worst', 4) %}
+        {{ val }} {{ percent(val) }}</dd>
+      <dd>Write-in answers:
+        {% for item in list_all(surveys, 'worst_other') %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </dd>
+    </dl>
+  </div>
+</div>

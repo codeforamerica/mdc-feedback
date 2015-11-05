@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+   {{ super() }} - Report for {{ date_header }}
+{% endblock %}
+
+{% block content %}
+<section class='row' id='reports-view'>
+
+<h3>Report for {{ date_header }}</h3>
+
+<h4>Overall</h4>
+{% include "reports/graph-overall.html" %}
+
+<h4>By Section</h4>
+{% include "reports/graph-section.html" %}
+
+<h4>Comments</h4>
+{% include "reports/graph-comments.html" %}
+
+</section>
+{% endblock %}

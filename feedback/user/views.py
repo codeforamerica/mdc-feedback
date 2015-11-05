@@ -57,9 +57,7 @@ def process_stakeholders_form(form):
                     email_list=value
                 )
             else:
-                stakeholder.update(
-                    email_list=value
-                )
+                stakeholder.update(email_list=value)
             db.session.add(stakeholder)
         else:
             errors = True
@@ -68,9 +66,8 @@ def process_stakeholders_form(form):
     if not errors:
         db.session.commit()
         flash("Your settings have been saved!", "alert-success")
-        return redirect(url_for('user.user_manage'))
-    else:
-        return redirect(url_for('user.user_manage'))
+
+    return redirect(url_for('user.user_manage'))
 
 
 @blueprint.route('/create', methods=['GET', 'POST'])
@@ -133,13 +130,7 @@ def user_delete(id):
     return redirect(url_for('user.user_manage'))
 
 
-@blueprint.route('/manage', methods=['GET', 'POST'])
-@requires_roles('admin')
-def user_manage():
-
-    if request.method == 'POST':
-        return process_stakeholders_form(request.form)
-
+def set_form():
     form = UserForm()
     users = User.query.order_by(User.role_id).all()
     stakeholders = Stakeholder.query.order_by(Stakeholder.id).all()
@@ -157,12 +148,41 @@ def user_manage():
         title='Manage Users')
 
 
+@blueprint.route('/manage', methods=['GET', 'POST'])
+@requires_roles('admin')
+def user_manage():
+
+    if request.method == 'POST':
+        return process_stakeholders_form(request.form)
+    return set_form()
+
+
 @blueprint.route('/monthly/manage', methods=['POST'])
 @requires_roles('admin')
 def monthly_manage():
+    errors = False
+
     if request.method == 'POST':
-        pass
-    pass
+        value = request.form['monthly-report-field']
+        if is_valid_email_list(value):
+            stakeholder = Monthly.query.first()
+            if not stakeholder:
+                stakeholder = Monthly(
+                    email_list=value
+                )
+            else:
+                stakeholder.update(email_list=value)
+            db.session.add(stakeholder)
+        else:
+            errors = True
+
+        if not errors:
+            db.session.commit()
+            flash("Your settings have been saved!", "alert-success")
+
+        return redirect(url_for('user.user_manage'))
+
+    return set_form()
 
 
 @blueprint.route('/profile', methods=['GET', 'POST'])
