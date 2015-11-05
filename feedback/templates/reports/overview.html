@@ -1,23 +1,34 @@
 {% extends "layout.html" %}
 {% set active_page = 'Monthly Report' %}
 
+
+
 {% block page_title %}
    {{ super() }} - Report for {{ date_header }}
 {% endblock %}
 
+
 {% block content %}
+
+<a href='' class='button green' id='pdf'>Click to download PDF of this report</a>
+  
+<div class='hidden'>
+	<div id='test-pdf'></div>
+</div>
+
 <section class='row' id='reports-view'>
-
-<h3>Report for {{ date_header }}</h3>
-
-<h4>Overall</h4>
-{% include "reports/graph-overall.html" %}
-
-<h4>By Section</h4>
-{% include "reports/graph-section.html" %}
-
-<h4>Comments</h4>
-{% include "reports/graph-comments.html" %}
+  
+  <h3>Report for {{ date_header }}</h3>
+  
+  <h4>Overall</h4>
+  {% include "reports/graph-overall.html" %}
+  
+  <h4>By Section</h4>
+  {% include "reports/graph-section.html" %}
+  
+  <h4>Comments</h4>
+  {% include "reports/graph-comments.html" %}
 
 </section>
+	
 {% endblock %}
