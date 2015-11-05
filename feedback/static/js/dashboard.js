@@ -811,19 +811,16 @@ $(document).ready(function () {
   
   function buildDataMaps(){
     
-    console.log(map);
-
     var vioLocationsData = JSON.parse($("#violations_locations_json")[0].childNodes[0].data),
         vioTypeData = JSON.parse($("#violations_type_json")[0].childNodes[0].data),
         vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data),
         vioArray = [];
-
+        
     for(i = 0; i < vioLocationsData.length; i+=1) {
 
       if(vioLocationsData[i].location.latitude != undefined) {
         
         var obj = vioLocationsData[i].location.human_address;
-        //console.log(obj);
         //console.log(typeof obj);
         //console.log(obj.split(":")[obj.split(":").length - 1])
         
