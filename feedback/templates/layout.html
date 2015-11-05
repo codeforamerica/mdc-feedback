@@ -21,7 +21,7 @@
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
   <meta name="viewport" content="width=device-width">
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
-  <link href='//fonts.googleapis.com/css?family=Raleway:400,600,300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
 
 	<!-- leaflet mapping -->
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
@@ -62,24 +62,26 @@
 
 		{% endif %} -->
 
-		{% if current_user and current_user.is_authenticated() and current_user.role.name == 'admin' %}
+		
+
+<!-- end stuff that requires authentication check -->
+
+<div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
+  
+  {% if current_user and current_user.is_authenticated() and current_user.role.name == 'admin' %}
 		
 		 {% set navigation_bar = [
       ('/users/manage', 'Manage Users & E-mail')
     ] -%}
 
-		<div class='row u-pull-left' id='breadcrumb'>
+		<div class='row'>
 
-			<ul class='list-nav'>
+			<ul class='list-nav u-pull-left'>
 				<li class='breadcrumb-text'>You're looking at:</li>
 				<li id='breadcrumb-location' class='bold'>{{ title }}</li>
 			</ul>
-
-		</div>
-
-		<div class='row u-pull-right' id='breadcrumb-nav-parent'>
-
-			<ul>
+			
+			<ul class='row u-pull-right'>
 
 				<li class='breadcrumb-text'>Go back to:</li>
 
@@ -92,10 +94,6 @@
 		</div>
 
 		{% endif %}
-
-<!-- end stuff that requires authentication check -->
-
-<div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
 
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
