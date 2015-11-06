@@ -96,7 +96,7 @@ def user_create():
             action='Add User')
 
 
-@blueprint.route('/edit/<id>', methods=['GET', 'POST'])
+@blueprint.route('/edit/<id>/', methods=['GET', 'POST'])
 @requires_roles('admin')
 def user_edit(id):
     user = get_object_or_404(User, User.id == id)
@@ -122,7 +122,7 @@ def user_edit(id):
             action='Save Changes')
 
 
-@blueprint.route('/delete/<id>', methods=['POST'])
+@blueprint.route('/delete/<id>/', methods=['POST'])
 @requires_roles('admin')
 def user_delete(id):
     current_app.logger.info(
