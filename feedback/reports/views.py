@@ -2,6 +2,7 @@
 
 import arrow
 import numpy as np
+import pdfkit
 
 from flask import (
     Blueprint, render_template
@@ -43,6 +44,7 @@ def overview():
     last_month = arrow.utcnow().replace(months=-1)
     date_start, date_end = last_month.span('month')
     sect = []
+    pdf = pdfkit.from_url('http://google.com', 'out.pdf')
 
     reports = Survey.query.filter(
         Survey.date_submitted.between(
