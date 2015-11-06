@@ -47,8 +47,9 @@ def create_app():
 
     # Only trigger SSLify if the app is running on heroku.
     # See: http://goo.gl/ahp8kh
-    # if 'staging' in config_string.lower():
-    if 'DYNO' in os.environ:
+
+    # if 'DYNO' in os.environ:
+    if 'staging' in config_string.lower():
         sslify = SSLify(app)
 
     register_extensions(app)
