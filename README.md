@@ -15,7 +15,7 @@ A lot of early development for this application was based on this tutorial, so a
 
 #### A note on VIM
 
-If you're not used to it see [VIM Adventures](http://vim-adventures.com/), because at least one of these steps requires using VIM.
+If you're not used to it see [VIM Adventures](http://vim-adventures.com/), because at least one of these steps requires using VIM. It lets you edit the file directly.
 
 #### Environmental variables
 
