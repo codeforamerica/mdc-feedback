@@ -108,6 +108,10 @@ def user_edit(id):
             role_id=form.role_id.data
         )
         flash('Profile changes saved.', 'alert-success')
+        current_app.logger.info(
+            'url_for of user.user_mange is: {}',
+            url_for('user.user_manage'))
+
         return redirect(url_for('user.user_manage'))
     else:
         return render_template(
