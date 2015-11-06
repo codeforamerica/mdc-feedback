@@ -20,7 +20,8 @@ from feedback.user.forms import UserForm
 from feedback.decorators import requires_roles
 
 from feedback.surveys.constants import ROUTES
-from feedback.surveys.models import Stakeholder, Monthly
+from feedback.surveys.models import Stakeholder
+from feedback.reports.models import Monthly
 
 blueprint = Blueprint(
     "user", __name__, url_prefix='/users',

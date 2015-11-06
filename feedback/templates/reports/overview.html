@@ -1,30 +1,31 @@
 {% extends "layout.html" %}
 {% set active_page = 'Monthly Report' %}
 
-
-
 {% block page_title %}
    {{ super() }} - Report for {{ date_header }}
 {% endblock %}
 
-
 {% block content %}
 
-<a href='' class='button green' id='pdf'>Click to download PDF of this report</a>
-  
-<section class='row' id='reports-view'>
-  
+<a href="#" class="button green" id="pdf">Click to download PDF of this report</a>
+
+<section class="row" id="reports-view">
+
   <h3>Report for {{ date_header }}</h3>
-  
+  {% if surveys|length == 0 %}
+
+  <p>There are currently no surveys in our database for {{ date_header }}.</p>
+
+  {% else %}
   <h4>Overall</h4>
   {% include "reports/graph-overall.html" %}
-  
+
   <h4>By Section</h4>
   {% include "reports/graph-section.html" %}
-  
+
   <h4>Comments</h4>
   {% include "reports/graph-comments.html" %}
 
 </section>
-	
+{% endif %}
 {% endblock %}
