@@ -13,7 +13,6 @@ class Config(object):
     SECRET_KEY = 'this-really-needs-to-be-changed'
     SQLALCHEMY_DATABASE_URI = os_env.get('DATABASE_URL')
     BROWSERID_URL = os_env.get('BROWSERID_URL')
-    # SERVER_NAME = os_env.get('BROWSERID_URL')
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     ADMIN_EMAIL = os_env.get('ADMIN_EMAIL', 'ehsiung@codeforamerica.org')
     CITY_DOMAINS = ['miamidade.gov', 'codeforamerica.org']
@@ -41,6 +40,7 @@ class StagingConfig(Config):
     MAIL_PASSWORD = os_env.get('SENDGRID_PASSWORD')
     MAIL_SERVER = 'smtp.sendgrid.net'
     MAIL_MAX_EMAILS = 100
+    PREFERRED_URL_SCHEME = 'https'
 
 
 class DevelopmentConfig(Config):
@@ -51,6 +51,7 @@ class DevelopmentConfig(Config):
     DEBUG_TB_ENABLED = True
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
     BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://localhost:9000')
+    SERVER_NAME = 'localhost:9000'
     MAIL_SERVER = 'smtp.gmail.com'  # Use gmail in dev: https://support.google.com/mail/answer/1173270?hl=en
     ADMIN_EMAIL = os_env.get('ADMIN_EMAIL', 'mdcfeedbackdev@gmail.com')
     MAIL_USERNAME = 'mdcfeedbackdev@gmail.com'
