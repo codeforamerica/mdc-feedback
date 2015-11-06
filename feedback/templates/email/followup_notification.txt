@@ -22,5 +22,8 @@ Improvement Suggestion: {{ survey.improvement }}
 Thank you,
 Miami-Dade County RER & Communications Departments
 
+-----
 
-<a href="#">Manage your subscription</a> | <a href="mailto:miami-dade@codeforamerica.org?Subject=Feedback%20from%20Email">Questions? Email us</a>
+You have received this mail because you have been listed as a stakeholder of
+ the {{ survey.route_en }} Section in the MDC Feedback Tool. If you believe this is
+incorrect, please let us know at miami-dade@codeforamerica.org.

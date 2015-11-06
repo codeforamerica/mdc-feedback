@@ -1,8 +1,6 @@
 Hello!
 
-You are receiving this e-mail because _______.
-
-Below is a link to the summary statistics for the Permit Inspection Center Survey for [MONTH] [YEAR]:
+Below is a link to the summary statistics for the Permit Inspection Center Survey for {{ date_header }}:
 
 [view monthly report]
 
@@ -11,4 +9,8 @@ To see the public dashboard of feedback data, visit http://c4a.me/mdcdashboard. 
 Thank you,
 Miami-Dade County RER & Communications Departments
 
-Questions? Email us at miami-dade@codeforamerica.org
+-----
+
+You have received this mail because you have been listed as someone that should
+receive monthly reports from the MDC Feedback Tool. If you believe this is incorrect,
+please let us know at miami-dade@codeforamerica.org.
