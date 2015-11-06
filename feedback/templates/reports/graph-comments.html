@@ -1,0 +1,32 @@
+{% macro open_table(label, value) -%}
+  <table style="width:100%">
+    <thead>
+      <th>Date</th>
+      <th>Tags</th>
+      <th>{{ label }}</th>
+    </thead>
+    <tbody>
+      {% for survey in surveys %}
+      {% if survey[value] and survey[value] != 'No' %}
+      <tr>
+        <td>{{ survey.date_submitted }}</td>
+        <td>{{ survey.purpose_en }}, {{ survey.route_en }}, {{ survey.role_en }}</td>
+        <td>{{ survey[value] }}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+{%- endmacro %}
+
+<div class="row twelve columns">
+
+  {{ open_table('Best', 'best_other') }}
+
+  {{ open_table('Worst', 'worst_other') }}
+
+  {{ open_table('Improvements', 'improvement') }}
+
+  {{ open_table('Additional Comments', 'more_comments') }}
+
+</div>

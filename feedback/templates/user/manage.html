@@ -2,6 +2,10 @@
 {% import "user/macro_field_with_errors.html" as macros %}
 {% set active_page = 'Manage Users' %}
 
+{% block page_title %}
+   {{ super() }} - Manage Users and Survey Lead E-mails
+{% endblock %}
+
 {% block content %}
   <div id="container">
 
@@ -16,7 +20,7 @@
       </ul>
 
 
-      <table>
+      <table style="width:100%;">
         <thead>
           <tr>
             <th>Name</th>
@@ -58,7 +62,7 @@
       <h3>Set who receives e-mail.</h3>
       <p>Here you can determine who receives daily e-mail updates from the dashboard system. You may separate multiple e-mail addresses with a comma.</p>
 
-      <form id="stakeholderForm" class="form form-stakeholders" method="POST" action="{{ url_for('surveys.survey_index') }}" role="form">
+      <form id="stakeholderForm" class="form form-stakeholders" method="POST" action="{{ url_for('user.user_manage') }}" role="form">
         <ul>
           {% for n in range(1,15) %}
           <li>{{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}{{ stakeholders[n-1].email_list }}{% endif %}"></li>
@@ -68,6 +72,18 @@
         <input type="submit" value="save changes">
       </form>
 
+    </section>
+
+    <section id="monthly-list" class="row twelve columns">
+      <h3>Set who receives monthly status reports.</h3>
+      <p>Separate multiple e-mail addresses with a comma.</p>
+      <form id="monthlyForm" class="form form-monthly" method="POST" action="{{ url_for('user.monthly_manage') }}" role="form">
+        <input
+        name="monthly-report-field"
+        type="text"
+        value="{% if monthly is defined %}{{ monthly.email_list }}{% endif %}">
+        <input type="submit" value="save changes">
+      </form>
 
     </section>
 

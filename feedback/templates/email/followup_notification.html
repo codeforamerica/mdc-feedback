@@ -1,4 +1,9 @@
 {% extends "./email/base.html" %}
+
+{% block header %}
+New feedback has been posted from the Permitting Inspection Center!
+{% endblock %}
+
 {% block content %}
 <p>Hello!</p>
 
@@ -22,6 +27,11 @@
   <li>Worst Experience: {{ survey.worst_en }}</li>
   <li>Improvement Suggestion: {{ survey.improvement }}</li>
 </ul>
+
+<p>Thank you,</p>
+
+<p>Miami-Dade County RER &amp; Communications Departments</p>
+
 {% endblock %}
 
 {% block footer %}

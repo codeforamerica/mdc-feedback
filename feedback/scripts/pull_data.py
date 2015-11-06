@@ -47,6 +47,7 @@ def call_web(ts):
     '''
     API = TF['API'] + TF['KEY'] + '&completed=true&since=' + str(ts.timestamp)
     response = requests.get(API)
+    print API
 
     return response.json()
 
@@ -186,7 +187,7 @@ def etl_sms_data(ts):
             'method': 'sms',
             'route': iter['Section']['text'],
             'get_done': string_to_bool(iter['Tasks']['text']),
-            'rating': iter['Satisfaction']['text'],
+            'rating': iter['Satisfaction']['value'],
             'improvement': iter['Improvement']['text'],
             'follow_up': string_to_bool(iter['Followup Permission']['text']),
             'more_comments': iter['Comments']['text']
@@ -236,8 +237,8 @@ def follow_up(models):
 
     Returns ..?
     '''
-    subj = 'Miami-Dade County Permit Inspection Center Survey'
-    from_email = 'mdcfeedbackdev@gmail.com'
+    subj = 'New feedback has been posted from the Permitting Inspection Center!'
+    from_email = current_app.config.get('ADMIN_EMAIL')
     for survey in models:
 
         if survey.follow_up and survey.route is not None:
@@ -279,7 +280,8 @@ def load_data():
         loader.slice_and_add(row)
 
     db_models = loader.save_models_or_report_errors()
-    follow_up(db_models)
+    if db_models is not None:
+        follow_up(db_models)
 
 
 def run():
