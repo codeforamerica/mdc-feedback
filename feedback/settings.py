@@ -35,7 +35,7 @@ class ProductionConfig(Config):
 class StagingConfig(Config):
     ENV = 'stage'
     DEVELOPMENT = True
-    DEBUG = True
+    DEBUG = False
     MAIL_USERNAME = os_env.get('SENDGRID_USERNAME')
     MAIL_PASSWORD = os_env.get('SENDGRID_PASSWORD')
     MAIL_SERVER = 'smtp.sendgrid.net'
