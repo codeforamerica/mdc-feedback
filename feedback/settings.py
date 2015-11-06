@@ -13,7 +13,7 @@ class Config(object):
     SECRET_KEY = 'this-really-needs-to-be-changed'
     SQLALCHEMY_DATABASE_URI = os_env.get('DATABASE_URL')
     BROWSERID_URL = os_env.get('BROWSERID_URL')
-    SERVER_NAME = os_env.get('BROWSERID_URL')
+    # SERVER_NAME = os_env.get('BROWSERID_URL')
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     ADMIN_EMAIL = os_env.get('ADMIN_EMAIL', 'ehsiung@codeforamerica.org')
     CITY_DOMAINS = ['miamidade.gov', 'codeforamerica.org']
