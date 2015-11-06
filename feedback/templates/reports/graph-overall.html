@@ -2,6 +2,7 @@
 {% macro percent(value=0) -%}
 ({{'%0.2f'| format(value / total * 100|float)}}%)
 {%- endmacro %}
+
 <div class="row twelve columns">
   <div class="three columns">
     <dl>

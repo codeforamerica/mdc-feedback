@@ -20,6 +20,11 @@
   
   <p><i>Pro tip: Click the table headers to sort each column.</i></p>
 
+  {% if current_user and current_user.is_authenticated() %}
+  <p><a href="{{ url_for('surveys.to_csv') }}">Download everything in CSV format.</a></p>
+  {% endif %}
+
+
 
   <div class='twelve columns' id='survey-details'>
 
