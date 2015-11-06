@@ -109,15 +109,15 @@ def user_edit(id):
         )
         flash('Profile changes saved.', 'alert-success')
         current_app.logger.info(
-            'url_for of user.user_mange is: {}'.format(url_for('user.user_manage', _external=True)))
+            'url_for of user.user_mange is: {}'.format(url_for('user.user_manage')))
 
-        return redirect(url_for('user.user_manage', _external=True))
+        return redirect(url_for('user.user_manage'))
     else:
         return render_template(
             'user/add-edit.html',
             form=form,
             date=today.strftime('%B %d, %Y'),
-            form_action=url_for('user.user_edit', id=id, _external=True),
+            form_action=url_for('user.user_edit', id=id),
             title='Edit User',
             action='Save Changes')
 
