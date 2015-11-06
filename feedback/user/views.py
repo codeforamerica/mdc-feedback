@@ -117,7 +117,7 @@ def user_edit(id):
             'user/add-edit.html',
             form=form,
             date=today.strftime('%B %d, %Y'),
-            form_action=url_for('user.user_edit', id=id),
+            form_action=url_for('user.user_edit', id=id, _external=True),
             title='Edit User',
             action='Save Changes')
 
