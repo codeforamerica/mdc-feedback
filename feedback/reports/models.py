@@ -3,6 +3,7 @@ import arrow
 
 from flask import (
     render_template, current_app,
+    url_for
 )
 
 from feedback.database import (
@@ -43,6 +44,11 @@ class Monthly(Model):
             last_month = arrow.utcnow().replace(months=-1)
             date_start, date_end = last_month.span('month')
             date_header = date_start.format('MMMM, YYYY')
+            year = last_month.format('YYYY')
+            month = last_month.format('MM')
+            report = url_for(
+                'reports.overview', _external=True,
+                year=year, month=month)
 
             send_email(
                 subj.format(date_header),
@@ -50,9 +56,7 @@ class Monthly(Model):
                 self.email_list,
                 render_template('email/monthly_notification.txt',
                                 date_header=date_header,
-                                year=last_month.format('YYYY'),
-                                month=last_month.format('MM')),
+                                report=report),
                 render_template('email/monthly_notification.html',
                                 date_header=date_header,
-                                year=last_month.format('YYYY'),
-                                month=last_month.format('MM')))
+                                report=report))
