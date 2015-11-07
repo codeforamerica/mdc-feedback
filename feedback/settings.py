@@ -29,7 +29,7 @@ class Config(object):
 class ProductionConfig(Config):
     ENV = 'prod'
     DEBUG = False
-    BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://mdc-feedback.herokuapp.com/')
+    BROWSERID_URL = os_env.get('BROWSERID_URL', 'https://mdc-feedback.herokuapp.com/')
 
 
 class StagingConfig(Config):
@@ -38,9 +38,13 @@ class StagingConfig(Config):
     DEBUG = False
     MAIL_USERNAME = os_env.get('SENDGRID_USERNAME')
     MAIL_PASSWORD = os_env.get('SENDGRID_PASSWORD')
+    BROWSERID_URL = os_env.get('BROWSERID_URL', 'https://mdc-feedback-stage.herokuapp.com/')
+
+    # SERVER_NAME is needed for the url_for function
+    # when we do timed e-mail scripts.
+    SERVER_NAME = os_env.get('SERVER_NAME', 'mdc-feedback-stage.herokuapp.com')
     MAIL_SERVER = 'smtp.sendgrid.net'
     MAIL_MAX_EMAILS = 100
-    PREFERRED_URL_SCHEME = 'https'
 
 
 class DevelopmentConfig(Config):
