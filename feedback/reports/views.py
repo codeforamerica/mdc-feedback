@@ -2,6 +2,9 @@
 
 import arrow
 import numpy as np
+import pdfkit
+
+import requests
 
 from flask import (
     Blueprint, render_template, flash
@@ -50,7 +53,7 @@ def get_target(year, month):
             target_month = arrow.utcnow().replace(
                 year=int(year),
                 month=int(month))
-        except Exception, e:
+        except Exception:
             flash("Looks like there was an issue retrieving this report. We've defaulted to last month's report instead.", "alert-warning")
             target_month = last_month
 

@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% set active_page = 'Dashboard - Violations' %}
+{% block content %}
+
+<span id='api-health' class='hidden'>{{ api }}</span>
+
+<div class="remodal" data-remodal-id="modal">
+
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h1 id='status'>Warning!<br>You can't undo this!</h1>
+  <p></p>
+  <br>
+  <button data-remodal-action="confirm" class="remodal-confirm">OK, thanks!</button>
+
+</div>
+
+
+<section class='row' id='regulation'>
+
+	<div class='row twelve columns'><h3>Neighborhood Compliance</h3></div>
+
+	<div class='row twelve columns panel'>
+
+		<div class='headline'>
+      Complaints &amp; violations cases opened, per month
+      <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-monthly'><img class='' src='static/images/question_bk.png'></a>
+    </div>
+		<div class='content-container'>
+			<canvas id='violations'></canvas>
+		</div>
+		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+
+	</div>
+
+	<div class='row twelve columns panel double-height'>
+
+    <div class='headline'>Violations by location, current month to date<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-closed'><img class='' src='static/images/question_bk.png'></a></div>
+    
+    <div class='four columns first-panel double-height'>
+      
+      filters etc go here. 
+      
+    </div>
+		
+		<div class='eight columns double-height'>
+
+			<div class='content-container'>
+				<div id='leaflet'></div>
+			</div>
+			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
+		</div>
+
+	</div>
+
+	<div class='row twelve columns panel double-height'>
+
+			<div class='headline'>Top 20 Violations by Type, to date in 2015<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-type'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='content-container'>
+				<canvas id='viotype'></canvas>
+			</div>
+			<p class='details invisible-button'><a href="{{ url_for('dashboard.violations_detail') }}">View Complete Dataset</a></p>
+
+		</div>
+</section> <!-- close row -->
+
+{% endblock %}
