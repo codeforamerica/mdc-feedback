@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from feedback.database import (
     Column, db, Model
 )
@@ -6,22 +7,6 @@ from feedback.surveys.constants import (
     ROLES, PURPOSE, ROUTES,
     BEST, WORST
 )
-
-
-class Monthly(Model):
-    ''' The monthly report model - this only contains
-    one field: a string of e-mails separated by commas
-    if necessary.
-    '''
-    __tablename__ = 'monthly-report'
-
-    id = Column(db.Integer, primary_key=True, index=True)
-    email_list = Column(db.String(200), nullable=True)
-
-    def __repr__(self):
-        return '<Monthly(id:{0}, emails:{1})>'.format(
-            self.id,
-            self.email_list)
 
 
 class Stakeholder(Model):

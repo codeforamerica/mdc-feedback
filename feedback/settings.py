@@ -29,15 +29,20 @@ class Config(object):
 class ProductionConfig(Config):
     ENV = 'prod'
     DEBUG = False
-    BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://mdc-feedback.herokuapp.com/')
+    BROWSERID_URL = os_env.get('BROWSERID_URL', 'https://mdc-feedback.herokuapp.com/')
 
 
 class StagingConfig(Config):
     ENV = 'stage'
     DEVELOPMENT = True
-    DEBUG = True
+    DEBUG = False
     MAIL_USERNAME = os_env.get('SENDGRID_USERNAME')
     MAIL_PASSWORD = os_env.get('SENDGRID_PASSWORD')
+    BROWSERID_URL = os_env.get('BROWSERID_URL', 'https://mdc-feedback-stage.herokuapp.com/')
+
+    # SERVER_NAME is needed for the url_for function
+    # when we do timed e-mail scripts.
+    SERVER_NAME = os_env.get('SERVER_NAME', 'mdc-feedback-stage.herokuapp.com')
     MAIL_SERVER = 'smtp.sendgrid.net'
     MAIL_MAX_EMAILS = 100
 
@@ -50,6 +55,7 @@ class DevelopmentConfig(Config):
     DEBUG_TB_ENABLED = True
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
     BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://localhost:9000')
+    SERVER_NAME = 'localhost:9000'
     MAIL_SERVER = 'smtp.gmail.com'  # Use gmail in dev: https://support.google.com/mail/answer/1173270?hl=en
     ADMIN_EMAIL = os_env.get('ADMIN_EMAIL', 'mdcfeedbackdev@gmail.com')
     MAIL_USERNAME = 'mdcfeedbackdev@gmail.com'

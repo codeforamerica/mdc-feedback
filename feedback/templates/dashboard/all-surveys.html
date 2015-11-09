@@ -10,14 +10,10 @@
 
   <h3>All Survey Responses</h3>
 
-  {% if current_user and current_user.is_authenticated() %}
-  <p><a href="{{ url_for('surveys.to_csv') }}">Download everything in CSV format.</a></p>
-  {% endif %}
-
   {% if not current_user.is_authenticated() %}
   <p>Not seeing your comment? If you're not logged in as a Miami-Dade County employee, some data has been obscured in order to protect your privacy and personal information.</p>
   {% endif %}
-  
+
   <p><i>Pro tip: Click the table headers to sort each column.</i></p>
 
   {% if current_user and current_user.is_authenticated() %}

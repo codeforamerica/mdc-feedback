@@ -5,6 +5,8 @@ import sys
 import logging
 import os
 
+from flask_sslify import SSLify
+
 from flask import Flask, render_template
 from werkzeug.utils import import_string
 
@@ -42,6 +44,14 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_object(config)
+
+    # Only trigger SSLify if the app is running on heroku.
+    # By default, SSLify only runs if DEBUG is False.
+    # See: http://goo.gl/ahp8kh
+    # if 'staging' in config_string.lower():
+    if 'DYNO' in os.environ:
+        sslify = SSLify(app)
+
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
