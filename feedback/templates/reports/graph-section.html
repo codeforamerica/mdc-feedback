@@ -1,34 +1,3 @@
 
-  <table style="width:100%">
-    <thead>
-      <th>Section</th>
-      <th>Respondents</th>
-      <th>Satisfaction</th>
-      <th>Task Completion</th>
-      <th>Requested Follow-Up</th>
-    </thead>
-    <tbody>
-      {% for n in range(0,14) %}
-      <tr>
-        <td>{{ section[n].label }}</td>
-        <td>{{ section[n].count }}</td>
-        <td>{% if section[n].count > 0 %}
-          {{ section[n].rating }}/7.0
-          {% else %}
-          --
-          {% endif %}</td>
-        <td>{% if section[n].count > 0 %}
-          {{ section[n].getdone }} / {{ section[n].count }}
-          {% else %}
-          --
-          {% endif %}</td>
-        <td>{% if section[n].count > 0 %}
-          {{ section[n].follow }} / {{ section[n].count }}
-          {% else %}
-          --
-          {% endif %}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  
   

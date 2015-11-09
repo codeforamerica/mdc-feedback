@@ -4,6 +4,8 @@ import arrow
 import numpy as np
 import pdfkit
 
+import requests
+
 from flask import (
     Blueprint, render_template
 )
@@ -38,14 +40,13 @@ def processor():
     )
 
 
-@blueprint.route('/overview', methods=['GET'])
+@blueprint.route('/overview', methods=['POST', 'GET'])
 def overview():
-
+         
     last_month = arrow.utcnow().replace(months=-1)
     date_start, date_end = last_month.span('month')
     sect = []
-    pdf = pdfkit.from_url('http://google.com', 'out.pdf')
-
+    
     reports = Survey.query.filter(
         Survey.date_submitted.between(
             date_start.format('YYYY-MM-DD'),
@@ -61,7 +62,7 @@ def overview():
                 rating=np.mean([x.rating for x in items if x.rating]),
                 getdone=len([x.get_done for x in items if x.get_done is True]),
                 follow=len([x.follow_up for x in items if x.follow_up is True])))
-
+    
     return render_template(
         "reports/overview.html",
         date_header=date_start.format('MMMM, YYYY'),
