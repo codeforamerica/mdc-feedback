@@ -10,7 +10,7 @@ from feedback.extensions import cache
 from dateutil.relativedelta import *
 
 
-requests_cache.install_cache()
+requests_cache.install_cache('feedback_cache')
 
 API_URL = 'https://opendata.miamidade.gov/resource/vvjq-pfmc.json'
 VIOLATIONS_URL = 'https://opendata.miamidade.gov/resource/tzia-umkx.json'
@@ -41,7 +41,6 @@ VIOLATIONS_LAST_30 = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2
 
 VIOLATIONS_PREV_MONTH = VIOLATIONS_URL + '?$select=issue_type%2C%20street_address%2C%20city%2C%20ticket_status%2C%20location%2C%20method_received%2C%20ticket_last_updated_date_time%2C%20ticket_closed_date_time&$where=ticket_created_date_time%3E%27' + p_month + '%27&$limit=50000'
 
-# print VIOLATIONS_LAST_30
 
 def api_health():
     '''
