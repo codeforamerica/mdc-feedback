@@ -2,9 +2,6 @@
 
 import arrow
 import numpy as np
-import pdfkit
-
-import requests
 
 from flask import (
     Blueprint, render_template, flash
