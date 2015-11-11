@@ -27,7 +27,6 @@ from feedback.utils import send_email
 TI_API = 'https://textit.in/api/v1/runs.json?flow_uuid='
 TEXTIT_UUID_EN = '0aa9f77b-d775-4bc9-952a-1a6636258841'
 TEXTIT_UUID_ES = 'bdb57073-ab32-4c1b-a3a5-25f866b9626b'
-TEXTIT_AUTH_KEY = '41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9'
 
 
 def date_to_db(str1):
@@ -45,7 +44,7 @@ def call_web(ts):
     as an argument, then pulls Return the
     result in json.
     '''
-    API = TF['API'] + TF['KEY'] + '&completed=true&since=' + str(ts.timestamp)
+    API = TF['API'] + current_app.config.get('TYPEFORM_KEY') + '&completed=true&since=' + str(ts.timestamp)
     response = requests.get(API)
     print API
 
@@ -64,7 +63,7 @@ def call_sms(ts):
 
     resp = requests.get(
         SMS_API,
-        headers={'Authorization': 'Token ' + TEXTIT_AUTH_KEY}
+        headers={'Authorization': 'Token ' + current_app.config.get('TEXTIT_KEY')}
         )
 
     return resp.json()
