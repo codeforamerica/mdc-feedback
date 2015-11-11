@@ -2,13 +2,11 @@
 
 import arrow
 import numpy as np
-import pdfkit
-
-import requests
 
 from flask import (
-    Blueprint, render_template
+    Blueprint, render_template, flash
 )
+from flask.ext.login import login_required
 from feedback.surveys.models import Survey
 from feedback.surveys.constants import ROUTES
 from feedback.dashboard.vendorsurveys import (
@@ -40,31 +38,56 @@ def processor():
     )
 
 
-@blueprint.route('/overview', methods=['POST', 'GET'])
-def overview():
-         
+def get_target(year, month):
     last_month = arrow.utcnow().replace(months=-1)
-    date_start, date_end = last_month.span('month')
+
+    if year is None and month is None:
+        # No arguments? We'll assume we want the
+        # latest report and set it to last month.
+        target_month = last_month
+    else:
+        try:
+            target_month = arrow.utcnow().replace(
+                year=int(year),
+                month=int(month))
+        except Exception:
+            flash("Looks like there was an issue retrieving this report. We've defaulted to last month's report instead.", "alert-warning")
+            target_month = last_month
+
+    return target_month
+
+
+@blueprint.route('/overview',
+                 defaults={'year': None, 'month': None},
+                 methods=['GET'])
+@blueprint.route('/overview/<year>/<month>', methods=['GET'])
+@login_required
+def overview(year, month):
+    target_month = get_target(year, month)
+
+    date_start, date_end = target_month.span('month')
     sect = []
-    
+
     reports = Survey.query.filter(
         Survey.date_submitted.between(
             date_start.format('YYYY-MM-DD'),
             date_end.format('YYYY-MM-DD')
         ))
+    date_header = date_start.format('MMMM, YYYY')
 
-    for n in range(1, 15):
-        items = reports.filter(Survey.route == n).all()
-        sect.append(
-            dict(
-                label=ROUTES[n],
-                count=len(items),
-                rating=np.mean([x.rating for x in items if x.rating]),
-                getdone=len([x.get_done for x in items if x.get_done is True]),
-                follow=len([x.follow_up for x in items if x.follow_up is True])))
-    
+    if len(reports.all()) > 0:
+        for n in range(1, 15):
+            items = reports.filter(Survey.route == n).all()
+            sect.append(
+                dict(
+                    label=ROUTES[n],
+                    count=len(items),
+                    rating=np.mean([x.rating for x in items if x.rating]),
+                    getdone=len([x.get_done for x in items if x.get_done is True]),
+                    follow=len([x.follow_up for x in items if x.follow_up is True])))
+
     return render_template(
         "reports/overview.html",
-        date_header=date_start.format('MMMM, YYYY'),
+        date_header=date_header,
         surveys=reports.all(),
         section=sect)

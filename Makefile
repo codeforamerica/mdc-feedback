@@ -46,3 +46,7 @@ load.users:
 
 load.surveys:
 	python ./feedback/scripts/pull_data.py
+
+send.report:
+	python ./feedback/scripts/send_monthly_report.py
+

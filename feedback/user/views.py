@@ -20,7 +20,8 @@ from feedback.user.forms import UserForm
 from feedback.decorators import requires_roles
 
 from feedback.surveys.constants import ROUTES
-from feedback.surveys.models import Stakeholder, Monthly
+from feedback.surveys.models import Stakeholder
+from feedback.reports.models import Monthly
 
 blueprint = Blueprint(
     "user", __name__, url_prefix='/users',
@@ -95,7 +96,7 @@ def user_create():
             action='Add User')
 
 
-@blueprint.route('/edit/<id>', methods=['GET', 'POST'])
+@blueprint.route('/edit/<id>/', methods=['GET', 'POST'])
 @requires_roles('admin')
 def user_edit(id):
     user = get_object_or_404(User, User.id == id)
@@ -107,6 +108,9 @@ def user_edit(id):
             role_id=form.role_id.data
         )
         flash('Profile changes saved.', 'alert-success')
+        current_app.logger.info(
+            'url_for of user.user_mange is: {}'.format(url_for('user.user_manage')))
+
         return redirect(url_for('user.user_manage'))
     else:
         return render_template(
@@ -118,7 +122,7 @@ def user_edit(id):
             action='Save Changes')
 
 
-@blueprint.route('/delete/<id>', methods=['POST'])
+@blueprint.route('/delete/<id>/', methods=['POST'])
 @requires_roles('admin')
 def user_delete(id):
     current_app.logger.info(
