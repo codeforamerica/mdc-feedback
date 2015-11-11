@@ -24,6 +24,8 @@ class Config(object):
     MAIL_PORT = 587
     MAIL_USE_SSL = False
     MAIL_USE_TLS = True
+    TYPEFORM_KEY = os_env.get('TYPEFORM_KEY')
+    TEXTIT_KEY = os_env.get('TEXTIT_KEY')
 
 
 class ProductionConfig(Config):
@@ -56,12 +58,15 @@ class DevelopmentConfig(Config):
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
     BROWSERID_URL = os_env.get('BROWSERID_URL', 'http://localhost:9000')
     SERVER_NAME = 'localhost:9000'
-    MAIL_SERVER = 'smtp.gmail.com'  # Use gmail in dev: https://support.google.com/mail/answer/1173270?hl=en
+
+    # Use gmail in dev: https://goo.gl/v2Q2nU
+    MAIL_SERVER = 'smtp.gmail.com'
     ADMIN_EMAIL = os_env.get('ADMIN_EMAIL', 'mdcfeedbackdev@gmail.com')
-    MAIL_USERNAME = 'mdcfeedbackdev@gmail.com'
-    MAIL_PASSWORD = 'miamidade305'
+    MAIL_USERNAME = os_env.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os_env.get('MAIL_PASSWORD')
     MAIL_PORT = 587
     MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
     # MAIL_SUPPRESS_SEND = True
 
 
