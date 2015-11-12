@@ -51,8 +51,8 @@ psql -c 'create database feedback_dev;'
 
 ADMIN_EMAIL='youremail@someplace.net'
 export CONFIG=feedback.settings.DevConfig
-export MAIL_USERNAME="mdcfeedbackdev@gmail.com"
-export MAIL_PASSWORD="miamidade305"
+export MAIL_USERNAME="[YOUR-DEVELOPMENT-GMAIL-ADDRESS]"
+export MAIL_PASSWORD="[YOUR-PASSWORD]"
 export TYPEFORM_KEY="b903e7c38f9ae29378f24b69eb743330d9dee34d"
 export TEXTIT_KEY="41a75bc6977c1e0b2b56d53a91a356c7bf47e3e9"
 
@@ -128,34 +128,23 @@ Resources
 Environment Variables
 
 * BROWSERID_URL (Necessary for Mozilla persona)
-
 * CONFIG (Set to feedback.settings.StagingConfig)
-
 * DATABASE_URL
-
 * SENDGRID_PASSWORD
-
 * SENDGRID_USERNAME
-
 * SERVER_NAME (Necessary for the timed e-mail template task; it’s BROWSERID_URL without the http or https)
-
 * TYPEFORM_API
-
 * TEXIT_API
 
 ### Miscellaneous Stuff
 
 #### Database Tables
 
-* survey: contains a standardized version of all surveys
-
-* roles: contains a list of rules, seeded manually by python manage.py seed_roles
-
-* users: A list of users that have accounts. Primary key is e-mail address and contains the ID number of the roles table.
-
-* stakeholders: A string consisted of comma separated e-mail addresses.
-
-* monthly-report: A string consisted of comma separated e-mail addresses which will receive the monthly report. As of now, only one row.
+* `survey`: contains a standardized version of all surveys
+* `roles`: contains a list of rules, seeded manually by python manage.py seed_roles
+* `users`: A list of users that have accounts. Primary key is e-mail address and contains the ID number of the roles table.
+* `stakeholders`: A string consisted of comma separated e-mail addresses.
+* `monthly-report`: A string consisted of comma separated e-mail addresses which will receive the monthly report. As of now, only one row.
 
 #### Server-based Scripts
 
