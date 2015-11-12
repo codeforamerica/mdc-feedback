@@ -2,7 +2,9 @@ Hello!
 
 Below is a link to the summary statistics for the Permit Inspection Center Survey for {{ date_header }}:
 
-[view monthly report]
+{{ report }}
+
+Logging in from your miamidade.gov e-mail address will be required.
 
 To see the public dashboard of feedback data, visit http://c4a.me/mdcdashboard. To see a live version of the feedback survey, visit http://c4a.me/picsurvey. If you have any questions about this process, please reach out to miami-dade@codeforamerica.org.
 
