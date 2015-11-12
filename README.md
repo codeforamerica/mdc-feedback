@@ -123,18 +123,18 @@ If you boot up the app immediately after installing the app, it will have no dat
 
 #### The Current Staging Environment on Heroku
 
-Resources
+##### Resources
 
-Environment Variables
+##### Environment Variables
 
-* BROWSERID_URL (Necessary for Mozilla persona)
-* CONFIG (Set to feedback.settings.StagingConfig)
-* DATABASE_URL
-* SENDGRID_PASSWORD
-* SENDGRID_USERNAME
-* SERVER_NAME (Necessary for the timed e-mail template task; it’s BROWSERID_URL without the http or https)
-* TYPEFORM_API
-* TEXIT_API
+* `BROWSERID_URL` (Necessary for Mozilla persona)
+* `CONFIG` (Set to feedback.settings.StagingConfig)
+* `DATABASE_URL`
+* `SENDGRID_PASSWORD`
+* `SENDGRID_USERNAME`
+* `SERVER_NAME` (Necessary for the timed e-mail template task; it’s `BROWSERID_URL` without the http or https)
+* `TYPEFORM_API`
+* `TEXIT_API`
 
 ### Miscellaneous Stuff
 
