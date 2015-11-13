@@ -20,9 +20,11 @@
 
 	<div class='twelve columns panel first-panel'>
 
-			<div class='headline'>Master building permits opened per month<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='p-monthly'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='headline'>Master building permits opened per month</div>
 
 			<div class='content-container'>
+  			
+  			<p id='p-monthly' class='tooltip'></p>
 				<canvas id='openPermits'></canvas>
 			</div>
 
@@ -34,7 +36,6 @@
       
       <div class='headline'>
         Trade permits, issued same-day v. total issued <!-- same day trade permits -->
-        <a rel='tipsy' title='' class='what-is-this u-pull-right tipsy-hook' href='#' id='p-same-day'><img class='' src='static/images/question_bk.png'></a>
       </div>
       
       <div class='content-container twelve-columns'>
@@ -46,6 +47,8 @@
           <li id='electrical-data'>{{ '%0.2f'| format(dash_obj[6].data.ELEC.percent) }}</li>
           <li id='zoning-data'>{{ '%0.2f'| format(dash_obj[6].data.ZIPS.percent) }}</li>
         </ul>
+        
+        <p id='p-same-day' class='tooltip'></p>
         
         <ul id='centered-list'>
           
@@ -91,9 +94,10 @@
     <div class='four columns panel double-height first-panel'>
       <div class='headline'>
         Time to issuance for commercial permits
-        <a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='p-commercial-issuance'><img class='' src='static/images/question_bk.png'></a>
       </div>
       <div class='content-container'>
+        
+        <p id='p-commercial-issuance' class='tooltip'></p>
         <p class='bold panel-header vertical-center-35'>New commercial construction and additions:</p>
         <li>{{ dash_obj[3].data.nc.val }} days on average</li>
         <li>{{ dash_obj[3].data.nc.min }} days min.</li>
@@ -118,10 +122,10 @@
     <div class='eight columns panel double-height last-panel'>
       <div class='headline'>
         <!-- {{ dash_obj[4].title }} --> Time to issuance for residential permits
-        <a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='p-residential-issuance'><img class='' src='static/images/question_bk.png'></a>
       </div>
       <div class='content-container'>
         
+        <p id='p-residential-issuance' class='tooltip'></p>
         <div class='six columns vertical-center-35'>
         
           <p class='bold panel-header'>New residential construction:</p>
@@ -164,9 +168,12 @@
 	<div class='twelve columns'>
 
     <div class='eight columns panel first-panel'>
-      <div class='headline'>{{ dash_obj[9].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-type'><img class='' src='static/images/question_bk.png'></a></div>
+      <div class='headline'>{{ dash_obj[9].title }}</div>
       <div class='content-container'>
-         <canvas id='permitTypeChart'>
+        
+        <p id='p-type' class='tooltip'></p>
+        <canvas id='permitTypeChart'>
+      
       </div>
       <p class='details invisible-button'><a href=#>View Details</a></p>
     </div>
@@ -174,9 +181,10 @@
     <div class='four columns panel last-panel'>
       <div class='headline'>
         {{ dash_obj[11].title }}
-        <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a>
       </div>
       <div class='content-container'>
+        
+        <p id='p-master' class='tooltip'></p>
         <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
         <p>Versus the same period a year ago:
           {% if dash_obj[11].data.yoy > 0 %}

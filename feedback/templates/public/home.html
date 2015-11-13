@@ -26,9 +26,11 @@
 		<p class='invisible'>{{ dash_obj[0].data.new_reviews }}</p>
 
 		<!-- the content -->
-		<div class='headline'>{{ dash_obj[0].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-submitted'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='headline'>{{ dash_obj[0].title }}</div>
 
 		<div class='content-container'>
+  		
+  		<p id='s-submitted' class='tooltip'></p>
 			<canvas id='myChart'></canvas>
 		</div>
 
@@ -38,9 +40,12 @@
 
 	<div class='three columns panel'>
 
-			<div class='headline'>{{ dash_obj[1].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-rating'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='headline'>{{ dash_obj[1].title }}</div>
 
 			<div class='content-container'>
+  			
+  			<p id='s-rating' class='tooltip'></p>
+			
 				<div id='star-rating'>
 					<!-- data & display -->
 					<p class='invisible'>{{ dash_obj[1].data }}</p>
@@ -55,8 +60,10 @@
 	<div class='three columns panel last-panel'>
 
 		<!-- the content -->
-		<div class='headline'><a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-type'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='headline'></div>
 		<div class='content-container'>
+  		
+  		<p id='s-type' class='tooltip'></p>
 			<canvas id='surveyChart'></canvas>
 		</div>
 
@@ -65,35 +72,43 @@
 
 <!-- merge conflict began here -->
   <div class='four columns panel first-panel'>
-    <div class='headline'>Respondents by Role<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='headline'>Respondents by Role</div>
+    
     <div class='content-container'>
+		  <p id='s-role' class='tooltip'></p>
 			<canvas id='s-role-chart'></canvas>
 		</div>
   </div>
 
   <div class='four columns panel'>
-    <div class='headline'>Visitors' ability to complete a task<a class='what-is-this u-pull-right tipsy-hook' href='#' id='s-complete'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='headline'>Visitors' ability to complete a task</div>
+    
     <div class='content-container'>
+      <p id='s-complete' class='tooltip'></p>
 			<canvas id='s-complete-chart'></canvas>
 		</div>
   </div>
 
   <div class='four columns panel last-panel'>
-    <div class='headline'>{{ dash_obj[13].title }}<a class='what-is-this u-pull-right' href='#' id='s-purpose'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='headline'>{{ dash_obj[13].title }}</div>
 
     <div class='content-container'>
+      <p id='s-purpose' class='tooltip'></p>
 			<canvas id='s-purpose-chart'></canvas>
 		</div>
 
   </div>
 
   <div class='four columns panel first-panel'>
-    <div class='headline'>Satisfaction by Language<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-ratings-lang'><img class='' src='static/images/question_bk.png'></a></div>
+    
+    <div class='headline'>Satisfaction by Language</div>
 
     <li id='rate-en' class='invisible'>{{ dash_obj[14].data.en }}</li><br />
     <li id='rate-es' class='invisible'>{{ dash_obj[14].data.es }}</li><br />
 
     <div class='content-container'>
+      
+      <p id='s-ratings-lang' class='tooltip'></p>
 			<div id='s-lang-rate-en'>English:<br> </div><br>
 			<div id='s-lang-rate-es'>Spanish:<br> </div>
 		</div>
@@ -101,7 +116,7 @@
   </div>
 
   <div class='four columns panel'>
-  	 <div class='headline'>Satisfaction by Purpose<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-ratings-purpose'><img class='' src='static/images/question_bk.png'></a></div>
+  	 <div class='headline'>Satisfaction by Purpose</div>
 
 		  <li id='rate-permit' class='invisible'>{{ dash_obj[14].data.p1 }}</li>
       <li id='rate-inspect' class='invisible'>{{ dash_obj[14].data.p2 }}</li>
@@ -110,6 +125,8 @@
       <li id='rate-cu' class='invisible'>{{ dash_obj[14].data.p5 }}</li>
 
       <div class='content-container'>
+        
+        <p id='s-ratings-purpose' class='tooltip'></p>
 
 	      <div class='six columns'>
 					<div id='s-purpose-rate-permit'>Apply for a Permit: <br></div><br>
@@ -126,10 +143,11 @@
   </div>
 
   <div class='four columns panel last-panel'>
-	  	 <div class='headline'>Satisfaction by Role<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-ratings-role'><img class='' src='static/images/question_bk.png'></a></div>
+	  	 <div class='headline'>Satisfaction by Role</div>
 
 			<div class='content-container'>
 
+        <p id='s-ratings-role' class='tooltip'></p>
 				<div class='six columns'>
 
 					<div id='s-role-rate-permit'>Contractor: </br></div><br />

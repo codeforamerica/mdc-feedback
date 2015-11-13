@@ -23,9 +23,10 @@
 
 		<div class='headline'>
       Complaints &amp; violations cases opened, per month
-      <a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-monthly'><img class='' src='static/images/question_bk.png'></a>
     </div>
 		<div class='content-container'>
+  		
+  		<p id='v-monthly' class='tooltip'></p>
 			<canvas id='violations'></canvas>
 		</div>
 		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
@@ -54,8 +55,10 @@
 
 	<div class='row twelve columns panel double-height'>
 
-			<div class='headline'>Top 20 Violations by Type, to date in 2015<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-type'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='headline'>Top 20 Violations by Type, to date in 2015</div>
+			
 			<div class='content-container'>
+			  <p id='v-type' class='tooltip'></p>
 				<canvas id='viotype'></canvas>
 			</div>
 			<p class='details invisible-button'><a href="{{ url_for('dashboard.violations_detail') }}">View Complete Dataset</a></p>

@@ -634,9 +634,9 @@ $(document).ready(function () {
 
   function buildTipsy(data) {
     //alert("Successfully processed!")
-    //console.log(data);
+    console.log(data);
 
-    for(var i = 0; i < data.length;   i+=1) {
+    for(var i = 0; i < data.length; i+=1) {
 
       var obj = {};
 
@@ -647,19 +647,19 @@ $(document).ready(function () {
 
     }
 
-    $('.tipsy-hook').each(function() {
+    $('.tooltip').each(function() {
 
       var id = $(this).attr('id');
-      //console.log(id);
 
-      for(var i = 0; i < data.length;   i+=1) {
+      for(var i = 0; i < data.length; i+=1) {
 
         if(id == data[i].hoverid) {
-
+          
+          console.log(data[i].hoverid)
           $(this).attr('title', data[i].descriptionforhover);
           var mid = '#' + data[i].hoverid;
-          $(mid).tipsy();
-          //console.log(mid);
+          $(mid).append(data[i].descriptionforhover);
+          
         }
       }
     });
