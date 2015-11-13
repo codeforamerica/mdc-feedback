@@ -3,18 +3,20 @@
 import datetime
 import os
 
+from flask import current_app
 from flask_script import Manager, Shell, Server
 from flask_migrate import MigrateCommand
 
 from feedback.app import create_app
 from feedback.database import db
-from feedback.settings import DevelopmentConfig, ProductionConfig, StagingConfig, TestingConfig
+from feedback.settings import (
+    DevelopmentConfig, ProductionConfig,
+    StagingConfig, TestingConfig
+)
+from feedback.surveys.constants import ROUTES
 
-if os.environ.get("CPCO_ENV") == 'prod':
-    app = create_app(ProductionConfig)
-else:
-    app = create_app(DevelopmentConfig)
 
+app = create_app()
 HERE = os.path.abspath(os.path.dirname(__file__))
 TEST_PATH = os.path.join(HERE, 'tests')
 
@@ -31,6 +33,38 @@ def _make_context():
 
 
 @manager.option('-e', '--email', dest='email', default=None)
+@manager.option('-s', '--section', dest='section', default=None)
+def seed_stakeholder(email, section):
+    ''' Creates a new stakeholder.
+    '''
+    from feedback.surveys.models import Stakeholder
+    seed_email = email if email else app.config.get('SEED_EMAIL')
+    try:
+        section_title = ROUTES[int(section)]
+        stakeholder_exists = Stakeholder.query.filter(Stakeholder.id == int(section)).first()
+        if stakeholder_exists:
+            current_app.logger.info(
+                'Stakeholder for Section {0} ({1}) already exists'.format(
+                    section,
+                    section_title))
+        else:
+            new_stakeholder = Stakeholder.create(
+                email_list=seed_email,
+                id=int(section),
+                label=ROUTES[int(section)]
+            )
+            db.session.add(new_stakeholder)
+            db.session.commit()
+            current_app.logger.info(
+                'Stakeholder for Section {0} successfully created!'.format(
+                    section_title))
+    except Exception, e:
+        current_app.logger.error(
+            'Something went wrong: {exception}'.format(exception=e.message))
+    return
+
+
+@manager.option('-e', '--email', dest='email', default=None)
 @manager.option('-r', '--role', dest='role', default=None)
 def seed_user(email, role):
     '''
@@ -40,7 +74,8 @@ def seed_user(email, role):
     seed_email = email if email else app.config.get('SEED_EMAIL')
     user_exists = User.query.filter(User.email == seed_email).first()
     if user_exists:
-        print 'User {email} already exists'.format(email=seed_email)
+        current_app.logger.info(
+            'User {email} already exists'.format(email=seed_email))
     else:
         try:
             new_user = User.create(
@@ -50,10 +85,30 @@ def seed_user(email, role):
             )
             db.session.add(new_user)
             db.session.commit()
-            print 'User {email} successfully created!'.format(email=seed_email)
+            current_app.logger.info(
+                'User {email} successfully created!'.format(
+                    email=seed_email))
         except Exception, e:
-            print 'Something went wrong: {exception}'.format(exception=e.message)
+            current_app.logger.error(
+                'Something went wrong: {exception}'.format(exception=e.message))
     return
+
+
+@manager.command
+def seed_roles():
+    from feedback.user.models import Role
+
+    try:
+        db.session.add(Role.create(name='admin'))
+        db.session.add(Role.create(name='user'))
+        db.session.commit()
+    except Exception, e:
+        current_app.logger.error(
+            'SEEDERROR | Error: {}'.format(
+                e
+            )
+        )
+        return False
 
 
 @manager.command

@@ -1,67 +1,73 @@
 # -*- coding: utf-8 -*-
+# DO NOT DELETE
+import StringIO
+import csv
 
-import pprint
+import datetime
+today = datetime.date.today()
 
 from flask import (
-    Blueprint, render_template, redirect,
-    url_for, flash
+    Blueprint,
+    make_response
 )
 
 from flask.ext.login import login_required
 
-
-from wtforms import fields
-
-from feedback.extensions import login_manager
-from feedback.utils import flash_errors
+from sqlalchemy import desc
 
 from feedback.surveys.models import Survey
-from feedback.surveys.forms import SurveyForm
 
-blueprint = Blueprint('surveys', __name__, url_prefix='/surveys', static_folder="../static")
 
-@blueprint.route('/')
+blueprint = Blueprint(
+    'surveys',
+    __name__,
+    url_prefix='/surveys',
+    static_folder="../static")
+
+
+@blueprint.route('/download')
 @login_required
-def survey_index():
-    surveys = Survey.query.all()
-    return render_template("surveys/survey-home.html", surveys=surveys)
+def to_csv():
+    csvList = []
+    csvList.append([
+        'date_submitted',
+        'method',
+        'language',
+        'route',
+        'rating',
+        'role',
+        'get_done',
+        'purpose',
+        'best',
+        'worst',
+        'improvement',
+        'follow_up',
+        'contact',
+        'more_comments'])
 
-@blueprint.route('/create', methods=['GET', 'POST'])
-@login_required
-def create():
-    # For dynamic forms, class attributes must be set before any instantiation occurs.
-    # you don't have to pass request.form to Flask-WTF; it will load automatically
+    survey_models = Survey.query.order_by(desc(Survey.date_submitted)).all()
+    for survey_model in survey_models:
+        csvList.append([
+            survey_model.date_submitted,
+            survey_model.method,
+            survey_model.lang,
+            survey_model.route_en,
+            survey_model.rating,
+            survey_model.role_en,
+            survey_model.get_done,
+            survey_model.purpose_en,
+            survey_model.best_en,
+            survey_model.worst_en,
+            survey_model.improvement,
+            survey_model.follow_up,
+            survey_model.contact,
+            survey_model.more_comments])
 
-    class F(SurveyForm):
-        pass
+    strIO = StringIO.StringIO()
+    writer = csv.writer(strIO)
+    writer.writerows(csvList)
 
-    F.question_en = fields.TextField()
-    F.question_es = fields.TextField()
-    F.question_type = fields.SelectField(choices=[('short_text', 'Short Text')])
-    form = F()
-
-    if form.validate_on_submit():
-        new_survey = Survey.create(
-                        title_en = form.title_en.data,
-                        title_es = form.title_es.data,
-                        description_en = form.description_en.data,
-                        description_es = form.description_es.data)
-        flash("New survey created", 'success')
-        return redirect(url_for('surveys.survey_index'))
-    else:
-        flash_errors(form)
-
-    return render_template("surveys/survey-form.html", form=form)
-
-@blueprint.route('/<int:survey_id>/edit', methods=['GET', 'POST'])
-@login_required
-def survey_edit(survey_id):
-    survey = Survey.query.get_or_404(survey_id)
-    errors = []
-
-    class F(SurveyForm):
-        pass
-
-    form = F(obj=survey)
-    return render_template('surveys/survey-form.html', form=form)
-
+    output = make_response(strIO.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output

@@ -1,0 +1,41 @@
+{% extends "./email/base.html" %}
+
+{% block header %}
+New feedback has been posted from the Permitting Inspection Center!
+{% endblock %}
+
+{% block content %}
+<p>Hello!</p>
+
+<p>A user has submitted a survey response that requires attention from the {{ survey.route_en }} division of the Permit Inspection Center.</p>
+
+<p>Below are the details of the survey response. Please follow up with the user within 30 days if contact information is provided.<p>
+
+<ul>
+  <li>Survey Date: {{ survey.date_submitted }}</li>
+  <li>Language: {{ 'English' if survey.lang=='en' else 'Spanish' }}</li>
+  <li>Input: {{ 'Website' if survey.method=='web' else 'Phone' }}</li>
+  <li>Would you like to be followed-up with: {{ 'Yes' if survey.follow_up else 'No' }}</li>
+  <li>Contact Information: {{ survey.contact }}</li>
+  <li>Comments: {{ survey.more_comments }}</li>
+
+  <li>Role: {{ survey.role_en }}</li>
+  <li>Purpose: {{ survey.purpose_en }}</li>
+  <li>Experience Rating: {{ survey.rating }} / 7</li>
+  <li>Were you able to complete your tasks? {{ 'Yes' if survey.get_done else 'No' }}</li>
+  <li>Best Experience: {{ survey.best_en }}</li>
+  <li>Worst Experience: {{ survey.worst_en }}</li>
+  <li>Improvement Suggestion: {{ survey.improvement }}</li>
+</ul>
+
+<p>Thank you,</p>
+
+<p>Miami-Dade County RER &amp; Communications Departments</p>
+
+{% endblock %}
+
+{% block footer %}
+<p>You have received this mail because you have been listed as a stakeholder of
+ the {{ survey.route_en }} Section in the MDC Feedback Tool. If you believe this is
+incorrect, please <a href="mailto:miami-dade@codeforamerica.org?Subject=Feedback%20from%20Email">let us know</a>.</p>
+{% endblock %}

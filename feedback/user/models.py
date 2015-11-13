@@ -19,10 +19,10 @@ class Role(SurrogatePK, Model):
         return self.name
 
 
-class User(Model, UserMixin):
-    __tablename__ = 'user'
+class User(UserMixin, SurrogatePK, Model):
+    __tablename__ = 'users'
 
-    email = db.Column(db.String(80), primary_key=True, nullable=False, index=True)
+    email = db.Column(db.String(80), unique=True, nullable=False, index=True)
     created_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
     full_name = db.Column(db.String(60), nullable=True)
     active = db.Column(db.Boolean(), default=True)
@@ -35,8 +35,8 @@ class User(Model, UserMixin):
     def get_id(self):
         return self.email
 
-    def is_superadmin(self):
-        return self.role.name == 'superadmin'
+    def is_admin(self):
+        return self.role and self.role.name == 'admin'
 
     def print_pretty_name(self):
         if self.full_name:

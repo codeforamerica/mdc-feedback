@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 {% set active_page = 'Violations' %}
-{% block content %}
 
+{% block page_title %}
+   {{ super() }} - Violations by Type
+{% endblock %}
+
+{% block content %}
 <section class='row' id='details-view'>
 
 	<div class='twelve columns panel fluid-height'>
@@ -10,10 +14,11 @@
 			<div class='content-container'>
 				<canvas id='viotype'></canvas>
 			</div>
-			
+
 		</div>
 
 </section> <!-- close row -->
-
 {% endblock %}
+
+
 

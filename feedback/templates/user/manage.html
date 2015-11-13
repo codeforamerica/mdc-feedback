@@ -2,100 +2,90 @@
 {% import "user/macro_field_with_errors.html" as macros %}
 {% set active_page = 'Manage Users' %}
 
+{% block page_title %}
+   {{ super() }} - Manage Users and Survey Lead E-mails
+{% endblock %}
+
 {% block content %}
   <div id="container">
 
     <section id='user-list' class='row twelve columns'>
 
-      <h1>Manage your users.</h1>
+      <h3>Manage your users.</h3>
 
-      {% for user in users %}
-      <li class='user twelve columns' id='0'>
-        <span class='user-name'>{{ user.print_pretty_name() }}</span>
-        <span class='user-mail'>{{ user.email }}</span>
-        <span class='user-permissions'>
-          <span class='bold'>Permissions: </span>
-          {{ user.role.name }}
-        </span>
-        {% if current_user.is_superadmin() %}
-          <button class="button password three columns" type="submit">Edit user</button>
-        {% endif %}
-        {% if current_user.is_superadmin() %}
-        <form action="{{ url_for('user.user_delete', id=user.email) }}" method="POST">
-          <button class="button delete three columns" type="submit">Delete user</button>
-        </form>
-        {% endif %}
-      </li>
-      {% endfor %}
+      <ul id='jump-nav'>
 
-      {% if current_user.is_superadmin() %}
-      <li class='add-user button'>Add a new user</li>
+        <li><a class='button' href='#stakeholder-list'>Jump to Reporting E-mail Management</a></li>
+
+      </ul>
+
+
+      <table style="width:100%;">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Permissions</th>
+            {% if current_user.is_admin() %}
+            <th>Actions</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user.full_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role.name }}</td>
+            {% if current_user.is_admin() %}
+
+            <td class='user-management-td'>
+              <li class='user-management-btn'><a class='button'href="{{ url_for('user.user_edit', id=user.id) }}">Edit user</a></li>
+              <form action="{{ url_for('user.user_delete', id=user.id) }}" method="POST">
+                <li class='user-management-btn'><button class="delete-small" type="submit">Delete user</button></li>
+              </form>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% if current_user.is_admin() %}
+      <a class='add-user button' href="{{ url_for('user.user_create') }}">Add a new user</a>
       {% endif %}
 
     </section>
 
-    <section id='add-user-form' class='row twelve columns hidden'>
+    <section id='stakeholder-list' class='row twelve columns'>
 
-      <h3>Add a new user.</h3>
+      <h3>Set who receives e-mail.</h3>
+      <p>Here you can determine who receives daily e-mail updates from the dashboard system. You may separate multiple e-mail addresses with a comma.</p>
 
-      <form action="{{ url_for('user.user_create') }}" method="POST">
-        {{ form.csrf_token }}
-        <div class='row'>
-          <h4>What's your user's name?</h4>
-          {{ macros.with_errors(form.full_name, class_="six columns", placeholder="Full Name") }}
-        </div>
+      <form id="stakeholderForm" class="form form-stakeholders" method="POST" action="{{ url_for('user.user_manage') }}" role="form">
+        <ul>
+          {% for n in range(1,15) %}
+          <li>{{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}{{ stakeholders[n-1].email_list }}{% endif %}"></li>
 
-        <div class='row'>
-          <h4>What's your user's e-mail address?</h4>
-          {{ macros.with_errors(form.email, class_="six columns", placeholder="name@miamidade.gov") }}
-        </div>
-
-        <div class='row'>
-          <h4>What permissions should your user have?</h4>
-          {% for subfield in form.role_id %}
-          <p>{{ subfield(class=radio) }}<label>{{ subfield.label}}</label></p>
           {% endfor %}
-        </div>
-
-        <button class='button' type="submit" id='submit-new-user'>Create new user</button>
-
+        </ul>
+        <input type="submit" value="save changes">
       </form>
 
     </section>
-    
-    <section id='edit-user-form' class='row twelve columns hidden'>
-			
-			<h3>Edit this user.</h3>
-			
-			<form action="{{ url_for('user.user_edit') }}" method="POST">
-        {{ form.csrf_token }}
-			
-			<div class='row'>
-				<h4>Name</h4>
-				<!--<input id='name' class='six columns' type='text' placeholder="First and last name">-->
-				{{ macros.with_errors(form.full_name, id_="name", class_="six columns", placeholder="Full Name") }}
-			</div>
-			
-			<div class='row'>
-				<h4>E-mail</h4>
-				<input id='email' class='six columns' type="email" placeholder='name@miamidade.gov'>
-				{{ macros.with_errors(form.email, id_="email", class_="six columns", placeholder="name@miamidade.gov") }}
-			</div>
-						
-			<div class='row'>
-				<h4>Permissions</h4>
-				<!--<p><input id='superuser' class='radio' type="radio" value='superuser'><label>Superuser <span class='small'>Can edit everything.</span></label></p>
-				<p><input id='user' class='radio' type="radio" value='user'><label>User <span class='small'>Can do everything but manage users.</span></label></p>-->
-				
-				{% for subfield in form.role_id %}
-        <p>{{ subfield(class=radio) }}<label>{{ subfield.label}}</label></p>
-        {% endfor %}
-          
-			</div>
-						
-			<span class='button' id='save-user-changes'>Save changes</span>
-			
-		</section>
+
+    <section id="monthly-list" class="row twelve columns">
+      <h3>Set who receives monthly status reports.</h3>
+      <p>Separate multiple e-mail addresses with a comma.</p>
+      <form id="monthlyForm" class="form form-monthly" method="POST" action="{{ url_for('user.monthly_manage') }}" role="form">
+        <input
+        name="monthly-report-field"
+        type="text"
+        value="{% if monthly is defined %}{{ monthly.email_list }}{% endif %}">
+        <input type="submit" value="save changes">
+      </form>
+
+    </section>
 
   </div><!--!/#container -->
 

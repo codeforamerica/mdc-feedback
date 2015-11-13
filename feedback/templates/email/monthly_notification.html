@@ -1,0 +1,27 @@
+{% extends "./email/base.html" %}
+
+{% block header %}
+Permitting Inspection Center Monthly Status Report - {{ date_header }}
+{% endblock %}
+
+{% block content %}
+<p>Hello!</p>
+
+<p>Below is a link to the summary statistics for the Permit Inspection Center Survey for {{ date_header }}:</p>
+
+<p><a href="{{ report }}">View {{ date_header }} Monthly Report</a></p>
+
+<p>To see the public dashboard of feedback data, visit <a href="http://c4a.me/mdcdashboard" target="_blank">c4a.me/mdcdashboard</a>. To see a live version of the feedback survey, visit <a href="http://c4a.me/picsurvey" target="_blank">c4a.me/picsurvey</a>. If you have any questions about this process, please reach out to miami-dade@codeforamerica.org.</p>
+
+<p>Thank you,</p>
+
+<p>Miami-Dade County RER &amp; Communications Departments</p>
+
+
+{% endblock %}
+
+{% block footer %}
+<p>You have received this mail because you have been listed as someone that should
+receive monthly reports from the MDC Feedback Tool. If you believe this is incorrect,
+<a href="mailto:miami-dade@codeforamerica.org">please let us know</a>.</p>
+{% endblock %}

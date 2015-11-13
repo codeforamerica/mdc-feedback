@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% set active_page = 'Monthly Report' %}
+
+{% block page_title %}
+   {{ super() }} - Report for {{ date_header }}
+{% endblock %}
+
+{% block content %}
+
+<a href='javascript:window.print()' class='button green' id='pdf'>Click to print this report</a>
+<i>If you're using Chrome, Firefox or Safari, you can also save a PDF of this report from the print dialog.</i>
+
+<section class='row twelve columns' id='reports-view'>
+
+  <h3 id='report-title'>Report for {{ date_header }}</h3>
+  {% if surveys|length == 0 %}
+
+  <p>There are currently no surveys in our database for {{ date_header }}.</p>
+
+  {% else %}
+  <div class='print-this'>
+    <h4>Overall</h4>
+    {% include "reports/graph-overall.html" %}
+  </div>
+
+  <div class='print-this'>
+    <h4>By Section</h4>
+    {% include "reports/graph-section.html" %}
+  </div>
+
+  <div class='print-this'>
+    <h4>Comments</h4>
+    {% include "reports/graph-comments.html" %}
+  </div>
+
+  {% endif %}
+</section>
+
+<div class='hidden' id='print-to-pdf'>
+</div>
+
+{% endblock %}

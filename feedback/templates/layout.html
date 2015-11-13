@@ -9,85 +9,69 @@
 <head>
   <meta charset="utf-8">
 
-  <title>{% block page_title %}Feedback | {{request.endpoint }} {% endblock %}</title>
+  <title>
+    {% block page_title %}
+      Feedback - {{ title }}
+    {% endblock %}
+  </title>
+  
   <meta name="description" content="{% block meta_description %}{% endblock %}">
   <meta name="author" content="{% block meta_author %}{% endblock %}">
+
+  <!-- Needed to not break persona. https://developer.mozilla.org/en-US/Persona/Quick_Setup -->
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
   <meta name="viewport" content="width=device-width">
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
-  <link href='//fonts.googleapis.com/css?family=Raleway:400,600,300' rel='stylesheet' type='text/css'>
-
-	<!-- leaflet mapping -->
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-	<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
 
   {% block assets %}
     {% assets "css_all" %}
-  <link rel="stylesheet" href="{{ ASSET_URL }}">
+      <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
   {% endblock %}
+  
 </head>
+
 <body class="{% block body_class %}{% endblock %}">
 {% block body %}
-{% with form=form  %}
-{% include "nav.html" %}
-{% endwith %}
 
-<!-- nav active states -->
-<!-- begin stuff that requires authentication check -->
+  {% with form=form  %}
+  {% include "nav.html" %}
+  {% endwith %}
 
-	{% if active_page == 'Dashboard' %}
+<div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="row">
+      <div class="col-md-12">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
+         {{message}}
+        </div><!-- end .alert -->
+        {% endfor %}
+      </div><!-- end col-md -->
+    </div><!-- end row -->
+    {% endif %}
+  {% endwith %}
 
-			{% set navigation_bar = [
-				('/admin/', 'Admin Panel'),
-				('/create-survey/', 'Survey Builder'),
-				('/users/manage', 'Manage Users')
-			] -%}
+  {% if current_user and current_user.is_authenticated() and current_user.role.name == 'admin' and active_page != 'Monthly Report'  %}
+		
+		 {% set navigation_bar = [
+      ('/users/manage', 'Manage Users & E-mail')
+    ] -%}
 
-		{% elif active_page == 'Survey Builder' or active_page == 'Manage Users' %}
+		<div class='row'>
 
-			{% set navigation_bar = [
-
-				('/', 'Dashboard'),
-				('/admin/', 'Admin Panel')
-
-			] -%}
-
-		{% elif active_page == 'Admin' %}
-
-			{% set navigation_bar = [
-
-				('/', 'Dashboard'),
-				('/create-survey/', 'Survey Builder')
-
-			] -%}
-
-		{% else %}
-
-				{% set navigation_bar = [
-
-				('/', 'Dashboard')
-
-			] -%}
-
-		{% endif %}
-
-		{% if current_user and current_user.is_authenticated() %}
-
-		<div class='row u-pull-left' id='breadcrumb'>
-
-			<ul class='list-nav'>
-
+			<ul class='list-nav u-pull-left'>
 				<li class='breadcrumb-text'>You're looking at:</li>
 				<li id='breadcrumb-location' class='bold'>{{ title }}</li>
 			</ul>
-
-		</div>
-
-		<div class='row u-pull-right' id='breadcrumb-nav-parent'>
-
-			<ul>
+			
+			<ul class='row u-pull-right'>
 
 				<li class='breadcrumb-text'>Go back to:</li>
 
@@ -99,28 +83,24 @@
 
 		</div>
 
-		{% endif %}
-
-<!-- end stuff that requires authentication check -->
-
-<div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
-
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-  <div class="row">
-    <div class="col-md-12">
-      {% for category, message in messages %}
-      <div class="alert alert-{{ category }}">
-        <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
-       {{message}}
-      </div><!-- end .alert -->
-      {% endfor %}
-    </div><!-- end col-md -->
-  </div><!-- end row -->
   {% endif %}
-{% endwith %}
 
-{% block content %}{% endblock %}
+  {% if active_page == 'Dashboard - Violations' or active_page == 'Dashboard - Metrics' or active_page == 'Dashboard - Main' %}
+  
+    <ul id='jumpnav' class='row u-pull-left'>
+      
+      <li>Choose your view: </li>
+      <li><a href='/'>Permitting & Inspection Center Feedback Metrics</a></li>
+      <li><a href='/metrics'>Permit Metrics</a></li>
+      <li><a href='/violations'>Zoning Code Violations Metrics</a></li>
+      
+    </ul>  
+    
+  {% endif %}
+
+{% block content %}
+
+{% endblock %}
 
 </div><!-- end container -->
 
@@ -132,22 +112,40 @@
 <!-- FIXME: move jquery into a bower and use grunt -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script src="https://login.persona.org/include.js"></script>
 <script src="/static/js/modernizr-custom.js"></script>
+<script src="/static/js/app.js"></script>
 
 <!-- JS blocking -->
 
-	{% if active_page == 'Dashboard' or active_page == 'Dashboard Editor - Public' or active_page == 'Dashboard Editor - Internal' %}
+	{% if active_page == 'Dashboard - Main' %}
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
 		<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
-		<script type="text/javascript" src="/static/js/jqcloud.min.js"></script>
-		<script type="text/javascript" src="/static/js/jquery.tipsy.js"></script>
 		<script type="text/javascript" src="/static/js/tabletop.js"></script>
 		<script type="text/javascript" src="/static/js/dashboard.js"></script>
+		
+  {% elif active_page == 'Dashboard - Metrics' %}
+
+		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
+		<script type="text/javascript" src="/static/js/chart.min.js"></script>
+		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
+		<script type="text/javascript" src="/static/js/tabletop.js"></script>
+		<script type="text/javascript" src="/static/js/dashboard-metrics.js"></script>
+		
+  {% elif active_page == 'Dashboard - Violations' %}
+
+    <!-- leaflet mapping -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+		
+		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
+		<script type="text/javascript" src="/static/js/chart.min.js"></script>
+		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
+		<script type="text/javascript" src="/static/js/tabletop.js"></script>
+		<script type="text/javascript" src="/static/js/dashboard-violations.js"></script>
+		<script type="text/javascript" src="/static/js/leaflet-heat.js"></script>
 
 	{% elif active_page == 'Violations' %}
 
@@ -155,20 +153,20 @@
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
 		<script type="text/javascript" src="/static/js/violations-data.js"></script>
 
-	{% elif active_page == 'Survey Builder' %}
-
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
-		<script type="text/javascript" src="/static/js/survey-builder.js"></script>
 
 	{% elif active_page == 'Manage Users' %}
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/manage-users.js"></script>
 
-	{% elif active_page == 'Admin' %}
+  {% elif active_page == 'Details' %}
 
-		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
+    <script type="text/javascript" src="/static/js/survey-details.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.stickytableheaders.min.js"></script>
+    <script type="text/javascript" src="/static/js/sorttable.js"></script>
 
+  {% elif active_page == 'Monthly Report' %}
+  
 	{% endif %}
 
 <!-- JS blocking -->
@@ -182,16 +180,13 @@
 
 {% if json_obj %}
 <script type="application/json" id="jsondata">
-{{ json_obj.test|safe }}
+{{ json_obj.daily_graph|safe }}
 </script>
 <script type="application/json" id="surveydata">
 {{ json_obj.surveys_type|safe }}
 </script>
 <script type="application/json" id="permitstype">
 {{ json_obj.permits_type|safe }}
-</script>
-<script type="application/json" id="appanswers">
-{{ json_obj.app_answers|safe }}
 </script>
 <script type="application/json" id="surveyrole">
 {{ json_obj.survey_role|safe }}
@@ -202,11 +197,24 @@
 <script type="application/json" id="surveypurpose">
 {{ json_obj.survey_purpose|safe }}
 </script>
-
+<script type="application/json" id="permits_rawjson">
+{{ json_obj.permits_rawjson|safe }}
+</script>
+<script type="application/json" id="violations_rawjson">
+{{ json_obj.violations_rawjson|safe }}
+</script>
+<script type="application/json" id="violations_locations_json">
+{{ json_obj.violations_locations_json|safe }}
+</script>
+<script type="application/json" id="violations_type_json">
+{{ json_obj.violations_type_json|safe }}
+</script>
+<script type="application/json" id="violations_per_month_json">
+{{ json_obj.violations_per_month_json|safe }}
+</script>
 {% endif %}
-
+<script src="https://login.persona.org/include.js"></script>
 <script type='text/javascript'>
-
 {% if current_user.is_anonymous() or not current_user %}
 var currentUser = null;
 {% else %}
@@ -224,15 +232,11 @@ navigator.id.watch({
       url: '{{ url_for("public.auth", next=thispage()) }}', // This is a URL on your website.
       data: {assertion: assertion},
       success: function(res, status, xhr) {
-        if (res.split('thispage')[0]) {
-          window.location.href = res.split('thispage')[0];
-        } else {
-          window.location.reload();
-        }
-
+        window.location.href = res.split('thispage')[0];
       },
       error: function(xhr, status, err) {
         alert("Login failure: " + err);
+        navigator.id.logout();
       }
     });
   },

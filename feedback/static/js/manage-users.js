@@ -1,9 +1,9 @@
   $(document).ready(function() {
 
-  console.log("manage users");
+  //console.log("manage users");
   /************************* USER MANAGEMENT *************************/
   
-  $('.add-user').click(function() {
+  $('#add-user').click(function() {
     
     //console.log('clicked');
     $('#add-user-form').removeClass('hidden');

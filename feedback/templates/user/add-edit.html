@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% import "user/macro_field_with_errors.html" as macros %}
+{% set active_page = 'Profile Form' %}
+
+{% block page_title %}
+   {{ super() }} - {{ title }}
+{% endblock %}
+
+{% block content %}
+  <div id="container">
+
+    <section id='add-user-form' class='row twelve columns'>
+
+      <h3>{{ title }}</h3>
+
+      <form action="{{ form_action }}" method="POST">
+        {{ form.csrf_token }}
+        <div class='row'>
+          <h4>User's name</h4>
+          {{ macros.with_errors(form.full_name, class_="six columns", placeholder="Full Name") }}
+        </div>
+
+        <div class='row'>
+          <h4>Users e-mail address</h4>
+          {{ macros.with_errors(form.email, class_="six columns", placeholder="name@miamidade.gov") }}
+          <p>They will log in using this e-mail address. Addresses can only come from the miamidade.gov domain. Passwords are handled through Mozilla Persona.</p>
+        </div>
+
+        <div class='row'>
+          <h4>What permissions should your user have?</h4>
+          {% for subfield in form.role_id %}
+          <p>{{ subfield(class=radio) }}<label>{{ subfield.label}}</label></p>
+          {% endfor %}
+        </div>
+
+        <button class='button' type="submit" id='submit-new-user'>{{ action }}</button>
+
+      </form>
+
+    </section>
+  </div><!--!/#container -->
+
+{% endblock %}

@@ -1,47 +1,80 @@
 {% extends "layout.html" %}
 {% set active_page = 'Details' %}
-{% block content %}
 
+{% block page_title %}
+   {{ super() }} - {{ title }}
+{% endblock %}
+
+{% block content %}
 <section class='row' id='details-view'>
+
+  <h3>All Survey Responses</h3>
+
+  {% if not current_user.is_authenticated() %}
+  <p>Not seeing your comment? If you're not logged in as a Miami-Dade County employee, some data has been obscured in order to protect your privacy and personal information.</p>
+  {% endif %}
+
+  <p><i>Pro tip: Click the table headers to sort each column.</i></p>
+
+  {% if current_user and current_user.is_authenticated() %}
+  <p><a href="{{ url_for('surveys.to_csv') }}">Download everything in CSV format.</a></p>
+  {% endif %}
+
+
 
   <div class='twelve columns' id='survey-details'>
 
-    <h3>All Responses</h3>
+    <table class='sticky-table sortable'>
 
-    <table>
-      <thead>
+      <thead class='sticky-thead'>
+
         <tr>
-          <th>ID</th>
           <th>Date</th>
           <th>Method</th>
-          <th>Lang</th>
+          <th>Language</th>
           <th>Rating</th>
           <th>Role</th>
           <th>Route</th>
+          {% if current_user and current_user.is_authenticated() %}
           <th>Add'l Comments</th>
+          {% endif %}
           <th>Followup?</th>
+          {% if current_user and current_user.is_authenticated() %}
+          <th>Survey ID</th>
+          {% endif %}
         </tr>
+
       </thead>
+
       <tbody>
         {% for item in resp_obj %}
-        <tr>
-          <td><a href="{{ url_for('dashboard.survey_detail', id=item.id) }}">{{ item.id }}</a></td>
-          <td>{{ item.date }}</td>
-          <td>{{ item.method }}</td>
-          <td>{{ item.lang }}</td>
+
+        <tr class='table-top-row'>
+          <td class='pretty-date'>{{ item.date_submitted.strftime('%-d %b %Y %-I:%M%p') }}</td>
+          <td class='method hidden'>{{ 'Text' if item.method=='sms' else 'Web' }}</td>
+          <td class='language hidden'>{{ item.lang }}</td>
+
           <td>{{ item.rating }}</td>
-          <td>{{ item.role }}</td>
-          <td>{{ item.route }}</td>
-          <td>{{ item.morecomments }}</td>
-          <td>{{ item.followup }}</td>
+          <td>{{ item.role_en }}</td>
+          <td>{{ item.route_en }}</td>
+
+          {% if current_user and current_user.is_authenticated() %}
+          <td>{{ item.more_comments }}</td>
+          {% endif %}
+          <td class='follow-up'>{{ 'Yes' if item.follow_up else 'No' }}</td>
+          {% if current_user and current_user.is_authenticated() %}
+          <td class='table-button'>
+            <a href="{{ url_for('dashboard.survey_detail', id=item.id) }}">#{{ item.id }} &raquo;</a>
+          </td>
+          {% endif %}
         </tr>
+
         {% endfor %}
       </tbody>
     </table>
 
-    </div>
+  </div>
 
 </section> <!-- close row -->
-
 {% endblock %}
 

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% set active_page = 'Dashboard' %}
+{% set active_page = 'Dashboard - Main' %}
 {% block content %}
 
 <span id='api-health' class='hidden'>{{ api }}</span>
@@ -17,7 +17,7 @@
 <section class='row' id='dashboard'>
 
 	<div class='row twelve columns'>
-		<h3>Permitting &amp; Inspection Center User Survey Metrics</h3>
+		<h3>Permitting &amp; Inspection Center Feedback Metrics (Last 30 Days)</h3>
 	</div>
 
 	<div class='six columns panel first-panel'>
@@ -26,9 +26,11 @@
 		<p class='invisible'>{{ dash_obj[0].data.new_reviews }}</p>
 
 		<!-- the content -->
-		<div class='headline'>{{ dash_obj[0].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-submitted'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='headline'>{{ dash_obj[0].title }}</div>
 
 		<div class='content-container'>
+  		
+  		<p id='s-submitted' class='tooltip'></p>
 			<canvas id='myChart'></canvas>
 		</div>
 
@@ -38,9 +40,12 @@
 
 	<div class='three columns panel'>
 
-			<div class='headline'>{{ dash_obj[1].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-rating'><img class='' src='static/images/question_bk.png'></a></div>
+			<div class='headline'>{{ dash_obj[1].title }}</div>
 
 			<div class='content-container'>
+  			
+  			<p id='s-rating' class='tooltip'></p>
+			
 				<div id='star-rating'>
 					<!-- data & display -->
 					<p class='invisible'>{{ dash_obj[1].data }}</p>
@@ -55,8 +60,10 @@
 	<div class='three columns panel last-panel'>
 
 		<!-- the content -->
-		<div class='headline'><a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-type'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='headline'></div>
 		<div class='content-container'>
+  		
+  		<p id='s-type' class='tooltip'></p>
 			<canvas id='surveyChart'></canvas>
 		</div>
 
@@ -65,35 +72,43 @@
 
 <!-- merge conflict began here -->
   <div class='four columns panel first-panel'>
-    <div class='headline'>Respondents by Role<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='headline'>Respondents by Role</div>
+    
     <div class='content-container'>
+		  <p id='s-role' class='tooltip'></p>
 			<canvas id='s-role-chart'></canvas>
 		</div>
   </div>
 
   <div class='four columns panel'>
-    <div class='headline'>Successful Task Completion<a class='what-is-this u-pull-right tipsy-hook' href='#' id='s-complete'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='headline'>Visitors' ability to complete a task</div>
+    
     <div class='content-container'>
+      <p id='s-complete' class='tooltip'></p>
 			<canvas id='s-complete-chart'></canvas>
 		</div>
   </div>
 
   <div class='four columns panel last-panel'>
-    <div class='headline'>{{ dash_obj[13].title }}<a class='what-is-this u-pull-right' href='#' id='s-purpose'><img class='' src='static/images/question_bk.png'></a></div>
+    <div class='headline'>{{ dash_obj[13].title }}</div>
 
     <div class='content-container'>
+      <p id='s-purpose' class='tooltip'></p>
 			<canvas id='s-purpose-chart'></canvas>
 		</div>
 
   </div>
 
   <div class='four columns panel first-panel'>
-    <div class='headline'>Satisfaction by Language<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-ratings-lang'><img class='' src='static/images/question_bk.png'></a></div>
+    
+    <div class='headline'>Satisfaction by Language</div>
 
     <li id='rate-en' class='invisible'>{{ dash_obj[14].data.en }}</li><br />
     <li id='rate-es' class='invisible'>{{ dash_obj[14].data.es }}</li><br />
 
     <div class='content-container'>
+      
+      <p id='s-ratings-lang' class='tooltip'></p>
 			<div id='s-lang-rate-en'>English:<br> </div><br>
 			<div id='s-lang-rate-es'>Spanish:<br> </div>
 		</div>
@@ -101,7 +116,7 @@
   </div>
 
   <div class='four columns panel'>
-  	 <div class='headline'>Satisfaction by Purpose<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-ratings-purpose'><img class='' src='static/images/question_bk.png'></a></div>
+  	 <div class='headline'>Satisfaction by Purpose</div>
 
 		  <li id='rate-permit' class='invisible'>{{ dash_obj[14].data.p1 }}</li>
       <li id='rate-inspect' class='invisible'>{{ dash_obj[14].data.p2 }}</li>
@@ -110,6 +125,8 @@
       <li id='rate-cu' class='invisible'>{{ dash_obj[14].data.p5 }}</li>
 
       <div class='content-container'>
+        
+        <p id='s-ratings-purpose' class='tooltip'></p>
 
 	      <div class='six columns'>
 					<div id='s-purpose-rate-permit'>Apply for a Permit: <br></div><br>
@@ -126,10 +143,11 @@
   </div>
 
   <div class='four columns panel last-panel'>
-	  	 <div class='headline'>Satisfaction by Role<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-ratings-role'><img class='' src='static/images/question_bk.png'></a></div>
+	  	 <div class='headline'>Satisfaction by Role</div>
 
 			<div class='content-container'>
 
+        <p id='s-ratings-role' class='tooltip'></p>
 				<div class='six columns'>
 
 					<div id='s-role-rate-permit'>Contractor: </br></div><br />
@@ -147,238 +165,15 @@
 
 			</div>
 
-			<li id='role-rate-permit' class='invisible'>{{ dash_obj[14].data.r1 }}</li>
-      <li id='role-rate-inspect' class='invisible'>{{ dash_obj[14].data.r2 }}</li>
-      <li id='role-rate-review' class='invisible'>{{ dash_obj[14].data.r3 }}</li>
-      <li id='role-rate-lien' class='invisible'>{{ dash_obj[14].data.r4 }}</li>
-      <li id='role-rate-cu' class='invisible'>{{ dash_obj[14].data.r5 }}</li>
+			<li id='role-rate-permit' class='invisible'>{{ dash_obj[14].data.contractor }}</li>
+      <li id='role-rate-inspect' class='invisible'>{{ dash_obj[14].data.architect }}</li>
+      <li id='role-rate-review' class='invisible'>{{ dash_obj[14].data.permitconsultant }}</li>
+      <li id='role-rate-lien' class='invisible'>{{ dash_obj[14].data.homeowner }}</li>
+      <li id='role-rate-cu' class='invisible'>{{ dash_obj[14].data.bizowner }}</li>
 
   </div>
 
-  <!--
-	  1) Apply for a permit
-2) Meet with an inspector
-3) Meet with a plan reviewer
-4) Find out about a violation/lien
-5) Obtain a certificate of use/occupancy
-
-
-  <div class='four columns panel first-panel'>
-    <div class='headline'>Best &amp; Worst Experiences<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-best'><img class='' src='static/images/question_bk.png'></a></div>
-    <div class='content-container'>
-      <div id='bestworst-data'>
-        {% for item in resp_obj %}
-          {% if item.lang == 'en' %}
-            <p>{{ item.bestworst }}</p>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-
-    <p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
-
-  </div>-->
-
-  <div class='four columns panel first-panel'>
-    <div class='headline'>Suggested Improvements<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-improve'><img class='' src='static/images/question_bk.png'></a></div>
-    <div class='content-container'>
-      <div id='improvements-data'>
-        {% for item in resp_obj %}
-          {% if item.lang == 'en' %}
-            <p>{{ item.improvement }}</p>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-
-    <p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
-
-  </div>
-
-  <div class='four columns panel last-panel'>
-
-    <div class='headline'>More Comments<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-comments'><img class='' src='static/images/question_bk.png'></a></div>
-    <div class='content-container'>
-      <div id='morecomments-data'>
-        {% for item in resp_obj %}
-          {% if item.lang == 'en' %}
-            <p>{{ item.morecomments }}</p>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-
-    <p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
-
-  </div>
-
-
 </section> <!-- close row -->
 
-<section class='row' id='permitting'>
-
-	<div class='row twelve columns'><h3>Permit Metrics</h3></div>
-
-	<div class='twelve columns panel first-panel'>
-
-			<div class='headline'>Permits opened per month<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-monthly'><img class='' src='static/images/question_bk.png'></a></div>
-
-			<div class='content-container'>
-				<canvas id='openPermits'></canvas>
-			</div>
-
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
-
-		</div>
-
-	<div class='twelve columns'>
-
-    {{ lifespan_panel(dash_obj[3].title, dash_obj[3].data.val, dash_obj[3].data.waittime, dash_obj[3].data.yoy, false) }}
-
-    {{ lifespan_panel(dash_obj[4].title, dash_obj[4].data.val, dash_obj[4].data.waittime, dash_obj[4].data.yoy, false) }}
-
-    {{ lifespan_panel(dash_obj[5].title, dash_obj[5].data.val, dash_obj[5].data.waittime, dash_obj[5].data.yoy) }}
-
-	</div>
-
-	<div class='twelve columns'>
-<!--
-    <div class='four columns panel first-panel'>
-      <div class='headline'>{{ dash_obj[6].title }}</div>
-      <div class='content-container'>
-        <p style="font-weight:bold; font-size:250%">
-          ${{ '%0.2f'| format(dash_obj[6].data|float) }}
-        </p>
-      </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
-    </div>
-
-    <div class='four columns panel'>
-      <div class='headline'>{{ dash_obj[7].title }}</div>
-      <div class='content-container'>
-        <p style="font-weight:bold; font-size:250%">
-          ${{ '%0.2f'| format(dash_obj[7].data|float) }}
-        </p>
-      </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
-    </div>
-
-    <div class='four columns panel last-panel'>
-      <div class='headline'>{{ dash_obj[8].title }}</div>
-      <div class='content-container'>
-        <p style="font-weight:bold; font-size:250%">
-          ${{ '%0.2f'| format(dash_obj[8].data|float) }}
-        </p>
-      </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
-    </div>
--->
-
-    <div class='eight columns panel first-panel'>
-      <div class='headline'>{{ dash_obj[9].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-type'><img class='' src='static/images/question_bk.png'></a></div>
-      <div class='content-container'>
-         <canvas id='permitTypeChart'>
-      </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
-    </div>
-
-    <div class='four columns panel last-panel'>
-      <div class='headline'>{{ dash_obj[11].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='p-master'><img class='' src='static/images/question_bk.png'></a></div>
-      <div class='content-container'>
-        <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
-        <p>Versus the same period a year ago:
-          {% if dash_obj[11].data.yoy > 0 %}
-          <span class='bold green'>Up
-          {% else %}
-          <span class='bold red'>Down
-          {% endif %}
-          {{ '%0.2f'| format(dash_obj[11].data.yoy|float) }}%
-          </span>
-        </p>
-      </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
-    </div>
-
-</section> <!-- close row -->
-
-<section class='row' id='regulation'>
-
-	<div class='row twelve columns'><h3>Neighborhood Compliance</h3></div>
-
-	<div class='row twelve columns panel'>
-
-		<div class='headline'>Violations per month<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-monthly'><img class='' src='static/images/question_bk.png'></a></div>
-		<div class='content-container'>
-			<canvas id='violations'></canvas>
-		</div>
-		<p class='hidden details invisible-button'><a href=#>View Details</a></p>
-
-	</div>
-
-	<div class='row twelve columns'>
-
-		<div class='four columns panel first-panel double-height'>
-
-			<div class='headline'>Violation Locations: Closed Violations<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-closed'><img class='' src='static/images/question_bk.png'></a></div>
-			<div class='content-container'>
-				<div id='leaflet'></div>
-			</div>
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
-		</div>
-
-		<div class='four columns panel double-height'>
-
-			<div class='headline'>Violation Locations: Locked Violations<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-locked'><img class='' src='static/images/question_bk.png'></a></div>
-
-			<div class='content-container'>
-				<div id='leaflet-open'></div>
-			</div>
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
-		</div>
-
-		<div class='four columns panel last-panel double-height'>
-
-			<div class='headline'>Violation Locations: Locations with Liens<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-liens'><img class='' src='static/images/question_bk.png'></a></div>
-			<div class='content-container'>
-				<div id='leaflet-lein'></div>
-			</div>
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
-		</div>
-
-	</div>
-
-	<div class='row twelve columns panel double-height'>
-
-			<div class='headline'>Top 20 Violations by Type<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='v-type'><img class='' src='static/images/question_bk.png'></a></div>
-			<div class='content-container'>
-				<canvas id='viotype'></canvas>
-			</div>
-			<p class='details invisible-button'><a href="{{ url_for('dashboard.violations_detail') }}">View Complete Dataset</a></p>
-
-		</div>
-</section> <!-- close row -->
 
 {% endblock %}
-
-{% macro lifespan_panel(title='', val=0, waittime=0, yoy=0, lastpanel=True) -%}
-
-    <div class='four columns panel{% if lastpanel==True %} last-panel{% endif %}'>
-
-      <div class='headline'>{{ title }}<a class='what-is-this u-pull-right' href='#'><img class='' src='static/images/question_bk.png'></a></div>
-
-      <div class='content-container vertical-center-35'>
-        <p class='huge bold'>{{ val }} days</p>
-        <p>Versus previous 30 days:
-          {% if yoy > 0 %}
-          <span class='bold red'>Up
-          {% else %}
-          <span class='bold green'>Down
-          {% endif %}
-          {{ '%0.2f'| format(yoy|float) }}%
-          </span>
-        </p>
-
-      </div>
-      <p class='hidden details invisible-button'><a href=#>View Details</a></p>
-    </div>
-{%- endmacro %}

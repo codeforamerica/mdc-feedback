@@ -1,0 +1,29 @@
+Hello!
+
+A user has submitted a survey response that requires attention from the {{ survey.route_en }} division of the Permit Inspection Center.
+
+Below are the details of the survey response. Please follow up with the user within 30 days if contact information is provided.
+
+Survey Date: {{ survey.date_submitted }}
+Language: {{ 'English' if survey.lang=='en' else 'Spanish' }}
+Input: {{ 'Website' if survey.method=='web' else 'Phone' }}
+Would you like to be followed-up with: {{ 'Yes' if survey.follow_up else 'No' }}
+Contact Information: {{ survey.contact }}
+Comments: {{ survey.more_comments }}
+
+Role: {{ survey.role_en }}
+Purpose: {{ survey.purpose_en }}
+Experience Rating: {{ survey.rating }} / 7
+Were you able to complete your tasks? {{ 'Yes' if survey.get_done else 'No' }}
+Best Experience: {{ survey.best_en }}
+Worst Experience: {{ survey.worst_en }}
+Improvement Suggestion: {{ survey.improvement }}
+
+Thank you,
+Miami-Dade County RER & Communications Departments
+
+-----
+
+You have received this mail because you have been listed as a stakeholder of
+ the {{ survey.route_en }} Section in the MDC Feedback Tool. If you believe this is
+incorrect, please let us know at miami-dade@codeforamerica.org.
