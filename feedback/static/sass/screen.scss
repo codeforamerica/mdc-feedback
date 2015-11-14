@@ -236,11 +236,7 @@ a.what-is-this {
   width:30%;
 }
 
-.tooltip {
-  
-  font-size: .85em;
-  text-align: left;
-}
+
 
 /* GLOBAL CONTAINER, NAV */
 
@@ -594,6 +590,15 @@ canvas {
 	height:199px;
 }
 
+.tooltip {
+  
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:10px;
+  font-size: .85em;
+  text-align: left;
+}
+
 .double-height .content-container {
 	
 	height:510px;
@@ -640,23 +645,6 @@ canvas {
   margin-bottom:30px;
 }
 
-.details {
-	
-	
-	background-color: #f7fafa;
-	text-align: center;
-	margin:0 auto;
-	padding-bottom:1px;
-	
-}
-
-.details a {
-	
-	text-transform: uppercase;
-	font-size: 11px;
-  letter-spacing: .1rem;
-
-}
 
 #star-rating {
 	

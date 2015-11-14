@@ -28,8 +28,6 @@
 				<canvas id='openPermits'></canvas>
 			</div>
 
-			<p class='hidden details invisible-button'><a href=#>View Details</a></p>
-
 		</div>
   
   <div class='twelve columns panel first-panel last-panel'>
@@ -85,8 +83,6 @@
         </ul>
       </div>
       
-      <p class='details invisible-button hidden'><a href=#>View Details</a></p>
-      
     </div>
     
   <div class='twelve columns'>
@@ -116,16 +112,17 @@
         <li class='last-list'>{{ dash_obj[3].data.s.max }} days max.</li>
 
       </div>
-      <p class='details invisible-button hidden'><a href=#>View Details</a></p>
+      
     </div>
     
     <div class='eight columns panel double-height last-panel'>
       <div class='headline'>
         <!-- {{ dash_obj[4].title }} --> Time to issuance for residential permits
       </div>
+      <p id='p-residential-issuance' class='tooltip'></p>
+      
       <div class='content-container'>
         
-        <p id='p-residential-issuance' class='tooltip'></p>
         <div class='six columns vertical-center-35'>
         
           <p class='bold panel-header'>New residential construction:</p>
@@ -160,7 +157,7 @@
         </div>
         
       </div>
-      <p class='details invisible-button hidden'><a href=#>View Details</a></p>
+      
     </div>
     
   </div>
@@ -169,22 +166,23 @@
 
     <div class='eight columns panel first-panel'>
       <div class='headline'>{{ dash_obj[9].title }}</div>
-      <div class='content-container'>
-        
-        <p id='p-type' class='tooltip'></p>
-        <canvas id='permitTypeChart'>
       
+      <p id='p-type' class='tooltip'></p>
+      
+      <div class='content-container'>
+        <canvas id='permitTypeChart'>
       </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
+    
     </div>
 
     <div class='four columns panel last-panel'>
       <div class='headline'>
         {{ dash_obj[11].title }}
       </div>
+      <p id='p-master' class='tooltip'></p>
+      
       <div class='content-container'>
         
-        <p id='p-master' class='tooltip'></p>
         <p class="huge bold">{{ '{0:,}'.format(dash_obj[11].data.val) }}</p>
         <p>Versus the same period a year ago:
           {% if dash_obj[11].data.yoy > 0 %}
@@ -196,7 +194,7 @@
           </span>
         </p>
       </div>
-      <p class='details invisible-button'><a href=#>View Details</a></p>
+      
     </div>
     
   </div>
