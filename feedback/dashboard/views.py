@@ -162,7 +162,7 @@ def home():
             "data": get_surveys_by_completion(survey_table)
         },
         {
-            "title": "Purpose",
+            "title": "Respondents by Purpose",
             "data": get_surveys_by_purpose(survey_table)
         },
         {
