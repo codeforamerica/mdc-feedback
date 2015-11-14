@@ -20,27 +20,79 @@
 		<h3>Permitting &amp; Inspection Center Feedback Metrics (Last 30 Days)</h3>
 	</div>
 
-	<div class='six columns panel first-panel'>
+	<div class='nine columns panel first-panel'>
 
 		<!-- the data -->
 		<p class='invisible'>{{ dash_obj[0].data.new_reviews }}</p>
 
 		<!-- the content -->
-		<div class='headline'>{{ dash_obj[0].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-submitted'><img class='' src='static/images/question_bk.png'></a></div>
+		<div class='headline'>{{ dash_obj[0].title }}</div>
 
+    <p id='s-submitted' class='tooltip'><a class='u-pull-right' href="{{ url_for('dashboard.all_surveys') }}"> View Details &raquo;</a></p>
+    
 		<div class='content-container'>
-			<canvas id='myChart'></canvas>
+  		<canvas id='myChart'></canvas>
 		</div>
-
-		<p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
 
 	</div>
 
-	<div class='three columns panel'>
+	<div class='three columns panel last-panel'>
 
-			<div class='headline'>{{ dash_obj[1].title }}<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-rating'><img class='' src='static/images/question_bk.png'></a></div>
+		<!-- the content -->
+		<div class='headline'></div>
+		
+		<p id='s-type' class='tooltip'><a class='u-pull-right' href="{{ url_for('dashboard.all_surveys') }}"> View Details &raquo;</a></p>
+		
+		<div class='content-container'>
+  		
+  		
+			<canvas id='surveyChart'></canvas>
+		</div>
 
+	</div>
+
+  <div class='six columns panel first-panel'>
+    <div class='headline'>Respondents by Role</div>
+    
+    <p id='s-role' class='tooltip'><a class='u-pull-right' href="{{ url_for('dashboard.all_surveys') }}"> View Details &raquo;</a></p>
+    
+    <div class='content-container'>
+		  
+			<canvas id='s-role-chart'></canvas>
+		</div>
+  </div>
+
+  <div class='six columns panel last-panel'>
+    <div class='headline'>{{ dash_obj[13].title }}</div>
+
+    <p id='s-purpose' class='tooltip'><a class='u-pull-right' href="{{ url_for('dashboard.all_surveys') }}"> View Details &raquo;</a></p>
+    
+    <div class='content-container'>
+      
+			<canvas id='s-purpose-chart'></canvas>
+		</div>
+
+  </div>
+  
+  <div class='four columns panel first-panel'>
+    <div class='headline'>Visitors' ability to complete a task</div>
+    
+    <p id='s-complete' class='tooltip'><a class='u-pull-right' href="{{ url_for('dashboard.all_surveys') }}"> View Details &raquo;</a></p>
+    
+    <div class='content-container'>
+      
+			<canvas id='s-complete-chart'></canvas>
+		</div>
+  </div>
+  
+  <div class='four columns panel'>
+
+			<div class='headline'>{{ dash_obj[1].title }}</div>
+
+      <p id='s-rating' class='tooltip'><a class='u-pull-right' href="{{ url_for('dashboard.all_surveys') }}"> View Details &raquo;</a></p>
+      
 			<div class='content-container'>
+  		
 				<div id='star-rating'>
 					<!-- data & display -->
 					<p class='invisible'>{{ dash_obj[1].data }}</p>
@@ -48,60 +100,28 @@
 				<p class='label'>Visitors to the PIC are rating their experience as {{ dash_obj[1].data }} out of seven stars.</p>
 			</div>
 
-			<p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
-
 		</div>
-
-	<div class='three columns panel last-panel'>
-
-		<!-- the content -->
-		<div class='headline'><a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-type'><img class='' src='static/images/question_bk.png'></a></div>
-		<div class='content-container'>
-			<canvas id='surveyChart'></canvas>
-		</div>
-
-		<p class='details invisible-button'><a href="{{ url_for('dashboard.all_surveys') }}">View Details</a></p>
-	</div>
-
-<!-- merge conflict began here -->
-  <div class='four columns panel first-panel'>
-    <div class='headline'>Respondents by Role<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-role'><img class='' src='static/images/question_bk.png'></a></div>
-    <div class='content-container'>
-			<canvas id='s-role-chart'></canvas>
-		</div>
-  </div>
-
-  <div class='four columns panel'>
-    <div class='headline'>Visitors' ability to complete a task<a class='what-is-this u-pull-right tipsy-hook' href='#' id='s-complete'><img class='' src='static/images/question_bk.png'></a></div>
-    <div class='content-container'>
-			<canvas id='s-complete-chart'></canvas>
-		</div>
-  </div>
 
   <div class='four columns panel last-panel'>
-    <div class='headline'>{{ dash_obj[13].title }}<a class='what-is-this u-pull-right' href='#' id='s-purpose'><img class='' src='static/images/question_bk.png'></a></div>
+    
+    <div class='headline'>Satisfaction by Language</div>
 
+    <li id='rate-en' class='invisible'>{{ dash_obj[14].data.en }}</li>
+    <li id='rate-es' class='invisible'>{{ dash_obj[14].data.es }}</li>
+
+    <p id='s-ratings-lang' class='tooltip'><a class='u-pull-right' href="{{ url_for('dashboard.all_surveys') }}"> View Details &raquo;</a></p>
+    
     <div class='content-container'>
-			<canvas id='s-purpose-chart'></canvas>
-		</div>
-
-  </div>
-
-  <div class='four columns panel first-panel'>
-    <div class='headline'>Satisfaction by Language<a rel='tipsy' title='this is a tooltip' class='what-is-this u-pull-right tipsy-hook' href='#' id='s-ratings-lang'><img class='' src='static/images/question_bk.png'></a></div>
-
-    <li id='rate-en' class='invisible'>{{ dash_obj[14].data.en }}</li><br />
-    <li id='rate-es' class='invisible'>{{ dash_obj[14].data.es }}</li><br />
-
-    <div class='content-container'>
+            
 			<div id='s-lang-rate-en'>English:<br> </div><br>
 			<div id='s-lang-rate-es'>Spanish:<br> </div>
+			
 		</div>
 
   </div>
 
-  <div class='four columns panel'>
-  	 <div class='headline'>Satisfaction by Purpose<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-ratings-purpose'><img class='' src='static/images/question_bk.png'></a></div>
+  <div class='six columns panel first-panel'>
+  	 <div class='headline'>Satisfaction by Purpose</div>
 
 		  <li id='rate-permit' class='invisible'>{{ dash_obj[14].data.p1 }}</li>
       <li id='rate-inspect' class='invisible'>{{ dash_obj[14].data.p2 }}</li>
@@ -109,8 +129,10 @@
       <li id='rate-liens' class='invisible'>{{ dash_obj[14].data.p4 }}</li>
       <li id='rate-cu' class='invisible'>{{ dash_obj[14].data.p5 }}</li>
 
+      <p id='s-ratings-purpose' class='tooltip twelve columns'><a class='u-pull-right' href="{{ url_for('dashboard.all_surveys') }}"> View Details &raquo;</a></p>
+      
       <div class='content-container'>
-
+        
 	      <div class='six columns'>
 					<div id='s-purpose-rate-permit'>Apply for a Permit: <br></div><br>
 					<div id='s-purpose-rate-inspect'>Meet w/ Inspector: <br></div><br>
@@ -125,9 +147,11 @@
 
   </div>
 
-  <div class='four columns panel last-panel'>
-	  	 <div class='headline'>Satisfaction by Role<a rel='tipsy' title='this is a tooltip' class='what-is-this   u-pull-right tipsy-hook' href='#' id='s-ratings-role'><img class='' src='static/images/question_bk.png'></a></div>
-
+  <div class='six columns panel last-panel'>
+	  	
+	  	<div class='headline'>Satisfaction by Role</div>
+      <p id='s-ratings-role' class='tooltip'><a class='u-pull-right' href="{{ url_for('dashboard.all_surveys') }}"> View Details &raquo;</a></p>
+      
 			<div class='content-container'>
 
 				<div class='six columns'>

@@ -215,6 +215,7 @@ a.blue:hover {
 	border-color:#4BC3FF;
 }
 
+/* remove this */
 a.what-is-this {
 	
 	width:20px;
@@ -228,10 +229,15 @@ a.what-is-this {
 	height:auto;
 }
 
+/* end remove this */
+
 .u-width-30 {
   
   width:30%;
 }
+
+
+
 /* GLOBAL CONTAINER, NAV */
 
 #container {
@@ -548,7 +554,7 @@ canvas {
 .panel {
 	
 	border:5px solid $grey;
-	height:300px;
+	height:350px;
 	margin:5px;
 	margin-right:3.53333%;
 	
@@ -556,7 +562,7 @@ canvas {
 
 .double-height {
 	
-	height:610px;
+	height:660px;
 }
 
 
@@ -582,6 +588,15 @@ canvas {
 	margin:0 auto;
 	vertical-align: middle;
 	height:199px;
+}
+
+.tooltip {
+  
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:10px;
+  font-size: .85em;
+  text-align: left;
 }
 
 .double-height .content-container {
@@ -630,23 +645,6 @@ canvas {
   margin-bottom:30px;
 }
 
-.details {
-	
-	
-	background-color: #f7fafa;
-	text-align: center;
-	margin:0 auto;
-	padding-bottom:1px;
-	
-}
-
-.details a {
-	
-	text-transform: uppercase;
-	font-size: 11px;
-  letter-spacing: .1rem;
-
-}
 
 #star-rating {
 	

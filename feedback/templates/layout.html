@@ -9,9 +9,12 @@
 <head>
   <meta charset="utf-8">
 
-  <title>{% block page_title %}
-    Feedback
-    {% endblock %}</title>
+  <title>
+    {% block page_title %}
+      Feedback - {{ title }}
+    {% endblock %}
+  </title>
+  
   <meta name="description" content="{% block meta_description %}{% endblock %}">
   <meta name="author" content="{% block meta_author %}{% endblock %}">
 
@@ -23,23 +26,20 @@
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
   <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
 
-	<!-- leaflet mapping -->
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-	<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-
   {% block assets %}
     {% assets "css_all" %}
-  <link rel="stylesheet" href="{{ ASSET_URL }}">
+      <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
   {% endblock %}
+  
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
 {% block body %}
-{% with form=form  %}
-{% include "nav.html" %}
-{% endwith %}
 
+  {% with form=form  %}
+  {% include "nav.html" %}
+  {% endwith %}
 
 <div id='container' class="remodal-bg {% block content_class %}container-fluid{% endblock content_class %}">
   
@@ -83,16 +83,16 @@
 
 		</div>
 
-		{% endif %}
+  {% endif %}
 
   {% if active_page == 'Dashboard - Violations' or active_page == 'Dashboard - Metrics' or active_page == 'Dashboard - Main' %}
   
     <ul id='jumpnav' class='row u-pull-left'>
       
-      <li>Jump to a section: </li>
+      <li>Choose your view: </li>
       <li><a href='/'>Permitting & Inspection Center Feedback Metrics</a></li>
       <li><a href='/metrics'>Permit Metrics</a></li>
-      <li><a href='/violations'>Neighborhood Compliance</a></li>
+      <li><a href='/violations'>Zoning Code Violations Metrics</a></li>
       
     </ul>  
     
@@ -123,42 +123,40 @@
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
 		<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
-		<script type="text/javascript" src="/static/js/jqcloud.min.js"></script>
-		<script type="text/javascript" src="/static/js/jquery.tipsy.js"></script>
 		<script type="text/javascript" src="/static/js/tabletop.js"></script>
+		<script type="text/javascript" src="/static/js/dashboard-common.js"></script>
 		<script type="text/javascript" src="/static/js/dashboard.js"></script>
-		<script type="text/javascript" src="/static/js/leaflet-heat.js"></script>
 		
   {% elif active_page == 'Dashboard - Metrics' %}
 
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
-		<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
-		<script type="text/javascript" src="/static/js/jqcloud.min.js"></script>
-		<script type="text/javascript" src="/static/js/jquery.tipsy.js"></script>
 		<script type="text/javascript" src="/static/js/tabletop.js"></script>
+		<script type="text/javascript" src="/static/js/dashboard-common.js"></script>
 		<script type="text/javascript" src="/static/js/dashboard-metrics.js"></script>
-		<script type="text/javascript" src="/static/js/leaflet-heat.js"></script>
 		
   {% elif active_page == 'Dashboard - Violations' %}
 
+    <!-- leaflet mapping -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+		
 		<script type="text/javascript" src="/static/js/remodal.min.js"></script>
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
-		<script type="text/javascript" src="/static/js/jquery.raty.js"></script>
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
-		<script type="text/javascript" src="/static/js/jqcloud.min.js"></script>
-		<script type="text/javascript" src="/static/js/jquery.tipsy.js"></script>
 		<script type="text/javascript" src="/static/js/tabletop.js"></script>
-		<script type="text/javascript" src="/static/js/dashboard-violations.js"></script>
 		<script type="text/javascript" src="/static/js/leaflet-heat.js"></script>
+		<script type="text/javascript" src="/static/js/dashboard-common.js"></script>
+		<script type="text/javascript" src="/static/js/dashboard-violations.js"></script>
+		
 
 	{% elif active_page == 'Violations' %}
-
+      
 		<script type="text/javascript" src="/static/js/chart.min.js"></script>
 		<script type="text/javascript" src="/static/js/Chart.HorizontalBar.js"></script>
+    <script type="text/javascript" src="/static/js/dashboard-common.js"></script>
 		<script type="text/javascript" src="/static/js/violations-data.js"></script>
-
 
 	{% elif active_page == 'Manage Users' %}
 
