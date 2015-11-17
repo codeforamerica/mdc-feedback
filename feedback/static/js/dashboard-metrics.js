@@ -33,7 +33,7 @@ $(document).ready(function () {
         labels:datetime2,
         datasets: [
           {
-              fillColor: globalColors.t_orange,
+              fillColor: globalColors.orange_20,
               strokeColor: globalColors.orange,
               pointColor: globalColors.orange,
               pointStrokeColor: "#fff",
@@ -121,8 +121,8 @@ $(document).ready(function () {
     datasets: [
       {
         label: "Permits by Type",
-        fillColor: globalColors.t_purple_1,
-        strokeColor: globalColors.purple_1,
+        fillColor: globalColors.orange_20,
+        strokeColor: globalColors.orange,
         data: cleanPermitData
       }
     ]
@@ -215,14 +215,14 @@ $(document).ready(function () {
       plumbingData = [
         {
           value: pData,
-          color:globalColors.purple_1,
-          highlight: globalColors.t_purple_1,
+          color:globalColors.orange,
+          highlight: globalColors.orange_20,
           label: 'Plumbing: same-day'
         },
         {
           value: (100 - pData),
-          color: globalColors.purple_2,
-          highlight: globalColors.t_purple_2,
+          color: globalColors.orange_60,
+          highlight: globalColors.orange_20,
           label: 'Plumbing'
         }
       ],
@@ -230,14 +230,14 @@ $(document).ready(function () {
       buildingData = [
         {
           value: bData,
-          color:globalColors.purple_1,
-          highlight: globalColors.t_purple_1,
+          color:globalColors.orange,
+          highlight: globalColors.orange_20,
           label: 'Building: same-day'
         },
         {
           value: (100 - bData),
-          color: globalColors.purple_2,
-          highlight: globalColors.t_purple_2,
+          color: globalColors.orange_60,
+          highlight: globalColors.orange_20,
           label: 'Building'
         }
       ],
@@ -245,14 +245,14 @@ $(document).ready(function () {
       fireData = [
         {
           value: fData,
-          color:globalColors.purple_1,
-          highlight: globalColors.t_purple_1,
+          color:globalColors.orange,
+          highlight: globalColors.orange_20,
           label: 'Fire: same-day'
         },
         {
           value: (100 - fData),
-          color: globalColors.purple_2,
-          highlight: globalColors.t_purple_2,
+          color: globalColors.orange_60,
+          highlight: globalColors.orange_20,
           label: 'Fire'
         }
       ],
@@ -260,14 +260,14 @@ $(document).ready(function () {
       elexData = [
         {
           value: eData,
-          color:globalColors.purple_1,
-          highlight: globalColors.t_purple_1,
+          color:globalColors.orange,
+          highlight: globalColors.orange_20,
           label: 'Electrical: same-day'
         },
         {
           value: (100 - eData),
-          color: globalColors.purple_2,
-          highlight: globalColors.t_purple_2,
+          color: globalColors.orange_60,
+          highlight: globalColors.orange_20,
           label: 'Electrical'
         }
       ],
@@ -275,14 +275,14 @@ $(document).ready(function () {
       zoningData = [
         {
           value: zData,
-          color:globalColors.purple_1,
-          highlight: globalColors.t_purple_1,
+          color:globalColors.orange,
+          highlight: globalColors.orange_20,
           label: 'Zoning: same-day'
         },
         {
           value: (100 - zData),
-          color: globalColors.purple_2,
-          highlight: globalColors.t_purple_2,
+          color: globalColors.orange_60,
+          highlight: globalColors.orange_20,
           label: 'Zoning'
         }
       ],

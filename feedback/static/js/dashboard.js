@@ -57,8 +57,8 @@ $(document).ready(function () {
     datasets: [
       {
           label: "Respondents by Role",
-          fillColor: globalColors.t_purple_1,
-          strokeColor: globalColors.purple_1,
+          fillColor: globalColors.orange_20,
+          strokeColor: globalColors.orange,
           data: sctxseries
       }
     ]
@@ -78,14 +78,14 @@ $(document).ready(function () {
     cctxPie = [
     {
       value: completeTrue,
-      color:globalColors.purple_1,
-      highlight: globalColors.t_purple_1,
+      color:globalColors.orange,
+      highlight: globalColors.orange_20,
       label: 'Successfully completed task'
     },
     {
       value: completeFalse,
-      color: globalColors.purple_4,
-      highlight: globalColors.t_purple_4,
+      color: globalColors.orange_60,
+      highlight: globalColors.orange_20,
       label: 'Failed to complete task'
     }
   ],
@@ -151,8 +151,8 @@ $(document).ready(function () {
     datasets: [
       {
         label: "Respondents by Purpose",
-        fillColor: globalColors.t_purple_1,
-        strokeColor: globalColors.purple_1,
+        fillColor: globalColors.orange_20,
+        strokeColor: globalColors.orange,
         data: sptxseries
       }
     ]
@@ -172,7 +172,7 @@ $(document).ready(function () {
         scaleBeginAtZero: true,
         datasets: [
             {
-                fillColor: globalColors.t_orange,
+                fillColor: globalColors.orange_20,
                 strokeColor: globalColors.orange,
                 pointColor: globalColors.orange,
                 pointStrokeColor: "#fff",
@@ -192,26 +192,26 @@ $(document).ready(function () {
       pieData = [
         {
           value: surveyData.data.web_en,
-          color: globalColors.purple_1,
-          highlight: globalColors.t_purple_1,
+          color: globalColors.orange,
+          highlight: globalColors.orange_20,
           label: surveyData.labels.web_en
         },
         {
           value: surveyData.data.web_es,
-          color: globalColors.purple_2,
-          highlight: globalColors.t_purple_2,
+          color: globalColors.orange_80,
+          highlight: globalColors.orange_20,
           label: surveyData.labels.web_es
         },
         {
           value: surveyData.data.sms_en,
-          color: globalColors.purple_3,
-          highlight: globalColors.t_purple_3,
+          color: globalColors.orange_60,
+          highlight: globalColors.orange_20,
           label: surveyData.labels.sms_en
         },
         {
           value: surveyData.data.sms_es,
-          color: globalColors.purple_4,
-          highlight: globalColors.t_purple_4,
+          color: globalColors.orange_40,
+          highlight: globalColors.orange_20,
           label: surveyData.labels.sms_es
 
         }
