@@ -58,12 +58,22 @@
     {% endif %}
   {% endwith %}
 
-  {% if current_user and current_user.is_authenticated() and current_user.role.name == 'admin' and active_page != 'Monthly Report'  %}
+  {% if current_user and current_user.is_authenticated() and current_user.role.name == 'admin' and active_page != 'Monthly Report' and active_page != 'Manage Users' %}
 		
 		 {% set navigation_bar = [
-      ('/users/manage', 'Manage Users & E-mail')
-    ] -%}
+      ('/users/manage', 'Manage Users & E-mail'), ('/', 'Dashboard')
+     ] -%}
+     
+  {% elif current_user and current_user.is_authenticated() and current_user.role.name == 'admin' and active_page == 'Manage Users' %}
+  
+    {% set navigation_bar = [
+      ('/', 'Dashboard')
+     ] -%}
+     
+  {% endif %}
 
+
+  {% if current_user and current_user.is_authenticated() and current_user.role.name == 'admin' %}
 		<div class='row'>
 
 			<ul class='list-nav u-pull-left'>
@@ -82,8 +92,8 @@
 			</ul>
 
 		</div>
-
   {% endif %}
+  
 
   {% if active_page == 'Dashboard - Violations' or active_page == 'Dashboard - Metrics' or active_page == 'Dashboard - Main' %}
   

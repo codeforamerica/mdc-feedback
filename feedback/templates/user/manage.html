@@ -7,20 +7,26 @@
 {% endblock %}
 
 {% block content %}
+  
+  <ul id='jumpnav'>
+  
+      <li><a href='#stakeholder-list'>Jump to Reporting E-mail Management</a></li> | 
+      <li><a href='#monthly-list'>Jump to Monthly E-mail Recipients</a></li>
+  
+    </ul>
+    
   <div id="container">
 
+    
+      
     <section id='user-list' class='row twelve columns'>
 
       <h3>Manage your users.</h3>
 
-      <ul id='jump-nav'>
-
-        <li><a class='button' href='#stakeholder-list'>Jump to Reporting E-mail Management</a></li>
-
-      </ul>
+      
 
 
-      <table style="width:100%;">
+      <table style="width:100%;" class='user-table'>
         <thead>
           <tr>
             <th>Name</th>
@@ -28,6 +34,7 @@
             <th>Permissions</th>
             {% if current_user.is_admin() %}
             <th>Actions</th>
+            <th></th>
             {% endif %}
           </tr>
         </thead>
@@ -39,10 +46,13 @@
             <td>{{ user.role.name }}</td>
             {% if current_user.is_admin() %}
 
-            <td class='user-management-td'>
-              <li class='user-management-btn'><a class='button'href="{{ url_for('user.user_edit', id=user.id) }}">Edit user</a></li>
+            <td>
+              <a class='button user-management-btn'href="{{ url_for('user.user_edit', id=user.id) }}">Edit user</a>
+            </td>
+            
+            <td>
               <form action="{{ url_for('user.user_delete', id=user.id) }}" method="POST">
-                <li class='user-management-btn'><button class="delete-small" type="submit">Delete user</button></li>
+                  <button class="user-management-btn delete-small" type="submit">Delete user</button>
               </form>
             </td>
             {% endif %}
@@ -65,10 +75,24 @@
       <form id="stakeholderForm" class="form form-stakeholders" method="POST" action="{{ url_for('user.user_manage') }}" role="form">
         <ul>
           {% for n in range(1,15) %}
-          <li>{{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}{{ stakeholders[n-1].email_list }}{% endif %}"></li>
+          <li>
+          
+            {{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="">
+            
+            <p class='bold'>Current recipients of e-mail updates:<p>
+            <ul class='user-list'>
+              
+              {% if stakeholders[n-1] is defined %}
+              <li>{{ stakeholders[n-1].email_list }}</li>
+              {% endif %}
+              
+            </ul>
+          
+          </li>
 
           {% endfor %}
         </ul>
+        
         <input type="submit" value="save changes">
       </form>
 
@@ -81,9 +105,16 @@
         <input
         name="monthly-report-field"
         type="text"
-        value="{% if monthly is defined %}{{ monthly.email_list }}{% endif %}">
+        value="">
         <input type="submit" value="save changes">
       </form>
+      
+      <p class='bold'>Current recipients of monthly status reports:</p>
+      <ul>
+        {% if monthly is defined %}
+          <li>{{ monthly.email_list }}</li>
+        {% endif %}  
+      </ul>
 
     </section>
 
