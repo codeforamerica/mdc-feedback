@@ -40,7 +40,7 @@
 
   if(apiModal !== undefined) {
 
-    console.log("checking API health");
+    //console.log("checking API health");
     if(apiStatus === -1) {
 
     //county error.
@@ -284,7 +284,7 @@
 
   function buildTipsy(data) {
     //alert("Successfully processed!")
-    console.log(data);
+    //console.log(data);
 
     for(var i = 0; i < data.length; i+=1) {
 
@@ -305,7 +305,7 @@
 
         if(id == data[i].hoverid) {
           
-          console.log(data[i].hoverid)
+          //console.log(data[i].hoverid)
           $(this).attr('title', data[i].descriptionforhover);
           var mid = '#' + data[i].hoverid;
           $(mid).prepend(data[i].descriptionforhover);

@@ -214,11 +214,11 @@ $(document).ready(function () {
       }
     }
     
-    console.log(vioArray.length);
+    //console.log(vioArray.length);
     
     var heat = L.heatLayer(vioArray).addTo(map);
     
-        console.log(map.hasLayer(heat), heat);
+        //console.log(map.hasLayer(heat), heat);
         
     
     for(i = 0; i < vioMonthlyData.length; i += 1) {
