@@ -236,7 +236,7 @@ def follow_up(models):
 
     Returns ..?
     '''
-    subj = 'New feedback has been posted from the Permitting Inspection Center!'
+    subj = 'A new survey has been submitted for your section!'
     from_email = current_app.config.get('ADMIN_EMAIL')
     for survey in models:
 

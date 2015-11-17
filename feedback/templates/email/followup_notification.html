@@ -1,15 +1,15 @@
 {% extends "./email/base.html" %}
 
 {% block header %}
-New feedback has been posted from the Permitting Inspection Center!
+A new survey has been submitted for your section!
 {% endblock %}
 
 {% block content %}
 <p>Hello!</p>
 
-<p>A user has submitted a survey response that requires attention from the {{ survey.route_en }} division of the Permit Inspection Center.</p>
+<p>A customer has submitted a survey response that requires attention from the {{ survey.route_en }} division of the Permit Inspection Center.</p>
 
-<p>Below are the details of the survey response. Please follow up with the user within 30 days if contact information is provided.<p>
+<p>Below are the details of the survey response. Please follow up with the customer within 30 days if contact information is provided.<p>
 
 <ul>
   <li>Survey Date: {{ survey.date_submitted }}</li>

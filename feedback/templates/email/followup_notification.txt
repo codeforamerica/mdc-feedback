@@ -1,8 +1,8 @@
 Hello!
 
-A user has submitted a survey response that requires attention from the {{ survey.route_en }} division of the Permit Inspection Center.
+A customer has submitted a survey response that requires attention from the {{ survey.route_en }} division of the Permit Inspection Center.
 
-Below are the details of the survey response. Please follow up with the user within 30 days if contact information is provided.
+Below are the details of the survey response. Please follow up with the customer within 30 days if contact information is provided.
 
 Survey Date: {{ survey.date_submitted }}
 Language: {{ 'English' if survey.lang=='en' else 'Spanish' }}
