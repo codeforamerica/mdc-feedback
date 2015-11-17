@@ -453,6 +453,7 @@ a.what-is-this {
 	display:inline-block;
 }
 
+
 #stakeholderForm {
   
   ul {
@@ -460,8 +461,18 @@ a.what-is-this {
     li {
       
       display:list-item;
+      
+      input {
+        
+        width:100%;
+      }
     }
   }
+}
+
+#monthlyForm input#monthly-report-email {
+  
+  width:100%;
 }
 /* SURVEY BUILDER */
 

@@ -17,14 +17,9 @@
     
   <div id="container">
 
-    
-      
     <section id='user-list' class='row twelve columns'>
 
       <h3>Manage your users.</h3>
-
-      
-
 
       <table style="width:100%;" class='user-table'>
         <thead>
@@ -77,16 +72,7 @@
           {% for n in range(1,15) %}
           <li>
           
-            {{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="">
-            
-            <p class='bold'>Current recipients of e-mail updates:<p>
-            <ul class='user-list'>
-              
-              {% if stakeholders[n-1] is defined %}
-              <li>{{ stakeholders[n-1].email_list }}</li>
-              {% endif %}
-              
-            </ul>
+            {{ routes[n] }}: <input name="field-route-{{n}}" type="text" value="{% if stakeholders[n-1] is defined %}{{ stakeholders[n-1].email_list }}{% endif %}">
           
           </li>
 
@@ -103,18 +89,13 @@
       <p>Separate multiple e-mail addresses with a comma.</p>
       <form id="monthlyForm" class="form form-monthly" method="POST" action="{{ url_for('user.monthly_manage') }}" role="form">
         <input
+        id='monthly-report-email'
         name="monthly-report-field"
         type="text"
-        value="">
+        value="{% if monthly is defined %}{{ monthly.email_list }} {% endif %}  ">
         <input type="submit" value="save changes">
       </form>
       
-      <p class='bold'>Current recipients of monthly status reports:</p>
-      <ul>
-        {% if monthly is defined %}
-          <li>{{ monthly.email_list }}</li>
-        {% endif %}  
-      </ul>
 
     </section>
 
