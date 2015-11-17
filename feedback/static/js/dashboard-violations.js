@@ -106,17 +106,18 @@ $(document).ready(function () {
   //25.7667° N, 80.2000° W
   //{lat: 25.626668871238568, lng: -80.44867515563963}
 
-  var map = L.map('leaflet').setView([25.626668871238568, -80.44867515563963], 10);
+  
+  /*var map = L.map('leaflet').setView([25.626668871238568, -80.44867515563963], 10);
     L.tileLayer('//api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
     minZoom: 9,
     id: 'phiden.e64a2341',
     accessToken: 'pk.eyJ1IjoicGhpZGVuIiwiYSI6ImM3MGIxMDA2MDA1NDkzMzY5MWNlZThlYzFlNWQzOTkzIn0.boD45w3d4Ajws7QFysWq8g'
-    }).addTo(map);
+    }).addTo(map);*/
 
   //county shapefiles
-  $.ajax({
+  /*$.ajax({
     type: "GET",
     url: "../static/geodata/municipalities_coast.json",
     dataType: "json",
@@ -162,12 +163,13 @@ $(document).ready(function () {
 
     buildDataMaps();
 
-  }
+  }*/
   
   function getRandomArbitrary(min, max) {
     return Math.round(Math.random() * (max - min) + min);
   }
 
+  buildDataMaps();
   
   function buildDataMaps(){
     
@@ -176,17 +178,18 @@ $(document).ready(function () {
         vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data),
         vioArray = [];
         
-    for(var i = 0; i < vioLocationsData.length; i+=1) {
+    /*for(var i = 0; i < vioLocationsData.length; i+=1) {
 
       if(vioLocationsData[i].location.latitude != undefined) {
         
-        var obj = vioLocationsData[i].location.human_address;
+        var obj = vioLocationsData[i].location.human_address;*/
+        
         //console.log(typeof obj);
         //console.log(obj.split(":")[obj.split(":").length - 1])
         
        // var latlng = L.latLng(vioLocationsData[i].location.latitude, vioLocationsData[i].location.longitude, 1);
         
-        vioArray[i] = [parseFloat(vioLocationsData[i].location.latitude), parseFloat(vioLocationsData[i].location.longitude)];
+        //vioArray[i] = [parseFloat(vioLocationsData[i].location.latitude), parseFloat(vioLocationsData[i].location.longitude)];
 
         /*var lat = vioLocationsData[i].location.latitude,
             lon = vioLocationsData[i].location.longitude,
@@ -211,17 +214,17 @@ $(document).ready(function () {
           marker2.on('mouseout', function() {
             this.closePopup();
           });*/
-      }
-    }
+     // }
+   // }
     
     //console.log(vioArray.length);
     
-    var heat = L.heatLayer(vioArray).addTo(map);
+   // var heat = L.heatLayer(vioArray).addTo(map);
     
         //console.log(map.hasLayer(heat), heat);
         
     
-    for(i = 0; i < vioMonthlyData.length; i += 1) {
+    //for(i = 0; i < vioMonthlyData.length; i += 1) {
 
       //console.log(vioMonthlyData[i]);
 
@@ -254,7 +257,7 @@ $(document).ready(function () {
       }*/
 
 
-    }
+   // }
 
     if(vioTypeData === '') {
 
@@ -266,7 +269,7 @@ $(document).ready(function () {
       var dataset = [];
 
       //the 'total' isn't an integer. make it one, or the sort will fail.
-      for(i = 0; i < vioTypeData.length;   i+=1) {
+      for(var i = 0; i < vioTypeData.length;   i+=1) {
 
         vioTypeData[i].total = parseInt(vioTypeData[i].total, 10);
         //console.log(data[i]);
