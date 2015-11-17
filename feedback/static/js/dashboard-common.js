@@ -9,7 +9,12 @@
         yellow : "rgba(245, 201, 61, 1)",
         t_yellow : "rgba(245, 201, 61, 0.2)",
         orange : "rgba(243, 155, 121, 1)",
-        t_orange : "rgba(243, 155, 121, 0.2)",
+        orange_80 : "rgba(243, 155, 121, 0.8)",
+        orange_60: "rgba(243, 155, 121, 0.6)",
+        orange_40: "rgba(243, 155, 121, 0.4)",
+        orange_20: "rgba(243, 155, 121, 0.2)",
+        
+        
         purple : "rgba(61, 51, 119, 1)",
         t_purple : "rgba(61, 51, 119, 0.2)",
         purple_1 : 'rgba(172, 75, 173, 1)',

@@ -36,7 +36,7 @@ $(document).ready(function () {
         labels:datetime3,
         datasets: [
           {
-            fillColor: globalColors.t_orange,
+            fillColor: globalColors.orange_20,
             strokeColor: globalColors.orange,
             pointColor: globalColors.orange,
             pointStrokeColor: "#fff",
@@ -100,106 +100,6 @@ $(document).ready(function () {
     date = month + ' ' + year;
     return date;
   }
-
-  var permitTypes = JSON.parse($("#permitstype")[0].childNodes[0].data),      cleanPermitData = [],
-      cleanPermitLabels = [];
-
-  //set the data up for Charts.js
-  for(var i = 0; i < permitTypes.data.length; i+=1) {
-
-    if(permitTypes.data[i].permit_type != 'CCUT') {
-
-      cleanPermitLabels.push(humanNames(permitTypes.data[i].permit_type));
-      cleanPermitData.push(permitTypes.data[i].count);
-      //console.log(data[i].issue_type, i);
-
-    }
-
-  }
-
-  var vdata2 = {
-    labels: cleanPermitLabels,
-    datasets: [
-      {
-        label: "Permits by Type",
-        fillColor: globalColors.t_purple_1,
-        strokeColor: globalColors.purple_1,
-        data: cleanPermitData
-      }
-    ]
-  };
-
-  function humanNames(type) {
-
-    //console.log(type);
-
-    switch(type) {
-
-      case 'FIRE':
-
-        return 'Fire';
-        break;
-
-      case 'MMEC':
-
-        return 'Municipal: Mechanical';
-        break;
-
-      case 'ZIPS':
-
-        return 'Zoning Improvement Permit';
-        break;
-
-      case 'MELE':
-
-        return 'Muncipal: Electrical';
-        break;
-
-      case 'CCUT':
-
-        return 'CCUT';
-        break;
-
-      case 'ELEC':
-
-        return 'Electrical';
-        break;
-
-      case 'PLUM':
-
-        return 'Plumbing';
-        break;
-
-      case 'MPLU':
-
-        return 'Municipal: Plumbing';
-        break;
-
-      case 'MBLD':
-
-        return 'Municipal: Building';
-        break;
-
-      case 'LPGX':
-
-        return 'Liquid Petroleum Gas';
-        break;
-
-      case 'BLDG':
-
-        return 'Building';
-        break;
-
-      case 'MECH':
-
-        return 'Mechanical';
-        break;
-
-    }
-
-  }
-
-  $('#permitTypeChart').parent().parent().find('.headline').html(permitTypes.title);      
         
   /************************* LEAFLET MAPPING *************************/
 
@@ -276,7 +176,7 @@ $(document).ready(function () {
         vioMonthlyData = JSON.parse($("#violations_per_month_json")[0].childNodes[0].data),
         vioArray = [];
         
-    for(i = 0; i < vioLocationsData.length; i+=1) {
+    for(var i = 0; i < vioLocationsData.length; i+=1) {
 
       if(vioLocationsData[i].location.latitude != undefined) {
         
