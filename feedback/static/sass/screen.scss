@@ -265,6 +265,8 @@ a.what-is-this {
   }
 }
 
+
+
 .main-nav-unauthed,
 .main-nav {
 	
@@ -451,6 +453,7 @@ a.what-is-this {
 	display:inline-block;
 }
 
+
 #stakeholderForm {
   
   ul {
@@ -458,8 +461,18 @@ a.what-is-this {
     li {
       
       display:list-item;
+      
+      input {
+        
+        width:100%;
+      }
     }
   }
+}
+
+#monthlyForm input#monthly-report-email {
+  
+  width:100%;
 }
 /* SURVEY BUILDER */
 
@@ -711,15 +724,20 @@ td {
   
 }
 
-.user-management-td {
+section#user-list,
+section#stakeholder-list {
   
-  max-width:500px;
-  
-  li {
-    
-    display:inline;
-  }
+  margin-bottom:0;
+  padding-bottom:0;
 }
+
+.user-table {
+  
+  margin-bottom:20px;
+  border-bottom:1px solid #E1E1E1;
+  
+}
+
 table {
   
   border:1px solid white;

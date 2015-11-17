@@ -548,10 +548,13 @@ def violations():
 def all_surveys():
     survey_table = get_all_survey_responses(SURVEY_DAYS)
 
+    today = datetime.date.today()
+    
     return render_template(
         "dashboard/all-surveys.html",
         resp_obj=survey_table,
-        title='All Survey Responses'
+        title='All Survey Responses',
+        date=today.strftime('%B %d, %Y')
     )
 
 
@@ -559,17 +562,22 @@ def all_surveys():
 @login_required
 def survey_detail(id):
     survey = Survey.query.filter_by(id=id)
+    today = datetime.date.today()
+    
     return render_template(
         "dashboard/survey-detail.html",
         resp_obj=survey,
-        title='Permitting & Inspection Center User Survey Metrics: Detail')
+        title='Permitting & Inspection Center User Survey Metrics: Detail',
+        date=today.strftime('%B %d, %Y'))
 
 
 @blueprint.route("/dashboard/violations/",  methods=['GET'])
 def violations_detail():
     json_obj = {}
     json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
+    today = datetime.date.today()
     return render_template(
         "public/violations-detail.html",
         title='Violations by Type: Detail',
-        json_obj=json_obj)
+        json_obj=json_obj,
+        date=today.strftime('%B %d, %Y'))
