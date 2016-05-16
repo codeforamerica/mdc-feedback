@@ -37,7 +37,7 @@ It is highly recommended that you use use [virtualenv](https://readthedocs.org/p
  First, create a virtualenv and activate it. Then:
 
 ```
-git clone git@github.com:codeforamerica/mdc-feedback-stage.git
+git clone git@github.com:codeforamerica/mdc-feedback.git
 
 # create the 'feedback_dev' database
 psql -c 'create database feedback_dev;'
@@ -49,8 +49,9 @@ psql -c 'create database feedback_dev;'
 # If you used virtualenvwrapper you can use the command
 # vi $VIRTUAL_ENV/bin/postactivate .
 
-ADMIN_EMAIL='youremail@someplace.net'
+export ADMIN_EMAIL='youremail@someplace.net'
 export CONFIG=feedback.settings.DevConfig
+export PYTHONPATH=${PYTHONPATH}:[WHATEVER-DIRECTORY-YOUR-CODE-IS-IN]
 export MAIL_USERNAME="[YOUR-DEVELOPMENT-GMAIL-ADDRESS]"
 export MAIL_PASSWORD="[YOUR-PASSWORD]"
 export TYPEFORM_KEY="b903e7c38f9ae29378f24b69eb743330d9dee34d"
@@ -73,10 +74,10 @@ If you want to walk through the complete setup captured above in make setup, use
 
 ```
 # clone the repo
-git clone https://github.com/codeforamerica/mdc-feedback-stage
+git clone https://github.com/codeforamerica/mdc-feedback
 
 # change into the repo directory
-cd mdc-feedback-stage
+cd mdc-feedback
 
 # install python dependencies
 # NOTE: if you are using postgres.app, you will need to make sure to
