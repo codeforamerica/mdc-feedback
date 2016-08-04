@@ -50,7 +50,7 @@ psql -c 'create database feedback_dev;'
 # vi $VIRTUAL_ENV/bin/postactivate .
 
 export ADMIN_EMAIL='youremail@someplace.net'
-export CONFIG=feedback.settings.DevConfig
+export CONFIG=feedback.settings.DevelopmentConfig
 export PYTHONPATH=${PYTHONPATH}:[WHATEVER-DIRECTORY-YOUR-CODE-IS-IN]
 export MAIL_USERNAME="[YOUR-DEVELOPMENT-GMAIL-ADDRESS]"
 export MAIL_PASSWORD="[YOUR-PASSWORD]"
