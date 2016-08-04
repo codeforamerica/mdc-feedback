@@ -51,7 +51,7 @@ psql -c 'create database feedback_dev;'
 
 export ADMIN_EMAIL='youremail@someplace.net'
 export CONFIG=feedback.settings.DevelopmentConfig
-export PYTHONPATH=${PYTHONPATH}:[WHATEVER-DIRECTORY-YOUR-CODE-IS-IN]
+export PYTHONPATH='.'
 export MAIL_USERNAME="[YOUR-DEVELOPMENT-GMAIL-ADDRESS]"
 export MAIL_PASSWORD="[YOUR-PASSWORD]"
 export TYPEFORM_KEY="b903e7c38f9ae29378f24b69eb743330d9dee34d"
