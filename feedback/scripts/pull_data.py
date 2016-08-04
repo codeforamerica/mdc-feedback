@@ -88,7 +88,7 @@ def etl_web_data(ts):
         else:
             obj['lang'] = 'es'
 
-        obj['source_id'] = 'WEB-' + resp['id']
+        obj['source_id'] = 'WEB-' + resp['token']
 
         temp = resp['metadata']['date_submit']
         obj['date_submitted'] = date_to_db(temp)
