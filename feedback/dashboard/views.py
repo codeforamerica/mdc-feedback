@@ -46,6 +46,7 @@ def to_bucket(str_date):
 def home():
 
     json_obj = {}
+    json_obj_home = {}
 
     surveys_by_date = {}
     surveys_date_array = []
@@ -195,15 +196,97 @@ def home():
     json_obj['violations_locations_json'] = json.dumps(dump_socrata_api('vl'))
     json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
     json_obj['violations_per_month_json'] = json.dumps(dump_socrata_api('vm'))
-    
+
+
+    dashboard_collection_home = [
+        {
+            "id": "graph",
+            "title": "Surveys Submitted".format(SURVEY_DAYS),
+            "data": {
+                "graph": {
+                    "datetime": {
+                        "data": surveys_date_array
+                    },
+                    "series": [
+                        {
+                            "data": surveys_value_array
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "title": "Satisfaction Rating".format(SURVEY_DAYS),
+            "data": "{0:.2f}".format(get_rating_scale(survey_table))
+        },
+        {
+            "title": "Survey Type".format(SURVEY_DAYS),
+            "data": {
+                "web_en": web_rows.count('en'),
+                "web_es": web_rows.count('es'),
+                "sms_en": sms_rows.count('en'),
+                "sms_es": sms_rows.count('es')
+            },
+            "labels": {
+                "web_en": "Web (English)",
+                "web_es": "Web (Spanish)",
+                "sms_en": "Text (English)",
+                "sms_es": "Text (Spanish)"
+            }
+        },
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {
+            "title": "Surveys by Survey Role",
+            "data": get_surveys_by_role(survey_table)
+        },
+        {},
+        {
+            "title": "How many completions?",
+            "data": get_surveys_by_completion(survey_table)
+        },
+        {
+            "title": "Respondents by Purpose",
+            "data": get_surveys_by_purpose(survey_table)
+        },
+        {
+            "title": "Ratings",
+            "data": {
+                "en": get_rating_by_lang(survey_table, 'en'),
+                "es": get_rating_by_lang(survey_table, 'es'),
+                "p1": get_rating_by_purpose(survey_table, 1),
+                "p2": get_rating_by_purpose(survey_table, 2),
+                "p3": get_rating_by_purpose(survey_table, 3),
+                "p4": get_rating_by_purpose(survey_table, 4),
+                "p5": get_rating_by_purpose(survey_table, 5),
+                "contractor": get_rating_by_role(survey_table, 1),
+                "architect": get_rating_by_role(survey_table, 2),
+                "permitconsultant": get_rating_by_role(survey_table, 3),
+                "homeowner": get_rating_by_role(survey_table, 4),
+                "bizowner": get_rating_by_role(survey_table, 5)
+            }
+        }
+    ]
+
+    json_obj_home['daily_graph'] = json.dumps(dashboard_collection[0]['data']['graph'])
+    json_obj_home['surveys_type'] = json.dumps(dashboard_collection[2])
+    json_obj_home['survey_role'] = json.dumps(dashboard_collection[10])
+    json_obj_home['survey_complete'] = json.dumps(dashboard_collection[12])
+    json_obj_home['survey_purpose'] = json.dumps(dashboard_collection[13])
+
     today = datetime.date.today()
 
     return render_template(
         "public/home.html",
         api=api_health(),
         date=today.strftime('%B %d, %Y'),
-        json_obj=json_obj,
-        dash_obj=dashboard_collection,
+        json_obj=json_obj_home,
+        dash_obj=dashboard_collection_home,
         resp_obj=survey_table,
         title='Dashboard - Main'
         )
