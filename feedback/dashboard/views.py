@@ -2,7 +2,8 @@
 
 import arrow
 import datetime
-import json
+import ujson
+import timeit
 
 from flask.ext.login import login_required
 
@@ -69,134 +70,6 @@ def home():
         date_index = time_i.strftime("%m-%d")
         surveys_value_array.append(
             len([x for x in survey_table if to_bucket(x.date_submitted) == date_index]))
-
-    dashboard_collection = [
-        {
-            "id": "graph",
-            "title": "Surveys Submitted".format(SURVEY_DAYS),
-            "data": {
-                "graph": {
-                    "datetime": {
-                        "data": surveys_date_array
-                    },
-                    "series": [
-                        {
-                            "data": surveys_value_array
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "title": "Satisfaction Rating".format(SURVEY_DAYS),
-            "data": "{0:.2f}".format(get_rating_scale(survey_table))
-        },
-        {
-            "title": "Survey Type".format(SURVEY_DAYS),
-            "data": {
-                "web_en": web_rows.count('en'),
-                "web_es": web_rows.count('es'),
-                "sms_en": sms_rows.count('en'),
-                "sms_es": sms_rows.count('es')
-            },
-            "labels": {
-                "web_en": "Web (English)",
-                "web_es": "Web (Spanish)",
-                "sms_en": "Text (English)",
-                "sms_es": "Text (Spanish)"
-            }
-        },
-        {
-            "title": "Commercial",
-            "data": {
-                "nc": get_lifespan('nc'),
-                "rc": get_lifespan('rc'),
-                "s":  get_lifespan('s')
-            }
-        },
-        {
-            "title": "Residential",
-            "data": {
-                "nr": get_lifespan('nr'),
-                "rr": get_lifespan('rr'),
-                "p":  get_lifespan('p'),
-                "f":  get_lifespan('f'),
-                "e":  get_lifespan('e')
-            }
-        },
-        {
-            "title": "Average time from application date to permit issuance, Owner/Builder Permits, Last 30 Days",
-            "data": 0
-        },
-        {
-            "title": "Same Day Trade Permits",
-            "data": {
-                "PLUM": trade(30, 'PLUM'),
-                "BLDG": trade(30, 'BLDG'),
-                "ELEC": trade(30, 'ELEC'),
-                "FIRE": trade(30, 'FIRE'),
-                "ZIPS": trade(30, 'ZIPS')
-            }
-        },
-        {
-            "title": "(UNUSED) Avg Cost of an Open Residential Permit",
-            "data": 0
-        },
-        {
-            "title": "(UNUSED) Avg Cost of an Owner/Builder Permit",
-            "data": 0
-        },
-        {
-            "title": "Permits & sub-permits issued by type, Last 30 Days",
-            "data": get_permit_types()
-        },
-        {
-            "title": "Surveys by Survey Role",
-            "data": get_surveys_by_role(survey_table)
-        },
-        {
-            "title": "Master Permits Issued, Last 30 Days",
-            "data": get_master_permit_counts('permit_issued_date')
-        },
-        {
-            "title": "How many completions?",
-            "data": get_surveys_by_completion(survey_table)
-        },
-        {
-            "title": "Respondents by Purpose",
-            "data": get_surveys_by_purpose(survey_table)
-        },
-        {
-            "title": "Ratings",
-            "data": {
-                "en": get_rating_by_lang(survey_table, 'en'),
-                "es": get_rating_by_lang(survey_table, 'es'),
-                "p1": get_rating_by_purpose(survey_table, 1),
-                "p2": get_rating_by_purpose(survey_table, 2),
-                "p3": get_rating_by_purpose(survey_table, 3),
-                "p4": get_rating_by_purpose(survey_table, 4),
-                "p5": get_rating_by_purpose(survey_table, 5),
-                "contractor": get_rating_by_role(survey_table, 1),
-                "architect": get_rating_by_role(survey_table, 2),
-                "permitconsultant": get_rating_by_role(survey_table, 3),
-                "homeowner": get_rating_by_role(survey_table, 4),
-                "bizowner": get_rating_by_role(survey_table, 5)
-            }
-        }
-    ]
-
-    json_obj['daily_graph'] = json.dumps(dashboard_collection[0]['data']['graph'])
-    json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
-    json_obj['permits_type'] = json.dumps(dashboard_collection[9])
-    json_obj['survey_role'] = json.dumps(dashboard_collection[10])
-    json_obj['survey_complete'] = json.dumps(dashboard_collection[12])
-    json_obj['survey_purpose'] = json.dumps(dashboard_collection[13])
-    json_obj['permits_rawjson'] = json.dumps(dump_socrata_api('p'))
-    json_obj['violations_rawjson'] = json.dumps(dump_socrata_api('v'))
-    json_obj['violations_locations_json'] = json.dumps(dump_socrata_api('vl'))
-    json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
-    json_obj['violations_per_month_json'] = json.dumps(dump_socrata_api('vm'))
-
 
     dashboard_collection_home = [
         {
@@ -273,17 +146,17 @@ def home():
         }
     ]
 
-    json_obj_home['daily_graph'] = json.dumps(dashboard_collection[0]['data']['graph'])
-    json_obj_home['surveys_type'] = json.dumps(dashboard_collection[2])
-    json_obj_home['survey_role'] = json.dumps(dashboard_collection[10])
-    json_obj_home['survey_complete'] = json.dumps(dashboard_collection[12])
-    json_obj_home['survey_purpose'] = json.dumps(dashboard_collection[13])
+    json_obj_home['daily_graph'] = ujson.dumps(dashboard_collection_home[0]['data']['graph'])
+    json_obj_home['surveys_type'] = ujson.dumps(dashboard_collection_home[2])
+    json_obj_home['survey_role'] = ujson.dumps(dashboard_collection_home[10])
+    json_obj_home['survey_complete'] = ujson.dumps(dashboard_collection_home[12])
+    json_obj_home['survey_purpose'] = ujson.dumps(dashboard_collection_home[13])
 
     today = datetime.date.today()
 
     return render_template(
         "public/home.html",
-        api=api_health(),
+        api=1,
         date=today.strftime('%B %d, %Y'),
         json_obj=json_obj_home,
         dash_obj=dashboard_collection_home,
@@ -433,17 +306,17 @@ def metrics():
         }
     ]
 
-    json_obj['daily_graph'] = json.dumps(dashboard_collection[0]['data']['graph'])
-    json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
-    json_obj['permits_type'] = json.dumps(dashboard_collection[9])
-    json_obj['survey_role'] = json.dumps(dashboard_collection[10])
-    json_obj['survey_complete'] = json.dumps(dashboard_collection[12])
-    json_obj['survey_purpose'] = json.dumps(dashboard_collection[13])
-    json_obj['permits_rawjson'] = json.dumps(dump_socrata_api('p'))
-    json_obj['violations_rawjson'] = json.dumps(dump_socrata_api('v'))
-    json_obj['violations_locations_json'] = json.dumps(dump_socrata_api('vl'))
-    json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
-    json_obj['violations_per_month_json'] = json.dumps(dump_socrata_api('vm'))
+    json_obj['daily_graph'] = ujson.dumps(dashboard_collection[0]['data']['graph'])
+    json_obj['surveys_type'] = ujson.dumps(dashboard_collection[2])
+    json_obj['permits_type'] = ujson.dumps(dashboard_collection[9])
+    json_obj['survey_role'] = ujson.dumps(dashboard_collection[10])
+    json_obj['survey_complete'] = ujson.dumps(dashboard_collection[12])
+    json_obj['survey_purpose'] = ujson.dumps(dashboard_collection[13])
+    json_obj['permits_rawjson'] = ujson.dumps(dump_socrata_api('p'))
+    json_obj['violations_rawjson'] = ujson.dumps(dump_socrata_api('v'))
+    json_obj['violations_locations_json'] = ujson.dumps(dump_socrata_api('vl'))
+    json_obj['violations_type_json'] = ujson.dumps(dump_socrata_api('vt'))
+    json_obj['violations_per_month_json'] = ujson.dumps(dump_socrata_api('vm'))
     
     today = datetime.date.today()
 
@@ -601,17 +474,17 @@ def violations():
         }
     ]
 
-    json_obj['daily_graph'] = json.dumps(dashboard_collection[0]['data']['graph'])
-    json_obj['surveys_type'] = json.dumps(dashboard_collection[2])
-    json_obj['permits_type'] = json.dumps(dashboard_collection[9])
-    json_obj['survey_role'] = json.dumps(dashboard_collection[10])
-    json_obj['survey_complete'] = json.dumps(dashboard_collection[12])
-    json_obj['survey_purpose'] = json.dumps(dashboard_collection[13])
-    json_obj['permits_rawjson'] = json.dumps(dump_socrata_api('p'))
-    json_obj['violations_rawjson'] = json.dumps(dump_socrata_api('v'))
-    json_obj['violations_locations_json'] = json.dumps(dump_socrata_api('vl'))
-    json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
-    json_obj['violations_per_month_json'] = json.dumps(dump_socrata_api('vm'))
+    json_obj['daily_graph'] = ujson.dumps(dashboard_collection[0]['data']['graph'])
+    json_obj['surveys_type'] = ujson.dumps(dashboard_collection[2])
+    json_obj['permits_type'] = ujson.dumps(dashboard_collection[9])
+    json_obj['survey_role'] = ujson.dumps(dashboard_collection[10])
+    json_obj['survey_complete'] = ujson.dumps(dashboard_collection[12])
+    json_obj['survey_purpose'] = ujson.dumps(dashboard_collection[13])
+    json_obj['permits_rawjson'] = ujson.dumps(dump_socrata_api('p'))
+    json_obj['violations_rawjson'] = ujson.dumps(dump_socrata_api('v'))
+    json_obj['violations_locations_json'] = ujson.dumps(dump_socrata_api('vl'))
+    json_obj['violations_type_json'] = ujson.dumps(dump_socrata_api('vt'))
+    json_obj['violations_per_month_json'] = ujson.dumps(dump_socrata_api('vm'))
     
     today = datetime.date.today()
 
@@ -657,7 +530,7 @@ def survey_detail(id):
 @blueprint.route("/dashboard/violations/",  methods=['GET'])
 def violations_detail():
     json_obj = {}
-    json_obj['violations_type_json'] = json.dumps(dump_socrata_api('vt'))
+    json_obj['violations_type_json'] = ujson.dumps(dump_socrata_api('vt'))
     today = datetime.date.today()
     return render_template(
         "public/violations-detail.html",

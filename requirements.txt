@@ -43,6 +43,7 @@ requests-cache==0.4.10
 six==1.9.0
 SQLAlchemy==1.0.4
 tzlocal==1.2
+ujson==1.35
 watchdog==0.8.3
 webassets==0.10.1
 Werkzeug==0.10.4

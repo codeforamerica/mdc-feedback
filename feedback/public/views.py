@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Public section, including homepage and signup."""
 
-import json
+import ujson
 import urllib
 
 import datetime
@@ -56,7 +56,7 @@ def auth():
     })
     req = urllib2.Request('https://verifier.login.persona.org/verify', data)
 
-    response = json.loads(urllib2.urlopen(req).read())
+    response = ujson.loads(urllib2.urlopen(req).read())
     current_app.logger.debug(
         'LOGIN: status from persona: {}'.format(response))
     if response.get('status') != 'okay':
